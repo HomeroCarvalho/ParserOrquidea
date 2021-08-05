@@ -1,0 +1,77 @@
+uma lista lisp, é átomo (sem proximo elemento), ou lista (com proximo elemento).
+um átomo pode ser um número ou símbolo.
+
+avaliar uma lista lisp (f x y) é equivalente à f(x,y).
+Se o primeiro elemento da lista não for uma função definido, uma execeção é gerada.
+
+Valor nil--> false ou lista vazia.
+
+
+1- Quote: '(a b c)== (a b c). o uso do quote impede que a lista seja avaliada, servindo como entrada de algum parâmetro.
+
+2- list: (list a b c d)==(a b c d). (list (+ 3 2))==(5).
+3- nth (numero_indice 'listaA(a b c))== listaA[numero_indice].(retorna o elemento[x] de uma lista, x é o índice na lista).
+4- length '(a b c)==3.
+5-member elemento '(a b c d)--> member a '(a b c d)==t, member e '(a b c d)==nil.
+6-car. Primeiro elemento da lista--> (car '(a b c))==a
+7-cdr. Lista sem o primeiro elemento da lista--> (cdr ' (a b c)==(b c).
+9- cXXR ou C(X(n)R, com X= A (car)  ou X=D (cdr).
+10- CONS: merge de duas listas. --> (CONS '(A B) '(C D))==((A B) C D).(o segundo parâmetro deve ser uma lista).
+	Um cons é somente um registro de dois campos. Os campos são chamados de "car" e "cdr" por razões históricas.
+
+11- LIST: constroi uma lista a partir de seus argumentos. (LIST 'A 'B 'C)==(A B C).
+12- APPEND: constrói uma lista a partir de argumentos lista. Os argumentos devem ser listas.
+13- SETQ:  faz o primeiro argumento ter o valor do segundo argumento. (PESQUISAR MAIS, NÃO ESTÁ MUITO CLARO).
+14- defun: constroi uma função, na forma: defun <nome da função> (<parâmetros>)<corpo da função>. O corpo da função são uma
+ou mais expressões que definem o que a função faz.
+15- COND: CONDICIONAL COMPLEXO:
+
+(cond
+   ((evenp a) a)                 ;if a is even return a
+   ((> a 7) (/ a 2));else if a is bigger than 7 return a/2
+   ((< a 5) (- a 1));else if a is smaller than 5 return a-1
+   (t 17)                ;else return 17
+  )
+
+
+ARRAYS
+- aref: recebe um array e índices e retorna o elemento array na posição especificada
+no arrat: (aref mat 2 1 6) é equivlente a mat[2,1,6] em C#.
+- construir um array: make-array(length1,.. lengthN). Preeche iniialmente com o valor NIL.
+LOOPS: macros doliste dotimes
+
+- Dolist
+
+
+estrurutas em LISP
+(defstruct nomeEstrutura nomeReg1 nomeR2... nomeRN).
+define também N funções de acesso de tipo de dado:
+make--nomeEstrutura, nomeEstrutura-nomeReg1,... nomeEstrutura-nomeReg2.
+
+
+
+FUNÇÕES MÍNIMAS PARA UM INTERPRETADOR LISP
+(quote a)
+(car (quote (a bc)))
+(cdr (quote (a b c)))
+(cons (quote) (a b c)))
+(equal (car (quote (a b))) (quote a))
+(cond(atom(quote a))(quote b))((quote t) (quote c)))
+(lambda (x y) (cons (car (car x) y))(quote (a b))(cdr (quote (c d))))
+(label ff (lambda (x)(cond ((atom x) x) ((quote t) (ff (car x)))))
+
+
+(def fun  fibonacci (N( (if (< N 2) 1 (+ (fibonacci (-N 2))(fibonacci (-N 1)(-N 1)))))
+(map  fibonacci quote (0 1 2 3 4 5))
+
+
+FUNÇÕES MATEMÁTICAS
+sin cos tan asin acos atan floor max min log abs ceil pow exp atan2 random sqrt round 
+
+MANIPULAÇAO DE OBJETOS:
+> (def obj {a: "hello", b: '(a b c), number: 0})
+ > (tail (get obj "b"))
+ > (set obj a (concat (get obj a) " world"))
+ > (get obj a)
+
+

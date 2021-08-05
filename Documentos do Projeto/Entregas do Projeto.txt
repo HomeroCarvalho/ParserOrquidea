@@ -1,0 +1,49 @@
+ENTREGAS DO PROJETO PARSER LINGUAGEM ORQUIDEA:
+	- classe producao: contém os dados de um comando da linguagem definido em arquivo XML. Tem os termos-chave, a máquina de estados (termos-chave e semi-produções), e semi-produções.
+	- classe ParserUniversal: obtem tokens de qualquer linguagem de programação, desde que se tenha nomes de termos-chave, e nomes de operadores.
+	- classe Tokens:
+		- GetTokens(): obtém tokens de uma linguagem de programação.
+		- GetProducoes(): obtém produções de uma linguagem de programação.
+	- classe UmaGramaticaComputacional:
+		- uma linguagem de computador com producoes configuraveis, com termos-chave, operadores. Operadores podem ser acrescentados, sem muitos esforços extras: operadores unarios, operadores binarios, operadores condicionais booleanos,...
+
+
+ENTREGAS DO PROJETO COMPILADORES LINGUAGEM ORQUIDEA:
+	- funcionalidades Interpretador Lisp:
+		- um pequeno interpretador lisp, com funções pré-definidas, e funções programáveis.
+		- classe ListaLisp: obtém listas lisp de um texto, carrega/salva listas lisp.
+		- classe FuncaoLisp: obtém, armazena, avalia funções lisp, salva/carrega funções lisp.
+		
+	- funcionalidades Interpretador Prolog:
+		- um pequeno interpretador prolog, com assercoes e listas prolog, consultas de asserções, salva/carrega bases de conhecimento.
+		- produz numa consulta, todas combinacoes possiveis resultantes.
+
+	- funcionalidade ProgramacaoEstruturada: 
+		- TabelaDeValores: registra, valida, e armazena informações de variáveis, funções, objetos, expressões.
+		- Escopo:  constroi e acessa escopos, definindo regiões de acessibilidade de variáveis, funções e objetos.
+		- SequenciasID:  definição de sequencias de ID, que não são termos-chave da linguagem, mas sim nomes de variáveis, funções, operadores, propriedades, métodos, classes, que tem uma sintaxe particular.---> parte da construção do escopo.
+
+	- funcionalidade ProgramacaoOrientadaObjetos;
+		---> Classes.
+		---> Herança();
+		---> Deserança();
+		---> extratores de métodos, propriedades, classes, através de análise de código de instruções.
+
+
+ENTREGAS DO PROJETO MAQUINA VIRTUAL ORQUIDEA:
+	-  Extensão do Analisador de sequencias id, para conter instruções de linguagem, como "while", "for", "if".
+		 (feito métodos para; "while", "for", e "if/else", "atribuição de variáveis", "chamada de função", "return", "break","continue",
+		  também os métodos destas instruções para avaliação na VM)
+
+	-  Método GetProducoes() extendido, para capturar SequenciasID, termos-chave, e semi-produções.
+	-  Classe VirtualMachine, contém os códigos de cada instrução, seguida de expressões para uma instrução e também lista de blocos de instrução, para avaliação da instrução.
+
+	-  Lista de instruções expandível, pois os métodos de instrução feitos sob o design pattern "Command".
+	
+	-- Interopabilidade entre a linguagem orquidea e a linguagem base C sharp.
+
+
+
+
+
+

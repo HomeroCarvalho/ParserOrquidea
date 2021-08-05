@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B08A9234-0F6F-44D1-8971-4E5957F9F304}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ParserLinguagemOrquidea</RootNamespace>
+    <AssemblyName>ParserLinguagemOrquidea</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>BasicCorrectnessRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MathNet.Numerics, Version=4.15.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MathNet.Numerics.4.15.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Spatial, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MathNet.Spatial.0.6.0\lib\net461\MathNet.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ChecklistEncapsulamento.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\LISP\FuncaoLISP.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\LISP\CorpoTestesLISP.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\LISP\FuncaoLISP utils.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\LISP\FuncoesEssenssiaisLISP.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\LISP\ListaLISP.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\LISP\LISP_Utils.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\EvalExpression.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ExtensionLanguage.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ParserAnyLanguage.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID_2.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\classe.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\classes de Apoio\DadosEmArquivoXML\FileForObjeto.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\classes de Apoio\ExtratoresOO.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\classes de Apoio\ImportadorDeClasses.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\classes de Apoio\RepositorioDeClassesOO.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\ExpressaoSemValidacao.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\metodo.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\Objetos.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\OperadoresNativos.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\PosicaoDeCodigo.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\propriedade.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\SequenciasID.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\Tokens.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROLOG\ListaProlog.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROLOG\Consultas.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROLOG\EditorSuporteProlog.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROLOG\ParserPROLOG.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROLOG\Predicado.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROLOG\ComandosProlog.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROLOG\Regra.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROLOG\BaseDeConhecimento.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ParserUniversal.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\Escopo.cs" />
+    <Compile Include="GramaticaComponentes\lngLinguagemOrquidia.cs" />
+    <Compile Include="GramaticaComponentes\lngUmaLinguagemComputacional.cs" />
+    <Compile Include="MaquinaVirtual\ParserAFile.cs" />
+    <Compile Include="MaquinaVirtual\ProcessamentoInstrucoes.cs" />
+    <Compile Include="testes\ClassesTestesManutencao.cs" />
+    <Compile Include="testes\CorpoTestesManutencao.cs" />
+    <Compile Include="testes\CorpoTestes_2.cs" />
+    <Compile Include="testes\CorpoTestes_3.cs" />
+    <Compile Include="testes\SuiteClasseTestes.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\producao.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\TabelaDeValores.cs" />
+    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\RegistradorBNF.cs" />
+    <Compile Include="GramaticaComponentes\xmlREADER_LINGUAGEM.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="testes\Assercoes.cs" />
+    <Compile Include="testes\ContainerTestes.cs" />
+    <Compile Include="testes\CorpoTestes_1.cs" />
+    <Compile Include="testes\LogFileTests.cs" />
+    <Compile Include="testes\ParserScripts.cs" />
+    <Compile Include="testes\Teste.cs" />
+    <Compile Include="Util\stringUtils\escreverNaTelaPrograma.cs" />
+    <Compile Include="Util\stringUtils\LocalizadorDeTokens.cs" />
+    <Compile Include="Util\stringUtils\Log.cs" />
+    <Compile Include="Util\stringUtils\Memory.cs" />
+    <Compile Include="Util\stringUtils\PreencherVazios.cs" />
+    <Compile Include="Util\stringUtils\strFila.cs" />
+    <Compile Include="Util\stringUtils\strPilha.cs" />
+    <Compile Include="Util\uMATRIZ.cs" />
+    <Compile Include="Util\UtilString.cs" />
+    <Compile Include="Util\UtilTokens.cs" />
+    <Compile Include="Util\FuncionalidadesXml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 e x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="componentesDeInterpretadoresECompiladores\GramaticaComponentes\readme.txt" />
+    <Content Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\classes de Apoio\readme.txt" />
+    <Content Include="Documentos do Projeto\DailyScrum.txt" />
+    <Content Include="Documentos do Projeto\Entregas do Projeto.txt" />
+    <Content Include="Documentos do Projeto\ManutencaoCorritivaEAditiva.txt" />
+    <Content Include="Sobre O Projeto\DesignDeNovasFuncionalidades.txt" />
+    <Content Include="Documentos do Projeto\Gerenciamento do Projeto.txt" />
+    <Content Include="Sobre O Projeto\GargalosNumaLinguagemDeProgramacao.txt" />
+    <Content Include="Sobre O Projeto\GERENCIAMENTO DE MUDANCAS.txt" />
+    <Content Include="Sobre O Projeto\GerenciamentoDeMudancasProjetoParserOrquidea.txt" />
+    <Content Include="Sobre O Projeto\TecnicasDeRetirarTokens.txt" />
+    <Content Include="Util\stringUtils\readme.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

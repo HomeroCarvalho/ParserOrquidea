@@ -1,0 +1,24 @@
+1- FUNCIONALIDADES DA CLASSE LISTA E CLASSE CONSULTA.
+  	1.1- listas Prolog.--> a codificar o acesso lógico a listas, como será processado a lista dentro de predicados.
+                               --> iniciada a codificação.--> codificação feita parcialmente. feito constroilistas, insert, GetHead(), GetTail(), GetElementsHead(), GetElementsTail().-->implementado com sucesso.
+                               --> especificação de regras como listaA(predicadoA,[X|Y]):- Y,X. , implementado, testado com sucesso.
+		  --> iniciada a parte lógica de ligação das listas nos predicados.--> falta o cálculo das cláusulas de horn para regras (parte direita da regra), dos elementos da lista.--> implementado, testado com sucesso.
+	   	  --> iniciada a extração da especificação da lista, 
+			-->1.0- falta associar a especificação da lista a um átomo do predicado base de uma regra (ou a um átomo de um predicado simples, sem regra).--> feito, testado com sucesso.	
+			
+	1.2- estruturas em Prolog.
+
+
+AGUARDANDO TESTES:
+	--> falta associar o comando a ser executado na lista, nos predicados meta de uma regra, com Head, Tail, elementos#. implementado, aguardando testes.--> texte feito, sucesso.
+	--> falta associar os átomos do predicado, aos elementos da lista.--> implementado, testado. Inicia um objeto Predicado, e passa-se os átomos e nome do predicado para a lista.	
+	--> falta implantar a recursividade para processamento de listas--> implementado, com um método que aplica uma função (como Head,Tail,Append) a uma lista variável, e com um método na classe Consulta, [ExecuteListProgram()].--> teste codificado e testado, com sucesso!--> aguardando novos testes.--> testes feitos com função append, bem sucedido.
+
+
+
+O QUE FALTA:
+1- completar o algoritmo com ConsultaBacktraking.--> implantado, aguardando testes.--> corrigido, testado, sucesso positivo, mas está muito lento.
+1.1- testar o método de GetVariaveis() para comparar valores comuns entre si, mesmas variáveis.--> testado com sucesso positivo.
+2- fazer mais testes para o método ProgramaProlog(). com regras mais complexas.--> teste com função lista append (X|Y) bem sucedido.
+
+

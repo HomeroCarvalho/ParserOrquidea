@@ -1,0 +1,399 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using parser.ProgramacaoOrentadaAObjetos;
+using ModuloTESTES;
+namespace parser
+{
+    class CorpoTestes_3
+    {
+        LinguagemOrquidea linguagem = new LinguagemOrquidea();
+        private void Teste1ProgramaOrquidea(Assercoes assercao)
+        {
+
+            Escopo escopo = null;
+
+
+            List<string> codigoChamadaFuncao = new List<string>() { "int funcaoB(int x); int b= funcaoB(a);" };
+            List<string> tokensChamadaFuncao = new Tokens(new LinguagemOrquidea(), codigoChamadaFuncao).GetTokens();
+            escopo = new Escopo(codigoChamadaFuncao);
+
+            List<Expressao> expressoes = Expressao.Instance.ExtraiExpressoes(escopo, tokensChamadaFuncao);
+
+            escopo = null;
+
+            List<string> codigo3 = new List<string>() { "int funcaoB(int x){ x=x+1;}; int a=1; int b= funcaoB(a);" };
+            escopo = null;
+            CenarioTestesProgramaOrquidea(codigo3, out escopo);
+
+            escopo = null;
+
+            List<string> codigo1 = new List<string>() { "int a=1; int b= 5; int c= a+b;" };
+            CenarioTestesProgramaOrquidea(codigo1, out escopo);
+
+            if (escopo.tabela.GetVar("c", escopo).GetValor().ToString() == "6")
+                assercao.MsgSucess("calculo do codigo feito com exatidao.");
+
+
+
+            List<string> codigo2 = new List<string>() { "int a=1; int b= 5; int x=7; int c= a+b*x;" };
+            escopo = null;
+            CenarioTestesProgramaOrquidea(codigo2, out escopo);
+            if (escopo.tabela.GetVar("c", escopo).GetValor().ToString() == "36")
+                assercao.MsgSucess("calculo do codigo 2 feito com exatidao.");
+        }
+
+        private static void CenarioTestesProgramaOrquidea(List<string> codigo, out Escopo escopo)
+        {
+            escopo = null;
+            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+         
+            ProcessadorDeID processador = new ProcessadorDeID(codigo);
+            processador.Compile();
+
+            ProgramaEmVM programa = new ProgramaEmVM(processador.GetInstrucoes());
+            programa.Run(escopo);
+        }
+
+        object funcaoVazia(object[] parametros)
+        {
+            return null;
+        }
+  
+ 
+        private static void CenarioTesteExtraiExpressoes(out Escopo escopo, List<string> codigo3, out List<Expressao> expressoes)
+        {
+            expressoes = null;
+            List<string> tokens3 = new Tokens(new LinguagemOrquidea(), codigo3).GetTokens();
+            escopo = new Escopo(codigo3);
+
+            Variavel v_a = new Variavel("public", "a", "int", 1);
+            Variavel v_b = new Variavel("public", "b", "int", 1);
+            Variavel v_c = new Variavel("public", "c", "int", 1);
+
+            escopo.tabela.GetVariaveis().Add(v_a);
+            escopo.tabela.GetVariaveis().Add(v_b);
+            escopo.tabela.GetVariaveis().Add(v_c);
+            
+
+
+            expressoes = Expressao.Instance.ExtraiExpressoes(escopo, tokens3);
+        }
+
+        private void TesteParaDefinicaoDeVariavelComExpressoesEmAtribuicao(Assercoes assercao)
+        {
+            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            List<string> codigo1 = new List<string>() { "int c=funcaoA()+a+b;" };
+
+
+            ProcessadorDeID processador = new ProcessadorDeID(codigo1);
+            processador.escopo.tabela.RegistraFuncao(new Funcao("public", "funcaoA", funcaoVazia, null));
+            processador.escopo.tabela.AddVar("public", "a", "int", "1", processador.escopo, false);
+            processador.escopo.tabela.AddVar("public", "b", "int", "5", processador.escopo, false);
+
+
+            processador.Compile();
+
+            assercao.MsgSucess("construcao de codigo de defnicoes de variaveis feito sem erros fatais.");
+
+            if ((processador.escopo.tabela.GetVariaveis().Count == 3) &&
+                (processador.escopo.tabela.GetVar("c", processador.escopo) != null))
+                assercao.MsgSucess("definição de variável a partir de expressao completa feita sem erros.");
+        }
+
+
+        private void TesteImportarClasseDaLinguagemSuporte(Assercoes assercao)
+        {
+
+            ImportadorDeClasses importador = new ImportadorDeClasses("ParserLinguagemOrquidea.exe");
+            importador.ImportAClassFromApplication(typeof(MATRIZES.Matriz));
+
+            assercao.MsgSucess("Importação de classe feita sem erros fatais.");
+
+            if ((RepositorioDeClassesOO.Instance().classesRegistradas.Count == 1) && (RepositorioDeClassesOO.Instance().classesRegistradas[0].GetNome() == "MyMATRIX"))
+                assercao.MsgSucess("importacao da classe MyMATRIX feita exatamente.");
+
+
+            importador.ImportAClassFromApplication(typeof(Expressao));
+            assercao.MsgSucess("Importação de classe Expressao feita sem erros fatais.");
+            if ((RepositorioDeClassesOO.Instance().classesRegistradas.Count == 2) && (RepositorioDeClassesOO.Instance().classesRegistradas[1].GetNome() == typeof(Expressao).Name))
+                assercao.MsgSucess("importacao da classe Expressao feita exatamente.");
+        }
+
+ 
+
+        ProcessadorDeID processador = null;
+        private void TestePropriedadesAninhadas(Assercoes assercao)
+        {
+
+            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+
+            List<string> code = new List<string>() { "public class A { int varA=1;} protected class B {A varB;}" };
+            Escopo escopo = new Escopo(code);
+
+            CenarioTesteProcessamentoParaPropriedadesAninhadas(code, escopo);
+
+
+
+            List<string> codeObject = new List<string>() { "obj1.varB.varA=1;" };
+
+            escopo = new Escopo(codeObject);
+            Objeto obj = new Objeto("B", "obj1", null, escopo);
+            escopo.tabela.RegistraObjeto(obj);
+
+            CenarioTesteProcessamentoParaPropriedadesAninhadas(codeObject, escopo);
+
+            assercao.MsgSucess("instruçao compilada sem erros fatais.");
+            if ((processador.GetInstrucoes().Count == 1) && (processador.GetInstrucoes()[0].code == ProgramaEmVM.codeAtribution))
+                assercao.MsgSucess("instrucao avaliada exatamente.");
+
+
+
+
+            ProgramaEmVM programa = new ProgramaEmVM(processador.GetInstrucoes());
+            programa.Run(escopo);
+
+            assercao.MsgSucess("programa rodado sem erros fatais.");
+
+            if ((RepositorioDeClassesOO.Instance().ObtemUmaClasse("A") != null) &&
+                (RepositorioDeClassesOO.Instance().ObtemUmaClasse("B") != null))
+                assercao.MsgSucess("processamento de classes feito exatamente.");
+
+
+
+        }
+
+        private string CenarioTesteProcessamentoParaPropriedadesAninhadas(List<string> code, Escopo escopo)
+        {
+            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+          
+            this.processador = new ProcessadorDeID(code);
+            this.processador.Compile();
+
+            return "processamento de propriedades aninhadas feito sem erros fatais.";
+        }
+
+        private void TesteManipulacaoDeObjetos(Assercoes assercao)
+        {
+            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            List<string> codigoClasseTeste = new List<string>() { "public class A {int VarA=1; int funcaoA(){ int k=2;}}" };
+
+            ProcessadorDeID processador = new ProcessadorDeID(codigoClasseTeste);
+
+            // compila os tokens da classe A,
+            processador.Compile();
+
+            assercao.MsgSucess("construcao da classe teste feita com sucesso.");
+
+            // inicializa um objeto do tipo A.
+            Objeto objeto = new Objeto("A", "obj1", null, processador.escopo);
+
+
+            assercao.MsgSucess("inicializacao indireta de objeto feita sucessamente");
+            if (objeto.GetFields().Count == 1)
+                assercao.MsgSucess("construcao de objeto via indiretamente, feita sucessamente");
+
+            List<string> codigoManipulacaoDeObjetos = new List<string>() { "obj1.VarA=1;" };
+  
+ 
+            ProcessadorDeID processadorObjetos = new ProcessadorDeID(codigoManipulacaoDeObjetos);
+            processador.escopo.tabela.RegistraObjeto(objeto); // registra via codigo o objeto do cenario do teste.
+
+
+            processadorObjetos.Compile();
+
+            assercao.MsgSucess("compilacao de um objeto feita com sucesso.");
+            if ((processadorObjetos.GetInstrucoes().Count == 1) &&
+                (processadorObjetos.escopo.tabela.GetObjetos().Count == 1))
+                assercao.MsgSucess("processamento de build e instrucao para manipulacao de propriedades do objeto.");
+
+            ProgramaEmVM programa = new ProgramaEmVM(processadorObjetos.GetInstrucoes());
+            programa.Run(processador.escopo);
+
+        }
+
+    
+        private void TesteDefinicaoDeMetodos(Assercoes assercao)
+        {
+            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            List<string> codigo = new List<string>() { "public int funcaoB(int a, int b){int x=1;}" };
+       
+            ProcessadorDeID processador = new ProcessadorDeID(codigo);
+
+            processador.Compile();
+
+            assercao.MsgSucess("Definicao de um metodo compilado sem erros fatais.");
+
+            if (processador.escopo.tabela.GetFuncoes().Count == 1)
+                assercao.MsgSucess("Definicao de um metodo feito exatamente.");
+
+            //____________________________________________________________________________________________________________________________________
+
+            List<string> codigo1 = new List<string>() { "public class classeA { public int varA; public int funcaoB(int y, int z){int x=1;} }" };
+ 
+            ProcessadorDeID processador1 = new ProcessadorDeID(codigo1);
+
+            processador1.Compile();
+
+            assercao.MsgSucess("compilacao de uma classe com metodos feito sem erros fatais.");
+            if ((RepositorioDeClassesOO.Instance().ObtemUmaClasse("classeA") != null) &&
+                (RepositorioDeClassesOO.Instance().ObtemUmaClasse("classeA").GetMetodos().Count == 1))
+                assercao.MsgSucess("compilacao de uma classe com metodos feito exatamente.");
+
+        } // TesteDefinicaoDeMetodos()
+
+        private ProcessadorDeID CenarioTesteConstrucaoDaClasseParaOTeste(List<string> code, out Escopo escopo)
+        {
+            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            ProcessadorDeID processador = new ProcessadorDeID(code);
+
+            processador.Compile();
+            escopo = processador.escopo;
+            return processador;
+        }
+
+   
+        private void TesteInstrucaoCreate(Assercoes assercao)
+        {
+
+            /// ID ID = create ( ID , ID  ---> tipo nomeObjeto = create (TipoParametro1 parametro1,... )
+            /// ou:
+            /// ID= create (ID , ID
+            /// 
+            List<string> codeClasse = new List<string>() { "public class ClasseB { int a; int b; }" };
+            List<string> codeCreate = new List<string>() { "ClasseB obj1=  create ( a , b);" };
+
+            ProcessadorDeID processador = null;
+            processador = new ProcessadorDeID(codeClasse);
+
+
+            // cria objetos parametros.
+            Objeto objetoA = new Objeto("int", "a", 1, processador.escopo);
+            Objeto objetoB = new Objeto("int", "b", 1, processador.escopo);
+            processador.escopo.tabela.RegistraObjeto(objetoA);
+            processador.escopo.tabela.RegistraObjeto(objetoB);
+
+            processador.Compile(); // constroi a classe teste.
+
+            Funcao umConstrutor = new Funcao("public", "ClasseB", funcaoVazia, null, new propriedade[] { new propriedade("a", "int", null, false), new propriedade("b", "int", null, false) });
+            Classe classeTeste = RepositorioDeClassesOO.Instance().ObtemUmaClasse("ClasseB");
+            classeTeste.construtores.Add(umConstrutor);
+           
+            
+            ProcessadorDeID.codigo = codeCreate;
+            processador.Compile();
+
+            if (processador.GetInstrucoes().Count == 1)
+                assercao.MsgSucess();
+            else
+                assercao.MsgFail();
+
+            ProgramaEmVM programa = new ProgramaEmVM(processador.GetInstrucoes());
+            programa.Run(processador.escopo);
+
+            assercao.MsgSucess("instrucoes VM executadas");
+
+        } // TesteInstrucaoCreate()
+
+       
+        private void TesteAceiteConstrucaoDeClasse(Assercoes assercao)
+        {
+            /*
+             * 
+             * public class umaClasse
+              {
+	                public int propA;
+	                private int propB;
+
+	            public int metodoA()
+	            {
+		            return -1;
+	            }
+
+	            private bool metodoB(int a, int b)
+	            {
+		            bool r= a<b;
+		            return r;
+	            }
+              } 
+             * 
+             */
+            ParserAFile parser= new ParserAFile("cenario2TesteAceite.txt");
+
+            List<string> codigo = parser.GetCode();
+
+            ProcessadorDeID processador = new ProcessadorDeID(codigo);
+            processador.Compile();
+            assercao.MsgSucess("processamento de arquivo com classe feito sem erros fatais.");
+
+            Classe classeTeste = RepositorioDeClassesOO.Instance().ObtemUmaClasse("umaClasse");
+            if ((classeTeste != null) && (classeTeste.GetMetodos().Count == 2) && (classeTeste.GetPropriedades().Count == 2))
+                assercao.MsgSucess("processamento de arquivo com classe feito com exatidão.");
+        }
+
+        private void TesteAceiteClasseComHeranca(Assercoes assercao)
+        {
+
+            string codigo = "public class AncestralA{ public int propAncestralA; public string propNomeAncestralA; public bool GetName(){ return propNomeAncestralA;} private bool VerificaID( int id) { if (id==propAncestralA) return 	true; return false;}} public class AncestralB { public int propAncestralB; public string propNomeAncestralB; private int propPrivateAncestralB; public bool GetNomeAncestral(){ int k=0; return (k==1);	}}  public class ClasseQueHerda: + AncestralA, + AncestralB {}";
+            ParserAFile parser = new ParserAFile("cenario3TesteAceite.txt");
+            List<string> tokens = new Tokens(new LinguagemOrquidea(), new List<string>() { codigo }).GetTokens();
+
+
+            ProcessadorDeID processador = new ProcessadorDeID(tokens);
+            processador.Compile();
+            assercao.MsgSucess("processamento de arquivo com classe feito sem erros fatais.");
+
+        }
+
+        private void TesteAceiteFuncao(Assercoes assercao)
+        {
+   
+            /*
+             * 
+             * int funcaoA(int x)
+                {
+                    int a=x+1;
+                    for (a=1;a< 5;a++)
+                    {
+	                    x=x+3;
+                    }
+                    return x;
+                }
+             * 
+             * 
+             */
+            ParserAFile parserTesteAceite = new ParserAFile("cenario1TesteAceite.txt");
+            List<string> code = parserTesteAceite.GetCode();
+            ProcessadorDeID processador = new ProcessadorDeID(code);
+            processador.Compile();
+
+            assercao.MsgSucess("processamento de arquivo de funcao feito sem erros fatais.");
+
+            if ((processador.escopo.tabela.GetFuncoes() != null) && (processador.escopo.tabela.GetFuncoes().Count > 0))
+                assercao.MsgSucess();
+        }
+
+
+        
+        public CorpoTestes_3()
+        {
+            Teste testeProgramaOrquidea1_teste = new Teste(this.Teste1ProgramaOrquidea, "avaliacao de programa orquidea.");
+            Teste testeDefinicoesDeVariaveis_teste = new Teste(this.TesteParaDefinicaoDeVariavelComExpressoesEmAtribuicao, "teste para verificacao de variaveis construidas com atribuicoes de expressoes.");
+            Teste testeImportacaoDeClasse_teste = new Teste(this.TesteImportarClasseDaLinguagemSuporte, "teste de importacao de classe da matriz de suporte.");
+            Teste testePropriedadesAninhadas_teste = new Teste(this.TestePropriedadesAninhadas, "teste para processamento de propriedades aninhadas.");
+            Teste testeManipulacaoDePropriedadeDeObjetos_teste = new Teste(this.TesteManipulacaoDeObjetos, "teste para manipular atribuicao de propriedades de um objeto.");
+            Teste testeDefinicaoDeMetodos_teste = new Teste(this.TesteDefinicaoDeMetodos, "teste para validacao de metodos.");
+            Teste testeCreateInstruction_teste = new Teste(this.TesteInstrucaoCreate, "teste para a instrução Create");
+     
+
+            Teste testeAceiteFuncaoEstruturada_teste = new Teste(this.TesteAceiteFuncao, "teste de aceite para codigo completo de funcao estruturada.");
+            Teste testeAceiteConstrucaoDeClasse_teste = new Teste(this.TesteAceiteConstrucaoDeClasse, "teste de aceite para codigo completo de uma classe.");
+            Teste testeAceiteConstrucaoDeClasseComHeranca_teste = new Teste(this.TesteAceiteClasseComHeranca, "teste de aceite para o codigo completo de classes com heranca.");
+
+            ContainerTestes container = new ContainerTestes(testeAceiteConstrucaoDeClasse_teste);
+            container.ExecutaTestes();
+
+        } // CorpoTestes_3()
+       
+    } // class
+} // namespace

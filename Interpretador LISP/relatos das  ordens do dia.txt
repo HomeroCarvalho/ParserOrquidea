@@ -1,0 +1,63 @@
+- O DOCUMENTO "ORDENS DO DIA" LISTA AS TAREFAS A FAZER PARA SE ENTREGAR UMA FUNCIONALIDADE,
+PARA RELATOS DE FIXAR ERROS, LISTAR INCREMENTOS.  É COMO O SPRINT PLANNING, MAS TEM VÁRIOS DIAS PARA CUMPRIR, DEVIDO A SE TER APENAS UM DESENVOLVEDOR, QUE É TAMBÉM O LÍDER DO PROJETO.
+
+
+
+
+- encontrar uma solução de chamar uma função lisp a partir de parâmetros.- uma solução temporária é substituir o texto da função pelos parâmetros,
+fazendo uma cópia do texto da função, e modificando o parâmetro de entrada pelo valor que se quer chegar.
+Mas para uma função recursiva, parece que não se chega a uma conclusão de cópia de texto da função.--> implementado a solução: cada chama de avaliação contém parâmetros de entrada, a serem chamados para associar o nome com o valor de um parâmetro.
+
+
+- SOLUÇÃO ENCONTRADA: a chamada de função recebe uma lista de parãmetros, cada um contendo nome  e valor, que foram
+também implementada nas instruções lisp. Fazendo a chamada de cada instrução lisp com os parâmetros de entrada, e todas chamadas com os mesmos parâmetros,
+pois uma função lisp pode ser decompostas num conjunto de comandos lisp, cada comando recebendo o mesmo conjunto de parâmetros (a conferir)..
+
+-planejamento do dia:
+- testar uma das funções básicas, para fins de validar as funções.--> testes sendo feitos, sucesso positivo para listas condicionais, exemplo: "(> 1 5)".
+
+--testar o método de obtenção de valores de variáveis de função--> implementado, método ObtençãoValores retorna  nomes e valores de parâmetros.(mas é preciso saber o nome e o valor das variáveis parametro).codificado o método CompoeFuncoesLisp, que liga os valores de chamada de função, com os respectivos parãmetros.
+- testar a avaliação de funções lisp.(nome, parametros, e corpo). -->falta completar o método Avalia(). Método Avalia() implementado, tanto para avaliação de listas quanto de funções lisp.
+- testar os demais comandos lisp.
+- favor revisar os métodos Avalia Listas e Avalia Funções. Verificar também se o resultado de uma avaliação de lista lisp entra nos cálculos de função lisp.--> verificado, sem erros detectados em testes--> avaliação de uma adição feita positivamente, fixado os erros.
+- refatorar a instrução lisp adicao, e copiar a adicao para a instrução lisp subtracao.--> implantado, aguardando testes.--> fixado, testado positivamente.		
+
+- fixar o erro de quotação de listas componentes, ao que parece a lista toda, não a lista a ser quotado, é quotada.É preciso quotar a lista membro, não a lista inteira.-->  fixado, a próxima lista depois do operador quote recebe a informação que é quotada (isQuoted=true).
+
+- fixar o erro de avaliação de função do repositório.-->implementado, aguardando testes.--> agora é possível avaliar funções do repositório e funções recursivas.
+
+	- testar os demais comandos lisp. Favor revisar primeiro os métodos dos comandos. Nota: o ponteiro de listas aponta para a parte do corpo da função.
+		- iniciado teste com comando [cons], teste com falhas. fixados erros na construção de listas por um texto. fixado erros na inicialização de comandos lisp, pois a construção do dicionário de comando estava vinculado à construção de funcaolisp, erro na chamada a partir de construção de uma listalisp.--> falha no reconhecimento de listas Lisp quotadas.--> fixado, o comando quote pode ser considerado um operador da linguagem LISP, entrando na lista de termos-chave presentes, no parser de tokens. --> fixado erros, testes positivamente.
+		- testes com o comando if, fixado erros, testado positivamente. (Corrigido a avaliação de uma lista Atomo retorna a lista, e lista que isQuoted=true (retorna a lista).
+		- testes com o comando cond, fixado erros, testado positivamente. Ao que parece, não se calculou direito as listas de car e cdr para as partes do comando, em quase todos comandos.
+		- testes com o comando member, com falha em razão de quotação da lista estar não funcionando.--> fixado a falha com o operador quote, fixado também o método member, setando os elementos a partir de seus nomes, e não valores.--> testado positivamente.
+		- testes com o comando setq, falha em passar a referência dos parâmetros. moficado a passagem de parâmetros para uma lista, feita. Novos testes positivamente.
+		-implementar comandos * e /, para dois parâmetros de entrada.-->implementado, aguardando testes.--> testes feito com resultados positivos.
+                	-  testar as quatro operações matemáticas para Avaliação de Listas com operadores matemáticos. --> testes feitos, fixado erros, resultados positivamente.
+                             - testar com a inserção de funções pela macro defun.  --> testes feitos, positivamente.- modificações feitas, testado positivamente.
+		
+
+- O QUE FALTA:
+	- testar a avaliação de funções vindas do repositório.--> iniciado, com falhas: a função para avaliar, ao longo do processamento, resulta numa lista vazia, sem elementos.
+	- fixado o problema da lista vazia, a função é registrada corretamente,  a macro [defun] registra a função no repositório.
+	- falta avaliar uma chamada à  função registrada, como (foo 5 5).--> testes começados, a avaliação da função falha ao 
+		compara os prâmetros da função com a lista de parâmetros da chamada da função. falha,
+		 tentando executar uma função do repositório executando todos comandos básicos dentro da função.
+		- testes com avaliar uma função com comando pré-definidos testado positivamente. falha em avaliar funções não pré-definidos.-->fixado, funciona bem para uma instrução não pré- definida, mas falha ao avançar para a próxima instrução lisp (uma função lisp pode ter várias instruções, retornando resultado para a última instrução.
+		- testes para avaliar uma instrução lisp através do editor com falha.--> fixado, testado positivamente.	
+		- falta testes para o comando CADXXXR --> fixado erros, testes positivamente.
+
+
+	- falta a avaliação de função recursiva lisp.--> iniciado os testes--> falha nos testes, há erros na passagem de uma instrução para outra, as instruções lisp dentro de uma função lisp.--> fixado, mas a primeira instrução lisp se repete após a chamada da mesma instrução lisp.
+					  --> regressão para teste de um função lisp não recursiva, função "foo", também resultado em falha nos cálculos--> a aguardar fixar os erros.--> fixado, aguardando testes de uma função recursiva.--> testes iniciado, quase lá... 
+					  --> falta a alteração de um parâmetro da função que represente a recursividade, dentro do método AvaliaFuncao(), como por exemplo: fatorial (- n 1).
+  				     	  --> implantado a avaliação de instruções dentro de instruções, como: (recursive (+ n 1)), codificado, testado para o caso de retorno da recursão.
+					 --> verificado a avaliação de operações condicionais, depois de alterações no código deixarem erros. testado, positivamente.	
+					 --> testado a avaliação de funções recursivas, na parte de parada de recursão da função, positivamente. Novos testes, que convegem para o caso de saída da recursão, testado positivamente.
+					 --> testado a avaliação de funções recursivas, na parte de chamada à recursão, testes positivamente!
+
+					
+
+- OS MÉTODOS AVALIA PRATICAMENTE ENCERRA O INTERPRETADOR LISP, o  ajuste fino, consiste em verificar cada instrução lisp, e adicionar novas instruções lisp.(operações incluidas: *, /, e um método genérico de avaliação de funções com operador matemática qualquer, que permite ascrescentar funções matemáticas como: sqrt, exp, ln, ^, square, etc...
+- PRÓXIMA SPRINT, ORIENTAÇÃO A OBJETOS (OO).
+

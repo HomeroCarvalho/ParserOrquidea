@@ -1,0 +1,91 @@
+﻿-----> MANUTENÇÃO ADITIVA E CORRETIVA:
+
+		----> DEVIDO A PERDA DE DADOS COM UMA FORMATAÇÃO DO PEN-DRIVE EM MAIO/21, MUITOS TESTES E BUGS FIXADOS FORAM PERDIDOS, O PROJETO ATUAL É UM BACKUP DE FEV/21.
+			  BUGS DE INSTRUÇÕES DA LINGUAGEM ESTRUTURADA E POO FORAM PERDIDOS, E TIVERAM QUE SEREM RESTADOS.	
+
+		----> ESTIMATIVA DE TERMINO: 3 SEMANAS, POIS AS FUNCIONALIDADES DE ARQUIVOS XML NO PROJETO NÃO ACRESCENTA VALOR AGREGADO, E TORNOU-SE SEM SENTIDO ANTE AO 
+		ENTENDER QUE A COMPILAÇÃO ESTÁ COM VELOCIADE DE COMPILAR, ADEQUADA. O COMPILADOR FICARÁ EMBUTIDO NO PROJETO QUE UTILIZA A LINGUAGEM.
+
+
+
+PRODUCT BACKLOG:
+
+		---> a descrição da manutenção corretiva, é que houve perda de dados, arquivos, numa formatação de um pen-drive danificado, que voltou 3 meses o projeto, que é a data de um arquivo compactado do projeto...
+
+		---> (feito) INCLUIR NO ARQUIVO .XML DE DEFINIÇÃO AS INSTRUÇÕES QUE AINDA NÃO ESTÃO NO ARQUIVO .XML.
+		---> CRIAR GERADOR/CARREGADOR DE EXPRESSOES EM XML, PARA NAO PRECISAR COMPILAR O PROGRAMA TODA VEZ QUE FOR RODADO, A COMPILAÇÃO É MEIO LENTA, DE ACORDO COM TESTES FEITOS.
+					---> criado leitura/gravacao de expressaoXML, propriedadeXML, metodoXML (a testar), e instrucaoXML.
+					---> faltando leitura/gravacao de classeXML.
+
+
+		---> CRIAR UM CARREGADOR DE PROGRAMAS JÁ COMPILADOS.
+					---> o arquivo compilado é uma estrutura XML. Não há que se falar em segurança dos dados, o projeto é open-source.
+					---> as expressoes sao processadas, e depois de gerar o programa com as instruções, é salvo em arquivo xml.
+									---> codificado,testado a leitura/gravacao de instrucoes XML, faltando a leitura/gravacao de metodos XML, pois é preciso compor a classe ClasseXML, que tem propriedades e metodos para leitura/gravacao em arquivo XML.
+
+
+		 ----> com a intenção de criar um arquivo compilado, por constatação da demora da compilação, constatou-se que é mais um erro do sistema, que torna a compilação algo demorado...
+			   surpreendentemente, constatou-se que a compilação não é demorada. Talvez um dos motivos seja carregar varias e varias vezes a linguagem orquidea, que é um código com acesso a arquivos, inicialização de classes, operadores, metodos, termos-chave, propriedades...
+					---> o principal delay de atraso eh devido a inicializacao varias vezes da classe LinguagemOrquidea, que faz acessos a arquivos físicos em XML. Com a refatoracao desta classe, tornou-se possível uma compilação bem mais rápida do código em programacao Estruturada e POO.
+					---> outra lentidao estava no metodo ProcessadorID.ResumeExpressoes(), que estava confuso e propenso a erros de natureza desconhecida.
+
+SPRINT ANTERIOR:
+		---> SPRINT BACKLOG
+				----> (feito, aguardando o build de metodos estaticos) INCLUIR NO ARQUIVO .XML OS COMANDOS QUE ESTÃO COMO APENDICE EM LinguagemOrquidea.
+				----> (a fazer) modificacao no metodo Tokens.GetProducoes(), com processamento de instruções com identificação do primeiro token da instrucao, ou id, ou expressao, ou chamada de função.
+										----> os ids expressoes são reduzidos para um id, para identificar o tipo de sequencia.
+
+					MANUTENÇÃO ADITIVA:
+				----> O P.O. PERGUNTOU: SE QUISERMOS INSERIR UM NOVO COMANDO, NAO DA PARA MODIFICAR O CODIGO EM UM UNICO PONTO?
+							----> (codificado, aguardando testes) PARA INSERIR UM NOVO COMANDO, JA HA METODOS, MAS ESTAO DISPERSOS NO CODIGO. mudança aprovada, por já fazer parte do projeto (mas nao centralizado).
+							
+				----> UM INSIGHT VALIDO, EH A CONSTATACAO DE MUITOS CODIGOS COMPLEXOS ESTAO COM O NIVEL DE ABSTRACAO QUE TORNA O CODIGO MAIS DIFICIL DE SER LIDOS, E POSSIVELMENTE SEREM MODIFICADOS POSTERIORMENTE.
+							----> AO REFATORAR, LEVAR EM CONTA O NIVEL DE ABSTRACAO DE METODOS EXTRAIDOS COM FERRAMENTAS DA IDE.
+
+
+Para aprimorar as próximas sprints e projetos:
+				---> testar com cenarários de testes os mais complexos possíveis, aumenta a cobertura de testes simples através de testes com dados de testes o mais abrangentes possiveis.
+				---> está havendo codigo com nivel de abstração mal formulada,
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________
+SPRINT ANTERIOR:
+			---> COM A MELHORA NO DESEMPENHO DO CODIGO QUANDO COMPILADO, TORNOU-SE DESNECESSÁRIO GUARDAR O CODIGO GERADO, EM ARQUIVOS XML. O COMPILADOR, POR SER PEQUENO,
+			PODE-SE SER ACRESCENTADO AO PROGRAMA QUE UTILIZA AS LINGUAGENS ORQUIDEAS, E PASSAGEM DE DADOS ENTRE O PROGRAMA QUE HOSPEDA E O PROGRAMA ORQUIDEA, PODERIA
+			SER POR ARQUIVOS TEXTO, XML, OU MESMO UM PROTOCOLO SOAP.
+
+
+			---> uma parada para mudança de foco, decidiu-se concentrar na inteporabilidade entre as linguagen orquidea POO, e a linguagem base,
+			e guardar dados processados em arquivo, no formato de xml, mas podendo ser txt, ou mesmo um banco de dados sql. Nesse projeto, os dados
+			gerados (valores de objetos processados), serão guardados em xml.
+
+FUNCIONALIDADES:
+				---> (verificado, testado) fixar, e verificar o comando "importer", para gerar objetos importados e integrar no programa que importou.
+				---> (verificado, testado) fixar o comando "create", para criar objetos.
+				---> (codificado, testado) guardar dados processados em objetos para arquivo no formato xml (tornando util alguns dos codigos de funcionalidade XML feitas e que foram retiradas do projeto).
+
+			    ---> A CONSTRUÇÃO DE CENÁRIOS DE TESTES o mais complexo possível, mostrou-se relevante, pois abrange cenarios simples e cenarios complexos...
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________
+SPRINT ANTERIOR:
+		---> (fixado, testado) tornar operacional o processamento de classes importadas, com chamada de metodos de classes importadas.
+
+
+		Não Prioritario:
+		---> verificar a construção de operadores unários, e a prioridade, tem que ser maior que operadores binários. Verificar a execução de expressões com  operadores unários, e na construção e extração de expressões com operadores unários.
+
+				---> UM ERRO CONCEITUAL DO PROJETO, É DE CODIFICAR BLOCOS TRY/CATCH O MENOS POSSÍVEL, PARA FACILITAR A CAPTURA DE ERROS EM CENÁRIO DE TESTES.
+					 MAS MESMO LANÇANDO EXCEPTIONS EM BLOCOS TRY/CATCH, NÃO PREJUDICA A EXECUÇÃO DE TESTES, BASTA LANÇAR UMA EXCEPTION DENTRO BLOCO CATCH.
+					 COMO RESULTADO, BOA PARTE DO CODIGO FALHA SEM TRATAR DE ERROS, APESAR QUE OS TESTE CAPTAM RESULTADOS DE CENÁRIOS DE TESTES. MAS
+					 COMO É UM INTERPRETADOR/COMPILADOR DE LINGUAGENS, MUITA COISA ERRADA PODE ESTAR NA ENTRADA DOS DADOS, COMO OS TEXTOS DE INSTRUÇÕES.
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________
+SPRINT ANTERIOR:
+		----> (fixado) fixar o metodo de Expressao.ExtraiExpressoes(), no caso de chamada de funcao, nao esta retornando os parametros da chamada.
+		----> (a fazer, segue o fluxo Scrum para trilhangem do projeto) codificar chamadas da linguagem POO, para linguagens dos intepretadores LISP e PROLOG.
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________
+SPRINT CURRENTE:
+		SPRINT BACKLOG:
+					1- testes unitarios para todas instruções: atribuicao, for, while, if/else, casesOfUse, continue, break, return.
+					2- testes para construção de objetos importados, e chamada a um dos método do objeto importado, como o que segue: Matriz m= CreateObject(m,null); m.SetElemento(lin, col, 5).
+
+
+
+
+

@@ -1,0 +1,974 @@
+PRODUCT BACKLOG ALÉM DO PROJETO INICIAL (UM PARSER PROGRAMÁVEL, COM UMA LINGUAGEM PROGRAMÁVEL).: produto gerado: um parser universal, programável.
+O PROJETO ORQUÍDEA FOI CUMPRIDO E GEROU UM RESULTADO ESPERADO, UM PARSER COM UMA LINGUAGEM PROGRAMÁVEL VIA ARQUIVO XML. Um fato negativo foi a não estimativa de tempo, e métodos não previstos em Gerenciamento de Projeto.
+
+PROJETOS FEITOS E A FAZER:
+    --->  projeto para obter tokens e produções a partir de uma definição de linguagem de programação. (ParserLinhguagemOrquidea).
+    --->  projeto para interpretadores LISP, PROLOG, classe para processamento de programação estruturada, classe para processamento de POO.
+    --->  projeto para uma VM. ( em fase de testes de aceite).
+
+
+Estimativa de término: 2 meses (estimativa anterior: 6 meses).
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Proximo estagio:  UM FATO IMPORTANTE PARA DETECÇÃO DE ERROS QUANDO SE UTILIZA A LINGUAGEM ORQUIDEA.
+
+					----> a parte mais dificil será: o que fazer quando o programador entra com um codigo errado?
+										----> Planejamento: a cada lista nula ou vazia, há um erro feito pelo programador...
+                                            ---> retornos null, devem ter uma mensagem de erros atreladas, pois retornos null indica que a operação currente foi terminado com não conformidade do algoritmo).
+
+
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+- PRODUCT BACKLOG para construção da VM:
+    ----> (feito) planejamento das instruções da VM. 
+	(instruções: "for", "if/else", "while", "for", chamadaDeFuncao", "atribuicao", "return", "continue","break", definição de função, "Classe", "definição de operador binario", "definição de operador unario", "caseOfUse", "create", "construtor". 
+						Há um tipo especial de definição de função,  método construtor, que  inicializa a lista de propriedades de um projeto.
+		  (feito)	----> especificações para métodos de compilação de sequencias id de instruções. 
+
+
+    ----> (feito) classificação de tipos de expressão (aritmética,condicional, etc..), para validação dos tipos de expressões em uma instrução de linguagem.
+				(feito) mas pode haver não ter funcionalidade em toda parte do código ----> funcionalidade VariavelVetor (uso de matrizes vetoriais como Variavel), aprovado no Gerencimento de Mudanças.
+				(feito) possibilidade de criar uma classe especializada, que encapsule um vetor ou matriz em um método de biblioteca, com funções e variáveis de acesso.
+    
+    ---->(feito) extensões para compilação de vários arquivos para um mesmo código de um software.
+
+	novas funcionalidades, com a intervenção do P.O.:
+		----> (feito) tipo de dados matriz. 
+		----> (feito) importador de métodos da linguagem suporte. (linguagem suporte: C sharp, com estudos para linguagem suporte C++, via classe gerenciada, e extrator de classes via reflexão, em C sharp).
+	
+
+ANOTAÇÕES:
+
+	PROPOSTA PARA UMA MUDANÇA: simplificação das sequencias id mapeadas, retirando também os tratadores variantes, e dando mais processamento para os métodos tratadores, que fariam a validação de sequencias id semelhantes entre si.
+								---> mudança aprovada, para simplificar o método MatchSequencias(), mas terá que fazer os cálculos até o início do index variante, anteriormente calculado. 
+              ---> feito um novo método para procurar sequencias id mapeadas, mais, simples, mais legível, e mais robusto em programação.
+
+	UM INSIGHT INTERESSANTE, UMA MUDANÇA IMPLEMENTADA: OTIMIZAÇÃO DE AVALIAÇÃO DE EXPRESSÕES.
+	----> uma notação interessante é sobre a divisão de tantos tipos de Variaveis, se a simplicidade do código compensa ante a otimização de variáveis tipadas.
+		----> o gargalo é quando se utiliza grandes quantidades de variáveis, como vetores, quando a utilização é de uma variável apenas, não afeta o desempenho.
+		----> outro gargalo que a otimização corrige, é quando expressões são avaliadas segundo tempos de reação humana, o computador fica calculando no tempo de desempenho dos algoritmos.
+              ----> visando atender esta observação, uma otimização feita, para criar um campo para expressao de cálculo antigo de uma expressão, a expressão é recalculada apenas se uma ou mais variáveis da expressão são modificadas.
+
+	UM INSIGHT INTERESSANTE, UMA MUDANÇA IMPLEMENTADA: APROVEITAMENTO DE SEQUENCIAS ID COMO CONTAINER DE EXPRESSÕES ENCONTRADAS.
+	    ---> inclusão de expressões nas sequencias id processadas em MathSequencias(), o que resume quase tudo de instruções de linguagem!
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+SPRINTE CURRENTE:
+
+        SPRINT BACKLOG:
+                    -----> (feito)testes de aceite, para instruções estruturadas (funcao, variavel).
+                    -----> (feito)testes de aceite, para instruções POO (classe, metodo, propriedade).
+                    -----> (feito) testes de aceite, para instrucoes da linguagem ("for","while","if","casesOfUse","return","break","continue", etc.).
+                    ---->  (a fazer) testes de aceite para classe com heranca de deseranca.
+
+
+
+___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+SPRINT ANTERIOR:
+
+        SPRINT BACKLOG:
+         ---> teste para um programa na VM, rodando instruções da linguagem.
+                    --->(feito) continuando os testes, parado por operações de expressões complexas, fixado no método Expressao.ExtraiExpressoes()
+                         
+                    ---> testes:
+                        para definição de variaveis (ok),
+                        para definição de funções (ok).
+                        para instrução if/else (ok).
+                        para instrução for (ok).
+                        para instrução while (ok).
+                        para instrução operador binario (ok).
+                        para instrução operador unário (ok).
+                        para instrução casesOfUse (ok).
+                        para instrução chamadaDeFuncoes. (ok).
+                        para instrução create (ok).
+                        para instrucao construtor (ok).
+                         
+         --->(feito) implementação da classe matriz, como operações +, - , *, /, > , <, ==.
+        ----> (feito) implementado uma classe matriz, com operações matemáticas básicas, e operações condicionais de comparações entre matrizes. (testado sucessamente para operadores: +,-.*, /,<.>).
+
+		           ----> (insight) com a implementação não nativa de execução de operadores: é possível operadores unários, binários, ternários, quaternários, etc...!
+
+		           ----> (insight) (feito) acesso a classes da linguagem suporte, via API Reflexão! Qualquer classe em C sharp pode ser instanciada e manipulada via API reflexão. Classes como 
+			      MyMATRIX, por exemplo, que dá acesso à operadores para matrizes, pode ser instanciada via API Reflexão, criando objetos MyMATRIX.
+			      quando instancia um objeto (classe Objeto), verifica-se se está no repositório de classes do orquidea, se não estiver, tenta via API- reflexão instanciar a classe,
+			      copiando propriedades e métodos para um objeto Classe e acrescentando ao repositório de classes do orquidea. Então, no código orquidea, pode-se acessar métodos via sintaxe
+			      do programa currente orquidea. 
+			            ----> Mudança aprovada implementada, testes sucessamente.
+
+	----> mais funcionalidades retiradas do ProductBacklog:
+			---> (feito, em fase de teste) avaliação de propriedades e métodos aninhados, na definicao de propriedades, e chamadas de métodos/funções.
+
+	----> (insight P.O. para novas funcionalidades) O P.O. perguntou se seria possível utilizar como linguagem de suporte também a linguagm C++,
+						com utilização de recursos em massa da linguagem C++, através de Wrappers Managed CLI C++, e uso de API de reflexão 
+	       					(que permite uso de  interfaces padronizadas para acessar as classes CLI C++  Managed Code).
+			---> extensão de funcionalidades aprovada, pelo acesso a mihares de recurso em C++, para o projeto Orquidea. Porém, é implantada após o término de funcionalidades POO do projeto.
+
+    ----> com o que foi pedido na sprint, esta sprint terminou.
+
+SPRINT REVIEW:
+	---> tomar cuidado com entradas de métodos via texto, que não tem como validar em tempo de compilação.
+	---> erros com listas vazias ou nulas voltou a crescer, e também indices fora da faixa de intervalos, em listas e vetores.
+	---> (Insight desenvolvedor): quando uma classe é repetidamente e sucessamente testada, fazer
+		 um checklist anotando numa lista que a classe pode ser utilizada como "bloco" 
+		 para construção de outros métodos e propriedades.
+
+__________________________________________________________________________________________________________________________________________________________________________________________________________
+
+SPRINT RETROSPECTIVE: (aperfeiçoando o processo Scrum Individual). Embora seja no final do projeto, é impossível registrar aperfeiçoamentos do processo Scrum individual, muito tempo depois que se percebeu a necessidade da anotação pertinente.
+		
+		1- AGENDAR NUM DIA DA SEMANA PARA TESTE UMA BATERIA DE TESTES PARA POO, POR EXEMPLO.
+		    CODIGOS TESTADOS, PODEM QUEBRAR ANTE MODIFICAÇÃO EM OUTROS CÓDIGO (Teoria de Teste básica).
+
+		2- A descrição de um algoritmo de uma funcionalidade complexa, é um bom comentário, e deve ser feita sempre que possível.
+
+        3- A parte mais dificil será: o que fazer quando o programador entra com um codigo errado?
+                Planejamento: 
+                    1-  a cada lista nula ou vazia, há um erro feito pelo programador...
+                    2-  métodos que retornam um booleano, pode ser utilizado na análise de erro no codigo do programador...
+
+IMPLANTANDO AS OBSERVAÇÕES:
+
+		1- agendar para SEGUNDA, a bateria de testes da sprint currente.
+        		2- agendar para  TERÇA, para fazer um checklist anotando numa lista que a classe muito testada, pode ser utilizada como "bloco" para construção de outros métodos e propriedades.
+
+		3- comentar a receita de bolo, o algoritmo para uma funcionalidade complexa...
+		4- cuidado com listas vazias e nulas, 80% dos erros estão nessa faixa.
+		5- formação do vocabulário do problema das funcionalidades o mais rápido possível, e utilizar para conhecer e resolver o problema.
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+SPRINT ANTERIOR:
+
+	---> (ok) a fazer a revisão sprint da sprint anterior (instruções e programa VM).
+	---> (ok) integração da parte POO no sistema de builds de instruções.
+	---> (ok) extensões para compilação de vários arquivos para um mesmo código de um software. Sistema de arquivos integrado com o método ProcessadorID.CompileClasses().
+
+
+	---> itens implicitos do ProductBacklog: 
+                    ---> (ok) cuidar da parte OO em builds de chamadaDeFuncao, e atribuicao de propriedades. faltando a validação de chamadas de função.
+                    ---> (ok) utilização de VariaveisVetor dentro de VariaveisVetor: arrays multi-dimensionais, chamados de Arrays Jaggs em Java. 
+						
+	---> (ok) testes: teste para o build das instruções "if/else", "for", "while", composição de blocos de instruções.
+
+    ---> (ok) construção de vetores multidimensionais!.
+    ---> (ok) funcionalidade de propriedades/variáveis estáticas!.
+    ---> (ok) novo método Tokens.GetProducoes(), testes feitos.
+
+O PO perguntou sobre operações com matrizes. 
+	--->o desenvolvedor disse que é possível... resultando em:
+	             ----> (ok): classe Matriz, com operadores: +,-.*,/.<.>.==.
+
+
+O que falta:
+    ---> (ok) nova instrução da linguagem orquidea: "casesOfUse", semelhante a "switch" em Java ou C sharp.
+    
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+SPRINT ANTERIOR: construção de instruções da VM:
+		---> definição de várias instruções: for, while, if/else, break, continue, return, SetVar, GetVar, definicao operador binario, definicao operador unario.
+		---> codificado métodos de construção das instruções (métodos Build).
+		---> codificado métodos que rodam as instruções, num programa na VM.
+
+		---> itens sprint feitos, e testados, menos a simulação de programa VM com as instruções da linguagem compiladas.
+   
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+---->  SPRINT REVIEW: 
+
+			1- FAVOR PRESTAR MAIS ATENÇÃO NOS ALGORITMOS, PARTE LÓGICA, POIS foram encontrados muitos erros na lógica.
+			2- TODAS PRODUÇÕES DENTRO DE PRODUÇÕES SÃO EXPRESSÕES, POIS NA LINGUAGEM DE PROGRAMAÇÃO NÃO SE TEM PRODUÇÕES DENTRO DE PRODUÇÕES!!
+			3- Favor fazer mais casos de testes, erros encontrados para um só teste, procurar por elementos-teste extremos.
+			4- RETRABALHO NÃO TÃO RUIM ASSIM, cada vez que refazemos um algoritmo, este sempre sai melhor (design, simplicidade, abrangencia, etc...). Quando um algoritmo é falho, muito longo, ou complexo demais, é hora do retrabalho.
+			5- quebrar um algoritmo complexos em pequenas partes para testes, se o teste valida,completa o algoritmo.
+             
+			6- ESTUDAR UM MÉTODO PARA TORNAR TESTES MAIS EFETIVOS. O método ParserUniversal.GetTokens() tem erros que são sutis, mas um bom método de testar situações "fronteiriças" tem que ser codificado.
+				6.1 - PROPOSTA PARA MELHORES TESTES: Codificar sempre DOIS TESTES: um que falha, outro que passa.	
+				6.2-  MELHORES TESTES: FAZER MAIS ENTRADAS PARA UM MESMO TESTE. A teoria recomenda que os testes sejam para um cenário, mas não diz nada se há mais de uma entrada para um cenário de teste.
+				6.3-  testes abrangentes: para cada desvio de fluxo em um método, fazer um teste.
+
+			7- FAZER UM RESUMO PARA REGISTRO DE DAILY SCRUM, as anotações currentes segue um roteiro meio confuso...
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+ 
+ ----> REUSO:
+
+    ---> o que pode valer para qualquer linguagem:
+            ---> a definição de termos-chave, e operadores de uma linguagem.
+            ---> a obtenção de tokens, a partir no ParserUniversal.
+            ---> com os tokens, e definição de textos-template semelhando às Expressões-Regex, pode-se configurar o Processador de IDs, reescrevendo os textos-template, e métodos tratadores para cada texto-template.
+            ---> o processador de id prepara o escopo, e as instruções para que a linguagem se torne operacional. As instruções podem ser executadas também, mais uma funcionalidade implementada, pelos métodos tratadores.
+            ---> com definição de operadores, pode-se tornar mais flexível sintaxes como "x+y", ou "x dot y" (operador binario), ou "++x", ou "dot y" (operador unario).
+
+    ---> PARA UM PROJETO DE IMPLEMENTAÇÃO DE UM INTERPRETADOR DE LINGUAGEM: desenho formado!
+            ---> configuração de instruções através de sequencias id.
+            ---> transformação do código em indices de métodos tratadores. os métodos tratadores tem que fazer além de construir escopos (sequencias id originais), oferecer funcionalidades de comandos de instrução, como  "while ( expressao) { bloco }", um "bloco" é um sub-programa, dentro do código (tratadores para sequencias id de instruções, com "while").
+            ---> para alimentar os métodos tratadores, constroi-se um push_expressao, que carrega expressões utilizados nos métodos tratadores. (substituido pelas expressões conseguidas em MacthSequencias()!);
+            ---> com as expressões conseguidas no método MatchSequencias(), e indices de metodos tratadores, constroi-se o código compilado,  como "push_expressao( exprss1);  tratadores[indiceWhile];", para uma instrução "while".
+
+
+----> UM FATO A SER OBSERVADO É QUE AS ANOTAÇÕES DE FUNCIONALIDADES/MODIFICAÇÕES DO CÓDIGO/ RESULTADO FALHA DE UM MÉTODO, SÃO ANOTAÇÕES (ALÉM DO CONTROLE DO PROJETO SCRUM) VISANDO MATERIALIZAR OS PROBLEMAS ENCONTRADOS, E DAR UMA VISÃO MAIS CLARA DO QUE SE ESTÁ FAZENDO..
+        ----> é como fazer um desenho num problema de Física, torna-se mais claro o problema a ser resolvido. Com este desenvolvedor, o fato de escrever ou digitar o problema, materializa e leva à resolução do problema, pois escrevendo pode-se corrigir uma visão anterior...
+
+----> OUTRO FATO É QUE NO DECORRER DO PROJETO, FOI-SE INFORMANDO SOBRE GERENCIAMENTO DE PROJETOS. O PROJETO PARSER ORQUIDEA ERA UM PROTOTIPO, POIS ERA UM DOS TIPOS DE  PROJETOS CONHECIDOS POR ESTE DESENVOLVEDOR.
+
+ANALISE SWOT, COM FRAQUEZA APARENTE ANTE AO FATO DE PODE-SE USAR EXPRESSÕES REGEX PARA ENCONTRAR PRODUÇÕES, MAS DAÍ PARA CONSEGUIR TODOS TOKENS,
+            É PRECISO DAS SEQUENCIAS ID MAPEADAS E OBTENÇÃO DE TODOS TOKENS PRESENTES, QUE A CLASSE PARSERUNIVERSAL IMPLEMENTA.
+
+MELHORIA DA QUALIDADE DO CÓDIGO:
+  ---> É DE SE NOTAR QUE SE VERIFICAR UMA LISTA GENÉRICA É NULO OU COM O CONTÚDO VAZIO, MELHOROU E MUITO A QUALIDADE DO CÓDIGO, ALÉM DE DIMIMUIR O TEMPO DE CORREÇÃO DE ERROS.
+			---> isto porque todas operações de vetores (Arrays) ou listas é feito com listas genéricas, que é problemático porque todos métodos envolvendo retorno ou modificação de listas, retorna listas nulas!!
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+PROJETO - CONTINUAÇÃO: uma linguagem de programação.
+
+		----> A QUE SE DESTINA O PROJETO CONTINUAÇÃO DA LINGUAGEM ORQUIDEA: 
+
+		propósito:
+			UMA LINGUAGEM DE PROGRAMAÇÃO COMPLETA, COM VIRTUAL MACHINE, OO, LISP, PROLOG.
+			entrega de funcionalidades e outros propósitos:
+				             
+				- EXPERIMENTAÇÃO DE AI COM LINGUAGENS DE PROGRAMAÇÃO CLÁSSICAS, COMO PROLOG, E LISP.
+
+	   		              - SUPORTE A OPERAÇÕES MATEMÁTICAS, COM DEFINIÇÃO DE CHAMADA DE OPERADORES, ALÉM DAS OPERAÇÕES MATEMÁTICAS: +,-,*,/ E %. HÁ UM MÉTODO PARA DEFINIR OPERADORES COMO CHAMADAS COMO:  R=a DOT B,
+				 COM [DOT] UM OPERADOR DEFINIDO PROGRAMATICAMENTE, NÃO NATIVO DA LINGUAGEM.  --->implementado na linguagem Orquidea.
+   			            
+                        -  EXPERIMENTAÇÃO COM POO, COMO ADIÇÃO DE MÉTODOS A UMA CLASSE, EM TEMPO DE EXECUÇÃO, HERANÇA E DESERÇÃO EM TEMPO DE EXECUÇÃO, HERANÇA DE MAIS DE UMA SUPERCLASSE (COMO C++).
+
+			            -  IMPLEMENTAÇÃO DE UMA LINGUAGEM QUE APRENDE INSTRUÇÕES EM TEMPO DE EXECUÇÃO, OU VIA ARQUIVO DE CONFIGURAÇÃO.---> um exemplo de implementação via arquivo XML, a linguagem Orquidea, feito.
+
+               		    -  FORMAÇÃO DE BIBLIOTECAS DE FUNÇÕES LISP, LISTAS E CONSULTAS DE PROLOG, EM MÓDULOS, PARA ESCREVER UMA VEZ E UTILIZAR SEMPRE..	
+			
+
+	---> A FORMATAÇÃO DE FUNÇÕES LISP EM TEXTO, E LISTAS E ASSERÇÕES PROLOG EM TEXTO, VIABILIZA A FORMAÇÃO DE BIBLIOTECAS, COM MÉTODOS QUE GRAVAM O TEXTO DO ITEM DE LINGUAGEM, EM ARQUIVO.
+
+             ----> ANDAMENTO: (O QUE JÁ FOI FEITO--> HERDADO DE PARSER ORQUIDEA).
+                    ------> um parser universal, onde se entra palavras reservadas de uma linguagem, e sai com tokens vindos de um trecho de códigos. O parser universal é útil também em construção de editores de texto com suporte a linguagens de programação. ---> implementado, testado positivamente.
+			          escrevendo com várias cores as palavras reservados e itens como variáveis, classes, métodos, propriedades.
+			        ------> um método de obter tokens (Tokens.GetTokens()), vindos de uma linguagem definida em arquivo XML, ou análise dos termos-chave da linguagem.
+			
+			------> um interpretador prolog feito  e testado, um intrpretador lisp feito e testado.
+			------> uma classe de construção de escopos,muito usados em linguagens estruturadas, e algumas linguagens orientadas a objetos, como Java e Csharp.
+            		------> uma classe para definir sequencias ID, como inicialização de variáveis, nomes e definições de funções, chamadas de funções e métodos, e expressões. Segue o padrão de projeto Command, para deixar possível a inclusão de novas sequencias ID, acrescentando o texto resumido da sequencia, e acrescentando o método tratador de construção de escopo.
+			------> construção de várias instruções para a linguagem orquidea.
+
+
+		 OBSERVAÇÃO:	
+		------>a classe Tokens.GetTokens(), e ParserUniversal, por si só, facilita e muito a construção de interpretadores e compiladores, tudo que se precisa fazer é descrever a ligação entre os vários tokens identificados, para compor comandos e instruções reconhecidas numa linguagem de programação.
+
+		UM INSIGHT MUITO RELEVANTE:		
+		----> com a especifiação de produções, termos-chave, operadores e sequencias id específicas, pode-se montar qualquer linguagem de programação!!!!!
+			---> classe e métodos de uma linguagem configurável:
+				    ----> classe Tokens, com GetTokens(), e GetProducoes(), com a especificação da linguagem.
+				    ----> classe ProcessadorID, com sequencias id mapeadas de acordo com a especificação de IDs da linguagem, e métodos tratadores que constroi os escopos.
+
+		UM INSIGHT DE MELHORIA:
+                    ---> a análise de sequencias id do ProcessadorID pode comportar produções de comando, pois o item de resumo EXPRSS permite caminhar pelo código pegando tokens palavra-chave, e expressões, funções e variáveis.
+                        o que precisa ser feito é construir sequencias ID que definem o resumo da sequencia do comando, mais os métodos tratadores para cada comando.
+
+    		MELHORIA DA QUALIDADE DO CÓDIGO:
+    				--> Conforme já observado, o código com objetos ou listas genéricas, se validadas após retorno de método, elimina 80% dos erros de código!
+    				    O que fica como erro, é erro de lógica, mas melhorou significadamente..		
+                        Todos métodos que retornam um objeto, também precisam ser validados, pois quase sempre há a possibilidade de retornar um objeto nulo.
+
+	       MELHORIA DA LEGIBILIDADE DO CÓDIGO:
+                    --> colocar linhas em branco facilitam a leitura de código, e agrupar as linhas de códigos por operações ligadas, melhoram também a leitura do código.
+___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+PROJETO DE CODIFICAÇÃO DE FUNCIONALIDADES LISP, PROLOG, PROGRAMAÇÃO ESTRUTURADA, PROGRAMAÇÃO ORIENTADA A OBJETOS:
+
+1-TEMPO ESTIMADO DE TÉRMINO: 01 MESES. HOUVE UMA ANTECIPAÇÃO GRANDE, POIS OS INTERPRETADORES LISP E PROLOG FORAM TERMINADOS ANTES DO PREVISTO, E AS FUNCIONALIDADE OO ESTÃO SENDO CONSTRUÍDOS SOB O PRAZO A TEMPO.
+                                       UMA GRANDE "SACADA" PARA DESENHO DA VM, A PARTIR DE ID DE CÓDIGO, E EXPRESSÕES CONSEGUIDAS NO MÉTODO MatchSequencia(), QUE CONSTITUI UM MÍNIMO DE CODIFICAÇÃO PARA O PLANEJAMENTO DE INSTRUÇÕES VM!!
+
+2- PRODUCT BACKLOG
+- quero uma linguagem flexível e fácil de se expandir.
+- funções estruturadas,POO, listas lisp, assercoes prolog.
+
+3- PRODUTO É FRUTO DE OUTRO PROJETO, O PARSER ORQUIDEA,
+  3.1 - o projeto como o nome sugere, um Parser Programável (parserLinguagemOrquidea) atingiu seu objetivo, tendo como produto um parser programável para todas linguagens,
+bastando informar os termos-chave e operadores da linguagem, o parser quebra a entrada de linhas de código em tokens da linguagem.
+
+----> retirado as restrições quanto ao nome compostos de operadores.
+2- Para implementar uma linguagem orquídea totalmente funcional, além das linguagens que contém, deve também ter uma VM (virtual machine). Isto é outro projeto.
+
+
+1- FAZER COMMANDOS  
+
+               1- INTERPRETADOR PROLOG, (função implementada na forma de um interpretador PROLOG, onde se pode fazer consultas/adicionar predicados na forma de linha de texto, como um ambiente editor de texto,com acesso a Prolog).--> implantado, testado com sucesso positivo. --> em status de ajuste fino.
+ 	            
+               2- PROGRAMAÇÃO ESTRUTURADO (função estruturada implementada, com identificação de tokens e producoes, Escopo, e SequenciasID).
+	            
+               3- PROGRAMAÇÃO ORIENTADA A OBJETOS.
+                     -----> implementado os extratores de classes, métodos e propriedades, sequencias ID de POO. aguardando mais testes.
+	            
+               4-INTERPRETADOR LISP:		
+			        -----> UMA CLASSE PARA LISTAS LISP. --> implementado, classes: Atomo, ListaLisp, FuncaoLisp.
+			        -----> UM MÉTODO DE AVALIAR LISTAS LISP --> implementado, AvaliaFuncao(). testado.
+			       -----> métodos para leitura/gravação de listas lisp.
+
+
+	---->   ESPERA-SE UMA GRANDE INTERAÇÃO ENTRE OS DIFERENTES PARADIGMAS CITADOS, COMO EXPERIÊNCIAS DE UMA LINGUAGEM DE PROGRAMAÇÃO. 
+	       HAVERÁ INTEGRAÇÃO, E PARA PROBLEMAS COM ABORDAGENS DIFERENTES DA POO, ESPERA-SE TAMBÉM MAIOR FLEXIBILIDADE EM ELABORAR ALGORITMOS.
+	       EXEMPLO, A LINGUAGEM LISP É BOA PARA EXPERIMENTOS DE AI, PROLOG PARA EXPERIMENTOS DE CONSULTA SOBRE UMA BASE CONSOLIDADA DE CONHECMENTOS, E TAMBÉ PROBLEMAS COMPLEXOS, COMO UM COMPILADOR, EM SUAS REGRAS DE DEFINIÇÃO.
+	       JÁ A PROGRAMAÇÃO ESTRUTURADA É BOA PARA EXPERIMENTOS DE PROGRAMAÇÃO MODULAR, O PROBLEMA É QUEBRADO EM PARTES MENORES, MAIS O FATO DE QUE A DETERMINAÇÃO DOS PACOTES DE TRABALHO, EM PROJETOS SOBRE O PMBOOK.
+  	       ENFIM, A POO É MUITO BOA PARA CONSTRUIR MODELOS MAIS PRÓXIMOS DA REALIDADE, COM ENCAPSULAMENTO, ABSTRAÇÃO, CLASSES, CLASSES HERDADAS, INTERFACES.
+	
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+- SPRINT ANTERIOR:  funcionalidades POO.
+
+	PROGRAMAÇÃO ORIENTADA A OBJETOS. 
+    
+    SPRINT BACKLOG:
+			-> EXTRATOR DE CLASSES; codificado, testado sucessamente.
+			-> EXTRATOR DE PROPRIEDADES. feito, aguardando testes. testes feitos sucessamente.
+			-> EXTRATOR DE MÉTODOS. feito, aguardando testes. testes feitos sucessamente.
+			
+            -> ANÁLISE DE SUPER-CLASSES, SUB-CLASSES. ---> implementado,testes sucessamente, validação de interface, herança, deserança, implementados e testados sucessamente.
+
+            -> SPRINT TERMINADA. PASSANDO PARA SPRINT REVIEW.
+                        --> a validação de listas genéricas, verificando se são nulas ou vazias, reduziu 80% dos erros.
+                           apesar da redução, só não foi maior porque nem todo código está testando lista genéricas.
+                           Testando também métodos que retornam objetos, se validados, também reduz o número de erros.
+                           Os outros problemas são erros de lógica, há que se tomar maior cuidado com indices,ou mesmo design dos métodos...
+
+
+
+
+            --> PELA IMPORTANCIA PARA A LINGUAGEM ORQUIDEA, É DE SE VERIFICAR SE OPERADORES SÃO HERDADOS OU DESERDADOS. ---> codificado, aguardando testes.
+                        ---> ver o seguinte item no Product Baklog:
+                                   "SUPORTE A OPERAÇÕES MATEMÁTICAS, COM DEFINIÇÃO DE CHAMADA DE OPERADORES, ALÉM DAS OPERAÇÕES MATEMÁTICAS: +,-,*,/ E %.
+                                    HÁ UM MÉTODO PARA DEFINIR OPERADORES COMO CHAMADAS COMO:  R=a DOT B;"
+				                    COM [DOT] UM OPERADOR DEFINIDO PROGRAMATICAMENTE, NÃO NATIVO DA LINGUAGEM. 
+                                         --->implementado no arquivo de definição da linguagem Orquidea. em uma sequencia ID de definição de operador no ProcessadorID.
+                                         ---> producao do operador:  "operador ID ID ( ID ID, ID ID ) prioridade ID;".
+                                         ---> implementado o método tratador de definição de operador, testado BuildAllEscopos sucessamente.
+   			       
+
+            ---> Métodos para salvar/carregar classes de um repositorio em arquivo. codificado, testado sucessamente.(save/load para classes).
+
+            ---> a idéia de deserança é utilizar API de Reflexão, para chamadas de métodos herdados, e propriedades herdadas, que não foram retiradas da Deserança do código.
+                    ---> ou ainda: trazer a compilação do código após a deserança, um compilador embutido no software, o que teoricamente deveria ser uma forma de corrigir erros ou acrescer novas funcionalidades.
+
+            ---> implementado: ---> um método Load() para a classe Classe. codificado,testes, bem sucedidos.
+                               ---> validação de interfaces para a Classe.feito, fixado, testes sucessamente.
+                ----> implementado também a herança/deserança para operadores, implementado uma sequencia id de definição de operador (binário), testado com sucessamente.
+
+           ---> SPRINT REVIEW:
+
+
+    		MELHORIA DA QUALIDADE DO CÓDIGO:
+    				--> Conforme já observado, o código com objetos ou listas genéricas, se validadas após retorno de método, elimina 80% dos erros de código!
+    				    O que fica como erro, é erro de lógica, mas melhorou significadamente..		
+            MELHORIA DA LEGIBILIDADE DO CÓDIGO:
+            --> colocar linhas em branco facilitam a leitura de código, e agrupar as linhas de códigos por operações ligadas, melhoram também a leitura do código.
+
+
+            ---> depois da resolução filosófica de testar sempre se as listas são nulos ou vazios,principalmente da volta de um método que resulte uma lista genérica.
+                    tormar cuidado com erros de lógica e principalmente, confusão entre um objeto de mesmo tipo que outro, mas nomes diferentes.
+
+           ---> VISÃO: há palavras chave que se aplicam a sequencias id: classe, interface, operador,e que poderiam formar uma sequencia id.  
+        
+----> PROXIMA SPRINT: VIRTUAL MACHINE ORQUIDEA ou EXTENSÃO DE PROCESSADOR ID PARA RECONHECER PRODUÇÕES.
+        Jogo de Prioridades:
+            VM Orquidea: complexidade: 71 funcionalidade já implementada: não. resumo: é um novo projeto.
+            Extensão Processador: complexidade: 31  funcionalidade já implementada: sim. resumo: é uma funcionalidade que potencializa a legibilidade da funcionalidade.
+
+
+        ----> SPRINT VM: OUTRO PROJETO.
+        ----> SPRINT BACKLOG: CODIFICAÇÃO DE INSTRUÇÕES BÁSICAS PARA OPERAR OPERANDOS INTEIROS, FLUTUANTES, OBJETOS, CADA UM COM UMA PILHA DE VARIÁVEIS PARA CADA TIPO.
+
+
+
+- SPRINTS FEITAS:
+
+
+1- OBTENÇÃO DE TOKENS DA LINGUAGEM, A PARTIR DE UM TRECHO DE CÓDIGO.
+2- OBTENÇÃO DE PRODUCOES DA LINGUAGEM A PARTIR DE UM TRECHO DE CÓDIGO:
+
+3- ANALISADOR LEXICO.(obsoleto)
+4- ANALISADOR DE EXPRESSÕES (suporta uso de parênteses, expressões simples ou complexas, operadores binários, operadores unários, e operadores que são ao mesmo tempo binário e unário).
+5- CONTEXTO-ESCOPO (para instruções de IDs)
+	- FAZER CONTEXTO_ESCOPO.
+	- USO DOS CONTEXTOS-ESCOPOS PARA REGISTRAR OU NÃO (SE NÃO TIVER TIPO REGISTRADO) UMA VARIÁVEL, UMA FUNÇÃO, UM TIPO DE VARIÁVEL.
+	  templates para as seguintes 	combinações de ID.
+      (CÓDIGO OBSOLETO, SEQUENCIAS ID SUBSTITUEM OS TEMPLATES, E PODEM SER EXTENDIDOS PARA OUTROS TIPOS DE SEQUENCIA, PELO PADRÃO DE PROJETO COMMAND).
+                "typeID nameID"; ok,testado.
+                "typeID funcao_ID ( PARAMSnomesETipos ){ PROXIMO_ESCOPO }";ok, testado.
+                "typeID nameID = EXPRESSION;ok, testadado.
+                "nomeID  =  EXPR"; ok,testado.
+                "funcao_ID ( PARAMSnomeSomente )"; ok,testado.
+	o analizador de contextos-escopo trata dos casos acima, feito, auguardando testes. É uma forma mais fácil de acrescentar novos casos de combinações scripts.
+    ---> obsoleto, na sprint PROGRAMACAO ORIENTADA A OBJETOS refatorou o analisador de escopos, implantando o padrão de projetos Command, que permite inserções de sequencias ID (definida na Sprint PROGRAMAÇÃO A OBJETOS), e métodos tratadores de sequencias ID para atualização de escopos.
+
+6-INTRODUZIR ASPECTOS DA OO, COMO CLASSES, HERANÇAS, CASTING, PROPRIEDADES, MÉTODOS, PRIVATE, PUBLIC, PROTECTED	(implantado, aguardando os testes finais).
+
+7- INTERPRETADOR PROLOG.
+		--> CONSULTA DE VARIÁVEIS PARA UM PREDICADO. --> implementado, aguardando refatoração para uma interface mais simples.--> refatoração feita.
+		--> mais algumas funcionalidades da linguagem Prolog, como N is M.--> implementado, testado com sucesso positivo.
+		--> funcionalidades como comandos Prolog: asserta, assertz, consult, tell/told, retract, listing, funções de comparações de números. --> testado, sucesso positivo.
+	 	--> REFATORAÇÃO DO MÉTODO CONSULTA() COM REGRAS, implementado, aguardando testes.--> testes feitos, com sucesso positivo.
+	AJUSTE FINO NO INTERPRETADOR PROLOG    
+		--> mais algumas funcionalidades da linguagem Prolog, como N is M --> implementado, testado com sucesso positivo.
+	PROCESSAMENTO RECURSIVO DE LISTAS.--> implementado, testado com sucesso positvo.
+
+
+8- INTERPRETADOR LISP:
+	- PRECISO DE UMA INTERFACE DE CONVERSÃO DE TEXTO PARA LISTAS LISP. --> codificado, aguardando testes.--> testes feitos, com sucesso.
+	- UMA MANEIRA DE ACRESCENTAR INSTRUÇÕES LISP. --> implantação via padrão de projetos Command. --> codificado.	
+	- É PRECISO UMA MANEIRA DE EXECUTAR FUNÇÕES LISP, INCLUSIVE FUNÇÕES RECURSIVAS.--> planejado, mas aguarda melhor modelamento, para um parâmetro para cada instrução lisp.
+	- TALVEZ SEJA PRECISO MUDAR A ESTRUTURA DE LISTAS LISP, PARA ACRESCENTAR LISTAS ENCADEADAS,
+                 COMO UM ATOMO DENTRO DA LISTA DE ATOMOS--> codificado para uma nova estrutura de dados de listas lisp.
+	
+	O QUE FALTAVA:
+		- o teste para funções recursivas com lista de chamada composta por listas. ---> testes para funções não recursivas, e recursivas sem ou com listas de chamada complexa, bem sucedidos. 
+
+  9- PROGRAMAÇÃO ESTRUTURADA.
+    A OBTENÇÃO DE PRODUÇÕES FOI MODIFICADA, E INVALIDADA COM AS CORREÇÕES E OUTRAS IMPLEMENTAÇÕES QUE AFETARAM A FUNCIONALIDADE.--> CORRIGIDO, expandindo para incluir produções que contém blocos como termos-chave.--> aguardando testes. --> aguardando testes finais.--> teste finais feitos, sucesso positivo.
+	        -- (implantado) FUNCIONALIDADE: OBTENÇÃO DE PRODUÇÕES, RETIRANDO O TRECHO DE CÓDIGO PARA CADA PRODUÇÃO, E OBTENÇÃO DE SEMI-PRODUÇÕES (EXPRESSÕES DE CONTROLE) 
+                         --> implantado, testado com sucesso positivo.
+                         --> modificado novamente, para incluir blocos dentro das produções--> aguardando testes.
+                         --> testes feitos com sucesso positivo.--> modificações feitas, testes iniciais com sucesso negativo (um problema na obtenção de termos-chave presentes).
+                         --> nova implementação de GetTermosChavePresentes(), com a classe Tokens e com a modificação de operadores bloco não são mais operadores...
+                         --> testes feitos, com sucesso positivo,---> aguardando testes finais.
+	                    --> testes finais feitos, sucesso positivo. 	
+
+	       -- AJUSTE FINO NO MÉTODO GetProducoesPorPontos(), com nome identificador, e possibilidade de mais de um bloco por produção.
+		   --> nome identificador implantado, testado com sucesso positivo.
+		   --> produções com mais de 1 bloco, testado com sucesso positivo. trecho de código com tokens do trecho correto--> testes feitos, sucesso positivo.
+
+           
+  10- SPRINT POO (PROGRAMAÇÃO ORIENTADA A OBJETOS).
+    ---> INICIALIZAÇÃO DA SPRINT:
+	---> A INTERPRETAÇÃO DE COMPOSIÇÃO DE IDs ESTÁ POUCO FLEXIVEL. 
+		---> IMPLEMENTAR UM SISTEMA DE PONTOS PARA RECONHECER O TEMPLATE DE ID A SER APLICADO: INICIALIZAÇÃO DE VARIÁVEIS, CHAMADAS DE FUNÇÕES, DEFINIÇÃO DE FUNÇÕES, AVALIAÇÃO DE EXPRESSÕES. A IDÉIA QUE MAIS TEMPLATES PODEM SER ACRESCENTADO, NUM PADRÃO DE PROJETO [Command pattern].
+            ----> iniciada a implantação do Sistema de Pontos, funcionalidade GetTemplateWithPoints() codificada. Falta a construção de BuildAllEscopos(). ---> implementado.
+		    ----> pontuação de sequencias ID operante, falta o tratamento das sequencias por métodos segundo padrão de projetos Command. ---> implementado, testado com uma só sequencia ID no código, aguardando teste com mais de uma sequencia ID. testes feitos para mais de uma sequencia ID, com sucesso positivamente.
+           ----> testes com mais de uma sequenciaID, falha. Falha também na obtenção da tabelaRaiz, e modificações na classe ContextoEscopo para suporte de escoposfilhos, e escopocurrente. Falha também da classe ParserUniversal. fixado classe ParserUniversal, escopo raiz a fixar. escopo raiz fixado.
+		---> sequencia para fixar:
+			---> método GetTokens(), do ParserUniversal(basta verificar se há espaço entre dois tokens, são dois IDs registrados como um.--> fixado.
+			---> obtencao da Tabela Raiz:  registrar todas classes vindas do construtor da classe linguagemOrquidea.Para GetTipo(), procurar na lista de classes.Para verificar se um Tipo está na tabela ou não utilizar TabelaDeValores.ValidaTipo(nomeTipo).
+			---> sequencias ID: a fixar.--->fixado.	
+
+            O que falta:
+            ----> validar chamada de função com expressões como parâmetro---> codificado, a verificar. testado para variáveis e chamadas de função, sucessamente.         		
+			----> fixar o escopo raiz.(tem que ser estático?).--> fixado.
+
+            ----> testar mais sequencias de ID com o BuildAllScopos. --> testado com sequencias id complexas, como definição de função com dois parâmetros sem corpo.
+            ----> verificar a construção de escopos em BuildAllScopos.--> verificado, fixado, testes sucessamente.
+
+                        --> métodos extratores de classe, métodos de classe, propriedades de classe, implementados, aguardando testes.
+            
+            ---> método BuildAllEscopos() modificado no método de encontrar indices de métodos tratadores. aguardando testes. testes, fixados, o método BuildAllEscopos() opera adequadamente.
+                (a rigor, a sprint de BuildAllEscopos() já estava terminado, mas o código estava meio problemático, e a curiosidade de pensar um algoritmo melhor para encontrar indices de métodos tratadores, foi maior...).
+            
+            ---> método BuildAllEscopos() testado para sequencias id complexas, fixado várias falhas..
+                        ---> continuando testes, testado em mais de 6 tipos de sequencias id, obténção de métodos tratadores constantes e variantes construidos com sucesso,
+                        ---> e fixado, os escopos estão sendo construidos corretamente, e suas tabelas de valores também registram as funções, variáveis, métodos, propriedades, expressões, escopos-folha, escopos-pai, etc...
+
+            --->modificada a execução de uma chamada de função, os parâmetros podem ser empilhados numa pilha de inteiros, flutantes, ou de objetos, a esperança é que isso agilize a execução de chamadas de função.
+            --->modificada a lista de parâmetros de uma função para um vetor de parâmetros, para agilizar o acesso randômico ou em sequencia de parametros de execução de uma função.
+            --->modificada ProcessadorID.RegistraExpressao() para conter expressoes como parâmetros de uma chamada de função.---> codificado, testes sucessamente.     
+            --->a inicializacao de Expressao verifica se os termos da expressão estão válidos, e guarda as variaveis(no objeto Expressao), para uma possivel avaliação. ---> fixado, testes sucessamente.
+
+___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+	SPRINT BACKLOG:
+	- Por ser de vital importância e prerequisito para POO, é preciso aperfeiçoar o método BuildAllEScopos(), para conter sequencias id de POO. O método foi totalmente refatorado, para compor sequencias id programaveis, e facilmente expandidas, com o padrão de projetos command.
+    - Extrator de Produções e sequencias ID dos métodos OO.
+
+         ---> refatoração da construção de escopo, reconstruída para conter o padrão de projetos Command, que permite adição de novos "templates" para reconhecedor de sequências de IDs.
+		----> codificado a DeterminacaoDeTemplates para sequencia de IDs, com um método heurístico de pontuação.
+		----> codificando novamente a classe Escopo-Contexto, pois estava sujeito a muitos erros, e não era bem legível.
+		---->  codificado métodos para obter e processar templates de sequencia ID,  a codificar a listagem de métodos tratadores, formando um novo núcleo de BuildaAllEscopos(). ---> testado o sistema de obtenção de sequencias ID, a codificar a análise e inclusão de expressões nos métodos tratadores. Na classe TabelaDeValores contém um analisador de expressões.
+
+              ----> codificado todos métodos tratadores, e codificado o método BuildAllEscopos().
+	----> método BuildAllEscopos codificado, aguardando testes.---> refatorado, mais simples e legível.
+	----> métodos tratadores de escopo codificado, testado com sequencias constantes e sequencias variantes,  retorna os tokens processados durante uma sequencia ID, e os indices de métodos tratadores.
+
+    ---> refatorado o método BuildAllEscopos(), mais fácil de ler e manter.
+    ---> testes para BuildAllEscopos(), para várias sequencias ID, sucessamente. Aguardando testes para propriedades e métodos. testes feitos, sucessamente.
+
+    ----> o que falta para essa SPRINT terminar:
+        ---> deletar escopos-folhas que são escopos globais, dentro do escopo-currente do processador de ids.---> fixado, a sequencias id contendo operador de bloco abre não estava sendo processado.
+            ---> modificações no código, falha na eliminação de escopo global como folhas. fixado.
+
+    ---> SPRINT TERMINADA, COM 2 A 3 SEMANAS DE ATRASO, PORÉM A PRÓXIMA SPRINT, FOI CODIFICADO A MAIOR PARTE DAS FUNCIONALIDADES, POR PROBLEMAS DE "STRESS" NA SPRINT CURRENTE.    
+___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________	
+
+
+1.2-  JOGO DE PRIORIDADES (ENTREGA DE MAIS VALOR):
+ 	1.2.0- MÓDULO ORIENTAÇÃO A OBJETOS (OO), OU INTERPRETADOR LISP?
+		1.2.2- O MÓDULO OO PARECE SER O QUE AGREGA MAIS VALOR, MAS JÁ ESTÁ QUASE COMPLETADO, FALTANDO ALGUMAS FUNCIONALIDADES, E A VM.
+		1.2.3- O INTERPRETADOR LISP AGREGA MENOS VALOR, E PRECISA SER TOTALMENTE IMPLEMENTADO.
+
+	DEVIDO AO FATO QUE A MAIOR PARTE DE VALOR AGREGADO DO MÓDULO ORIENTADO A OBJETOS SER IMPLEMENTADO, MAS PASSARIA PARA A IMPLEMENTAÇAO DA VIRTUAL MACHINE, QUE EXIGE GRANDE COMPLEXIDADE.
+
+	O MÓDULO LISP PARECE SER O QUE REÚNE MAIOR VALOR AGREGADO AINDA NÃO EXPLORADO.
+
+
+	
+//****************************************************************************************************************************************************
+SPRINT FUNCOES:
+	
+BANCO DE HORAS TRABALHADAS
+24.03- 04 HORAS DE TRABALHO (FUNCIONALIDADES DE CONTEXTO-ESCOPO, REFORMULAÇÃO DA TABELA DE VALORES, REGISTRO DE CLASSES NA LINGUAGEM COMPUTACIONAL.
+04.09- 02 HORAS REFATORANDO O CONTEXTO-ESCOPO. (completado, aguardando testes).
+05.09- 02 HORAS TRABALHANDO EM ANALISADOR DE MÉTODOS, E COMPLETANDO O CONTEXTO-ESCOPO, PARA COMPORTAR EXPRESSOES COM CHAMADAS A MÉTODOS.
+07.09- 2,5 HORAS TRABALHANDO EM CONTEXTO DE ESCOPOS, REGISTRA VARIÁVEIS E FUNCÕES. implementado o contexto de escopo, aguardando mais testes.
+        - 2,3 HORAS TRABALHANDO NO ANALISADOR DE EXPRESSÕES PARA PÓS- ORDEM. implementado, testando com expressões simples e complexas, e expressões com parenteses.
+           (Falta pegar na Internet exemplos de expressões infixa para posfixa, para confirmar o cálculo com parenteses).
+08.09- 3,0 HORAS RETIRANDO BUGS DO ANALISADOR DE EXPRESSÕES, testado, resultado positivo. É necessário testes para operadores unários que são binários também.
+        - 1,5 HORAS ACRESCENTANDO AO ANALISADOR  DE EXPRESSÕES OPERAÇÕES COM OPERADORES UNARIO E BINARIO AO MESMO TEMPO. Segue uma lógica de negócio especifca para diferenciar quando é binário e quando é unário.
+         -2,0 HORAS CORRIGINDO BUGS DO ANALISADOR DE EXPRESSÕES COM OPERAÇÕES DE OPERADORES QUE SÃO UNÁRIO E BINÁRIO AO MESMO TEMPO. aguardando testes finais.
+  	
+09.09- 2,0 HORAS REFINANDO O ANALISADOR DE EXPRESSÕES, AGORA COMPORTA OPERADORES UNÁRIO E BINÁRIO AO MESMO TEMPO (COMO -1, 1-5, O OPERADOR - É AO MESMO TEMPO UNÁRIO E BINÁRIO). testes finais realizados.
+        - 1,5 HORAS TIRANDO BUGS E REFATORANDO O CONTEXTO-ESCOPO.	
+	
+10.09- 2,0 HORAS REFINANDO, TIRANDO BUGS, E REFATORANDO A CLASSE CONTEXTO-ESCOPO, E REALIZANDO TESTES SOBRE A CLASSE CONTEXTO-ESCOPO.
+        - 0,5 HORAS IMPLEMENTANDO A VALIDAÇÃO DO TIPO DE UMA VARIÁVEL, DENTRO DA LISTA DE CONTEXTOS-ESCOPO.	
+12.09- 2,5 HORAS REESCRENDO A CLASSE CONTEXTO-ESCOPO (feito, aguardando testes).
+          3,0 HORAS TESTANDO A CLASSE CONTEXTO-ESCOPO.
+13.09- 1,0 HORAS APERFEIÇOANDO A CLASSE CONTEXTO-ESCOPO (
+	PARA PROCESSAR EXPRESSÕES SEM TIPO ANTECEDENTE DA VARIÁVEL DO COMEÇO DA EXPRESSÃO,
+	PARA PROCESSAR CHAMADA A FUNÇÕES SEM VARIÁVEIS ANTECEDENTES, EMITIR MENSAGENS DE ERRO PARA TIPOS NÃO REGISTRADOS).		
+14.09- 2,0 HORAS APERFEIÇOANDO A CLASSE CONTEXTO-ESCOPO (feito, sob testes).
+18.09- 2,0 HORAS APERFEIÇOANDO A CLASSE CONTEXTO-ESCOPO E TABELA_DE_VALORES.
+19.09- 2,0 HORAS MODIFICANDO A CLASSE CONTEXTO-ESCOPO PARA PERMITIR UM MELHOR MANUTENÇÃO, PODENDO ACRESCENTAR NOVAS FORMAS DE PROCESSAR IDs.
+19.10- 3,0 HORAS CODIFICANDO E TERMINANDO A CONSTRUÇÃO DE ESCOPOS.
+20.10- (1,5) HORAS REFATORANDO A CLASSE ESCOPO_CONTEXTO (design e codificação terminada, aguardando testes).
+          (1,5) HORAS TESTANDO E CORRIGINDO BUGS DA CLASSE ESCOPO_CONTEXTO.
+21.10 (1,0) HORAS TESTANDO A CLASSE ESCOPO_CONTEXTO.
+         (0,5) HORAS TESTANDO E REFATORANDO O METODO BUILD-ESCOPOS().	
+         (0,5) HORAS TESTANDO E REFATORANDO COM MAIS TESTES O MÉTODO BUILD-ESCOPO.
+23.10 (1,0) HORAS FAZENDO TESTES FINAIS NO MÉTODO BUILD-ESCOPO.
+25.10 (1,5) HORAS REFAZENDO TESTES NO MÉTODO BUILD-ESCOPO (FUNCIONANDO, MAS PODERIA SER MELHOR).
+26.10 (1,0) HORA FAZENDO TESTES FINAIS NA CLASSE CONTEXTO DE ESCOPO.
+         (1,5) HORAS FAZENDO O DESIGN E IMPLANTANDO AS CLASSES PARA PROGRAMAÇÃO ORIENTADA A OBJETOS.
+27.10 (1,0) HORAS TRABALHANDO NO CALCULO DE EXPRESSÕES, INICIADOS OS TRABALHOS DA VIRTUAL MACHINE.
+28.10 (1,5) HORAS TRABALHANDO NA VIRTUAL MACHINE.
+29.10 (1,5) HORAS TRABALHANDO NA OBTENÇÃO DE PRODUÇÕES, ESSENCIAL PARA O INTERPRETADOR DA MÁQUINA VIRTUAL.
+30.10 (1,5) HORAS TRABALHANDO NA OBTENÇÃO DE PRODUÇÕES.
+         (1,0) HORAS TRABALHANDO NA NOVA CLASSE PARA OBTER PRODUÇÕES, LOCALIZADORdePRODUCOES.
+31.10  (1,0) HORAS TRABALHANDO NO LOCALIZADOR DE PRODUÇÕES, DE SEMI-PRODUCÕES ASSOCIADAS, E TRABALHANDO NA MÁQUINA VIRTUAL.
+          (1,0) HORAS TRABALHANDO NA MAQUINA VIRTUAL, E NOS OPERADORES NATIVOS E PILHAS DA MAQUINA VIRTUAL.
+** PAUSA PARA TRABALHOS EM OUTROS PROJETOS.**
+16.11 (1,5) HORAS TRABALHANDO EM FUNCIONALIDADES PARA PROGRAMAÇÃO ORIENTADA A OBJETOS.
+         (1,0)  HORAS CODIFICANDO O EXTRATOR DE MÉTODOS PARA OO.X
+21.12 (2,5) HORAS IMPLANTANDO UM EMPACOTADOR DE EXPRESSÕES PARA CÓDIGO VM. FALTA O AVALIADOR DE EXPRESSÕES, QUE CRIA OS NÚMEROS VM PARA UMA EXPRESSÃO. UMA IMPLEMENTAÇÃO IMPORTANTE É QUE AO REGISTRAR A VARIÁVEL, ELA OBTÉM UM NÚMERO ID IDENTIFICADOR, QUE PODE SER ARMAZENADO EM EXPRESSÕES. ISSO ELIMINA A PILHA DE OBJETOS, DEIXANDO APENAS A PILHA DE IDs (VARIÁVEL, FUNÇÃO, OPERADORES)!
+      (0,5) HORAS PLANEJANDO O FORMATO DA VM, COM UMA TABELA DE VALORES EM TEMPO DE EXECUÇÃO.	
+22.12 (1,5) HORAS IMPLANTANDO A EXPRESSÃO VM, QUE TRADUZ AS VARIÁVEIS E FUNÇÕES EM CÓDIGOS DE INTEIROS.
+      (1,0)HORAS REFATORANDO A GetProducoes() DA CLASSE TOKENS, E ANALISADOR LÉXICO.
+      (1,0) HORAS CORRIGINDO A CLASSE EXPRESSÃO, QUE ESTAVA FUNCIONANDO, MAS FOI MODIFICADA COM ADIÇÃO DE OPERADORES SUBSTITUTOS PARA OPERADOR UNÁRIO X-Y E OPERADOR BINÁRIO - X 		
+
+23.12 (2,5) HORAS MODIFICANDO O AVALIADOR DE EXPRESSÕES PARA COMPORTAR OPERADORES QUE SÃO BINÁRIOS E UNÁRIOS. (os elementos da expressão parecem não estar nas posições originais quando ordenados).
+      (1,0) HORAS IMPLANTANDO MODIFICAÇÕES DE EXPRESSÕES, E CORRIGINDO ERROS (FOI MODIFICADO PARA CALCULAR COM OPERADORES UNARIOS TAMBÉM, MAS NÃO HAVIA SIDO TESTADO)--> implantado, testado com sucesso positivo.
+      (1,0) HORAS TIRANDO BUGS DE GetProducoes(), o método estava funcionando, mas devido a modificações posteriores, resultou um método com erros. -->testado, sucesso negativo.
+
+24.12 (1,0) HORAS CORRIGINDO O CÓDIGO DE TOLKENS.GETPRODUCOES(), QUASE LÁ, ESTÁ COM UMA INVERSÃO DE ORDEM DOS [ID]---> implantado, com sucesso negativo.
+      (0,5) CORRIGINDO TODOS BUGS DE GETPRODUCOES(), DA CLASSE TOKENS. ao que parece, não incluia o trecho de código para a produção currente. --> corrigido, com sucesso positivo.
+	
+27.12 (2,5) HORAS REFATORANDO E RETIRANDO ERROS DO MÉTODO GETPRODUCOES(), DA CLASSE TOKENS -->implantado, aguardando testes (redirecinoado com a inicialização do AnalizadorLexico e para a classe UmaLinguagemComputacional, que verifica as produções).
+
+28.12 (1,0) HORAS CORRIGINDO A CLASSE ANALISADOR LEXICO, PARA CONSUMIR OS TOKENS DA PRODUÇÃO ENCONTRADA, E LOCALIZAÇÃO DE PRODUÇOES (PRIMEIRO TERMO CHAVE) NA CLASSE UmaLinguagemComputacinal).
+      (0,5) HORAS TESTANDO A CLASSE ANALISADOR LEXICO, PARA OBTENÇÃO DE PRODUÇOES,  aguardando teste final.
+      (0,5) HORAS TESTANDO A OBTENÇÃO DE PRODUCÕES GetProducaoPorPonto(), quase lá, faltando a obtenção do trecho de código de uma produção, quando um termo-chave é encontrado.
+29.12 (1,5) HORAS TIRANDO ERROS DO MÉTODO GetProducaoPorPonto, quase lá, tem produção que sai duplicada (fixado: havia código duplicado na adição de produção encontrada), e falta o processamento de blocos, para produções que tem bloco como if(){}else{}.Foi criada uma tag para resumir blocos, no reconhecimento de termos chave para identificador da produção.
+ 
+30.12 (0,5) HORAS IMPLANTANDO A OBTENÇÃO DE BLOCOS DA classe AnalisadorLexico. Quase lá, falta a inserção do método de retirada de blocos, para o método obtenção de produções por pontos.
+         (1,0) HORAS TERMINANDO A IMPLEMENTAÇAO DE PRODUÇÕES DO MÉTODO GetProducaoPorPontos(), concluido implantação, aguardando testes.
+
+31.12 (1,5) HORAS REALIZANDO TESTES FINAIS COM GetCodigoBloco().
+         (1,0) CODIFICANDO SOBRE ERROS DE GetProducaoPorPontos(). --> dificuldade na colocação da tab de bloco na posição correta.
+
+01.01 (2,0) HORAS CODIFICANDO UM NOVO ALGORITMO PARA OBTER OS TOKENS DE GetProducaoPorPontos(). --> a completar a implementação.	
+         (0,5) HORAS TESTANDO E CORRIGINDO FALHAS NO ALGORITMOS DE VERIFICAÇÃO DE TERMOS-CHAVE NO MÉTODO GetProducaoPorPontos().
+         (0,5) HORAS CORRIGINDO A OBTENÇÃO DE TERMOS CHAVE PRESENTES, NÃO ESTAVA MUITO CERTO--> testes feitos, com sucesso positivo.
+02.01 (2,0) HORAS CODIFICANDO A PARTE FINAL DE OBTENÇÃO DE PRODUÇÕES EM GetProducoesPorPontos().
+         (1,5) HORAS REFINANDO E REFATORANDO O MÉTODO GetProducoesPorPontos().
+
+03.01 (0,5) HORAS COM AJUSTE FINO PARA GetProducoesPorPontos(), nome identificador implementado, testes feitos com sucesso positivo.
+         (0,5) HORAS COM AJUSTE FINO PARA GetProducoesPorPontos() para comportar produções com 2 ou mais blocos.--> implantando, testes com sucesso negativo.
+         (0,5) HORAS COM AJUSTE FINO PARA GetProducoesPorPontos(), para o teste com o comando "if" o segundo bloco não é contado como integrante da produção, mas o resultado é o mesmo para a produção if com 2 blocos e a produção if com 1 bloco , mais um bloco contado independentemente.
+		
+05.01 (1,0) HORAS COM AJUSTE FINO PARA GetProducoesPorPontos(), com teste do comando if com 2 blocos, sucesso positivo, mas o trecho de código da produção está incompleto.-->implementado, testado com sucesso positivo (dois testes, testeFOR, testeIF).
+         (1,0) HORAS IMPLEMENTANDO O INTERPRETADOR PROLOG, CONSULTA DE UM PREDICADO COM VARIÁVEIS.
+         (1,0) HORAS IMPLEMENTANDO UMA CONSULTA COM UM PREDICADO BASE E VARIÁVEIS.	 	
+         (0,5) HORAS IMPLEMENTANDO UMA CONSULTA QUE RESULTA EM UM CONJUNTO DE PREDICADOS DA BASE CONHECIMENTO, RESULTADO DE UMA CONSULTA DE UM FATO.(REQUISITO PARA A BUSCA BACKTRACKING).		
+         (1,5) HORAS IMPLEMENTANDO ADIÇÃO DE TEXTOS QUE REPRESENTAM UM PREDICADO OU UMA REGRA. --> implementado, aguardando testes.
+
+06.01 (2,0) HORAS CODIFICANDO A ADIÇÃO DE PREDICADOS OU REGRAS A PARTIR DE UM TEXTO, PARA A BASE DE CONHECIMENTO--> implementado, testes com sucesso negativo.
+         (0,5) HORAS RETIRANDO ERROS DA CONVERSAO DE TEXTO EM REGRA, NA BASE DE CONHECIMENTO--> testado com sucesso negativo.--> codificado, testado com sucesso positivo.
+         (0,5) HORAS CODIFICANDO E TESTANDO A CONVERSÃO DE TEXTO EM REGRA, E CONVERSÃO DE TEXTO EM PREDICADO--> testado, com sucesso positivo. PRONTO PARA O BACKTRACKING!).		
+         (0,5) HORAS TESTANDO A CONSULTA SIMPLES (COM UM PREDICADO)--> testado, com sucesso positivo.
+         (2,5) HORAS IMPLEMENTANDO O BACKTRACKING PARA CONSULTAS COMPLEXAS--> codificado, mas com defeitos, o backtracking parece não ligar o predicado anterior com o predicado posterior.
+	
+07.01 (1,0) HORAS CODIFICANDO UMA CONSULTA COM REGRAS.  --> codificado, aguardando testes.
+         (1,0) HORAS TESTANDO A CONSULTA COMPLEXA COM REGRAS--> algum ajustes, como o resultado em forma de uma regra, e retorno booleano da ConsultaComRegras.
+         (1,0) HORAS IMPLEMENTANDO PREDICADOS COMANDO DO INTERPRETADOR PROLOG--> codificando ainda.	
+         (0,5) HORAS ACRESCENTANDO UMA NOVA FUNCIONALIDADE NOS MÉTODO CONSULTA()--> variáveis são substituidas por valores de predicados anteriormente calculados--> aguardando testes.
+
+08.01 (0,3) HORAS IMPLEMENTANDO A SUBSTITUIÇÃO DE VARIÁVEIS POR VALORES, NO MÉTODO CONSULTA--> implementado, testado com sucesso positivo.
+         (0,1) HORAS TESTANDO O MÉTODO CONSULTA(),APÓS O SISTEMA DE SUBSTITUIÇÃO DE VARIÁVEIS POR VALORES --> testado com sucesso negativo.
+         (0,5) HORAS IMPLEMENTANDO FUNCIONALIDADES NA FORMA DE PREDICADOS, E PLANEJANDO FUNCIONALIDADES DE LISTAS E ESTRUTURAS EM PROLOG.	
+         (0,5) HORAS ACRESCENTANDO FUNCIONALIDADES DA CLASSE DE PREDICATIVOS COMANDOS.
+         (1,0) HORAS PESQUISANDO NA INTERNET COMO IMPLEMENTAR LISTAS PROLOG, E INICIADO A CODIFICAÇÃO DE UMA LISTA PROLOG (ATRAVÉS DE ÁRVORES BINÁRIAS).	
+         (1,0) HORAS FAZENDO TESTES ENVOLVENDO O BACKTRACKING COM OU SEM CORTE (COM CORTE, RETORNA O PRIMEIRO RESULTADO VÁLIDO).	
+         (0,5) HORAS IMPLEMENTANDO NOVAS FUNCIONALIDADES PROLOG, COMO Is(), E FUNCIONALIDADES DE LISTAS PROLOG.
+         (0,5) HORAS AINDA TENTANDO RESOLVER O PROBLEMA DE SUBSTITUIÇÃO DE VARIÁVEIS, COMO: homem(X):-racional(X,Y),animal(Y).--> codificado, aguardando testes.
+
+09.01 (0,5) HORAS IMPLEMENTANDO FUNCIONALIDADES DE PREDICATIVOS Is(), E Comparacao().
+         (0,3) HORAS TERMINANDO E REFATORANDO A CODIFICAÇÃO  DE Is(), E Comparacao().  	
+         (1,0) HORAS CODIFICANDO A ENTRADA DE COMANDOS PROLOG DENTRO DA CONSULTA SIMPLES, E TAMBÉM A FUNCIONALIDADE CORTE (!), UM COMANDO PROLOG.  		 		
+         (0,5) HORAS TESTANDO A EXECUÇÃO DE UM COMANDO PROLOG, tell(arquivo)--> chamada ao comando tell é de dois atomos, atomo[0]= nome do arquivo, atomo[1]= a consulta de predicados, para os predicados serem gravados.
+         (0,5) HORAS RETIRANDO ERROS DO EDITOR DE SUPORTE PARA TEXTOS PREDICADOS. 	
+         (1,0) HORAS RETIRANDO ERROS DE PREDICADO.GETPREDICADO().
+
+10.01 (0,5) HORAS TESTANDO A EXECUÇÃO DE UM COMANDO PROLOG, --> sucesso positivo, mas o método GetPredi	cado() não está funcinando muito bem, o nome do predicado é calculado, mas o átomo 0 é o texto inteiro do predicado..
+         (0,2) HORAS RETIRANDO ERROS DE GetPredicado() e GetRegra()--> os átomos da retirada de predicados complexo não estava funcionando muito bem, porque há um parenteses abre no inicio do texto, e um parenteses fecha no fim do texto.
+         (0,5) HORAS INICIANDO A CODIFICAÇÃO DE LISTAS.
+         (1,5) HORAS REFATORANDO A CONSULTA COM REGRAS. --> implementado, testes feitos, com sucesso positivo.	
+	 CODIFICAÇÃO PARCIAL PARA LISTAS, FALTA LIGAR A REGRA CONTENDO ESPECIFICAÇÕES DA LISTA, E OS PREDICATIVOS DE LISTA EXIGIDOS PARA A REGRA.
+         (0,5) HORAS PARA FUNCIONALIDADES PARA A PARTE LÓGICA DA LISTA NO INTERPRETADOR. --> faltando apenas o match com as especificações de uma regra.
+
+11.01 (2,5) HORAS MODIFICANDO TOTALMENTE O MÉTODO CONSULTA() PARA REGRAS, PARA RESOLVER REGRAS COMO: homem(X):-racional(X,Y),animal(Y).--> resolve o problema, mas não há muita segurança (há uma coincidência que prejudica a análise do problema).
+	--> o problema é como segue: os predicados de uma regra obdecem uma cláusula boolena "and", todas deverm ser válidas simultâneamente. Pode-se calcular individualmente cada predicado, mas tem que se verificar se são válidas em conjunto.
+
+12.01 (1,0) HORAS CODIFICANDO O NOVO MÉTODO DE Consulta() PARA REGRAS. --> a dificuldade é contar o número de regras distintas.
+         (1,5) HORAS INICIANDO NOVAMENTE A CODIFICAÇÃO DE Consulta() PARA REGRAS. --> implantado, aguardando testes para regras com mais de 2 predicados.
+
+13.01 (1,0) HORAS TESTANDO CONSULTAS COM TRÊS PREDICADOS SIMPLES COMO ENTRADA --> testado, regras com 3 predicados resultando em sucesso positivo.
+         (0,5) HORAS PESQUISANDO INSTRUÇÕES LISP.
+
+14.01 (0,5) HORAS FAZENDO AJUSTE FINO DA APRESENTAÇÃO DAS VARIÁVEIS DE UMA CONSULTA POR REGRAS, ACRESCENTANDO TAMBÉM A CONTAGEM DE REGRAS INICIAIS NO CÁLCULO DO MERGE DE CONSULTAS, PARA Consulta()  DE UMA REGRA.
+
+15.01 (1,0) HORAS INICIANDO TESTES PARA ARVORES BINÁRIAS, IMPLEMENTANDO LISTAS PROLOG.
+
+16.01 (1,0) HORAS TESTANDO INSERÇÃO DE ELEMENTOS EM ÁRVORES BINÁRIAS DE LISTAS PROLOG (ConstroiLista(),GetHead(),GetTail(),GetElementsTail(),GetElementsHead(). --> implementado, testado com sucesso positivo.
+         (0,5) HORAS TESTANDO A ESPECIFICAÇÃO DE LISTAS PROLOG --> testado com sucesso positivo.
+         (0,5) HORAS CODIFICANDO A PARTE LÓGICA DAS LISTAS NOS PREDICADOS.		
+         (0,5) HORAS TENTANDO CODIFICAR A PARTE LÓGICA DE PREDICADOS COM LISTAS.
+         (0,5) HORAS CODIFICANDO O ÁTOMO DE PREDICADO NA CLASSE REGRA, COMO ESPECIFICAÇÃO DA LISTA.  --> faltando implementar o comando prolog de lista, na classe Regra.
+
+17.01 (0,5) HORAS CODIFICANDO A EXTRAÇÃO DE COMANDOS DE LISTA DE UM PREDICADO.--> faltando codificar o comando Match de uma lista.
+         (0,5) HORAS CODIFICANDO O MÉTODO MATCH PARA LISTAS--> faltando o combinar de átomos do Predicado procurado que não são especificações de lista.
+19.01 (1,0) HORAS CODFICANDO O USO DE LISTAS NAS REGRAS, TENDO O PREDICADO BASE DA REGRA DETERMINANDO AS VARIÁVEIS UTILIADAS.
+
+20.01 (1,0) HORAS CODIFICANDO A CLASSE CONSULTA PARA PROCEDER QUANTO A LISTAS. --> falta verificar as especificações da lista dentro do átomo do predicado currente, extraídas do predicado base e associado ao predicado meta.
+         (0,5) HORAS PLANEJANDOO PROCESSAMENTO DAS LISTA, a codficar ainda.	
+
+21.01 (1,5) HORAS CODIFICANDO A SUBSTITUIÇÃO DE VARIÁVEIS LISTA DE UM PREDICADO, POR VALORES CONTENDO OS TERMOS "Head" e "Tail".
+         (1,0) HORAS CODIFICANDO A LIGAÇÃO LÓGICA DE VARIÁVEIS LISTA E SUAS FUNÇÕES DENTRO DO PROCEDIMENTO RECURSIVO DE LISTAS PROLOGS.
+         (1,0) IMPLEMENTADO AS TAGS PARA ELEMENTOS DE LISTA, COMEÇANDO A CODIFICAR A CONSULTA RECURSIVA PARA MANIPULAÇÃO DE LISTAS.  IMPLEMENTADO O MÉTODO MATCH DE LISTAS, QUE VERIFICA SE DUAS LISTAS COMBINAM (UMA A LISTA DE ENTRADA, E OUTRA UMA LISTA DA BASE DE CONHECIMENTO).
+
+22.01 (1,5) HORA TESTANDO O MÉTODO CONSULTA SIMPLES DE LISTA. ESPECIFICAÇÕES DA LISTA TEM RESULTADO POSITIVO. --> FALTA O MATCH DE LISTAS, PARA CASOS EM QUE SE TEM A CABEÇA E CAUDA PARA VALIDAR. FALTA TAMBÉM A TRANSPOSIÇÃO DE PARTES DA LISTA (HEAD, TAIL), PARA O PREDICADO QUE CONTÉM A LISTA.
+
+	        	
+23.01  - TESTANDO O MÉTODO CONSULTA SIMPLES DE LISTA, REFATORAÇÃO DA CLASSE LISTA, TIRANDO ERROS DO MÉTODO MATCH PARA LISTAS --> feito, testado com sucesso.
+          - CODIFICANDO UM NOVO METODO DE CONSULTA COM O ALGORITMO BACKTRACKING (cONSULTA COM REGRAS).
+
+24.01  -TERMINO DO METODO DE CONSULTA COM BACKTRACKING,
+         - CODIFICAÇÃO DA EXTRAÇÃO E VALIDAÇÃO DE VARIÁVEIS, PARA VALIDAR UM CONJUNTO DE PREDICADOS QUE SÃO UMA SOLUÇÃO.	
+         - CODIFICAÇAO DE VALIDAÇÃO DE VARIÁVEIS PARA PREDICADOS ENCONTRADOS, FALTANDO VALIDAR OU INSERIR OS VALORES ENCONTRADOS, PARA O PREDICADO BASE DA REGRA E PREDICADOS DE META.
+         - CODIFICAÇÃO E REFATORAÇÃO DE VARIÁVEIS DE LISTA, PARA UMA REGRA (PREDICADO BASE E PREDICADOS META).
+         - TESTE E CORREÇÃO DE ASSOCIAÇÃO DE VARIÁVEIS DE LISTA, PARA UMA REGRA. 		
+         - TESTE E CORREÇÃO PARA ASSOCIAÇÃO DE VÁRIAVEIS DE VÁRIAS LISTAS DENTRO DO PREDICADO BASE, PARA UMA REGRA.
+         - CODIFICAÇÃO DO MÉTODO ToString() PARA LISTAS, CODIFICAÇÃO DO MÉTODO ToString() PARA REGRAS.	
+         - ACRESCIMO DO NOME DA LISTA PARA A ESPECIFICAÇÃO DE PARTES DA LISTA.	
+
+25.01 - CODIFICAÇÃO DO MÉTODO DE UNIÃO (MERGE) DE DUAS LISTAS.
+          -ACRÉSCIMOS DO NOME DA LISTA PARA O ELEMENTO ENCONTRADO EM RECONSTROI LISTA. 
+         -TESTE DO ACRESCIMO DO NOME DA LISTA PARA CADA ELEMENTO ENCONTRADO NA LISTA, NO MÉTODO RECONSTROI LISTA.	
+         - ACRÉSCIMO DOS ELEMENTOS QUE NÃO CABEÇA E NÃO CAUDA PARA LISTAS DE MAIS DE UM ELEMENTO,  E COM O NOME DA LISTA, NO MÉTODO RECONSTROI LISTA.
+         - TRABALHANDO NO ENCAPSULAMENTO DE MÉTODOS DA CLASSE LISTA, QUE NÃO PRECISAM SER PÚBLICOS.
+         - IMPLEMENTANDO O MÉTODO IS_MEMBER PARA LISTAS.
+         - INICIANDO A CODIFICAÇÃO  DO MÉTODO DE PROCESSAMENTO RECURSIVO DE LISTAS.
+         - CODIFICAÇÃO DO ALGORITMO RECURSIVO DE APLICADO A LISTAS, FALTANDO MAIS FUNÇÕES DE APLICAÇÃO LISTA, DEFINIDA EM Lista.AplicaUmaFuncaoLista(). --> aguardando primeiros testes.
+
+26.01 - TESTE DE AplicacaoFuncaoLista(), feita com sucesso.
+         -  REFATORACAO E ALTERACAO DA CLASSE  LISTA. 		
+         - CODIFICAÇÃO DE FUNÇÕES APPEND PARA FUNÇÕES DE APLICAÇÃO LISTA, DEFINIDAS EM Lista.AplicaUmaFuncaoLista().--> aguadando testes.
+         - MUDANÇA NA ESTRUTURA DE ESPECIFICAÇÕES DA LISTA (DE PartesLista para PartesListaVariaveis), PARA UMA SIMPLIFICAÇÃO DOS CÁLCULOS.--> implantado, testes feitos com sucesso.
+         - PARA UMA MELHOR LEITURA DE CÓDIGO, FOI REFATORADO O CONSTRUTOR DE LISTA, QUE CONSTRÓI A PARTIR DA ESPECIFICAÇÃO DE ENTRADA, OS ELEMENTOS DA LISTA. -->implantado, testes feitos com sucessos.
+         - ALTERAÇÃO NO CONSTRUTOR DE LISTA, OS ELEMENTOS DA LISTA ESTARÃO AGORA DENTRO DO TEXTO_LISTA. isso garante uma total compatibilidade de textos definindo as lista, e não dependem de programação para elaborar a lista de elementos. --> implantado com sucesso.
+         - FUNÇÃO APPEND PARA APLICAÇÃO DE FUNÇÃO EM LISTAS, CODIFICADO E TESTADO. MÉTODO CONSTROI LISTA LIMPA A ARVORE_LISTA DA NOVA LISTA, QUE VINHA HERDANDO A RAIZ DA LISTA QUE CHAMAVA O MÉTODO. --> implantando, testado com sucesso.
+
+27.01 - TESTE DE ProgramProlog() EXECUTADO COM SUCESSO! (sem modificações no método, apenas na classe lista, na obtenção de partes da lista, pois havia sido modificada a variável de partes da lista, que não incluía a inicialização da variável..)--> aguardando mais testes.
+
+28.01- IMPLEMENTADO VARIÁVEIS ANÔNIMAS.--> aguardando testes.--> testes feitos com sucesso positivo.
+         - CODIFICANDO  O MÉTODO CONSULTA COM BACKTRACKING, problemas com reconhecimento das variáveis.  	
+         - CORRIGINDO RECONHECIMENTO DE VARIÁVEIS COMUNS ENTRE PREDICADOS SOLUÇÃO --> implantado, testado com sucesso positivo.	
+
+29.01 - CORRIGINDO O MÉTODO DE OBTENÇÃO DE PREDICADOS DE META, NA CLASSE REGRAS --> testado com sucesso negativo. --> fixado, testado com sucesso positivo.
+         - FIXANDO OS ERROS DE VALIDACAO DE VARIAVEIS, NA CLASSE CONSULTAS.--> fixado, testado com sucesso positivo.
+         - MELHORANDO OS MÉTODOS ToString() PARA PREDICADOS, E REGRAS.
+         - INICIANDO TESTES DO MÉTODO CONSULTA() COM BACKTRACKING. 		 		
+        -  CODIFICANDO NOVAMENTE O MÉTODO CONSULTA() COM BACKTRACKING, DEVIDO AOS MUITOS ERROS ENCONTRADOS,
+                      USANDO UMA SOLUÇÃO RECURSIVA. --> implementado, aguardando testes.--> testado, sucesso positivo, apesar da lentidão.	
+         - CODIFICANDO O MÉTODO ToString() PARA SUPORTE DE VARIÁVEIS ANÔNIMAS.	
+
+31.01 -  TESTANDO E CORRIGINDO O MÉTODO PARA REGRA Consulta()--> testado, sucesso positivo, mas é um algoritmo lento. TALVEZ DE INTRODUZIRMOS O NOME DO PREDICADO DENTRO DO LAÇO META, DIMINUIRIA O TEMPO. TAMBÉM SE CALCULARMOS UMA ÚNICA VEZ CONSULTAS DE PREDICADO, DIMINUIRIA O TEMPO TAMBÉM.
+         -  ANALISE DE TEMPO DE PROCESSAMENTO LEVOU À VALIDAÇÃO DE VARIÁVEIS ESTAVA DEMORANDO MUITO, REFATORANDO PARA UMA SÓ CHAMADA DE OBTENÇÃO DE VÁRIAVEIS DA REGRA FOI FEITO.--> testado, com sucesso positivo.
+         -  NOVA PROPRIEDADE PARA A CLASSE CONSULTAS, MÉTODO Consulta() PARA REGRAS: NOME E VALOR DAS VARIÁVEIS ENCONTRADAS --> implantado, testado, com sucesso positivo.
+
+01.02- IMPLEMENTADO A CLASSE LISTA, CLASSE ATOMO, E CLASSE FORM.
+        - IMPLEMENTADO OS MÉTODOS INSERT_HEAD(ELEMENTOS[]), INSERT_TAIL(ELEMENTOS[]).--> implementado, com sucesso muito positivo.
+        - IMPLEMENTADO O MÉTODO GET_ELEMENTS() DA LISTA--> implementado, com sucesso muito positivo.
+        - IMPLEMENTADO O MÉTODO WRITE_LISTA(), UTIL PARA VISUALIZAÇÃO DE LISTAS --> implementado, com sucesso muito positivo.
+         - COMEÇO DA IMPLEMENTAÇÃO DE INSTRUÇÕES LISP, NA CLASSE COMANDOS_LISP.
+         - IMPLEMENTAÇÃO DE LISTAS NILL E T, PARA RETORNO NULO E VERDADEIRO, RESPECTIVAMENTE.--> implantado.
+         - IMPLEMENTAÇÃO DAS FUNÇÕES CLÁSSICAS CAR E CDR.--> aguardando testes.
+
+02.02- IMPLEMENTAÇÃO DE OBTER UMA LISTA A PARTIR DE UM TEXTO --> testes feitos, fixados os erros por métodos empíricos.--> mais testes feitos, fixado o erro do último parenteses fechado.--> testes feitos, com sucesso positivo.
+         -Alteração nos métodos: Lista.GetElements(), Lista.EscreveLista(), e Lista.GetLista(texto).
+         - TESTES COM MÉTODO Car(), falharam. MÉTODO Car() REDUZIDA AO EXEMPLO MAIS BÁSICO.
+
+03.02- MUDANÇA DA ESTRUTURA DE DADOS QUE GUARDA A LISTA LISP, para melhor estração de dados como GetHead() e GetTail(), além de melhor entendimento e clareza de métodos como Car() e Cdr(), de comandos LISP.
+         - INICIO DE TODOS TESTES ATÉ FEITOS ENTÃO COM A ANTIGA ESTRUTURA DE DADOS DE LISTA LISP. 	
+        -  TESTES COM A NOVA ESTRUTURA DE DADOS DE LISTA LISP, completado, erros fixados, testes feitos com sucesso positivo.
+        -  RECODIFICANDO OS MÉTODOS Car() e Cdr()--> completado, aguardando testes. 	testes método Car(), fixado erros. método Cdr() extrai lista cauda em um dos casos.			 
+
+05.02- FIXADO O ERRO DE INSERÇÕES DE VAZIOS "" NO GET_LISTA(TEXTO)--> testes feitos, sem erros.
+        - TROCA DA ESTRUTURA DE DADOS QUE GUARDA A LISTA, PARA UMA CLASSE MAIS SIMPLES, SEM PONTEIROS.. -> implantado, testes feitos para: obtenção de lista a partir de texto (GetLista()), função Car(), função Cdr(),  método GetAllEments(), testes com sucesso positivo.
+        -  IMPLEMENTADO O CORE DO INTERPRETADOR LISP: UM PARSER EXPANDÍVEL PARA INSTRUÇÕES-CHAVE LISP.
+        -  IMPLEMENTADO VÁRIAS FUNÇÕES BÁSICAS LISP: quote, car, cdr, atom, member, +, -, cons, cond.
+        -  IMPLEMENTADO MÉTODO ToString() PARA LISTAS.
+        -  PLANEJAMENTO PARA UMA NOVA ESTRUTURA DE LISTAS LISP, CADA ÁTOMO DA LISTA PODE SER UM ATOMO OU UMA LISTA LISP. --> modificado os métodos GetLista(texto), EscreveLista(), GetListHead(), GetListTail().
+
+10.02 - AINDA FIXANDO MÉTODO GetLista().--> testado métodos GetListHead(), GetListTail(), GetAllEments(), sucesso sem falhas.                
+         - IMPLEMENTADA FUNÇÕES LISP: IF, <, >, <=, >= (para números inteiros e ponto-flutuante).
+
+11.02- IMPLEMENTADO O QUOTE (AVALIAÇÃO OU NÃO DA LISTA ANTES DE SER PROCESSADA) PARA TODOS COMANDOS LISP.
+        - IMPLEMENTADO UM MÉTODO PARA OBTER A PALAVRA-CHAVE DE UMA LISTA LISP A SER PROCESSADA.
+        - IMPLEMENTADO A ESTRUTURA DE DADOS DE UMA FUNÇÃO LISP DEFINIDA POR defun--> nome, parâmetros, corpo da função. --> falta ainda um planejamento de match de parâmetros da função com os parâmetros chamados na avaliação da função.
+        - IMPLEMENTADO O COMANDO LISP defun.
+        - FIXADO OS ERROS DO MÉTODO GetListas(texto), através da colocação certa de elementos na lista parcial certa. --> implementado, testado, fixados, sem erros.
+ 
+12.02- IMPLEMENTADO O MÉTODO PARA OBTENÇÃO DE INSTRUÇÕES LISP ENTRE PARENTESES., aguardando testes.	 --> testes feitos, negativo. problemas com o primeiro e último parenteses no texto para gerar a função lisp.--> fixado, testes positivo.
+        - CODIFICANDO O MÉTODO DE OBTENÇÃO DE INSTRUÇÕES LISP RECURSIVAMENTE, PARA CAPTURAR INSTRUÇÕES DENTRO DE INSTRUÇÕES.
+        -  CANCELADO O MÉTODO DE OBTENÇÃO DE INSTRUÇÕES LISP, O MÉTODO GetLista(Texto) FAZ A MESMA FUNÇÃO E JÁ FOI TESTADO. (CONTA-SE INCLUSIVE PROPRIEDADES DE RECURSÃO). 	
+        -  CODIFICADO UM MÉTODO PARA ESCREVER UMA LISTA A PARTIR DE SEUS ELEMENTOS, PARA COMPROVAR SE O MÉTODO GetLista(texto) SERVE PARA PROCESSAR UMA FUNÇÃO LISP--> testado negativamente, esperando codificação mais efetiva.
+        - MODELADO O MÉTODO PARA EXECUÇÃO DE UMA FUNÇÃO-LISP COM MÚLTIPLOS COMANDOS LISP, a verificar se os parâmetros valem para todos comandos lisp, ou se precisa para cada comando lisp um parâmetro para cada.
+
+13.02- INICIO DO MODELAMENTO DA AVALIAÇÃO DE FUNÇÕES LISP.
+        - COIFICADO CADA COMANDO ESSENCIAL LISP RECEBE TAMBÉM AGORA UM VETOR DE PARAMETROS, COM NOME E VALOR.(VARIÁVEIS EM LISP).
+
+14.02- CODIFICANDO O MÉTODO DE OBTENÇÃO DE VALORES DAS VARIÁVEIS DE UMA FUNÇÃO LISP.
+          RETRABALHANDO O MÉTODO DE AVALIAÇÃO DE FUNÇÕES LISP.
+          INICIANDO OS TESTES PARA FUNÇÕES LISP.  	  	
+          FIXANDO ERROS NO MÉTODO DE OBTENÇÃO DE TOKENS (ExpandeElementosLista()), não estava processando direito os elementos parênteses.--> fixado, testado.--> troca por algoritmo mais robusto, com técnica testada com sucesso em GetTokens() da Linguagem Orquidea.--> testado.
+          NOVO MÉTODO DE OBTER TOKENS PARA AS LINGUAGENS LISP E PROLOG, COM A MESMA TÉCNICA DA OBTENÇÃO DE TOKENS DA LINGUAGEM ORQUIDEA.--> textado sucesso positivamente.
+
+15.02- MODELADO UM MÉTODO PARA AVALIAR LISTAS. SE UMA LISTA FOR ÁTOMO RETORNA O ÁTOMO, SE A LISTA POR TIPO LISTA, RETORNA O RESULTADO DE UM COMANDO LISP PARA O NOME COMO PRIMEIRO ELEMENTO DA LISTA (exemplo: (==(1 5)).
+        - TESTES PARA COMANDOS LISP PARA LISTAS CONDICIONAIS, testado para o método igual, mas por serem similares, testado positivamente.
+        - CODIFICAÇÃO DE UMA CLASSE QUE RETIRA TOKENS (UM PARSER) DE QUALQUER LINGUAGEM, TENDO APENAS UMA LISTA DE TERMOS-CHAVE DA LINGUAGE, E UMA LINHA DE TEXTO CONTENDO OS TOKENS.
+        - IMPLEMENTAÇÃO DE PARSERS PARA LISP, PROLOG, COM USO DO PARSER UNIVERSAL--> testado, mas não precisava pois a técnica já tinha sido utilizada na Linguagem Orquidea.
+        - ALGUNS ERROS FIXADOS NA OBTENÇÃO DE TOKENS, UMA FUNÇÃO DE  PREENCHER VAZIOS NO MÉTODO POSICAOECODIGO() NÃO RETORNAVA O TEXTO MODIFICADO.--> testado, positivamente.
+        - FIXAR MAIS ERROS NO MÉTODO GETLISTA(TEXTO), OU NO MÉTODO  ESCREVELISTALISP()--> volta mais de uma lista final. 	  		   	
+        - CODIFICADOS OS MÉTODOS DE AVALIAÇÃO DE LISTAS E FUNÇÕES LISP.  favor revisar se o resultado de avaliação de listas no método de avaliação funções, se o resultado é também avaliado, após o processamento de uma função básica.
+ 
+16.02- INICIADO OS TESTES PARA AVALIAÇAO DE UMA FUNÇÃO LISP, testado com falhas, o retorno da função não é o valor esperado (função lisp testada, contém a instrução lisp adição [+]  para avaliar como lista). fixado, aguardando mais testes com outras funções.
+        - ADICIONADO NOVAS FUNCIONALIDADES PARA A CLASSE DE REPOSITÓRIO DE FUNÇÕES LISP: WriteInFile(),ReadInFile().
+        - ADICIONADO NOVAS FUNCIONALIDADES PARA A CLASSE EDITOR LISP: RegistraUmaFuncao(texto), AvaliaUmaFuncao(textoDeChamada).
+
+17.02- INICIADO TESTES DE COMANDO LISP CONS. --> falha nos testes. --> fixado, novos testes, positivamente,
+        - TESTES COM COMANDO LISP IF--> fixado erros, testado positivamente.
+        - TESTES COM COMANDO LISP COND--> fixado erros, testado positivamente.   	
+        - FIXADO ERROS NAS FUNÇÕES LISP [T] E [NILL]. CORRIGIDO OS MÉTODO IS_T(LISTA) E IS_F(LISTA).
+
+19.02- AMPLIANDO OS MÉTODOS DE AVALIAR LISTA E AVALIAR FUNÇÃO, PARA TRATAR FUNÇÕES ARMAZENADAS NO REPÓSITÓRIO DE FUNÇÕES. AGORA TAMBÉM  É POSSÍVELAVALIAR FUNÇÕES RECURSIVAS...
+        - TESTES COM O COMANDO member, MAS FALHA POIS NÃO ESTÁ CALCULANDO LISTAS COM QUOTA.
+        - FIXADO O ERRO DE QUOTAR LISTAS, testado positivamente.  	
+        - TESTES COM O COMANDO member.--> testado com resultados positivos (falhas com  listas quotadas e pesquisa de elemento-membro pelo seu valor e não seu nome, fixados).
+        - TESTES COM O COMANDO setq-->falha, fixado com modificação da passagem de parâmetros através de listas. testes novamente, positivamente. 
+        - CODIFICADO COMANDOS DE MULTIPLICAÇÃO E DIVISÃO com dois parâmetros.--> aguardando testes.--> testes feitos com resultados positivamente.
+        - REFATORANDO OS COMANDO DE OPERAÇÕES MATEMÁTICA (+,-,*,/) PARA UM MÉTODO GENÉRICO, QUE PODE EXPANDIR PARA NOVAS OPERAÇÕES MATEMÁTICAS, COMO ln(), exp(), sqrt(), implementado a função matemática como seus operandos e reusltado num formato compatível delegate, etc...---> aguardando testes.--> testes feitos, resultados positivamente.
+        - Iniciado testes com DEFINIÇÕES DE FUNÇÕES COM defun, E AVALIAÇÃO DE LISTAS NÃO PREDEFINIDAS, ARMAZENADAS NO REPOSITÓRIO DE FUNÇÕES LISP.
+
+21.02- TESTE DE CONSTRUÇÃO DE FUNÇÃO  EFETUADA POSITIVAMENTE.
+        - INCREMENTO DO MÉTODO ToString() PARA LISTAS LISP, SUPORTANDO PARÊNTESES NO COMEÇO E NO FIM DO TEXTO RETORNADO DO MÉTODO.	
+        - INCREMENTO NO MÉTODO AvaliaFuncao(), com acrescimo da macro [defun], que reconhece a função, e registra no repositório de funções Lisp.
+        - TESTE COM AVALIA FUNÇÃO INICIADO, FALHA: A LISTA ENVIADA PARA AVALIAR, APÓS UM PRÉ-PROCESSAMENTO, É UMA LISTA VAZIA PARA AVALIAR. fixado, teste positivamente.
+        - TESTE COM A MACRO DEFUN, testes feitos positivamente.
+        - TESTES INICIADOS COM UMA CHAMADA A UMA FUNÇÃO REGISTRADA, COMO (foo 5 5).       	
+
+
+24.02- IMPLEMENTADO A FUNÇÃO CLÁSSICA CADXXXXR, QUE PELO NOME VARIÁVEL, É CHAMADA NO MÉTODO AvaliaFuncaoLisp().--> aguardando testes.
+
+25.02- TESTES COM AVALIAÇÃO DE UMA CHAMADA DE FUNÇÃO PREDEFINIDA, testado positivamente.
+        - TESTES COM AVALIAÇÃO DE UMA CHAMADA DE FUNÇÃO NÃO PREDEFINIDA, falha.-->  fixado, testado positivamente, mas falha para o avanço para a próxima instrução lisp, que é feita recursivamente até retornar uma instrução lisp definida.--> fixado, mas falha no carregamento dos parâmetros do texto chamada para a função lisp.
+
+01.03- MODIFICAÇÃO DA CLASSE FUNCAO LISP NO MÉTODO AvaliaFuncao(), PARA ACEITAR CHAMADAS RECURSIVAS, QUE ALTERAM OS PARÂMETROS DA Avaliacao().
+        - CODIFICAÇÃO DO TESTE PARA A FUNÇÃO RECURSIVA fact(). --> aguardando resultados do teste.	
+
+04.03- AVALIAÇÃO DE FUNÇÕES testado, falha: falta a passagem correta com .car() e .cdr() funções até chegar a próxima instrução lisp dentro da função lisp.
+        - FIXADO O ERRO DE PARÂMETROS SEM VALOR, SENDO ENTÃO SETADA PARA O NOME DO PARÂMETRO.
+        - REFATORAÇÃO DAS OPERAÇÕES MATEMÁTICAS: IGUAL, MENOR, MAIOR, MENOR_OU_IGUAL, MAIOR_OU_IGUAL,  para um tipo genérico expandível. TIPOS PARA A COMPARAÇÃO: int e float.
+        - TESTE FEITO PARA INSTRUÇÃO VARIÁVEL CADXXR, fixado erros, testes positivamente.
+        - FIXADO UM ANTIGO ERRO DE RETIRADA DE TOKENS NO LOCALIZADOR DE STRINGS, se o usuário entrar com uma palavra contendo um token palavra-chave, o sistema registrava o falso token.--> testado para casos previstos sem tokens grudados positivamente.
+
+05.03- REFATORAÇÃO DA CLASSE TOKENS, DA CLASSE LOCALIZADOR DE TOKENS, testado com sucesso positivamente.
+
+06.03- REFATORAÇÃO DOS MÉTODOS DE OPERAÇÕES MATEMÁTICAS GENÉRICAS, para compor avaliação de função lisp de cada operando.
+        - FIXADO ERROS DO MÉTODO AVALIA FUNCÃO, POIS HAVIA SIDO FEITO ALTERAÇÕES QUE CRIOU ERROS COLATERAIS. --> fixado, testes positivamente.
+        - INICIADO OS TESTES COM UMA FUNÇÃO RECURSIVA SIMPLES, COM PARÂMETROS SENDO CARREGADOS NO CORPO DA FUNÇÃO, NA CHAMADA RECURSIVA. testado negativamente, a recursão funciona, mas falha quando retorna o último resultado da recursão.--> fixado o erro, mas pode haver erros colaterais.
+
+08.03 - TESTES COM FUNÇÃO RECURSIVA SIMPLES, NO MÉTODO AvaliaFuncao(), quase lá, faltando a operação sobre os parâmetros da função como por exemplo: fatorial (- n 1).	
+         - FIXADO ERRO DO MÉTODO AVALIA FUNÇÃO DO EDITOR LISP, chama apenas com o nome da função e seus parâmetros --> implantado, testes positivamente.
+	
+10.03- REFRESSÃO DO MÉTODO AvaliaFuncao(), PARA CALCULAR SEM RECURSÃO -->  testado positivamente.
+         - INCREMENTO NO MÉTOO AvaliaFuncao(),PARA CALCULAR INSTRUÇÕES DENTRO DE INSTRUÇÕES DA  FUNÇÃO LISP, PERMITINDO CHAMADAS RECURSIVAS.-->TESTADO PARA UMA FUNÇÃO SEM SEM RECURSÃO. retultados positivamente.
+         -TESTES PARA AvaliaFuncao(), NO CASO DE SAÍDA DA RECURSÃO, TESTADO POSITIVAMENTE. 	
+         - CORREÇÃO DO MÉTODO OPERAÇÕES MATEMÁTICAS, que estava rodando naturalmente, mas devido a alterações dentro do próprio método, gerava falhas. --> fixado, testado positivamente.   			
+         - TESTES PARA FUNÇÕES RECURSIVAS, NO CASO DE PARADA RECURSÃO DA FUNÇÃO, testada positivamente. A Aguardar mais um teste de uma função recursiva.--> testes feitos para saída da recursão, voltando um valor específico, testado positivamente.
+
+11.03 - TESTES PARA FUNÇÕES RECURSIVAS, NO CASO DE RECURSÃO, testes falham,  MAS É PORQUE NÃO ESTAMOS COM UM MÉTODO RETORNA TRUE SE O ELEMENTO É LISTA.
+         - TESTES PARA FUNÇÕES RECURSIVAS, NO CASO DE RECURSÃO  E DE PARADA DE RECURSÃO, testes positivamente!--> aguardando  outras funções lisp para avaliar.
+         - MODIFICAÇÃO NA FUNÇÃO GENÉRICA MATEMÁTICA, PARA ACEITAR LISTAS LISP COMO PARÂMETROS, QUE DEVEM SER AVALIADAS, ANTES DO PROCESSAMENTO DA OPERAÇÃO. --> testado para as funções anteriores, sem listas, positivamente.
+         - NO AGUARDA DA AVALIAÇÃO DE FUNÇÕES RECURSIVAS, A fatorial(n).
+         - CODFICAÇÃO A UMA VERSÃO ESTÁVEL DE IS_LIST_LISP(), TESTES COM AVALIAÇÃO DE FUNÇÕES PARA O CASO DE PARADA DE FUNÇÃO, testes positivamente.
+	   	           	 	
+13.03- ACRESCENTADA OPERAÇÕES MATEMÁTICAS COM OPERANDOS LISTAS LISP. --> testado positivamente para o caso de operandos não-listas.
+         - TESTES POSITIVAMENTE PARA AVALIAÇÃO DE FUNÇÃO LISP RECURSIVA, DENTRO DA PARTE DE RECURSÃO.--> aguardando mais testes.
+
+15.03- codificando novamente a avaliação de funções AvaliaFuncao(), faltando o salvamento da lista lisp original, depois de uma chamada ao método ObterValores().--fixado em 16.03.
+         - recodificando a instrução [if], para comportar agora operações matemáticas dentro de parâmetros.
+
+16.03-FIXADO A PASSAGEM DE VALORES E NOMES DE PARÂMETROS NO MÉTODO ObterValores(). Somente os valores são alterados para o parametro currente, os nomes permanecem os mesmos. --> testado positivamente.
+          FIXADO AS RECURSÕES DE UMA FUNÇÃO RECURSIVA, SIMPLIFICANDO A OPERAÇÃO-GENÉRICA, E MODFICANDO VÁRIOS MÉTODOS, COMO AVALIAÇÃO DENTRO DA LISTA DE PARÂMETROS. testado com função recursiva, com parada para x=0, e chamada f(2)-->f(n-1).
+          INICIADO UM TESTE PARA A FUNÇÃO FATORIAL RECURSIVA, COMO TESTE DE ACEITE PARA O INTERPRETADOR LISP.	
+17.03 - TESTES COM FUNÇÕES RECURSIVAS, testado positivamente. A AGUARDAR OPERAÇÕES MATEMÁTICAS DENTRO DA LISTA DE PARÂMETROS DE UMA FUNÇÃO, como (fatorial(-n 1)).
+         - TESTES COM COMANDOS IF, MEMBER, SETQ, OPERAÇÕES MATEMÁTICAS, testes positivamente. SÃO TESTES DE ACEITE.
+
+18.03- TESTE COM FUNÇÃO LISP RECURSIVA, COMPLETANDO UM CICLO COMPLETO DE RECURSÃO. A aguardar o teste de função lisp recursiva com operações matemáticas dentro do caso da recursão,  como (*  n fatorial(-n 1)).
+
+19.03 - TESTE COM FUNÇÃO LISP COM MÚLTIPLAS FUNÇÕES, FALHA NA DETERMINAÇÃO DO PARÂMETRO, NO MÉTODO AVALIA FUNÇÃO DO EDITOR(). A DETERMINAÇÃO DO PARÂMETRO FALHA PORQUE O VALOR A SER CONSIDERADO É UM CONJUNTO DE FUNÇÕES, NÃO ELEMENTO.
+         - CODIFICAÇÃO NOVA PARA OBTER VALORES DE PARÃMETROS NA CLASSE EDITOR, MÉTODO AVALIA FUNÇÃO(),  TESTADO PARA O CASO SIMPLES, SEM COMPOSIÇÃO DE FUNÇÕES.
+         - QUEBRA DO CÓDIGO DO MÉTODO AVALIA FUNÇÃO(), CLASSE FUNCAO LISP. A SUBSTITUIÇÃO DOS SIMBOLOS DOS PARÂMETROS PELO VALOR DOS PARÂMETROS PARECE FUNCIONAR.-> fixado o erro, houve uma alteração de código nas operações matemáticas, sem um invólucro de parenteses simulando uma função, e testando e fixando, gerava erro em funções matemáticas dentro de funções. fixado o acrescimo de parenteses, tanto os testes de operações matemáticas quanto a avaliação da função (foo(x y)  (+(1 5 1))), testados positivamente.
+         - QUEBRA DO CÓDIGO DE OPERAÇÕES MATEMÁTICAS,  POIS COMANDOS DIRETOS CHAMANDO UMA OPERAÇÃO MATEMÁTICA TEM QUE TER UM PAR DE PARENTESES A MAIS, SIMULANDO UMA FUNÇÃO.-- fixado, teste positivamente para operações matemáticas (com um invólucro de parenteses a mais, simulando uma função), e teste para avaliação da função lisp foo(+(x y 5)).
+
+20.03-  TESTES NEGATIVAMENTE PARA AVALIAÇÃO DE FUNÇÃO LISP COMPOSTA, COM OPERAÇÕES DE 2 FUNÇÕES NÃO PREDEFINIDAS.
+         - QUEBRA DE CÓDIGO PARA OPERAÇÕES MATEMÁTICAS exemplo: (+ 1 5), fixado, testado positivamente.
+         - CODIFICADO E TESTADO OPERAÇÕES MATEMÁTICAS COM SUB-LISTAS, exemplo: (* 3 (- n 1)). (n-1) é uma sublista contida na lista da expressão. ESTA NOVA FUNCIONALIDADE É REQUISITO PARA CÁLCULO DE FUNÇÕES COMPOSTAS.
+
+21.03-
+         - CODIFICADO E TESTADO OPERAÇÃOE COM SUB-LISTAS COM FUNÇÕES NÃO PREDEFINIDAS. 
+        - POSSÍVEL ERRO NOS MÉTODO CAR() E CDR() LEVOU A MODIFICAÇÃO DO CÓDIGO, TESTE COM FUNÇÕES LISP SIMPLES, SEM RECURSÃO, TESTADO POSITIVAMENTE COM SUCESSO.
+				
+22.03- TESTADO FUNÇÃO LISP FATORIAL, PARA O CASO DE RECURSÃO, TESTADO POSITIVAMENTE!!!
+          - APÓS O ERRO NO MÉTODO CAR(), ONDE UMA REFERÊNCIA DE LISTA LISP ERA MODIFICADO, SEM CONSTRUÇÃO DE UMA NOVA LISTA, TESTADO POSITIVAMENTE OPERAÇÕES MATEMÁTICAS.
+         - TESTADO POSITIVAMENTE A AVALIAÇÃO DE PARÂMETROS. NO CÓDIGO ATUAL, SOMENTE OPERAÇÕES MATEMÁTICAS BÁSICAS (+,-,*,/) SÃO PROCESSADAS PELO MÉTODO AVALIA PARÂMETROS.
+         - FIXADO O PROBLEMA DE CAR() NA INSTRUÇÃO IF, E FIXADO O ERRO DE AVALIAÇÃO DE UM ELEMENTO NÃO SER UMA LISTA.
+         - TESTADO POSITIVAMENTE O MÉTODO SETQ(), POIS HOUVE QUEBRA DE CÓDIGO NO MÉTODO CAR().
+         - TESTADO POSITIVAMENTE O MÉTODO IS MEMBER(), POIS HOUVE QUEBRA DE CÓDIGO NO MÉTODO CAR().
+         - TESTADO POSITIVAMENTE O MÉTODO CONS(), POIS HOUVE QUEBRA DE CÓDIGO NO MÉTODO CAR() E CDR(). FOI NECESSÁRIO FIXAR O ERRO NA OBTENÇÃO DOS ELEMENTOS DAS DUAS LISTAS DE ENTRADA DO MÉTODO.
+         -  TESTADO POSITIVAMENTE OS MÉTODOS COMANDOS LISP CAR() E CDR(), PARA SER UTILIZADOS COMO INSTRUÇÃO EM UMA FUNÇÃO, DEVIDO AO PROBLEMA DA QUEBRA DE CÓDIGO CAR() E CDR() PARA LISTAS LISP.
+         - mudança surgerida na avaliação de parâmetros, para não só conter operações matemáticas, mas qualquer funções pre-definida ou comando lisp. Isto daria muito maior flexibilidade em funções lisp, agregando valor ao projeto. complexidade:3 valorAgregado: 6.
+         - INCREMENTO NA AVALIAÇÃO DE PARÃMETROS, PODE CONTER UMA OU MAIS INSTRUÇÕES ENTRE PARÂMETROS, COMO: [foo (- n 1) (* m 2)]. [(- n 1)] e [(* m 2)] são duas instruções matemáticas entre a lista de parâmetros de [foo].
+   	
+ 28.04- implementado novas funções lisp, que retornam qualquer lista dentro de uma lista, contando elementos Atomo e ListaLISP. -->implementado, testado através do comando [if].
+        - OperacaoMatematica, devido ao uso de novos métodos GetEnesimaList(), GetAllElementsUntilEnd(), havia quebrado, fixado, resultando uma função mais compacta e mais simples. implementad, testado positivamente.
+
+29.04- ---> fixados e testados positivamente:
+		---> instrução [cond].
+		---> operações matemáticas, modificadas com a recodificação com métodos mais intuitivos, sem uso das funções car() e cdr().
+		---> Avaliação de Parâmetros, para funções básicas e funções armazenadas no repositório.
+		---> Avaliação de Funções, para funções básicas e funções compostas, com listas dentro dos parâmetros.
+
+30.04 ----> ampliado o método de Avaliação de OperaçãoMatemática, agora contém sub-listas. Este ponto já havia sido conseguido, mas o código estava menos legível, e sujeito a erros colaterais. Foi codificado uma nova classe de utilidades de listas lisp, como ObtemAEnesimaLista(), que substitui os métodos cdr() e car().
+	   ---> verificando se as sub-listas podem ser listas de funções lisp armazenadas, se a AvaliaçãoOperaçãoMatemática reconhece uma função lisp como uma sub-lista.	
+
+02.05 ----> teste para funções compostas como avaliação. O teste é necessário antes da avaliação de funções recursivas com operações de números e funções, exemplo: foo(z)(z), fact(x) (* foo(x) 3) --> implementado, fixado, está funcionando apropriadamente.
+         ----> retirada de métodos cdr() das instruções de funções lisp, testado com todos comandos, falha no comando [Cond]. A substituição por métodos GetList() é mais intuitiva e torna o código mais legível e menos propenso a erros colaterais.	
+
+07.05 ----> Ante a falha de avaliação de uma função recursiva completa, foi codificado um método que extrai o valores (da lista de chamada da função) e os nomes (da lista de definição da função), para compor a lista de parâmetros.--> codificado, aguardando testes.
+
+09.05 ----> Retirada a lista de parâmetros para o método AvaliaFuncao(), o que resultou em muitos bugs. ---> regressão para função não básica, não recursiva. ----> testado positivamente. 
+      ----> Tentativa de Codificar um método que avalia listas-lisp dentro da lista de parâmetros. implantado, testes falham em encontrar parâmetros na AvaliacaoParametros().---> fixado o erro na SubstituicaoDeParametros(), agora segue o raciocínio inicial de substituir variáveis de uma função lisp pelos valores dos parâmetros. ---> aguardando teste para AvaliacaoParametros().      	
+      ----> Modificação de todos métodos estáticos de FuncaoLisp para método não estáticos, de acordo com as boas práticas em POO.	
+
+10.05 ----> testes para AvaliacaoParametros() e AvaliacaoFuncao(), com função recursiva completa (com recursão e listas lisp dentro dos parâmetros)---> falha, entra em loop infinito.
+		---> a função lisp do teste é: (recursive (x)(if (= x 0) (1) (* x recursive(- x  1))), os cálculos trabalharam adequadamente, mas ao chegar na lista recursive(- x 1), entra em loop infinito.
+		---> investigando, parece que a instrução if não tem parâmetros atualizados, se tivesse a recursão pararia e voltaria com resultado, não entrando em loop infinito.
+			---> o que se tem que fixar é a inicialização de parâmetros, pois ao que parece é que o parâmetro, no exemplo de função, seja igual sempre um, ou o método SubstituiParametros não consegue substituir com os parâmetros depois de x=1, mas x=0.
+			---> investigando mais, a mudança de parâmetros não ocorre, pois o protótipo da funcaoLisp é alterada e modificada para os primeiros parâmetros, ou seja, o problema é de referência que modifica a função lisp armazenada no repositório.
+			---> fixado, o método AvaliaFuncao() carrega os parâmetros apropriadamente, mas quando é chamado o carregamento de parâmetros conforme a lista de entrada, o algoritmo salta para um ponto aleatoriamente, vazamento de memória?
+			
+11.05 --->
+	---> SubstituiParametros(), que havia vazamento de referências, agora restaura a função a partir do texto da função, evitando vazamentos, que não foi encontrado.
+	---> AvaliaFuncao(), funciona para funções lisp não recursivas, e para funções recursivas.
+		Mas houve modificação nos métodos AvaliaParametro(), e ObtemParametros(), regredindo para o caso de avaliação de função não recursiva, e avaliação de função recursiva.
+	---> um erro nos métodos condicionais, na validação de operandos, corrigindo, mudando de campo do átomo do operando se não for um número.
+	---> os métodos condificionais agora podem trabalhar com símbolos (Átomos que não são números).
+	---> quebrado o código do método AvaliaFuncao() para funções recursivas. A aguardar fixação.--> fixado, testes para funções recursiva bem sucedidos.
+	---> testes para função recursiva com listas de funções armazenadas, dentro da lista de parâmetros, falha, o método ObtemParametrosParaFuncaoArmazenada() não está funcionando apropriadamente.
+		---> fixado os métodos ObtemParametros(), agora comporta parâmetros que são funções lisp (armazenada ou básica) e parâmetro Atomos. ----> aguardando testes--> testes feitos bem sucedidos.
+		---> testes para função recursivas com listas dentro dos parâmetros da função, testes bem sucedidos.
+12.05 --->
+	---> adicionado nova funcionalidade no método AvaliaFuncao(), para avaliar listas dentro da lista de chamada da função. Sem a nova funcionalidade, AvaliaFuncao() funciona adequadamente, mas com a nova funcionalidade o método quebrou.--> fixado, a lista de chamada estava embutida em outra lista, como ((foo 1 5)), quando o correto para avaliação é (foo 1 5).---> testes para funções lisp simples passou, a aguardar testes para funções recursivas.
+	---> para se entender as chamadas de função composta por funções lisp, foi movido para fora a funcionalidade, e não está trabalhando adequadamente, há erro quando a um  elemento da lista de chamada for uma lista também.
+	---> algo que se deve notar, sem esta nova funcionalidade, o projeto alcançou seu objetivo para o Interpretador Lisp, criando listas lisp, funções lisp básicas e armazenadas, e avaliando funções recursivas e não recursivas.
+15.05 --->
+	---> testes feitos para ObtemParametros(), SubstiuicaoParametros(), e AvaliaFuncao(), fixados, testados positivamente.
+	---> teste feito para chamada complexa com funções armazenadas e funções básicas, dentro da chamada à função, resultado positivamente.
+	---> funcionalidade adicional testada positivamente, o que se pode ou não fazer é embutir chamadas complexas no método AvaliaFuncao().
+	---> funcionalidade de listas cotadas (Quoted) acrescentada na AvaliaFuncao(), testado resultado positivamente.
+
+DIFICULDADES ENCONTRADAS:
+
+-OS ERROS SE CONCENTRAM EM OBJETOS REFERENCIADOS E NÃO INICIALIZADOS, E ESTOURO DE ÍNDICE DE VETORES, MATRIZES.
+ CUIDADO COM TRECHOS DE CÓDIGO COMO ACESSO A OBJETOS, E ÍNDICE DE VETORES.  --> Regra de Paretto: 80% dos erros estão nos 20% do código.
+-FALTA ESTABELECER A CONDIÇÃO DE PARADA DE DESENVOLVIMENTO DE UMA FUNCIONALIDADE: DEVE SER O AJUSTE FINO A CONDIÇÃO DE PARADA?
+
+- O USO DE MATRIZES PARA GUARDAR DOIS OU MAIS OBJETOS DE SAÍDA, HÁ QUE SE TER CUIDADO COM A SEQUENCIA, A TROCA DE INDICES, PODE ALTERAR O PROCESSAMENTO CORRETO DOS OBJETOS CONTIDOS NO VETOR..
+
+
+LIÇÕES?
+---> HOUVE MELHORIA NA CODIFICAÇÃO SEM ERROS FATAIS, OBSERVANDO MÉTODOS E EXPRESSÕES SE RESULTAM EM LISTA DE OBJETO NULL OU LISTA DE OBJETO COM CONTADOR=0.
+
+    		MELHORIA DA QUALIDADE DO CÓDIGO:
+    				--> Conforme já observado, o código com objetos ou listas genéricas, se validadas após retorno de método, elimina 80% dos erros de código!
+    				    O que fica como erro, é erro de lógica, mas melhorou significadamente..		
+            MELHORIA DA LEGIBILIDADE DO CÓDIGO:
+                    --> colocar linhas em branco facilitam a leitura de código, e agrupar as linhas de códigos por operações ligadas, melhoram também a leitura do código.
+
+
+1- A SOLUÇÃO PARA MENOS ERROS!
+	1.1- REFATORE ATÉ ACHAR O NOME CORRETO DAS VARIÁVEIS E FUNÇÕES, SEMPRE COM FOCO NO OBJETIVO.
+	1.2- NÃO TESTE ATÉ TER UM DESENHO INTERNO BEM NÍTIDO, DA FUNCIONALIDADE (ISSO FUNCIONA BEM EM MIM, POIS MINHA SINTAXE MENTAL QUANDO TENTA RESOLVER UM PROBLEMA É: VISUAL INTERNO, AUDITIVO INTERNO.(IDÉIA E MANIPULAÇÃO DO DICIONÁRIO DA IDÉIA, GERANDO UMA LINGUAGEM).
+	1.3- TESTE DEPOIS DE UMA FUNCIONALIDADE CRUSCIAL FOI IMPLANTADA.
+	1.4- A SOLUÇÃO DA TDD NÃO É PORQUE CRIA TESTES, MAS PORQUE REFATORA A FUNCIONALIDADE VÁRIAS VEZES. O RETRABALHO PROVOCA UMA MELHORIA A CADA VEZ QUE É REFEITO.
+	1.5- SOBRE LISTAS COM PONTEIROS LISTA, TENTAR PARA QUE A "CADEIA DE PONTEIROS"  NÃO SEJA QUEBRADA. SE O ELEMENTO LISTA TIVER UM CAMPO PONTEIRO "NEXT", INCORRE A ERROS FAZER LISTA= NEW LISTA(), E SIM LISTA.NEXT= NEW LISTA(), E ENTÃO LISTA=LISTA.NEXT.
+	1.6- 80% dos erros está em 20% de código (Regra de Pareto): 1: objetos não instanciados quando uso,2: estouro de indices  de listas, vetores, matrizes.Solução ainda não encontrada para minimizar esses erros. Convém pesquisar na Internet soluções para estes problemas: será que um código simples minimiza a ocorrências desses erros?
+	1.7- TENTE MATEARILIZAR O PROBLEMA,UM DESENHO,UM CONCEITO UMA IDÉIA, COLOQUE NO PAPEL, NO GRAVADOR,OU OUTRO MEIO DE COMUNICAÇÃO, AO FAZER VOCÊ MATERIALIZA O PROBLEMA, E QUESTIONA OS DETALHES.
+	1.8- REDUZIR POR SIMPLICIDADE A CADEIA DE MENSAGENS ENTRE OBJETOS, PARA MELHOR TESTABILIDADE DE MÉTODOS.
+
+	1.9-EM NOVOS PROJETOS, EM PROJETAR LISTAS DE STRINGS, POR EXEMPLO, CRIAR UMA CLASSE QUE ENCAPSULA O TEXTO, E RETORNA VALORES VÁLIDOS OU LANÇAM EXCEÇÃO QUANDO NULL, OU COUNT=0.
+	2.0-SE O ALGORITMO DE UM MÉTODO FOR MUITO LONGO, UTILIZAR AS CAIXAS DE BLOCO- RESUMO DE CÓDIGO, E COMENTAR O BLOCO PARA QUE FUNCIONA. ISSO FOCARÁ NOS CASOS COBERTOS PELO MÉTODO, E ESCONDE DETALHES QUE PODEM DESVIAR A ATENÇÃO E LEGIBILIDADE DO CÓDIGO DO MÉTODO.
+
+
+1.0.1-  QUANTO A ERRO DE INICIALIZAÇÃO DE OBJETOS E ESTOURO DE ÍNDICES, A METODOLOGIA XP TEM UMA AÇÃO QUE PODE MITIGAR: CODIFICAÇÃO EM DUPLA!
+          MAS NÃO HÁ OUTRO DESENVOLVEDOR NO PROJETO, ENTRETANTO SE AO DOCUMENTAR AS LINHAS DE CÓDIGO NOS FORÇA A REVISAO DE CÓDIGO... 
+          MUITOS ERROS FORAM ENCONTRADOS NO PROJETO AO DOCUMENTAR O CÓDIGO, POIS FORÇOU A PRESTAR ATENÇÃO NA BUSCA DE ERROS NO CÓDIGO.
+          ISTO SIMULA UMA CODIFICAÇÃO EM PAR!
+
+1.0.5-  INTERFACES DE MÉTODOS SIMPLES, CÓDIGO SIMPLES PARECEM DIMINUIR A COMPLEXIDADE DO SISTEMA, AUXLIANDO NA CORREÇÃO DE ERROS, MANTEM UMA BOA LEGIBILIDADE DO CÓDIGO, FACILIDADE DE MANUTENÇÃO, CREIO EU.
+
+1.0.6- AVALIAÇÃO DA CODIFICAÇÃO:
+	- AO COMENTAR O CÓDIGO, GEROU GRANDE QUANTIDADE DE RETRABALHO, POIS A ANSIEDADE FAZ COM QUE SE PROGRAME RAPIDAMENTE. ESSTE TIPO DE RETRABALHO NÃO É TÃO RUIM, MELHOR QUE DESCOBRIR QUANDO SE GERA OS TESTES DE ACEITE, OU NA MANUTENÇÃO CORRETIVA.
+                 É SEMELHANTE AO TDD DA XP PROGRAMMING, SÓ QUE UM POUCO MAIS DE LIBERDADE NA PRODUÇÃO DE CÓDIGO E TESTES. O TDD VEM COM RETRABALHO,
+                E RESULTA EM CLASSES COM MELHOR DESIGN, TAMBÉM É ASSIM O RETRABALHO RESULTANTE O COMENTÁRIO DO CÓDIGO. A TDD É MAIS EFICIENTE AINDA POIS GERAM UMA GRANDE MASSA DE TESTES UNITÁRIOS, ENQUANTO QUE NO PROJETO ATUAL, APENAS UM TESTE UNITÁRIO É FEITO POR FUNCIONALIDADE OU UNIDADE A TESTAR.
+
+2- O PROJETO PARECE UM POUCO CONFUSO EM SUAS TAREFAS, JUSTAMENTE PORQUE NÃO SE DEFINIU AINDA [O QUE ESTÁ PRONTO] NUMA FUNCIONALIDADE. NÃO SE TENDO ESTA DEFINIÇÃO, VAI SE CORRIGINDO CÓDIGO JÁ TERMINADO,  O QUE PODE OCORRER ERROS COLATERAIS, ALÉM DO RETRABALHO.
+    ASSIM, É IMPORTANTE TER ESTA DEFINIÇÃO, E O QUANTO ANTES POSSÍVEL.
+	2.2- PESQUISANDO NA INTERNET, UM CONCEITO DE PRONTO É:  “todo item dado como pronto deve ter passado em testes unitários” e depois se aprofunde em itens mais “avançados” como testes de regressão, teste em pares,
+
+3- O INTERPRETADOR PROLOG NÃO ESTÁ BASEADO NAS FUNCIONALIDADES DA LINGUAGEM ORQUÍDEA, O QUE PARECE SE DISTANCIAR DO OBJETIVO PRIMEIRO DO PROJETO DE PARSER. NO ENTANTO, NÃO SÓ RECONHECE COMANDOS PROLOG, COMO EXECUTA PROGRAMAS E CONSULTAS PROLOG.
+	- 3.2- NOVOS AVANÇOS NA OBTENÇÃO DE TOKENS A PARTIR DE UMA LISTA DE TERMOS-CHAVE E OPERADORES (COMO O OPERADOR QUOTE, OU ', EM LISP)  FOI IMPLEMENTADO, REUSANDO O CÓDIGO FEITO PARA FUNÇÕES ESTRUTURADAS...
+
+4- AO QUE PARECE, A FORMAÇÃO DO DICIONÁRIO QUE DESCREVE E CONCEITUA BEM O PROBLEMA DO PROJETO, É MUITO MAIS IMPORTANTE, POIS COM O DICIONÁRIO, PODEMOS "FALAR O PROBLEMA", MANIPULANDO CONCEITOS, E APRENDENDO NOVOS, GRAÇAS AO DICIONÁIO. É CRUSCIAL APRENDER O DICIONÁRIO O MAIS RÁPIDO E PRECISO QUE PUDER...
+		---> OUTRA GENERALIZAÇÃO IMPORTANTE É USAR MÉTODOS TESTADOS COMO PALAVRA DO DICIONÁRIO DO PROJETO.
+		---> OUTRO CUIDADO É COM RETORNO NULO DE MÉTODOS, QUE DEVE SER VERFICADO. 80% DOS PROBLEMAS COM INICIALIZAÇÃO DE OBJETOS É O RETORNO NULO DE FUNÇÕES, OU NO CASO DE RETORNO COM LISTAS, CUIDADO COM LISTAS DE CUMPRIMENTO 0, E LISTAS NULAS.
+			--->VERIFICAR A SAÍDA DOS MÉTODOS, E VERIFICAR SE GERAM VALORES NULOS OU COM COMPRIMENTO 0.
+
+5- O RETRABALHO NÃO É RUIM, DESDE QUE SEJA FOCADO E CONTROLADO. NO RETRABALHO, A PESSOA TEM CONHECIMENTO DO PROBLEMA DO PROJETO, GERANDO SEMPRE UMA VERSÃO MELHOR.. METODOLOGIA DO TDD É BASEADO NO RETRABALHO TAMBÉM, E GERAM CLASSES MELHORES CONSTRUIDAS E COM MELHOR DESIGN, NÃO PELO FATO DOS TRÊS SINAIS DE GERAÇÃO DO TESTE, MAS POR JUSTAMENTE,E JUSTIFICADAMENTE, PELO RETRABALHO.
+
+6- SE UM CÓDIGO ESTIVER MUITO PROBLEMÁTICO, NÃO ATRASA O PROJETO RECODIFICAR, UTILIZANDO A EXPERIÊNCIA DA CONSTRUÇÃO DO CÓDIGO MUITO PROBLEMÁTICO. ISSO É BEM MELHOR QUE ENTREGAR UMA FUNCIONALIDADE MAL TESTADO, E ADIANTA O PROJETO.
+
+7- AGENDAR NUM DIA DA SEMANA PARA TESTE UMA BATERIA DE TESTES PARA POO, POR EXEMPLO.
+		    CODIGOS TESTADOS, PODEM QUEBRAR ANTE MODIFICAÇÃO EM OUTROS CÓDIGO (Teoria de Teste básica).
+
+8- A descrição de um algoritmo de uma funcionalidade complexa, é um bom comentário, e deve ser feita sempre que possível.
+
+
+

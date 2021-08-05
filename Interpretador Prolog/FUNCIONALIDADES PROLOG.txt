@@ -1,0 +1,25 @@
+
+FUNCIONALIDADES IMPLEMENTAR NO INTERPRETADOR PROLOG:
+
+-0 Operações com números:
+	-0.1- inteiros, ponto flutuante: N is 1 é N(1), acrescentar o predicado se não existe, e setar o átomo de N para 1.--> feito.
+	-0.2- comparação maior, menor, maiorOuIgual, menorOuIgual, de números inteiros ou ponto flutuante.--> feito.
+
+1- listas do tipo [],ou [x|Y]. --> pesquisa feita, as listas prolog são implementadas em árvores-binárias de um certo padrão (valores são colocados no nó esquerdo, o nó direito representa a cauda).
+
+		              --> implementar a lista, com árvore binária (feito).
+			--> construir uma lista. (feito).
+			--> pegar o valor da cabeça e o valor da cauda da lista.(feito)
+			--> pegar a cabeça da lista, a cauda da lista.(feito).
+
+			--> criar a lógica prolog que manipula listas.(como instruções [X|Y], [X,Y],[X,Y|Z], como dispor as variáveis da lista, no Predicativo)--> feito,  testado com sucesso.
+			--> falta criar a consulta de listas, que utiliza recursão para processamento de listas (a saída são listas, a partir de uma lista de entrada)--> feito, testado com sucesso.			
+
+2- functor com estrutura de dados do tipo registro.(data(campoX,campoY,...)) é uma estrutura de dados em PROLOG.
+
+3- programação dinâmica: (a base de dados insere e lista predicados na base de conhecimento).--> feito.
+	- listing nomePredicado (lista todos predicados [nomePredicado] da base de conhecimento).--> feito.
+	-assertz/asserta predicado (adiciona o predicado [predicado] na base de conhecimento).--> feito.
+	-retract: (remove predicados da base desconhecimento)--> feito.
+	- tell/told, consult--> acesso a arquivos, para gravar/ler predicados.--> feito.
+
