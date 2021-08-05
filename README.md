@@ -40,9 +40,9 @@ Instrucoes da parte Programacao Orientada a Objetos, e tambem Programacao Estrut
 				    { operacao aritmetica, poucondicional) var_caso2: {instrucoes }
 
 					exemplo: casesOfUse x {
-							{>1: funcaoA();}
-							{>(a+b): funcaoB();}
-							{==1: funcaoAB();}
+							(>1: bloco_intstrucoes;)
+							(>(a+b): funcaoB();)
+							(==1: funcaoAB();)
 							}
 
 
