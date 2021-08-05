@@ -1,4 +1,4 @@
-# ProjetoLinguagensOrquideaVisual
+# ProjetoLinguagensOrquidea
 implementacao de linguagens de programacao LISP, PROLOG, programacao estruturada, e programacao orientada a  objetos
 
 # LinguagensDoOrquidea
