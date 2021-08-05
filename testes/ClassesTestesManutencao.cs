@@ -19,12 +19,7 @@ namespace ParserLinguagemOrquidea.testes
             private Escopo escopo;
             private object resultEval;
 
-            public void Teste_Quatro(AssercaoSuiteClasse assercao)
-            {
-                string expressaoNumeroPontoFlutuante = "1.0";
-                List<string> tokensNumero = ParserUniversal.GetTokens(expressaoNumeroPontoFlutuante);
-                List<string> tokensCorretos = ParserUniversal.ObtemNumerosPontoFlutuante(tokensNumero);
-            }
+          
 
             public void Teste_Dois(AssercaoSuiteClasse assercao)
             {
@@ -84,6 +79,13 @@ namespace ParserLinguagemOrquidea.testes
                 this.resultEval = eval.EvalPosOrdem(exprssaoAProcessar, processador.escopo);
 
                 this.escopo = this.processador.escopo;
+            }
+
+            public void Teste_Quatro(AssercaoSuiteClasse assercao)
+            {
+                string expressaoNumeroPontoFlutuante = "1.0";
+                List<string> tokensNumero = ParserUniversal.GetTokens(expressaoNumeroPontoFlutuante);
+                List<string> tokensCorretos = ParserUniversal.ObtemNumerosPontoFlutuante(tokensNumero);
             }
         }
 
@@ -198,14 +200,6 @@ namespace ParserLinguagemOrquidea.testes
 
             }
           
-
-
-
-          
-            
-
-          
-
         }
 
 

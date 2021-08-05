@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<file>
+  <funcao />
+  <acessor acessor="protected" />
+  <nomeFuncao isReflexao="nao">funcaoA</nomeFuncao>
+  <tipoRetorno>int</tipoRetorno>
+  <parametros>
+    <parametro nome="x" tipo="int" />
+  </parametros>
+  <instrucoes>
+    <instrucao>
+      <codigo_instrucao>4</codigo_instrucao>
+      <expressoes>
+        <expressao>
+          <elementos>int x</elementos>
+        </expressao>
+        <expressao>
+          <elementos>0 ;</elementos>
+        </expressao>
+      </expressoes>
+    </instrucao>
+    <instrucao>
+      <codigo_instrucao>2</codigo_instrucao>
+      <expressoes>
+        <expressao>
+          <elementos>x ;</elementos>
+        </expressao>
+      </expressoes>
+    </instrucao>
+  </instrucoes>
+</file>

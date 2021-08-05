@@ -1,0 +1,10 @@
+int funcaoA()
+{
+int c=1;
+for (c=1; c< 10;c++){c=c+1;}
+if (c==1)
+	{c=c+1;}
+while (c<0)
+{ c=c+1;}
+return c;
+}

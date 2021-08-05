@@ -4009,3 +4009,12 @@ Daily Scrum 04.08:
 			---> fixar o build da instrução "create", para retirar indices de dimensões, se a variavel a ser criada for uma variavel VariavelVetor.
 						---> codificado, aguardando testes.
 __________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 05.08: 	
+
+	Atividades do dia realizadas:
+
+	---> teste para processamento de uma chamada de metodo de um objeto de classe importada.
+			---> (teste implícito) modificado o codigo de ParserUniversal.GetTokens(), para corrigir erros com tokens de ponto flutuante.
+
+			---> fixar o build da instrução "create", para retirar indices de dimensões, se a variavel a ser criada for uma variavel VariavelVetor.
+						---> codificado, aguardando testes.

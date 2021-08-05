@@ -1,0 +1,1 @@
+public class classeA { public int a ; public int funcaoB ( int x ){ while (x>0) {x= x+1;}} } 

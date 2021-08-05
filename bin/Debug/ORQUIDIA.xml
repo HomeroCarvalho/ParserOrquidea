@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+
+
+<producoes>
+
+
+	<producao>
+    <nome>[RETURN]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>return [ID] ;</maquinaDeEstados>
+    <palavrasChave>return ;</palavrasChave>
+    <VM></VM>
+    </producao>
+
+
+
+	<producao>
+    <nome>[CONSTRUCTOR]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>construtor [ID] ( [ID] [ID] , )</maquinaDeEstados>
+    <palavrasChave>construtor (  )</palavrasChave>
+    <VM></VM>
+    </producao>
+
+
+
+   <producao>
+    <nome>[CREATE]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>[ID] [ID] = create ( [ID] , [ID] )</maquinaDeEstados>
+    <palavrasChave>=  create  (  )</palavrasChave>
+    <VM></VM>
+     </producao>
+
+
+
+    <producao>
+    <nome>[CASESOFUSE]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>casesOfUse [ID] : ( case [ID] [ID] :</maquinaDeEstados>
+    <palavrasChave>casesOfUse : ( case : </palavrasChave>
+    <VM></VM>
+     </producao>
+
+	<producao>
+    <nome>[GetVar]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>[ID] GetVar (  [ID]  )</maquinaDeEstados>
+    <palavrasChave>GetVar (    ) </palavrasChave>
+    <VM></VM>
+  </producao>
+
+
+	<producao>
+    <nome>[SetVar]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>SetVar ( [ID] )</maquinaDeEstados>
+    <palavrasChave>SetVar (    ) </palavrasChave>
+    <VM></VM>
+  </producao>
+
+
+  <producao>
+    <nome>[WHILE]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>while ( [EXPRESSAO_CONDICIONAL] ) [BLOCO]</maquinaDeEstados>
+    <palavrasChave>while  (    ) </palavrasChave>
+    <VM></VM>
+  </producao>
+
+
+  <producao>
+    <nome>[FOR]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>for( [EXPRESSAO_ATRIBUICAO] ; [EXPRESSAO_CONDICIONAL] ; [EXPRESSAO_ARITMETICA_RESUMIDA] ) [BLOCO]</maquinaDeEstados>
+    <palavrasChave>for  (   ;    ;   )  </palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[IF]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>if ( [EXPRESSAO_CONDICIONAL] ) [BLOCO]  else [BLOCO] </maquinaDeEstados>
+    <palavrasChave>if   (   )  {  }  else  {  } </palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[IF]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>if ( [EXPRESSAO_CONDICIONAL] ) [BLOCO]</maquinaDeEstados>
+    <palavrasChave>if  (   ) </palavrasChave>
+  </producao>
+
+
+
+<producao>
+    <nome>[CONTINUE]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>continue ; </maquinaDeEstados>
+    <palavrasChave>continue</palavrasChave>
+    <VM></VM>
+  </producao>
+
+
+<producao>
+    <nome>[BREAK]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>break ; </maquinaDeEstados>
+    <palavrasChave>break</palavrasChave>
+    <VM></VM>
+  </producao>
+
+
+
+
+  <producao>
+    <nome>[IGUALDADE]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>[ID] = [EXPRESSAO]</maquinaDeEstados>
+    <palavrasChave>=</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[DEFINICAO_OPERADOR_BINARIO]</nome>
+    <tipo>[DEFINICAO]</tipo>
+    <maquinaDeEstados>operador [ID] [ID] ( [ID] [ID] , [ID] [ID]) prioridade [ID] metodo [ID];</maquinaDeEstados>
+    <palavrasChave>operador  (   ,   )  prioridade , metodo </palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[DEFINICAO_OPERADOR_UNARIO]</nome>
+    <tipo>[DEFINICAO]</tipo>
+    <maquinaDeEstados>operador [ID] [ID] ( [ID] [ID] ) prioridade [ID] metodo [ID];</maquinaDeEstados>
+    <palavrasChave>operador  (   ,   )  prioridade , metodo </palavrasChave>
+    <VM></VM>
+  </producao>
+    
+  <producao>
+    <nome>[FUNCAO_ESTRUTURADA]</nome>
+    <tipo>[FUNCAO]</tipo>
+    <maquinaDeEstados>[ID]  [ID] ( [PARAMETRO_FUNCAO] ) [BLOCO]</maquinaDeEstados>
+    <palavrasChave>(  )</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[FUNCAO_LISP]</nome>
+    <tipo>[FUNCAO]</tipo>
+    <maquinaDeEstados>LISP [FUNCAO_GENERICA_LISP]</maquinaDeEstados>
+    <palavrasChave>LISP</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[FUNCAO_PROLOG]</nome>
+    <tipo>[FUNCAO]</tipo>
+    <maquinaDeEstados>PROLOG [FUNCAO_GENERICA_PROLOG] .</maquinaDeEstados>
+    <palavrasChave>PROLOG  .</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[FUNCAO_GENERICA]</nome>
+    <tipo>[FUNCAO]</tipo>
+    <maquinaDeEstados>[ID] ( [PARAMETRO_FUNCAO]  ) [BLOCO]</maquinaDeEstados>
+    <palavrasChave>(  )</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[PARAMETRO_FUNCAO]</nome>
+    <tipo>[ID]</tipo>
+    <maquinaDeEstados>[ID] [ID]</maquinaDeEstados>
+    <palavrasChave></palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <poducao>
+    <nome>[PARAMETRO_FUNCAO]</nome>
+    <tipo>[ID]</tipo>
+    <maquinaDeEstados>[PARAMETRO_FUNCAO] , [PARAMETRO_FUNCAO]</maquinaDeEstados>
+    <palavrasChave>,</palavrasChave>
+    <VM></VM>
+  </poducao>
+  
+  <producao>
+    <nome>[FUNCAO_GENERICA_LISP]</nome>
+    <tipo>[FUNCAO]</tipo>
+    <maquinaDeEstados>[ID]  (  [PARAMETRO_FUNCAO]  )  (  [FUNCAO_GENERICA_LISP]  ) </maquinaDeEstados>
+    <palavrasChave> (   )</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+  <producao>
+    <nome>[FUNCAO_GENERICA_PROLOG]</nome>
+    <tipo>[FUNCAO]</tipo>
+    <maquinaDeEstados>[ID] ( [PARAMETRO_FUNCAO] ) :- [ASSERCAO_PROLOG] .</maquinaDeEstados>
+    <palavrasChave>(   )   :- </palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[ASSERCAO_PROLOG]</nome>
+    <tipo>[FUNCAO]</tipo>
+    <maquinaDeEstados>( [EXPRESSAO] )</maquinaDeEstados>
+    <palavrasChave>(   )</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+  <producao>
+    <nome>[ASSERCAO_PROLOG]</nome>
+    <tipo>[FUNCAO]</tipo>
+    <maquinaDeEstados>(  [EXPRESSAO]  )  ,  (  [EXPRESSAO]  )</maquinaDeEstados>
+    <palavrasChave>(  ,  )</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[CLASSE]</nome>
+    <tipo>[TYPE_ID]</tipo>
+    <maquinaDeEstados>class [ID]  { [PARAMETRO CLASSE] }</maquinaDeEstados>
+    <palavrasChave>class   {   }</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[CLASSE]</nome>
+    <tipo>[TYPE_ID]</tipo>
+    <maquinaDeEstados>class [ID] : [CLASSE_HERDADA]  { [PARAMETRO_CLASSE] }</maquinaDeEstados>
+    <palavrasChave>class   :   {   }</palavrasChave>
+    <VM></VM>
+  </producao>
+
+ 
+  <producao>
+    <nome>[CLASSE_HERDADA]</nome>
+    <tipo>[TYPE_ID]</tipo>
+    <maquinaDeEstados>[ID] , [CLASSE_HERDADA]</maquinaDeEstados>
+    <palavrasChave>,</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+    <producao>
+    <nome>[CLASSE_HERDADA]</nome>
+    <tipo>[TYPE_ID]</tipo>
+    <maquinaDeEstados>[ID]</maquinaDeEstados>
+    <palavrasChave></palavrasChave>
+    <VM></VM>
+  </producao>
+  
+
+  <producao>
+    <nome>[PROPRIEDADE]</nome>
+    <tipo>[ID]</tipo>
+    <maquinaDeEstados>[ID]  [ID] ;</maquinaDeEstados>
+    <palavrasChave> ;</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+  <producao>
+    <nome>[ACESS KEY]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>[ID]  .  [FUNCAO_GENERICA]</maquinaDeEstados>
+    <palavrasChave>.</palavrasChave>
+    <VM></VM>
+
+  </producao>
+
+  <producao>
+    <nome>[ACESS KEY]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>[ID] . [PROPRIEDADE]</maquinaDeEstados>
+    <palavrasChave>.</palavrasChave>
+    <VM></VM>
+  </producao>
+ 
+ <producao>
+    <nome>[ESTATICA]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>static</maquinaDeEstados>
+    <palavrasChave>static</palavrasChave>
+    <VM></VM>
+  </producao>
+
+ 
+  <producao>
+    <nome>[PARAMETRO CLASSE]</nome>
+    <tipo>[PARAMETRO CLASSE]</tipo>
+    <maquinaDeEstados>protected [PROPRIEDADE]</maquinaDeEstados>
+    <palavrasChave>protected</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[PARAMETRO CLASSE]</nome>
+    <tipo>[PARAMETRO CLASSE]</tipo>
+    <maquinaDeEstados>private [PROPRIEDADE]</maquinaDeEstados>
+    <palavrasChave>private</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[PARAMETRO CLASSE]</nome>
+    <tipo>[PARAMETRO CLASSE]</tipo>
+    <maquinaDeEstados>public [PROPRIEDADE]</maquinaDeEstados>
+    <palavrasChave>public</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[PARAMETRO CLASSE]</nome>
+    <tipo>[PARAMETRO CLASSE]</tipo>
+    <maquinaDeEstados>protected  [FUNCAO]</maquinaDeEstados>
+    <palavrasChave>protected</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+  <producao>
+    <nome>[PARAMETRO CLASSE]</nome>
+    <tipo>[PARAMETRO CLASSE]</tipo>
+    <maquinaDeEstados>private [FUNCAO]</maquinaDeEstados>
+    <palavrasChave>private</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+  <producao>
+    <nome>[PARAMETRO CLASSE]</nome>
+    <tipo>[PARAMETRO CLASSE]</tipo>
+    <maquinaDeEstados>public  [FUNCAO]</maquinaDeEstados>
+    <palavrasChave>public</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  
+  <producao>
+    <nome>[ATRIBUICAO]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>[ID]  =  [EXPRESSAO]  ;</maquinaDeEstados>
+    <palavrasChave>=  ;</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[ATRIBUICAO]</nome>
+    <tipo>[COMANDO]</tipo>
+    <maquinaDeEstados>[TYPE_ID] [ID] = [EXPRESSAO] ;</maquinaDeEstados>
+    <palavrasChave>=   ;</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+   <producao>
+    <nome>[INDICE_MATRICIAL]</nome>
+    <tipo>[OPERADOR DUPLO]</tipo>
+    <maquinaDeEstados>[ [EXPRESSAO] ]</maquinaDeEstados>
+    <palavrasChave>[  ]</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+  <producao>
+    <nome>[INDICE_MATRICIAL]</nome>
+    <tipo>[OPERADOR DUPLO]</tipo>
+    <maquinaDeEstados>[ [EXPRESSAO] ] [ [INDICE_MATRICIAL] ]</maquinaDeEstados>
+    <palavrasChave>[   ]</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  
+  <producao>
+  <nome>[OPERADOR VERIFICADOR DE IGUALDADE]</nome>
+  <tipo>[OPERADOR BINARIO]</tipo>
+  <maquinaDeEstados>==</maquinaDeEstados>
+  <palavrasChave>==</palavrasChave>
+  <VM></VM>
+  </producao>
+  
+  <producao>
+    <nome>[OPERADOR IGUALDADE]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>=</maquinaDeEstados>
+    <palavrasChave>=</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+  <producao>
+  <nome>[OPERADOR DESIGUALDADE]</nome>
+  <tipo>[OPERADOR BINARIO]</tipo>
+  <maquinaDeEstados>!=</maquinaDeEstados>
+  <palavrasChave>!=</palavrasChave>
+  <VM></VM>
+  </producao>
+  
+  
+  <producao>
+    <nome>[OPERADOR DOT]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>.</maquinaDeEstados>
+    <palavrasChave>.</palavrasChave>
+    <VM></VM>
+  </producao>
+ 
+  <producao>
+    <nome>[OPERADOR LOGICO]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>|</maquinaDeEstados>
+    <palavrasChave>|</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+  <producao>
+    <nome>[OPERADOR LOGICO]</nome>
+    <tipo>[OPERADOR UNARIO]</tipo>
+    <maquinaDeEstados>!</maquinaDeEstados>
+    <palavrasChave>!</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[OPERADOR LOGICO]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>&amp;</maquinaDeEstados>
+    <palavrasChave>&amp;</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[OPERADOR_ARITMETICO]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>+</maquinaDeEstados>
+    <palavrasChave>+</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+  <producao>
+    <nome>[OPERADOR_ARITMETICO]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>-</maquinaDeEstados>
+    <palavrasChave>-</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+<producao>
+    <nome>[OPERADOR_ARITMETICO]</nome>
+    <tipo>[OPERADOR UNARIO]</tipo>
+    <maquinaDeEstados>+</maquinaDeEstados>
+    <palavrasChave>+</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+  <producao>
+    <nome>[OPERADOR_ARITMETICO]</nome>
+    <tipo>[OPERADOR UNARIO]</tipo>
+    <maquinaDeEstados>-</maquinaDeEstados>
+    <palavrasChave>-</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+  <producao>
+    <nome>[OPERADOR_ARITMETICO]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>*</maquinaDeEstados>
+    <palavrasChave>*</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+  <producao>
+    <nome>[OPERADOR_ARITMETICO]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>/</maquinaDeEstados>
+    <palavrasChave>/</palavrasChave>
+    <VM></VM>
+  </producao>
+  
+  <producao>
+    <nome>[OPERADOR_ARITMETICO]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>%</maquinaDeEstados>
+    <palavrasChave>%</palavrasChave>
+    <VM></VM>
+  </producao>
+  <producao>
+    <nome>[OPERADOR_ARITMETICO]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>^</maquinaDeEstados>
+    <palavrasChave>^</palavrasChave>
+    <VM></VM>
+  </producao>
+ 
+  <producao>
+    <nome>[OPERADOR_UNARIO]</nome>
+    <tipo>[OPERADOR UNARIO]</tipo>
+    <maquinaDeEstados>++</maquinaDeEstados>
+    <palavrasChave>++</palavrasChave>
+    <VM></VM>
+  </producao>
+  <producao>
+    <nome>[OPERADOR_UNARIO]</nome>
+    <tipo>[OPERADOR UNARIO]</tipo>
+    <maquinaDeEstados>--</maquinaDeEstados>
+    <palavrasChave>--</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[OPERADOR_CONDICIONAL]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>></maquinaDeEstados>
+    <palavrasChave>></palavrasChave>
+    <VM></VM>
+  </producao>
+  <producao>
+    <nome>[OPERADOR_CONDICIONAL]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>&lt;</maquinaDeEstados>
+    <palavrasChave>&lt;</palavrasChave>
+    <VM></VM>
+  </producao>
+  <producao>
+    <nome>[OPERADOR_CONDICIONAL]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>>=</maquinaDeEstados>
+    <palavrasChave>>=</palavrasChave>
+    <VM></VM>
+  </producao>
+  <producao>
+    <nome>[OPERADOR_CONDICIONAL]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>&lt;=</maquinaDeEstados>
+    <palavrasChave>&lt;=</palavrasChave>
+    <VM></VM>
+  </producao>
+
+
+  <producao>
+    <nome>[OPERADOR_CONDICIONAL]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>!=</maquinaDeEstados>
+    <palavrasChave>!=</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[OPERADOR_EXPRESSIONAL_BOOLEANO]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>&amp;&amp;</maquinaDeEstados>
+    <palavrasChave>&amp;&amp;</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[OPERADOR_EXPRESSIONAL_BOOLEANO]</nome>
+    <tipo>[OPERADOR BINARIO]</tipo>
+    <maquinaDeEstados>||</maquinaDeEstados>
+    <palavrasChave>||</palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[ID]</nome>
+    <tipo>[ID]</tipo>
+    <maquinaDeEstados>[ID]</maquinaDeEstados>
+    <palavrasChave> </palavrasChave>
+    <VM></VM>
+  </producao>
+
+  <producao>
+    <nome>[NUMERO]</nome>
+    <tipo>[ID]</tipo>
+    <maquinaDeEstados>[ID]</maquinaDeEstados>
+    <palavrasChave> </palavrasChave>
+    <VM></VM>
+  </producao>
+  <producao>
+    <nome>[TYPE_ID]</nome>
+    <tipo>[ID]</tipo>
+    <maquinaDeEstados>[ID]</maquinaDeEstados>
+    <palavrasChave> </palavrasChave>
+    <VM></VM>
+  </producao>
+</producoes>

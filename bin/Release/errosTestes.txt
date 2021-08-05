@@ -1,0 +1,40 @@
+
+
+Time: 20/02/2018 05:34:20  Message: Erro no corpo do projeto principal. Stack Trace:    em System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   em System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   em System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize)
+   em System.Xml.XmlDownloadManager.GetStream(Uri uri, ICredentials credentials, IWebProxy proxy, RequestCachePolicy cachePolicy)
+   em System.Xml.XmlUrlResolver.GetEntity(Uri absoluteUri, String role, Type ofObjectToReturn)
+   em System.Xml.XmlTextReaderImpl.OpenUrlDelegate(Object xmlResolver)
+   em System.Threading.CompressedStack.runTryCode(Object userData)
+   em System.Runtime.CompilerServices.RuntimeHelpers.ExecuteCodeWithGuaranteedCleanup(TryCode code, CleanupCode backoutCode, Object userData)
+   em System.Threading.CompressedStack.Run(CompressedStack compressedStack, ContextCallback callback, Object state)
+   em System.Xml.XmlTextReaderImpl.OpenUrl()
+   em System.Xml.XmlTextReaderImpl.Read()
+   em System.Xml.XmlTextReader.Read()
+   em parser.xmlREADER_LINGUAGEM.LE_ARQUIVO_LINGUAGEM(List`1 producoes, String nomearquivo) na E:\pendrive azul backup\0_PROGRAMAÇÃO CURRENTE DESDE 08.02.16\ParserLinguagemOrquidea Projeto Atual\ParserLinguagemOrquidea\GramaticaComponentes\xmlREADER_LINGUAGEM.cs:linha 30
+   em parser.linguagemOrquidea.inicializaProducoesDaLinguagem() na E:\pendrive azul backup\0_PROGRAMAÇÃO CURRENTE DESDE 08.02.16\ParserLinguagemOrquidea Projeto Atual\ParserLinguagemOrquidea\GramaticaComponentes\lngLinguagemOrquidia.cs:linha 128
+   em parser.UmaGramaticaComputacional..ctor() na E:\pendrive azul backup\0_PROGRAMAÇÃO CURRENTE DESDE 08.02.16\ParserLinguagemOrquidea Projeto Atual\ParserLinguagemOrquidea\GramaticaComponentes\lngUmaLinguagemComputacional.cs:linha 45
+   em parser.CorpoTestes.TesteGetTodosTermosChave(Assercoes assercao) na E:\pendrive azul backup\0_PROGRAMAÇÃO CURRENTE DESDE 08.02.16\ParserLinguagemOrquidea Projeto Atual\ParserLinguagemOrquidea\testes\CorpoTestes.cs:linha 164
+   em MODULO_TESTE.Teste.ExecutaTeste() na E:\pendrive azul backup\0_PROGRAMAÇÃO CURRENTE DESDE 08.02.16\ParserLinguagemOrquidea Projeto Atual\ParserLinguagemOrquidea\testes\ModuloDeTestes.cs:linha 281
+   em MODULO_TESTE.ContainerTestes.ExecutaTestes() na E:\pendrive azul backup\0_PROGRAMAÇÃO CURRENTE DESDE 08.02.16\ParserLinguagemOrquidea Projeto Atual\ParserLinguagemOrquidea\testes\ModuloDeTestes.cs:linha 426
+
+
+Time: 20/02/2018 05:35:12  Message: Erro no corpo do projeto principal. Stack Trace:    em System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   em System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   em System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize)
+   em System.Xml.XmlDownloadManager.GetStream(Uri uri, ICredentials credentials, IWebProxy proxy, RequestCachePolicy cachePolicy)
+   em System.Xml.XmlUrlResolver.GetEntity(Uri absoluteUri, String role, Type ofObjectToReturn)
+   em System.Xml.XmlTextReaderImpl.OpenUrlDelegate(Object xmlResolver)
+   em System.Threading.CompressedStack.runTryCode(Object userData)
+   em System.Runtime.CompilerServices.RuntimeHelpers.ExecuteCodeWithGuaranteedCleanup(TryCode code, CleanupCode backoutCode, Object userData)
+   em System.Threading.CompressedStack.Run(CompressedStack compressedStack, ContextCallback callback, Object state)
+   em System.Xml.XmlTextReaderImpl.OpenUrl()
+   em System.Xml.XmlTextReaderImpl.Read()
+   em System.Xml.XmlTextReader.Read()
+   em parser.xmlREADER_LINGUAGEM.LE_ARQUIVO_LINGUAGEM(List`1 producoes, String nomearquivo) na E:\pendrive azul backup\0_PROGRAMAÇÃO CURRENTE DESDE 08.02.16\ParserLinguagemOrquidea Projeto Atual\ParserLinguagemOrquidea\GramaticaComponentes\xmlREADER_LINGUAGEM.cs:linha 30
+   em parser.linguagemOrquidea.inicializaProducoesDaLinguagem() na E:\pendrive azul backup\0_PROGRAMAÇÃO CURRENTE DESDE 08.02.16\ParserLinguagemOrquidea Projeto Atual\ParserLinguagemOrquidea\GramaticaComponentes\lngLinguagemOrquidia.cs:linha 128
+   em parser.UmaGramaticaComputacional..ctor() na E:\pendrive azul backup\0_PROGRAMAÇÃO CURRENTE DESDE 08.02.16\ParserLinguagemOrquidea Projeto Atual\ParserLinguagemOrquidea\GramaticaComponentes\lngUmaLinguagemComputacional.cs:linha 45
+   em parser.CorpoTestes.TesteGetTodosTermosChave(Assercoes assercao) na E:\pendrive azul backup\0_PROGRAMAÇÃO CURRENTE DESDE 08.02.16\ParserLinguagemOrquidea Projeto Atual\ParserLinguagemOrquidea\testes\CorpoTestes.cs:linha 164
+   em MODULO_TESTE.Teste.ExecutaTeste() na E:\pendrive azul backup\0_PROGRAMAÇÃO CURRENTE DESDE 08.02.16\ParserLinguagemOrquidea Projeto Atual\ParserLinguagemOrquidea\testes\ModuloDeTestes.cs:linha 281
+   em MODULO_TESTE.ContainerTestes.ExecutaTestes() na E:\pendrive azul backup\0_PROGRAMAÇÃO CURRENTE DESDE 08.02.16\ParserLinguagemOrquidea Projeto Atual\ParserLinguagemOrquidea\testes\ModuloDeTestes.cs:linha 426

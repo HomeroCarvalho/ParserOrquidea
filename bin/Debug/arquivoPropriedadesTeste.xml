@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<file>
+  <propriedade acessor="private" tipo="int" nome="propriedadeA" valor="0" isStatic="false" />
+</file>

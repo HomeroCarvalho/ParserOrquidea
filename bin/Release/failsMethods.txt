@@ -1,0 +1,2 @@
+1
+[FAIL TEST NAME] Teste de obtenção de todos termos chave

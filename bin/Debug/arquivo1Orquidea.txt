@@ -1,0 +1,1 @@
+class classeA { public int a ; public int funcaoB ( int x ){ int c=1;} } 

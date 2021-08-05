@@ -259,7 +259,7 @@ namespace parser
         }
 
 
-        class TokenComPosicao
+        public class TokenComPosicao
         {
             public string token { get; set; }
             public int coluna { get; set; }
@@ -276,7 +276,7 @@ namespace parser
             }
         } // class
 
-        class ComparerTokensPosicao : IComparer<TokenComPosicao>
+        public class ComparerTokensPosicao : IComparer<TokenComPosicao>
         {
             public int Compare(TokenComPosicao x, TokenComPosicao y)
             {
@@ -289,7 +289,7 @@ namespace parser
             }
         }
 
-        class ComparerTexts : IComparer<string>
+        public class ComparerTexts : IComparer<string>
         {
             public int Compare(string x, string y)
             {

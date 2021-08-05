@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<file>
+  <instrucao>
+    <codigo_instrucao>3</codigo_instrucao>
+    <expressoes>
+      <expressao>
+        <elementos>int x = 0 ;</elementos>
+      </expressao>
+      <expressao>
+        <elementos>x &lt; 5 ;</elementos>
+      </expressao>
+      <expressao>
+        <elementos>x ++</elementos>
+      </expressao>
+    </expressoes>
+  </instrucao>
+  <blocos>
+    <bloco>
+      <instrucao>
+        <codigo_instrucao>4</codigo_instrucao>
+        <expressoes>
+          <expressao>
+            <elementos>int x</elementos>
+          </expressao>
+          <expressao>
+            <elementos>x - 1 ;</elementos>
+          </expressao>
+        </expressoes>
+      </instrucao>
+    </bloco>
+  </blocos>
+</file>
