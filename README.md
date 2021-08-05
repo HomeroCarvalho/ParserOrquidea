@@ -1,4 +1,4 @@
-# ProjetoLinguagensOrquideaVisualStudio2019
+# ProjetoLinguagensOrquidea
 implementacao de linguagens de programacao LISP, PROLOG, programacao estruturada, e programacao orientada a  objetos
 
 # LinguagensDoOrquidea
@@ -8,7 +8,7 @@ Ante de compilar o projeto, acrescente os pacotes NuGet: MathNet.Numerics, MathN
 
 Instrucoes da parte Programacao Orientada a Objetos, e tambem Programacao Estruturada.
 
-----> INSTRUCOES:
+----> INSTRUCOES: (comandos)
 		
 		---> Create (object objeto, List<propriedades>)
 			cria uma copia na memoria das propriedades do objeto, e registra o objeto no escopo.
@@ -40,9 +40,9 @@ Instrucoes da parte Programacao Orientada a Objetos, e tambem Programacao Estrut
 				    { operacao aritmetica, poucondicional) var_caso2: {instrucoes }
 
 					exemplo: casesOfUse x {
-							{>1: funcaoA();}
-							{>(a+b): funcaoB();}
-							{==1: funcaoAB();}
+							(>1: bloco_intstrucoes;)
+							(>(a+b): funcaoB();)
+							(==1: funcaoAB();)
 							}
 
 
@@ -71,8 +71,8 @@ Instrucoes da parte Programacao Orientada a Objetos, e tambem Programacao Estrut
 
 CLASSES DA LINGUAGEM:
 		---> interopabilidade entre linguagem Orquidea e C sharp: (importa tipos de um arquivo .dll gerenciado, ou .exe.
-			         classe ImportadorDeClasses
-		--> int, float, char, string.
+			classe ImportadorDeClasses: importa classes de um Assembly (aplicativo .exe c sharp, ou biblioteca .dll c sharp). importa classes, metodos, propriedades.. 
+		
 
 OBJETOS DA LINGUAGEM:
-		---> muito semelhante a visto em Java, C sharp, mas classes com multi-heranca (com detecção do problema do "losango da morte"), deserança.
+		---> muito semelhante a visto em Java, C sharp, mas classes com multi-heranca (com detecção do problema do "losango da morte"), desherança.
