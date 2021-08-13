@@ -110,13 +110,8 @@ namespace parser
             if ((escopo.tabela.GetFuncoes() != null) && (escopo.tabela.GetFuncoes().Count > 0))
                 this.tabela.GetFuncoes().AddRange(escopo.tabela.GetFuncoes());
 
-
-            if ((escopo.tabela.GetVariaveis() != null) && (escopo.tabela.GetVariaveis().Count > 0))
-                this.tabela.GetVariaveis().AddRange(escopo.tabela.GetVariaveis());
-
-
-            if ((escopo.tabela.GetVariaveisVetor() != null) && (escopo.tabela.GetVariaveisVetor().Count > 0))
-                this.tabela.GetVariaveisVetor().AddRange(escopo.tabela.GetVariaveisVetor());
+            if ((escopo.tabela.GetVetores() != null) && (escopo.tabela.GetVetores().Count > 0))
+                this.tabela.GetVetores().AddRange(escopo.tabela.GetVetores());
 
 
             if ((escopo.tabela.GetOperadores() != null) && (escopo.tabela.GetOperadores().Count > 0))
@@ -236,7 +231,7 @@ namespace parser
  *    métodos da classe TabelaDeValores
  *    
  *  GetTipoVariavel(nome, escopo): string
- *  GetVariaveis(): List<Variavel>
+ *  GetObjetos(): List<Variavel>
  *  GetFuncao(nome, tipoRetorno)
  *  GetClasses()
  *  GetValorVariavel(nomeVariavel, escopo): object

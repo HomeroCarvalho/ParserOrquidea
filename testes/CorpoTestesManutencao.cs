@@ -109,7 +109,7 @@ namespace parser.Manutencao
             ProcessadorDeID processador = new ProcessadorDeID(new List<string>() { codigo });
             processador.Compile();
 
-            assercao.IsTrue(processador.escopo.tabela.GetVar("variavelDaClasse", processador.escopo) != null);
+            assercao.IsTrue(processador.escopo.tabela.GetObjeto("variavelDaClasse", processador.escopo) != null);
         }
 
         private void TestePropriedadesEncadeadas(Assercoes assercao)
@@ -159,7 +159,7 @@ namespace parser.Manutencao
 
 
             if (!isStatic)
-                return processador.escopo.tabela.GetVar(nomeDaVariavel, processador.escopo) != null;
+                return processador.escopo.tabela.GetObjeto(nomeDaVariavel, processador.escopo) != null;
             if (isStatic)
             {
                 Classe classeDaPropriedadeEstatica = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoDaVariavel);
@@ -218,7 +218,7 @@ namespace parser.Manutencao
 
             XDocument document = new XDocument();
 
-            propriedade propriedadeASalvar1 = new propriedade("propriedadeA", "int", "0", false);
+            Objeto propriedadeASalvar1 = new Objeto("propriedadeA", "int", "a","0", false);
 
 
             PropriedadesXML escritaEmArquivoXml = new PropriedadesXML("arquivoPropriedadesTeste.xml");
@@ -234,7 +234,7 @@ namespace parser.Manutencao
 
 
             PropriedadesXML leituraEmArquivosXml = new PropriedadesXML("arquivoPropriedadesTeste.xml");
-            propriedade propriedadeALer = leituraEmArquivosXml.Read(null);
+            Objeto propriedadeALer = leituraEmArquivosXml.Read(null);
 
             assercao.IsTrue((propriedadeALer != null) &&
                             (propriedadeASalvar1.GetNome() == propriedadeALer.GetNome()));
@@ -335,7 +335,7 @@ namespace parser.Manutencao
             string codigo = "int x=x+1;";
             ProcessadorDeID processador = new ProcessadorDeID(new List<string>() { codigo });
             processador.Compile();
-            assercao.IsTrue(processador.escopo.tabela.GetVariaveis().Count == 1);
+            assercao.IsTrue(processador.escopo.tabela.GetObjetos().Count == 1);
         }
 
         private void testeBuildOperadorBinario(Assercoes assercao)
@@ -397,6 +397,10 @@ namespace parser.Manutencao
         {
             int numeroId_teste = 0;
 
+            public Teste_01():base("Testes experimentais da nova classe para testes.")
+            {
+
+            }
             public void TesteCenario1(AssercaoSuiteClasse assercao)
             {
                 LoggerTests.AddMessage("teste cenario 1 executado.");
@@ -455,7 +459,7 @@ namespace parser.Manutencao
             ProcessadorDeID processador = new ProcessadorDeID(codigoTotal);
             processador.Compile();
 
-            Objeto objetoEscrito = new Objeto("classeA", "umObjeto", "5", processador.escopo);
+            Objeto objetoEscrito = new Objeto("private", "classeA", "umObjeto", "5");
 
 
 
@@ -525,7 +529,7 @@ namespace parser.Manutencao
             ProcessadorDeID procesador = new ProcessadorDeID(new List<string>() { codigo });
             procesador.Compile();
             assercao.MsgSucess("cenario de testes terminado sem erros fatais.");
-            assercao.IsTrue(procesador.escopo.tabela.GetVariaveis().Count == 1);
+            assercao.IsTrue(procesador.escopo.tabela.GetObjetos().Count == 1);
         }
 
         private void testeChamadaDeMetodo(Assercoes assercao)

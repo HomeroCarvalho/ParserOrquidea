@@ -29,6 +29,19 @@ namespace ModuloTESTES
           
         }
 
+        public static void WriteEmptyLines()
+        {
+            if (nameFileLog == null)
+                nameFileLog = Path.GetFullPath("RelatorioTexto.txt");
+
+            FileStream stream = new FileStream(nameFileLog, FileMode.Append);
+            StreamWriter stmwrt = new StreamWriter(stream);
+            stmwrt.WriteLine("");
+            stmwrt.WriteLine("");
+            stmwrt.Close();
+            stream.Close();
+        }
+
         /// <summary>
         /// adiciona uma linha de informação no log.
         /// </summary>
@@ -40,8 +53,7 @@ namespace ModuloTESTES
 
             FileStream stream = new FileStream(nameFileLog, FileMode.Append);
             StreamWriter stmwrt = new StreamWriter(stream);
-            stmwrt.WriteLine();
-            stmwrt.WriteLine();
+          
             stmwrt.Write("Time: " + DateTime.Now.ToString() + "  ");
             stmwrt.WriteLine("Message: " + logMessage);
             stmwrt.Close();

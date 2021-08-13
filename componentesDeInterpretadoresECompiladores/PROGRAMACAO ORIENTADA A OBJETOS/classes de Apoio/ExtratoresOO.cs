@@ -95,7 +95,7 @@ namespace parser
 
             //********************************************************************************************************
             // obtém as propriedades da classe.
-            List<propriedade> propriedadesDaClasse = this.ExtraiPropriedades(nomeDeClasseOuInterface, escopoDaClasse);
+            List<Objeto> propriedadesDaClasse = this.ExtraiPropriedades(nomeDeClasseOuInterface, escopoDaClasse);
 
             //**********************************************************************************************       
 
@@ -252,10 +252,10 @@ namespace parser
                                 classeHerdeira.GetMetodos()[indexMetodo].SetNomeLongo(); // adiciona o nome da classe herdada ao nome do metodo, para impedir o problema do losango mortal.
                             }
                         } // if
-        
+
                     for (int p = 0; p < classeHerdada.GetPropriedades().Count; p++)
                         // adiciona propriedades das classes herdadas, para a classe herdeira, para a classe herdeira, se são publico ou protegido.
-                        if ((classeHerdada.GetPropriedades()[p].acessor == "public") || (classeHerdada.GetPropriedades()[p].acessor == "protected"))
+                        if ((classeHerdada.GetPropriedades()[p].GetAcessor() == "public") || (classeHerdada.GetPropriedades()[p].GetAcessor() == "protected")) 
                         {
                             classeHerdeira.GetPropriedades().Add(classeHerdada.GetPropriedades()[p]);
 
@@ -304,8 +304,8 @@ namespace parser
                     }
                     for (int p = 0; p < umaClasseDeserdada.GetPropriedades().Count; p++)
                         // remove propriedades publicas ou protegidas, com o mesmo nome de propriedade da classe herdeira (a classe que receber a herança).
-                        if ((umaClasseDeserdada.GetPropriedades()[p].acessor == "public") ||
-                            (umaClasseDeserdada.GetPropriedades()[p].acessor == "private"))
+                        if ((umaClasseDeserdada.GetPropriedades()[p].GetAcessor() == "public") ||
+                            (umaClasseDeserdada.GetPropriedades()[p].GetAcessor() == "private")) 
                         {
                             int indexRemocao = classeHerdeira.GetPropriedades().FindIndex(k => k.GetNome() == umaClasseDeserdada.GetPropriedades()[p].GetNome());
                             if (indexRemocao == -1)
@@ -448,43 +448,43 @@ namespace parser
         }
 
         /// Extrai propriedades (campos) a partir do código da classe.
-        private List<propriedade> ExtraiPropriedades(string nomeClasse, Escopo escopo)
+        private List<Objeto> ExtraiPropriedades(string nomeClasse, Escopo escopo)
         {
             // obtém uma lista de variáveis declaradas na construção do escopo da classe.
-            List<Variavel> variaveis = escopo.tabela.GetVariaveis();
+            List<Objeto> objetosCampos = escopo.tabela.GetObjetos();
 
             // se a lista de variaveis não for vazia, registra as variáveis da classe, a partir do escopo principal.
-            if ((variaveis != null) && (variaveis.Count > 0))
+            if ((objetosCampos != null) && (objetosCampos.Count > 0))
             {
 
-                List<propriedade> propriedadesDaClasse = new List<propriedade>();
+                List<Objeto> propriedadesDaClasse = new List<Objeto>();
 
                 // faz uma varredura em busca de variáveis, que também tem acessor: public, private, ou protected.
-                foreach (Variavel umaVariavel in variaveis)
+                foreach (Objeto umObjeto in objetosCampos)
                 {
 
 
-                    string acessor = umaVariavel.GetAcessor();
+                    string acessor = umObjeto.GetAcessor();
 
-                    string nome = umaVariavel.GetNome();
-
-                   
-                    if (umaVariavel.isStatic) // a variável, propriedade é estática, modifica o nome.
-                        umaVariavel.SetNome("static." + umaVariavel.GetNomeLongo());
+                    string nome = umObjeto.GetNome();
 
 
-                    int  indexVariavelJaDefinidaEmOutraClasseHerdada= propriedadesDaClasse.FindIndex(k => k.GetNome().Equals(nome));
-                    if (indexVariavelJaDefinidaEmOutraClasseHerdada != -1)
+                    if (umObjeto.isStatic) // a variável, propriedade é estática, modifica o nome.
+                        umObjeto.SetNome("static." + umObjeto.GetNome());
+
+
+                    int  indexPropriedadeJaDefinidaEmOutraClasseHerdada= propriedadesDaClasse.FindIndex(k => k.GetNome().Equals(nome));
+                    if (indexPropriedadeJaDefinidaEmOutraClasseHerdada != -1)
                     {
                         // muda o nome das variaveis para o seu nome longo, pois há conflito em nomes de variaveis de diferentes classes herdadas.
-                        propriedadesDaClasse[indexVariavelJaDefinidaEmOutraClasseHerdada].SetNomeLongo();
-                        propriedadesDaClasse.Add(new propriedade(umaVariavel.GetAcessor(), umaVariavel.GetNomeLongo(), umaVariavel.GetTipo(), umaVariavel.GetValor(), umaVariavel.isStatic));
+                        propriedadesDaClasse[indexPropriedadeJaDefinidaEmOutraClasseHerdada].SetNomeLongo();
+                        propriedadesDaClasse.Add(new Objeto(umObjeto.GetAcessor(), umObjeto.GetTipo(), umObjeto.GetNome(), umObjeto.GetValor()));
 
                     }
                     else
                     {
                         // inicializa uma propriedade, com tipo obtido no repositório de classes.
-                        propriedadesDaClasse.Add(new propriedade(umaVariavel.GetAcessor(), umaVariavel.GetNome(), umaVariavel.GetTipo(), umaVariavel.GetValor(), umaVariavel.isStatic));
+                        propriedadesDaClasse.Add(new Objeto(umObjeto.GetAcessor(), umObjeto.GetTipo(), umObjeto.GetNome(),  umObjeto.GetValor()));
                     }
                 } // foreach
                 return propriedadesDaClasse;

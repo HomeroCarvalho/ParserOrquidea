@@ -79,7 +79,7 @@ namespace parser
         internal List<Expressao> expressoes = new List<Expressao>(); // contém as expressões validadas no escopo currente.
         private List<Funcao> Funcoes = new List<Funcao>(); // contém as funções do escopo currente.
 
-       
+        public List<Variavel> Variaveis = new List<Variavel>();  // variáveis objeto da tabela de valores.
         private List<Vetor> VariaveisVetor = new List<Vetor>(); // variaveis vetor.
         
 
@@ -172,7 +172,16 @@ namespace parser
             return funcoesDoRepositorioDeClassesComMesmoNome;
         } // GetFuncao()
 
-      
+        public void RemoveVar(string nomeDaVariavel)
+        {
+            Variavel v = this.Variaveis.Find(k => k.GetNome().Equals(nomeDaVariavel));
+            if (v != null)
+                this.Variaveis.Remove(v);
+        }
+        public List<Variavel> GetVariaveis()
+        {
+            return Variaveis;
+        }
         public List<Vetor> GetVetores()
         {
             return VariaveisVetor;
@@ -216,6 +225,9 @@ namespace parser
 
             if (tabela.GetOperadores().Count > 0)
                 tabelaClone.GetOperadores().AddRange(tabela.GetOperadores());
+
+            if (tabela.GetVariaveis().Count > 0)
+                tabelaClone.GetVariaveis().AddRange(tabela.GetVariaveis());
 
             if (tabela.GetVetores().Count > 0)
                 tabelaClone.GetVetores().AddRange(tabela.GetVetores());
@@ -276,13 +288,10 @@ namespace parser
         {
             this.objetos.Add(objeto);
         } // RegistraObjeto().
-
-
-        // remove a ultima instancia do objeto com o nome de entrada.
         public void RemoveObjeto(string nomeObjeto)
         {
 
-            int index = this.objetos.FindLastIndex(k => k.GetNome() == nomeObjeto);
+            int index = this.objetos.FindIndex(k => k.GetNome() == nomeObjeto);
             if (index != -1)
                 this.objetos.RemoveAt(index);
 
@@ -320,7 +329,19 @@ namespace parser
             return false;
         } // ValidaOperador()
     
-        
+        /// <summary>
+        /// retorna [true] se a variável já foi declarada, [false] se não.
+        /// </summary>
+        public bool ValidaNomeDaVariavel(string nomeDaVariavel, Escopo escopoCurrente)
+        {
+            for (int x = 0; x < escopoCurrente.tabela.GetVariaveis().Count; x++)
+            {
+                if (escopoCurrente.tabela.GetVariaveis()[x].GetNome() == nomeDaVariavel.TrimStart(' ').TrimEnd(' '))
+                    return true;
+            } // for x
+            return false;
+        } // ValidaNomeDaVariavel()
+
         /// <summary>
         ///  obtém uma propriedade, que é de uma sequencia de propriedades aninhadas.
         /// </summary>
@@ -403,25 +424,41 @@ namespace parser
     
  
 
-    
+        public void AddVar(string acessor, string nome, string tipo, object valor, Escopo escopo, bool isStatic)
+        {
+            Variavel v = new Variavel(acessor, nome, tipo, valor);
+            v.isStatic = isStatic;
 
-        public void AddObjetoVetor(string acessor, string nome, string tipo, int[] dims, Escopo escopo, bool isStatic)
+            this.Variaveis.Add(v);
+        }  // RegistraVariavel()
+
+
+        public void AddVarVetor(string acessor, string nome, string tipo, int[] dims, Escopo escopo, bool isStatic)
         {
             Vetor v = new Vetor(acessor, nome, dims);
             v.SetAcessor(acessor);
             v.isStatic = isStatic;
             escopo.tabela.VariaveisVetor.Add(v);
-        } // RegistraVetor()
+        } // RegistraVariavelVetor()
 
-        public void AddObjeto(string acessor,string nome, string tipo, object valor)
+
+        public Variavel GetVar(string nomeVariavel, Escopo escopo)
         {
-            Objeto objeto = new Objeto(acessor, tipo, nome, valor);
-            this.objetos.Add(objeto);
+            if (escopo == null)
+                return null;
+            Variavel v = escopo.tabela.Variaveis.Find(k => k.GetNome() == nomeVariavel);
+            if (v != null)
+                return v;
+            Variavel vEstatica = escopo.tabela.Variaveis.Find(k => k.GetNome() == ("static." + k.GetNome()));
+            if (vEstatica != null)
+                return vEstatica;
 
-        }
+            if (escopo.ID != Escopo.tipoEscopo.escopoGlobal)
+                return GetVar(nomeVariavel, escopo.escopoPai);
+            return null;
+        } //GetVariavel()
 
-   
-        public Vetor GetObjetoVetor(string nomeVariavel, Escopo escopo, params int[] indices)
+        public Vetor GetVarVetor(string nomeVariavel, Escopo escopo, params int[] indices)
         {
             if (escopo == null)
                 return null;
@@ -439,13 +476,13 @@ namespace parser
             if (escopo.ID != Escopo.tipoEscopo.escopoGlobal)
                 return GetVetor(nomeVariavel, escopo.escopoPai);
             return null;
-        } // GetObjetoVetor()
+        } // GetVarVetor()
 
         public Vetor GetVetor(string nomeVariavel, Escopo escopo)
         {
             if (escopo == null)
                 return null;
-            Vetor v = this.GetVetores().Find(k => k.GetNome() == nomeVariavel);
+            Vetor v = escopo.tabela.VariaveisVetor.Find(k => k.GetNome() == nomeVariavel);
             if (v != null)
                 return v;
             else
@@ -453,7 +490,7 @@ namespace parser
                 return null;
             else
                 return GetVetor(nomeVariavel, escopo.escopoPai);
-        } // GetObjetoVetor()
+        } // GetVarVetor()
 
 
         private static Vetor GetElementoVetor(int[] indices, ref Vetor v)
@@ -470,11 +507,11 @@ namespace parser
                 return null;
             Funcao funcao = escopo.tabela.Funcoes.Find(k => k.nome == nomeFuncao);
             if (funcao != null)
-                return funcao.tipoReturn;
+                return funcao.tipoDoRetornoDaFuncao;
 
             Funcao umaFuncaoDoRepositorioDeClasses = RepositorioDeClassesOO.Instance().ObtemUmaClasse(nomeClasseDaFuncao).GetMetodos().Find(k => k.nome.Equals(nomeFuncao));
             if (umaFuncaoDoRepositorioDeClasses != null)
-                return umaFuncaoDoRepositorioDeClasses.tipoReturn;
+                return umaFuncaoDoRepositorioDeClasses.tipoDoRetornoDaFuncao;
 
             if (escopo.escopoPai.ID != Escopo.tipoEscopo.escopoGlobal)
                 return GetTypeFunction(nomeClasseDaFuncao, nomeFuncao, escopo.escopoPai);
@@ -519,7 +556,69 @@ namespace parser
             return null;
         } // IsFunction()
 
-       
+        public object GetVarValue(string variavel, Escopo escopoCurrente)
+        {
+            if (escopoCurrente == null)
+                return null;
+            Variavel v = escopoCurrente.tabela.Variaveis.Find(k => k.GetNome() == variavel);
+            if (v != null)
+                return v.GetValor();
+            Variavel vEstatica = escopoCurrente.tabela.Variaveis.Find(k => k.GetNome() == "static." + variavel);
+            if (v != null)
+                return v.GetValor();
+
+
+            if (escopoCurrente.ID != Escopo.tipoEscopo.escopoGlobal)
+                return GetVarValue(variavel, escopoCurrente.escopoPai);
+            return null;
+        }
+        /// <summary>
+        /// valida a variável se já existir uma definição da variável, de mesmo tipo.
+        /// </summary>
+        public bool ValidaVariavel(string nomeVariavel, string tipoDaVariavel, Escopo escopo)
+        {
+            if (escopo == null)
+                return false;
+            Variavel v = escopo.tabela.Variaveis.Find(k => k.GetNome() == nomeVariavel);
+            if (v != null)
+            {
+                if (v.GetTipo() == tipoDaVariavel)
+                    return true;
+                else
+                    return false;
+            }
+
+            Variavel vEstatica = escopo.tabela.Variaveis.Find(k => k.GetNome() == "static."+nomeVariavel);
+            if (v != null)
+            {
+                if (v.GetTipo() == tipoDaVariavel)
+                    return true;
+                else
+                    return false;
+            }
+
+            if (escopo.ID != Escopo.tipoEscopo.escopoGlobal)
+                return ValidaVariavel(nomeVariavel, tipoDaVariavel, escopo.escopoPai);
+            return false;
+        } // ValidaVariavel()
+
+        public bool ValidaVariavel(string nomeVariavel, Escopo escopo)
+        {
+            if (escopo == null)
+                return false;
+            Variavel v = escopo.tabela.Variaveis.Find(k => k.GetNome() == nomeVariavel);
+            if (v != null)
+                return true;
+
+            Variavel vEstatica = escopo.tabela.Variaveis.Find(k => k.GetNome() == "static."+nomeVariavel);
+            if (vEstatica != null)
+                return true;
+
+            if (escopo.ID != Escopo.tipoEscopo.escopoGlobal)
+                return ValidaVariavel(nomeVariavel, escopo.escopoPai);
+            return false;
+        } // ValidaVariavel()
+
 
         public bool ValidaObjeto(string nomeObjeto, Escopo escopo)
         {
@@ -534,7 +633,7 @@ namespace parser
             return false;
         } // ValidaVariavel()
 
-        public bool ValidaTipoObjeto( string tipoVariavel, Escopo escopo)
+        public bool ValidaTipoVariavel( string tipoVariavel, Escopo escopo)
         {
             if (escopo == null)
                 return false;
@@ -546,15 +645,185 @@ namespace parser
 
             
             if (escopo.ID != Escopo.tipoEscopo.escopoGlobal)
-                return (ValidaTipoObjeto(tipoVariavel, escopo.escopoPai));
+                return (ValidaTipoVariavel(tipoVariavel, escopo.escopoPai));
             return false;
         } // ValidaTipoVariavel()
+
+        public bool SetaVariavel(string nomeVariavel, object valor, Escopo escopo)
+        {
+            if (escopo == null)
+                return false;
+            Variavel v= escopo.tabela.GetVar(nomeVariavel, escopo);
+            if (v != null)
+            {
+                v.valor = valor;
+                return true;
+            }
+            Variavel vEstatica = escopo.tabela.GetVar("static." + nomeVariavel, escopo);
+            if (vEstatica != null)
+            {
+                vEstatica.valor = valor;
+                return true;
+            }
+            else
+            if (escopo.ID == Escopo.tipoEscopo.escopoGlobal)
+                return false;
+            else
+                return SetaVariavel(nomeVariavel, valor, escopo);
+            
+        }
 
         
 
     } // class TabelaDeValores
 
-    public class Vetor: Objeto
+    public class Variavel
+    {
+        private string acessor = "";
+        private string nome = "";
+        private string nomeLongo = "";
+        private string tipo = "";
+        public object valor = "";
+        public bool isStatic = false;
+   
+ 
+        private static Random aleatorizador = new Random();
+        public List<propriedade> propriedades { get; set; }
+
+        public Variavel()
+        {
+            this.propriedades = new List<propriedade>();
+
+        }
+
+        public Variavel(string acessor, string name, string tipo, object value)
+        {
+            Init(acessor, name, tipo, value);
+      
+        }
+
+
+
+        private void Init(string acessor, string name, string tipo, object value)
+        {
+            if (acessor == "null")
+                this.acessor = "protected";
+            else
+                this.acessor = acessor;
+            this.nome = name;
+            this.tipo = tipo;
+            this.valor = value;
+
+            this.propriedades = new List<propriedade>();
+        }
+
+
+
+        public string GetAcessor()
+        {
+            return acessor;
+        }
+
+        internal void SetAcessor(string acessor)
+        {
+            this.acessor = acessor;
+        }
+
+        public string GetNome()
+        {
+            return nome;
+        }
+
+        public void SetNome(string novoNome)
+        {
+            this.nome = novoNome;
+        }
+
+        public string GetNomeLongo()
+        {
+            return this.tipo + "." + this.nome;
+        }
+        public void SetNomeLongo(string nome)
+        {
+            this.nomeLongo = nome;
+        }
+
+        public string GetTipo()
+        {
+            return tipo;
+        }
+        public object GetValor()
+        {
+            return valor;
+        }
+      
+     
+
+        public static string GetTipoVariavelObjeto(string nomeVariavel, Escopo escopoCurrente)
+        {
+            if (escopoCurrente == null)
+                return null;
+            // percorre a tabela do escopo currente, para verificar se há váriavel para o nomeVariavel.
+            foreach (Variavel umaVariavel in escopoCurrente.tabela.GetVariaveis())
+                if (umaVariavel.GetNome() == nomeVariavel)
+                    return umaVariavel.GetTipo();
+
+            // para a pesquisa se o escopo currente for o global, não há escopo pai.
+            if (escopoCurrente.ID != Escopo.tipoEscopo.escopoGlobal)
+                return GetTipoVariavelObjeto(nomeVariavel, escopoCurrente.escopoPai);
+            return null;
+        } // GetTipoVariavel()
+
+        public void SetValor(object newValue, Escopo escopo)
+        {
+            Variavel v = escopo.tabela.GetVar(this.nome, escopo);
+            v.valor = newValue;
+            SetModificacaoExpressao(escopo); // hook para otimização de cálculo de expressões.
+        } // SetVariavelObjeto()
+
+
+        /// <summary>
+        /// otimização. as expressoes não são modificadas a todo tempo da execução do código.
+        /// Quando uma variavel recebe um novo valor, todas expressões que tem essa variavel precisam ser
+        /// recalculadas, quando for solicitada sua avaliação como expressão.
+        /// </summary>
+        /// <param name="escopo">escopo que contém as expressões monitoradas.</param>
+        protected void SetModificacaoExpressao(Escopo escopo)
+        {
+
+            for (int umaExpressao = 0; umaExpressao < escopo.tabela.GetExpressoes().Count; umaExpressao++)
+            {
+                Expressao expressaoCurrente = escopo.tabela.GetExpressoes()[umaExpressao];
+                for (int variavel = 0; variavel < expressaoCurrente.Elementos.Count; variavel++)
+                {
+                    if (expressaoCurrente.Elementos[variavel].ToString().Equals(this.GetNome()))
+                    {
+                        expressaoCurrente.isModdfy = true;
+                        break;
+                    } // if
+                } // for variavel
+
+            } // for umaExpressao
+        }
+
+        public override string ToString()
+        {
+            string str = "";
+            if ((this.acessor != null) && (this.acessor != ""))
+                str += this.acessor + " ";
+            if ((this.nome != null) &&(this.nome != ""))
+                str += "variavel: " + this.nome;
+            if ((this.tipo != null) && (this.tipo != ""))
+                str += "  tipo: " + this.tipo;
+            if (this.valor != null)
+                str += " valor: " + this.valor.ToString();
+            return str;
+        } // ToString()
+
+    } // class Variavel
+
+
+    public class Vetor: Variavel
     {
         public string nome;
         private string tipo;
@@ -574,13 +843,12 @@ namespace parser
         {
             this.tailVetor = new List<Vetor>();
             this.nome = "";
-            this.tipo = "Vetor";
-           
+            this.tipo = "VariavelVetor";
             this.dimensoes = new int[1]; 
         }
 
 
-        public Vetor(string acessor, string nome, int[] dims) : base(acessor, "Vetor", nome, null)
+        public Vetor(string acessor, string nome, int[] dims) : base(acessor, nome,"VariavelVetor", null)
         {
             
             Init(nome, dims);
@@ -595,7 +863,7 @@ namespace parser
 
         private void Init(string nomeVariavel, int[] dims)
         {
-            this.tipo ="Vetor";
+            this.tipo ="VariavelVetor";
             this.nome = nomeVariavel;
             this.dimensoes = dims;
 
@@ -668,7 +936,7 @@ namespace parser
             Vetor vt = new Vetor(this.GetAcessor(), this.GetNome(), this.dimensoes);
             for (int x = 0; x < indices.Length; x++)
                 vt = vt.tailVetor[indices[x]];
-            return vt.GetValor();
+            return vt.valor;
         }
 
 

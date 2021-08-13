@@ -136,7 +136,7 @@ namespace parser
                 if (!isEmptyWord(umtokenNaoOrdenado.token))
                     tokensOrdenados.Add(umtokenNaoOrdenado.token);
 
-            tokensOrdenados = ObtemNumerosPontoFlutuante(tokensOrdenados); // fixa erros de obter tokens que são ponto flutuante (1.1, exemplo).
+            tokensOrdenados = ObtemPontosFlutuantes(tokensOrdenados); // fixa erros de obter tokens que são ponto flutuante (1.1, exemplo).
 
             return tokensOrdenados;
 
@@ -220,7 +220,7 @@ namespace parser
             return true;
         }
 
-        public static List<string> ObtemNumerosPontoFlutuante(List<string> todosTokensObtidos)
+        public static List<string> ObtemPontosFlutuantes(List<string> todosTokensObtidos)
         {
             LinguagemOrquidea linguagem = new LinguagemOrquidea();
             for (int x = 0; x < todosTokensObtidos.Count; x++)
@@ -250,7 +250,7 @@ namespace parser
                         todosTokensObtidos.RemoveAt(indiceNumero);
                         indiceNumero += +1 - 1; // registro que: a lista de tokens removeu um elemento (-1), e a malha passou para o próximo elemento (+1).
                     }
-                    todosTokensObtidos.Insert(indiceNumeroInicial, numeroPontoFlutuante);
+                    todosTokensObtidos.Insert(indiceNumeroInicial, numeroPontoFlutuante.Replace(" ", ""));
                 }
                 
             }

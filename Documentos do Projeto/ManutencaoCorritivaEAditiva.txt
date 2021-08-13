@@ -32,7 +32,7 @@ PRODUCT BACKLOG:
 SPRINT ANTERIOR:
 		---> SPRINT BACKLOG
 				----> (feito, aguardando o build de metodos estaticos) INCLUIR NO ARQUIVO .XML OS COMANDOS QUE ESTÃO COMO APENDICE EM LinguagemOrquidea.
-				----> (a fazer) modificacao no metodo Tokens.GetProducoes(), com processamento de instruções com identificação do primeiro token da instrucao, ou id, ou expressao, ou chamada de função.
+				----> (feito, testado) modificacao no metodo Tokens.GetProducoes(), com processamento de instruções com identificação do primeiro token da instrucao, ou id, ou expressao, ou chamada de função.
 										----> os ids expressoes são reduzidos para um id, para identificar o tipo de sequencia.
 
 					MANUTENÇÃO ADITIVA:
@@ -50,7 +50,7 @@ ________________________________________________________________________________
 SPRINT ANTERIOR:
 			---> COM A MELHORA NO DESEMPENHO DO CODIGO QUANDO COMPILADO, TORNOU-SE DESNECESSÁRIO GUARDAR O CODIGO GERADO, EM ARQUIVOS XML. O COMPILADOR, POR SER PEQUENO,
 			PODE-SE SER ACRESCENTADO AO PROGRAMA QUE UTILIZA AS LINGUAGENS ORQUIDEAS, E PASSAGEM DE DADOS ENTRE O PROGRAMA QUE HOSPEDA E O PROGRAMA ORQUIDEA, PODERIA
-			SER POR ARQUIVOS TEXTO, XML, OU MESMO UM PROTOCOLO SOAP.
+			SER POR ARQUIVOS TEXTO, XML.
 
 
 			---> uma parada para mudança de foco, decidiu-se concentrar na inteporabilidade entre as linguagen orquidea POO, e a linguagem base,
@@ -82,8 +82,13 @@ SPRINT ANTERIOR:
 _____________________________________________________________________________________________________________________________________________________________________________________________________________________________
 SPRINT CURRENTE:
 		SPRINT BACKLOG:
-					1- testes unitarios para todas instruções: atribuicao, for, while, if/else, casesOfUse, continue, break, return.
-					2- testes para construção de objetos importados, e chamada a um dos método do objeto importado, como o que segue: Matriz m= CreateObject(m,null); m.SetElemento(lin, col, 5).
+					1- (testado) testes unitarios para todas instruções: atribuicao, for, while, if/else, casesOfUse, continue, break, return.
+					2- (testado) testes para construção de objetos importados, e chamada a um dos método do objeto importado, como o que segue: Matriz m= CreateObject(m,null); m.SetElemento(lin, col, 5).
+
+	   APOS O SPRINT BACKLOG, foi constatado que havia uma confusao entre como armazenar dados (classe Variavel, classe propriedade, class Objeto), foi unificado estas classes,
+	   como apenas uma forma de armazenar variaveis/objetos, a classe Objeto. Ha tambem a classe Vetor, que armazena vetores uni/multidimensionais.
+
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
 

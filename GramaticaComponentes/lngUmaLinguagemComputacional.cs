@@ -171,27 +171,8 @@ namespace parser
             return strOperadores;
         } // GetTodosOperadores()
 
-        /// <summary>
-        /// obtém o propriedade [operador] para um dado nome.
-        /// </summary>
-        /// <param name="nomeOperador">nome do operador a ser pesquisado.</param>
-        /// o<returns>o propriedade [operador] para o nome parâmetro.</returns>
-        public Operador GetOperadorPeloNome(string nomeOperador)
-        {
-            return operadores.Find(k => k.nome == nomeOperador);
-        } // GetOperadorPeloNome()
-
-        /// <summary>
-        /// obtém a prioridade (um número inteiro para comparação com outros operadores)
-        /// do operador parâmetro.
-        /// </summary>
-        /// <param name="nomeOperador">nome do operador a ser pesquisado.</param>
-        /// <returns></returns>
-        public int GetPrioridadeOperador(string nomeOperador)
-        {
-                return (this.GetOperadorPeloNome(nomeOperador).GetPrioridade());
-        }
-
+      
+       
      
         /// <summary>
         /// verifica se uma palavra é um operador-duplo, um tipo

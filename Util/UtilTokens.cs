@@ -83,6 +83,12 @@ namespace parser
         /// faz a conversao de tipos basicos de classes importados, para o sistema de tipos da linguagem.
         public static string Casting(string tipo)
         {
+            if (tipo == "Single")
+                return "float";
+
+            if (tipo == "double")
+                return "float";
+
             if (tipo == "Int32")
                 return "int";
 
@@ -90,7 +96,7 @@ namespace parser
                 return "float";
 
             if (tipo == "Double")
-                return "float";
+                return "double";
 
             if (tipo == "Bool")
                 return "bool";

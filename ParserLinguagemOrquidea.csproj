@@ -95,7 +95,6 @@
     <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\Objetos.cs" />
     <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\OperadoresNativos.cs" />
     <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\PosicaoDeCodigo.cs" />
-    <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\propriedade.cs" />
     <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\SequenciasID.cs" />
     <Compile Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\Tokens.cs" />
     <Compile Include="componentesDeInterpretadoresECompiladores\PROLOG\ListaProlog.cs" />

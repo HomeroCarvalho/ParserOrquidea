@@ -26,7 +26,7 @@ namespace parser
             if (objetoToWrite.GetFields().Count == 0)
                 return false;
 
-            XElement noNomeClasse = new XElement("nomeClasse", objetoToWrite.GetClasse());
+            XElement noNomeClasse = new XElement("nomeClasse", objetoToWrite.GetTipo());
             XElement noNomeObjeto = new XElement("nome", objetoToWrite.GetNome());
             XElement noValorObjeto = new XElement("valor", objetoToWrite.GetValor().ToString());
 
@@ -37,7 +37,7 @@ namespace parser
 
             if ((objetoToWrite.GetFields() != null) && (objetoToWrite.GetFields().Count > 0))
             {
-                foreach (propriedade aPropertyObject in objetoToWrite.GetFields())
+                foreach (Objeto aPropertyObject in objetoToWrite.GetFields())
                 {
                     PropriedadesXML propriedadeXml = new PropriedadesXML();
                     propriedadeXml.Write(aPropertyObject, dadosPropriedadesObjetos);
@@ -63,7 +63,7 @@ namespace parser
 
             Escopo escopo = new Escopo(new List<string>());
 
-            List<propriedade> lstPropriedadesLidas = new List<propriedade>();
+            List<Objeto> lstPropriedadesLidas = new List<Objeto>();
     
 
             XElement root = raiz.Element("Objeto");
@@ -79,12 +79,12 @@ namespace parser
                 foreach (XElement nodePropriedadeObjeto in listaXMLPropriedadesObjetos)
                 {
                     PropriedadesXML propriedadeXml = new PropriedadesXML();
-                    propriedade umaPropriedade = propriedadeXml.Read(nodePropriedadeObjeto); // le recursivamente as propriedades.
+                    Objeto umaPropriedade = propriedadeXml.Read(nodePropriedadeObjeto); // le recursivamente as propriedades.
                     lstPropriedadesLidas.Add(umaPropriedade);
                 }
 
             }
-            Objeto objetoLido = new Objeto(nomeClasse, nomeDoObjeto, valorDoObjeto, escopo);
+            Objeto objetoLido = new Objeto("public",nomeClasse, nomeDoObjeto, valorDoObjeto);
             objetoLido.GetFields().AddRange(lstPropriedadesLidas);
             return objetoLido;
 

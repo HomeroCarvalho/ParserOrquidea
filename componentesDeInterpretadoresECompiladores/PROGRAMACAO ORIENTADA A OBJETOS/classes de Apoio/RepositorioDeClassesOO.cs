@@ -78,7 +78,7 @@ namespace parser.ProgramacaoOrentadaAObjetos
             int indexClasse = classesRegistradas.FindIndex(k => k.nome == classe.nome);
             if (indexClasse != -1)
             {
-                this.classesRegistradas[indexClasse] = classe;
+                //this.classesRegistradas[indexClasse] = classe;
                 return true;
             } // if
             // registra a classe no repositório de classes.

@@ -32,7 +32,7 @@ namespace parser
         public List<Funcao> construtores { get; set; }
 
 
-        public List<Variavel> propriedadesEstaticas { get; set; }
+        public List <Objeto> propriedadesEstaticas { get; set; }
         public string GetNome()
         {
             return nome;
@@ -50,12 +50,12 @@ namespace parser
         {
             return operadores;
         }
-        public List<propriedade> GetPropriedades()
+        public List<Objeto> GetPropriedades()
         {
             return propriedades;
         }
 
-        public propriedade GetPropriedade(string nomeProp)
+        public Objeto GetPropriedade(string nomeProp)
         {
             return propriedades.Find(k => k.GetNome() == this.nome + "." + nomeProp);
         }
@@ -66,7 +66,7 @@ namespace parser
         }
 
         private List<Funcao> metodos = new List<Funcao>();
-        private List<propriedade> propriedades = new List<propriedade>();
+        private List<Objeto> propriedades = new List<Objeto>();
         private List<Operador> operadores = new List<Operador>();
 
 
@@ -82,15 +82,15 @@ namespace parser
                 linguagem = new LinguagemOrquidea();
             this.metodos = new List<Funcao>();
             this.operadores = new List<Operador>();
-            this.propriedades = new List<propriedade>();
+            this.propriedades = new List<Objeto>();
             this.tokensDaClasse = new List<string>();
             this.construtores = new List<Funcao>();
-            this.propriedadesEstaticas = new List<Variavel>();
+            this.propriedadesEstaticas = new List<Objeto>();
             this.classesHerdadas = new List<Classe>();
             this.interfacesHerdadas = new List<Classe>();
             this.GetInfoReflexao();
         }
-        public Classe(string acessor, string name, List<Funcao> methods, List<Operador> operadores, List<propriedade> propriedades):base()
+        public Classe(string acessor, string name, List<Funcao> methods, List<Operador> operadores, List<Objeto> propriedades):base()
         {
             if (linguagem == null)
                 linguagem = new LinguagemOrquidea();
@@ -99,8 +99,8 @@ namespace parser
             this.nome = name;
             this.tokensDaClasse = new List<string>();
             this.metodos = new List<Funcao>();
-            this.propriedades = new List<propriedade>();
-            this.propriedadesEstaticas = new List<Variavel>();
+            this.propriedades = new List<Objeto>();
+            this.propriedadesEstaticas = new List<Objeto>();
             this.operadores = new List<Operador>();
             this.construtores = new List<Funcao>();
             this.classesHerdadas = new List<Classe>();
@@ -118,8 +118,10 @@ namespace parser
             // adiciona os operadores da classe.
             if (operadores != null)
                 for (int i = 0; i < operadores.Count; i++)
+                {
+                    operadores[i].tipoRetorno = this.nome; // seta a classe a qual o operador pertence.
                     this.operadores.Add(operadores[i]);
-
+                }
             this.GetInfoReflexao();
        } // constructor
 
@@ -169,15 +171,18 @@ namespace parser
                 return "Int32";
             if (Expressao.Instance.IsTipoFloat(nomeElemento))
                 return "float";
-            Variavel v = escopo.tabela.GetVar(nomeElemento, escopo);
+            if (Expressao.Instance.IsTipoDouble(nomeElemento))
+                return "double";
+
+            Objeto v = escopo.tabela.GetObjeto(nomeElemento, escopo);
             if (v != null)
                 return v.GetTipo();
-            VariavelVetor vetor = escopo.tabela.GetVarVetor(nomeElemento, escopo);
+            Vetor vetor = escopo.tabela.GetVetor(nomeElemento, escopo);
             if (vetor != null)
                 return v.GetTipo();
-            Objeto objeto = escopo.tabela.GetObjeto(nomeElemento);
+            Objeto objeto = escopo.tabela.GetObjeto(nomeElemento, escopo);
             if (objeto != null)
-                return objeto.GetClasse();
+                return objeto.GetTipo();
 
             Classe classeElemento = RepositorioDeClassesOO.Instance().ObtemUmaClasse(nomeElemento);
             if (classeElemento != null)
@@ -261,7 +266,7 @@ namespace parser
             {
                 str += "  propriedades: \n";
                 for (int x = 0; x < this.propriedades.Count; x++)
-                    str += this.propriedades[x].GetNome() + ", tipo:  " + this.propriedades[x].tipo + "\n";
+                    str += this.propriedades[x].GetNome() + ", tipo:  " + this.propriedades[x].GetTipo()+ "\n";
             } // if
 
             if ((this.metodos != null) && (this.metodos.Count > 0))

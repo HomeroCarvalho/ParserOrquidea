@@ -68,7 +68,7 @@ namespace parser
 
             List<Funcao> metodosParaOrquidea = new List<Funcao>();
             List<Funcao> construtoresParaOrquidea = new List<Funcao>();
-            List<propriedade> propriedadesParaOrquidea = new List<propriedade>();
+            List<Objeto> propriedadesParaOrquidea = new List<Objeto>();
 
             RegistraMetodosImportados(metodosImportados, metodosParaOrquidea);
             RegistraPropriedadesImportadas(propriedadesImportadas, propriedadesParaOrquidea);
@@ -90,7 +90,7 @@ namespace parser
             foreach (var umConstrutor in construtoresImportados)
             {
                 ParameterInfo[] parametrosDoConstrutor = umConstrutor.GetParameters();
-                List<propriedade> parametros = new List<propriedade>();
+                List<Objeto> parametros = new List<Objeto>();
                 ObtemOsParametrosDoMetodoImportado(umConstrutor, parametros);
                 string acessor = "";
                 if (umConstrutor.IsPublic)
@@ -108,7 +108,7 @@ namespace parser
 
         private void RegistraMetodosImportados(MethodInfo[] metodosImportados, List<Funcao> metodosOrquidea)
         {
-            List<propriedade> parametros = new List<propriedade>();
+            List<Objeto> parametros = new List<Objeto>();
             foreach(MethodInfo umMetodo in metodosImportados)
             {
                 ObtemOsParametrosDoMetodoImportado(umMetodo, parametros);
@@ -130,43 +130,43 @@ namespace parser
                 if (camposImportados[x].IsStatic)
                 {
                     string acessor = GetFieldAcessor(camposImportados, x);
-                    classeImportada.propriedadesEstaticas.Add(new Variavel(acessor, camposImportados[x].Name, camposImportados[x].FieldType.Name, null));
+                    classeImportada.propriedadesEstaticas.Add(new Objeto(acessor, camposImportados[x].Name, classeImportada.GetNome(), null));
                 } // if
         }
 
-        private void RegistraCamposImportados(FieldInfo[] camposImportados, List<propriedade> propriedadesOrquidea)
+        private void RegistraCamposImportados(FieldInfo[] camposImportados, List<Objeto> propriedadesOrquidea)
         {
             // os campos não estáticos são importados, para a lista de propriedades orquidea.
             for (int x = 0; x < camposImportados.Length; x++)
                 if (!camposImportados[x].IsStatic)
                 {
                     string acessor = GetFieldAcessor(camposImportados, x);
-                    propriedadesOrquidea.Add(new propriedade(acessor, camposImportados[x].Name, camposImportados[x].FieldType.Name, null, false));
+                    propriedadesOrquidea.Add(new Objeto(acessor, camposImportados[x].FieldType.Name,camposImportados[x].Name,  null, false));
                 } // if
         }
 
 
 
-        private void RegistraPropriedadesImportadas(PropertyInfo[] propriedadesImportadas, List<propriedade> propriedadesOrquidea)
+        private void RegistraPropriedadesImportadas(PropertyInfo[] propriedadesImportadas, List<Objeto> propriedadesOrquidea)
         {
             // as propriedades são importadas, para a lista de propriedades orquidea.
             for (int x = 0; x < propriedadesImportadas.Length; x++)
-                propriedadesOrquidea.Add(new propriedade("public", propriedadesImportadas[x].Name, propriedadesImportadas[x].PropertyType.Name, null, false));
+                propriedadesOrquidea.Add(new Objeto("public", propriedadesImportadas[x].PropertyType.Name, propriedadesImportadas[x].Name, null, false));
         }
 
 
 
-        private void ObtemOsParametrosDoMetodoImportado(MethodInfo metodoImportado, List<propriedade> parametros)
+        private void ObtemOsParametrosDoMetodoImportado(MethodInfo metodoImportado, List<Objeto> parametros)
         {
             ParameterInfo[] parametrosInfo = metodoImportado.GetParameters();
             for (int k = 0; k < parametrosInfo.Length; k++)
             {
                 string tipoParametroCasting = UtilTokens.Casting(parametrosInfo[k].ParameterType.Name);
-                parametros.Add(new propriedade(parametrosInfo[k].Name, tipoParametroCasting, null, false));
+                parametros.Add(new Objeto("private", tipoParametroCasting, parametrosInfo[k].Name, null, false));
             }
         }
 
-        private void ObtemOsParametrosDoMetodoImportado(ConstructorInfo construtorImportado, List<propriedade> parametros)
+        private void ObtemOsParametrosDoMetodoImportado(ConstructorInfo construtorImportado, List<Objeto> parametros)
         {
          
             
@@ -174,7 +174,7 @@ namespace parser
             for (int k = 0; k < parametrosInfo.Length; k++)
             {
                 string tipoParametroCasting = UtilTokens.Casting(parametrosInfo[k].ParameterType.Name);
-                parametros.Add(new propriedade(parametrosInfo[k].Name, tipoParametroCasting, null, false));
+                parametros.Add(new Objeto("private", tipoParametroCasting, parametrosInfo[k].Name, null, false));
             }
         }
 

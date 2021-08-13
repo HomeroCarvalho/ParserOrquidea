@@ -1,631 +1,677 @@
 
 
-Time: 03/08/2021 10:42:59  Message: teste passou.
 
 
-Time: 03/08/2021 10:42:59  Message: teste: TesteCasesOfUse executado em: 256milisegundos.
 
 
-Time: 03/08/2021 10:42:59  Message: teste: TesteCasesOfUse executado sem erros fatais.
 
 
-Time: 03/08/2021 10:43:00  Message: teste passou.
 
 
-Time: 03/08/2021 10:43:00  Message: teste: TesteCasesOfUse_2 executado em: -15milisegundos.
 
 
-Time: 03/08/2021 10:43:00  Message: teste: TesteCasesOfUse_2 executado sem erros fatais.
+Time: 08/13/2021 09:50:47  Message: teste: TesteFor executado em: 250  milisegundos.   teste nao passou.
+Time: 08/13/2021 09:50:47  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
+Time: 08/13/2021 09:50:47  Message: teste: TesteChamadaDeObjetoImportado executado em: 16  milisegundos.   teste passou
+Time: 08/13/2021 09:50:47  Message: teste: TesteVariavelVetor executado em: 16  milisegundos.   teste passou
+Time: 08/13/2021 09:50:47  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
+Time: 08/13/2021 09:50:47  Message: teste: TesteCasesOfUse executado em: 31  milisegundos.   teste passou
+Time: 08/13/2021 09:50:47  Message: teste: TesteCasesOfUse_2 executado em: 16  milisegundos.   teste passou
 
 
-Time: 03/08/2021 10:43:03  Message: teste passou.
 
 
-Time: 03/08/2021 10:43:03  Message: teste: TesteWhile executado em: 541milisegundos.
 
 
-Time: 03/08/2021 10:43:03  Message: teste: TesteWhile executado sem erros fatais.
 
 
-Time: 03/08/2021 10:43:04  Message: teste passou.
 
 
-Time: 03/08/2021 10:43:04  Message: teste: Atribuicao executado em: -165milisegundos.
 
 
-Time: 03/08/2021 10:43:04  Message: teste: Atribuicao executado sem erros fatais.
+Time: 08/13/2021 09:52:29  Message: teste: TesteFor executado em: -438  milisegundos.   teste nao passou.
+Time: 08/13/2021 09:52:29  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
+Time: 08/13/2021 09:52:29  Message: teste: TesteChamadaDeObjetoImportado executado em: 31  milisegundos.   teste passou
+Time: 08/13/2021 09:52:29  Message: teste: TesteVariavelVetor executado em: 0  milisegundos.   teste passou
+Time: 08/13/2021 09:52:29  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
+Time: 08/13/2021 09:52:38  Message: teste: TesteCasesOfUse executado em: -110  milisegundos.   teste passou
 
 
-Time: 03/08/2021 10:43:05  Message: teste passou.
 
 
-Time: 03/08/2021 10:43:05  Message: teste: TesteIF executado em: 15milisegundos.
 
 
-Time: 03/08/2021 10:43:05  Message: teste: TesteIF executado sem erros fatais.
 
 
-Time: 03/08/2021 10:43:06  Message: teste passou.
 
 
-Time: 03/08/2021 10:43:06  Message: teste: TesteIF_Else executado em: -21milisegundos.
 
 
-Time: 03/08/2021 10:43:06  Message: teste: TesteIF_Else executado sem erros fatais.
 
 
-Time: 03/08/2021 10:43:08  Message: teste passou.
 
 
-Time: 03/08/2021 10:43:08  Message: teste: TesteFor executado em: 29milisegundos.
 
 
-Time: 03/08/2021 10:43:08  Message: teste: TesteFor executado sem erros fatais.
 
 
-Time: 04/08/2021 09:29:25  Message: teste: TesteImporter, na classe: TestesAvaliacaoDeInstrucoes gerou excecao que interrompeu o seu processamento. falha porque: Uma exceção foi acionada pelo destino de uma chamada., Stack:    em System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
-   em System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
-   em System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
-   em System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)
-   em parser.SuiteClasseTestes.ExecutaTestes() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\testes\SuiteClasseTestes.cs:linha 68
 
 
-Time: 04/08/2021 11:07:17  Message: teste: TesteImporter executado em: 393milisegundos.
 
 
-Time: 04/08/2021 11:07:17  Message: teste: TesteImporter executado sem erros fatais.
 
 
-Time: 04/08/2021 11:15:32  Message: teste: TesteImporter executado em: 397milisegundos.
 
 
-Time: 04/08/2021 11:15:32  Message: teste: TesteImporter executado sem erros fatais.
 
 
-Time: 04/08/2021 11:16:48  Message: teste: TesteImporter executado em: 392milisegundos.
 
 
-Time: 04/08/2021 11:16:48  Message: teste: TesteImporter executado sem erros fatais.
 
 
-Time: 04/08/2021 11:18:16  Message: teste: TesteImporter executado em: 372milisegundos.
 
 
-Time: 04/08/2021 11:18:16  Message: teste: TesteImporter executado sem erros fatais.
 
 
-Time: 04/08/2021 11:18:18  Message: teste: TesteCreateObjects executado em: -316milisegundos.
 
 
-Time: 04/08/2021 11:18:18  Message: teste: TesteCreateObjects executado sem erros fatais.
 
 
-Time: 04/08/2021 11:18:19  Message: teste passou.
 
 
-Time: 04/08/2021 11:18:19  Message: teste: TesteCasesOfUse executado em: -15milisegundos.
 
 
-Time: 04/08/2021 11:18:19  Message: teste: TesteCasesOfUse executado sem erros fatais.
 
 
-Time: 04/08/2021 11:18:19  Message: teste passou.
 
 
-Time: 04/08/2021 11:18:19  Message: teste: TesteCasesOfUse_2 executado em: 801milisegundos.
 
 
-Time: 04/08/2021 11:18:19  Message: teste: TesteCasesOfUse_2 executado sem erros fatais.
 
 
-Time: 04/08/2021 11:18:23  Message: teste passou.
 
 
-Time: 04/08/2021 11:18:23  Message: teste: TesteWhile executado em: -628milisegundos.
 
 
-Time: 04/08/2021 11:18:23  Message: teste: TesteWhile executado sem erros fatais.
 
 
-Time: 04/08/2021 11:18:24  Message: teste passou.
 
 
-Time: 04/08/2021 11:18:24  Message: teste: Atribuicao executado em: -159milisegundos.
 
 
-Time: 04/08/2021 11:18:24  Message: teste: Atribuicao executado sem erros fatais.
 
 
-Time: 04/08/2021 11:18:25  Message: teste passou.
 
 
-Time: 04/08/2021 11:18:25  Message: teste: TesteIF executado em: 89milisegundos.
 
 
-Time: 04/08/2021 11:18:25  Message: teste: TesteIF executado sem erros fatais.
 
 
-Time: 04/08/2021 11:18:26  Message: teste passou.
+Time: 08/13/2021 10:42:05  Message: teste: TesteFor executado em: 352  milisegundos.   teste passou
 
 
-Time: 04/08/2021 11:18:26  Message: teste: TesteIF_Else executado em: -45milisegundos.
 
 
-Time: 04/08/2021 11:18:26  Message: teste: TesteIF_Else executado sem erros fatais.
 
 
-Time: 04/08/2021 11:18:32  Message: teste: TesteImporter executado em: -608milisegundos.
 
 
-Time: 04/08/2021 11:18:32  Message: teste: TesteImporter executado sem erros fatais.
 
 
-Time: 04/08/2021 11:22:33  Message: teste: TesteImporter executado em: 375milisegundos.
 
 
-Time: 04/08/2021 11:22:33  Message: teste: TesteImporter executado sem erros fatais.
 
 
-Time: 04/08/2021 11:24:17  Message: teste: TesteImporter executado em: 394milisegundos.
 
 
-Time: 04/08/2021 11:24:17  Message: teste: TesteImporter executado sem erros fatais.
 
 
-Time: 04/08/2021 11:24:52  Message: teste: TesteImporter executado em: 379milisegundos.
 
 
-Time: 04/08/2021 11:24:52  Message: teste: TesteImporter executado sem erros fatais.
 
 
-Time: 04/08/2021 11:27:01  Message: teste: TesteImporter executado em: 392milisegundos.
 
 
-Time: 04/08/2021 11:27:01  Message: teste: TesteImporter executado sem erros fatais.
 
 
-Time: 04/08/2021 11:27:41  Message: teste: TesteImporter executado em: 372milisegundos.
 
 
-Time: 04/08/2021 11:27:41  Message: teste: TesteImporter executado sem erros fatais.
 
 
-Time: 04/08/2021 11:30:30  Message: teste: TesteCreateObjects executado em: -416milisegundos.
+Time: 08/13/2021 10:54:19  Message: teste: TesteImporter executado em: 203  milisegundos.   teste passou
+Time: 08/13/2021 10:54:19  Message: teste: TesteChamadaDeObjetoImportado executado em: 47  milisegundos.   teste passou
+Time: 08/13/2021 10:54:19  Message: teste: TesteVariavelVetor executado em: 0  milisegundos.   teste passou
+Time: 08/13/2021 10:54:19  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
+Time: 08/13/2021 10:54:19  Message: teste: TesteCasesOfUse executado em: 31  milisegundos.   teste passou
+Time: 08/13/2021 10:54:19  Message: teste: TesteCasesOfUse_2 executado em: 31  milisegundos.   teste passou
 
 
-Time: 04/08/2021 11:30:30  Message: teste: TesteCreateObjects executado sem erros fatais.
 
 
-Time: 04/08/2021 11:30:31  Message: teste passou.
 
 
-Time: 04/08/2021 11:30:31  Message: teste: TesteCasesOfUse executado em: -24milisegundos.
+Time: 08/13/2021 10:55:43  Message: teste: TesteCasesOfUse_2 executado em: 642  milisegundos.   teste passou
+Time: 08/13/2021 10:55:53  Message: teste: TesteImporter executado em: 224  milisegundos.   teste passou
+Time: 08/13/2021 10:56:05  Message: teste: TesteChamadaDeObjetoImportado executado em: 126  milisegundos.   teste passou
+Time: 08/13/2021 10:56:18  Message: teste: TesteVariavelVetor executado em: -410  milisegundos.   teste passou
+Time: 08/13/2021 10:56:28  Message: teste: TesteCreateObjects executado em: -41  milisegundos.   teste passou
+Time: 08/13/2021 10:56:41  Message: teste: TesteCasesOfUse executado em: 181  milisegundos.   teste passou
 
 
-Time: 04/08/2021 11:30:31  Message: teste: TesteCasesOfUse executado sem erros fatais.
 
 
-Time: 04/08/2021 11:30:31  Message: teste passou.
 
 
-Time: 04/08/2021 11:30:31  Message: teste: TesteCasesOfUse_2 executado em: 732milisegundos.
+Time: 08/13/2021 10:58:53  Message: teste: TesteCasesOfUse_2 executado em: -46  milisegundos.   teste passou
+Time: 08/13/2021 10:58:53  Message: teste: TesteImporter executado em: 36  milisegundos.   teste passou
+Time: 08/13/2021 10:58:53  Message: teste: TesteChamadaDeObjetoImportado executado em: 24  milisegundos.   teste passou
+Time: 08/13/2021 10:58:53  Message: teste: TesteVariavelVetor executado em: 9  milisegundos.   teste passou
+Time: 08/13/2021 10:58:53  Message: teste: TesteCreateObjects executado em: 4  milisegundos.   teste passou
+Time: 08/13/2021 10:58:53  Message: teste: TesteCasesOfUse executado em: 18  milisegundos.   teste passou
 
 
-Time: 04/08/2021 11:30:31  Message: teste: TesteCasesOfUse_2 executado sem erros fatais.
 
 
-Time: 04/08/2021 11:30:35  Message: teste passou.
 
 
-Time: 04/08/2021 11:30:35  Message: teste: TesteWhile executado em: -431milisegundos.
+Time: 08/13/2021 11:07:43  Message: teste: TesteCasesOfUse_2 executado em: 234  milisegundos.   teste passou
+Time: 08/13/2021 11:07:43  Message: teste: TesteImporter executado em: 63  milisegundos.   teste passou
+Time: 08/13/2021 11:07:43  Message: teste: TesteChamadaDeObjetoImportado executado em: 15  milisegundos.   teste passou
+Time: 08/13/2021 11:07:43  Message: teste: TesteVariavelVetor executado em: 16  milisegundos.   teste passou
+Time: 08/13/2021 11:07:43  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
+Time: 08/13/2021 11:07:43  Message: teste: TesteCasesOfUse executado em: 31  milisegundos.   teste passou
 
 
-Time: 04/08/2021 11:30:35  Message: teste: TesteWhile executado sem erros fatais.
 
 
-Time: 04/08/2021 11:30:36  Message: teste passou.
 
 
-Time: 04/08/2021 11:30:36  Message: teste: Atribuicao executado em: -160milisegundos.
+Time: 08/13/2021 11:12:55  Message: teste: TesteCasesOfUse_2 executado em: 328  milisegundos.   teste passou
+Time: 08/13/2021 11:12:55  Message: teste: TesteImporter executado em: 63  milisegundos.   teste passou
+Time: 08/13/2021 11:12:55  Message: teste: TesteChamadaDeObjetoImportado executado em: 31  milisegundos.   teste passou
+Time: 08/13/2021 11:12:55  Message: teste: TesteVariavelVetor executado em: 0  milisegundos.   teste passou
+Time: 08/13/2021 11:12:55  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
+Time: 08/13/2021 11:12:55  Message: teste: TesteCasesOfUse executado em: 31  milisegundos.   teste passou
 
 
-Time: 04/08/2021 11:30:36  Message: teste: Atribuicao executado sem erros fatais.
 
 
-Time: 04/08/2021 11:30:37  Message: teste passou.
 
 
-Time: 04/08/2021 11:30:37  Message: teste: TesteIF executado em: 35milisegundos.
+Time: 08/13/2021 11:16:03  Message: teste: TesteCasesOfUse_2 executado em: 250  milisegundos.   teste passou
+Time: 08/13/2021 11:16:03  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
+Time: 08/13/2021 11:16:03  Message: teste: TesteChamadaDeObjetoImportado executado em: 16  milisegundos.   teste passou
+Time: 08/13/2021 11:16:03  Message: teste: TesteVariavelVetor executado em: 0  milisegundos.   teste passou
+Time: 08/13/2021 11:16:03  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
+Time: 08/13/2021 11:16:03  Message: teste: TesteCasesOfUse executado em: 31  milisegundos.   teste passou
 
 
-Time: 04/08/2021 11:30:37  Message: teste: TesteIF executado sem erros fatais.
 
 
-Time: 04/08/2021 11:30:38  Message: teste passou.
 
 
-Time: 04/08/2021 11:30:38  Message: teste: TesteIF_Else executado em: 3milisegundos.
+Time: 08/13/2021 11:20:31  Message: teste: TesteCasesOfUse_2 executado em: 219  milisegundos.   teste passou
+Time: 08/13/2021 11:20:31  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
+Time: 08/13/2021 11:20:31  Message: teste: TesteChamadaDeObjetoImportado executado em: 32  milisegundos.   teste passou
+Time: 08/13/2021 11:20:31  Message: teste: TesteVariavelVetor executado em: 0  milisegundos.   teste passou
+Time: 08/13/2021 11:20:31  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
+Time: 08/13/2021 11:20:31  Message: teste: TesteCasesOfUse executado em: 31  milisegundos.   teste passou
 
 
-Time: 04/08/2021 11:30:38  Message: teste: TesteIF_Else executado sem erros fatais.
 
 
-Time: 04/08/2021 11:31:18  Message: teste: TesteImporter executado em: -636milisegundos.
 
 
-Time: 04/08/2021 11:31:18  Message: teste: TesteImporter executado sem erros fatais.
+Time: 08/13/2021 11:23:23  Message: teste: TesteCasesOfUse_2 executado em: -781  milisegundos.   teste passou
+Time: 08/13/2021 11:23:23  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
+Time: 08/13/2021 11:23:23  Message: teste: TesteChamadaDeObjetoImportado executado em: 16  milisegundos.   teste passou
+Time: 08/13/2021 11:23:23  Message: teste: TesteVariavelVetor executado em: 16  milisegundos.   teste passou
+Time: 08/13/2021 11:23:23  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
+Time: 08/13/2021 11:23:23  Message: teste: TesteCasesOfUse executado em: 15  milisegundos.   teste passou
 
 
-Time: 04/08/2021 11:57:00  Message: teste: TesteCreateObjects executado em: -84milisegundos.
 
 
-Time: 04/08/2021 11:57:00  Message: teste: TesteCreateObjects executado sem erros fatais.
 
 
-Time: 04/08/2021 11:57:02  Message: teste: TesteImporter executado em: -136milisegundos.
+Time: 08/13/2021 11:30:13  Message: teste: TesteCasesOfUse_2 executado em: 207  milisegundos.   teste passou
+Time: 08/13/2021 11:30:13  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
+Time: 08/13/2021 11:30:13  Message: teste: TesteChamadaDeObjetoImportado executado em: 16  milisegundos.   teste passou
+Time: 08/13/2021 11:30:13  Message: teste: TesteVariavelVetor executado em: 16  milisegundos.   teste passou
+Time: 08/13/2021 11:30:13  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
+Time: 08/13/2021 11:30:13  Message: teste: TesteCasesOfUse executado em: 15  milisegundos.   teste passou
 
 
-Time: 04/08/2021 11:57:02  Message: teste: TesteImporter executado sem erros fatais.
 
 
-Time: 04/08/2021 11:57:05  Message: teste passou.
 
 
-Time: 04/08/2021 11:57:06  Message: teste: TesteCasesOfUse executado em: -534milisegundos.
+Time: 08/13/2021 11:39:39  Message: teste: TesteCasesOfUse_2 executado em: 122  milisegundos.   teste passou
+Time: 08/13/2021 11:39:39  Message: teste: TesteImporter executado em: 36  milisegundos.   teste passou
+Time: 08/13/2021 11:39:39  Message: teste: TesteChamadaDeObjetoImportado executado em: 21  milisegundos.   teste passou
+Time: 08/13/2021 11:39:39  Message: teste: TesteVariavelVetor executado em: 5  milisegundos.   teste passou
+Time: 08/13/2021 11:39:39  Message: teste: TesteCreateObjects executado em: 4  milisegundos.   teste passou
+Time: 08/13/2021 11:39:39  Message: teste: TesteCasesOfUse executado em: 18  milisegundos.   teste passou
 
 
-Time: 04/08/2021 11:57:06  Message: teste: TesteCasesOfUse executado sem erros fatais.
 
 
-Time: 04/08/2021 14:45:45  Message: teste passou.
 
 
-Time: 04/08/2021 14:45:58  Message: teste: TesteCreateObjects executado em: 736milisegundos.
 
 
-Time: 04/08/2021 14:45:58  Message: teste: TesteCreateObjects executado sem erros fatais.
 
 
-Time: 04/08/2021 15:13:59  Message: teste passou.
 
 
-Time: 04/08/2021 15:13:59  Message: teste: TesteChamadaDeObjetoImportado executado em: -110milisegundos.
 
 
-Time: 04/08/2021 15:13:59  Message: teste: TesteChamadaDeObjetoImportado executado sem erros fatais.
 
 
-Time: 04/08/2021 15:14:00  Message: teste passou.
 
 
-Time: 04/08/2021 15:14:00  Message: teste: TesteCreateObjects executado em: -382milisegundos.
+Time: 08/13/2021 11:48:25  Message: teste: TesteWhile executado em: 836  milisegundos.   teste passou
+Time: 08/13/2021 11:48:25  Message: teste: TesteCasesOfUse_2 executado em: 25  milisegundos.   teste passou
+Time: 08/13/2021 11:48:25  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
+Time: 08/13/2021 11:48:25  Message: teste: TesteChamadaDeObjetoImportado executado em: 22  milisegundos.   teste passou
+Time: 08/13/2021 11:48:25  Message: teste: TesteVariavelVetor executado em: 6  milisegundos.   teste passou
+Time: 08/13/2021 11:48:25  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
+Time: 08/13/2021 11:48:25  Message: teste: TesteCasesOfUse executado em: 22  milisegundos.   teste passou
+Time: 08/13/2021 11:48:25  Message: teste: Atribuicao executado em: 11  milisegundos.   teste passou
+Time: 08/13/2021 11:48:26  Message: teste: TesteIF executado em: -970  milisegundos.   teste passou
+Time: 08/13/2021 11:48:26  Message: teste: TesteIF_Else executado em: 43  milisegundos.   teste passou
+Time: 08/13/2021 11:48:26  Message: teste: TesteFor executado em: 52  milisegundos.   teste nao passou.
 
 
-Time: 04/08/2021 15:14:00  Message: teste: TesteCreateObjects executado sem erros fatais.
 
 
-Time: 04/08/2021 15:14:00  Message: teste: TesteImporter executado em: 171milisegundos.
 
 
-Time: 04/08/2021 15:14:00  Message: teste: TesteImporter executado sem erros fatais.
 
 
-Time: 04/08/2021 15:14:01  Message: teste passou.
+Time: 08/13/2021 11:51:50  Message: teste: TesteWhile executado em: 349  milisegundos.   teste passou
+Time: 08/13/2021 11:51:50  Message: teste: TesteCasesOfUse_2 executado em: 28  milisegundos.   teste passou
+Time: 08/13/2021 11:51:50  Message: teste: TesteImporter executado em: 48  milisegundos.   teste passou
+Time: 08/13/2021 11:51:50  Message: teste: TesteChamadaDeObjetoImportado executado em: 39  milisegundos.   teste passou
+Time: 08/13/2021 11:51:50  Message: teste: TesteVariavelVetor executado em: 5  milisegundos.   teste passou
+Time: 08/13/2021 11:51:50  Message: teste: TesteCreateObjects executado em: 4  milisegundos.   teste passou
+Time: 08/13/2021 11:51:50  Message: teste: TesteCasesOfUse executado em: 33  milisegundos.   teste passou
+Time: 08/13/2021 11:51:50  Message: teste: Atribuicao executado em: 21  milisegundos.   teste passou
+Time: 08/13/2021 11:51:50  Message: teste: TesteIF executado em: 51  milisegundos.   teste passou
+Time: 08/13/2021 11:51:50  Message: teste: TesteIF_Else executado em: 51  milisegundos.   teste passou
+Time: 08/13/2021 11:53:43  Message: teste: TesteFor executado em: -375  milisegundos.   teste nao passou.
 
 
-Time: 04/08/2021 15:14:01  Message: teste: TesteCasesOfUse executado em: 240milisegundos.
 
 
-Time: 04/08/2021 15:14:01  Message: teste: TesteCasesOfUse executado sem erros fatais.
 
 
-Time: 04/08/2021 15:14:02  Message: teste passou.
 
 
-Time: 04/08/2021 15:14:02  Message: teste: TesteCasesOfUse_2 executado em: -190milisegundos.
+Time: 08/13/2021 11:55:11  Message: teste: TesteWhile executado em: 242  milisegundos.   teste passou
+Time: 08/13/2021 11:55:11  Message: teste: TesteCasesOfUse_2 executado em: 23  milisegundos.   teste passou
+Time: 08/13/2021 11:55:11  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
+Time: 08/13/2021 11:55:11  Message: teste: TesteChamadaDeObjetoImportado executado em: 20  milisegundos.   teste passou
+Time: 08/13/2021 11:55:11  Message: teste: TesteVariavelVetor executado em: 6  milisegundos.   teste passou
+Time: 08/13/2021 11:55:11  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
+Time: 08/13/2021 11:55:11  Message: teste: TesteCasesOfUse executado em: 25  milisegundos.   teste passou
+Time: 08/13/2021 11:55:11  Message: teste: Atribuicao executado em: 29  milisegundos.   teste passou
+Time: 08/13/2021 11:55:11  Message: teste: TesteIF executado em: 35  milisegundos.   teste passou
+Time: 08/13/2021 11:55:11  Message: teste: TesteIF_Else executado em: 53  milisegundos.   teste passou
 
 
-Time: 04/08/2021 15:14:02  Message: teste: TesteCasesOfUse_2 executado sem erros fatais.
 
 
-Time: 04/08/2021 15:14:06  Message: teste passou.
 
 
-Time: 04/08/2021 15:14:06  Message: teste: TesteWhile executado em: -462milisegundos.
+Time: 08/13/2021 11:58:06  Message: teste: TesteWhile executado em: 198  milisegundos.   teste passou
+Time: 08/13/2021 11:58:06  Message: teste: TesteCasesOfUse_2 executado em: 26  milisegundos.   teste passou
+Time: 08/13/2021 11:58:06  Message: teste: TesteImporter executado em: 33  milisegundos.   teste passou
+Time: 08/13/2021 11:58:06  Message: teste: TesteChamadaDeObjetoImportado executado em: 21  milisegundos.   teste passou
 
 
-Time: 04/08/2021 15:14:06  Message: teste: TesteWhile executado sem erros fatais.
 
 
-Time: 04/08/2021 15:14:07  Message: teste passou.
 
 
-Time: 04/08/2021 15:14:07  Message: teste: Atribuicao executado em: -209milisegundos.
+Time: 08/13/2021 11:58:50  Message: teste: TesteWhile executado em: -771  milisegundos.   teste passou
 
 
-Time: 04/08/2021 15:14:07  Message: teste: Atribuicao executado sem erros fatais.
 
 
-Time: 04/08/2021 15:14:08  Message: teste passou.
 
 
-Time: 04/08/2021 15:14:08  Message: teste: TesteIF executado em: 72milisegundos.
+Time: 08/13/2021 12:03:20  Message: teste: TesteWhile executado em: -67  milisegundos.   teste passou
 
 
-Time: 04/08/2021 15:14:08  Message: teste: TesteIF executado sem erros fatais.
 
 
-Time: 04/08/2021 15:14:09  Message: teste passou.
 
 
-Time: 04/08/2021 15:14:09  Message: teste: TesteIF_Else executado em: -61milisegundos.
+Time: 08/13/2021 12:09:05  Message: teste: TesteWhile executado em: -327  milisegundos.   teste passou
 
 
-Time: 04/08/2021 15:14:09  Message: teste: TesteIF_Else executado sem erros fatais.
 
 
-Time: 04/08/2021 15:14:11  Message: teste passou.
 
 
-Time: 04/08/2021 15:14:11  Message: teste: TesteFor executado em: 126milisegundos.
+Time: 08/13/2021 12:12:01  Message: teste: TesteWhile executado em: 476  milisegundos.   teste passou
 
 
-Time: 04/08/2021 15:14:11  Message: teste: TesteFor executado sem erros fatais.
 
 
-Time: 04/08/2021 16:51:02  Message: teste nao passou.
 
 
-Time: 04/08/2021 16:51:02  Message: teste: TesteChamadaDeObjetoImportado executado em: -582milisegundos.
+Time: 08/13/2021 12:13:47  Message: teste: TesteWhile executado em: -202  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:51:02  Message: teste: TesteChamadaDeObjetoImportado executado sem erros fatais.
 
 
-Time: 04/08/2021 16:51:02  Message: teste nao passou.
 
 
-Time: 04/08/2021 16:51:02  Message: teste: TesteCreateObjects executado em: 351milisegundos.
+Time: 08/13/2021 12:15:07  Message: teste: TesteImporter executado em: 241  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:51:02  Message: teste: TesteCreateObjects executado sem erros fatais.
 
 
-Time: 04/08/2021 16:51:03  Message: teste: TesteImporter executado em: -357milisegundos.
 
 
-Time: 04/08/2021 16:51:03  Message: teste: TesteImporter executado sem erros fatais.
+Time: 08/13/2021 17:03:26  Message: teste: TesteImporter executado em: 446  milisegundos.   teste passou
+Time: 08/13/2021 17:03:26  Message: teste: TesteWhile executado em: 59  milisegundos.   teste passou
+Time: 08/13/2021 17:04:06  Message: teste: TesteIF executado em: -174  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:51:19  Message: teste passou.
 
 
-Time: 04/08/2021 16:51:19  Message: teste: TesteCasesOfUse executado em: 25milisegundos.
 
 
-Time: 04/08/2021 16:51:19  Message: teste: TesteCasesOfUse executado sem erros fatais.
+Time: 08/13/2021 17:05:06  Message: teste: TesteImporter executado em: 198  milisegundos.   teste passou
+Time: 08/13/2021 17:05:06  Message: teste: TesteWhile executado em: 49  milisegundos.   teste passou
+Time: 08/13/2021 17:05:58  Message: teste: TesteIF executado em: -294  milisegundos.   teste passou
+Time: 08/13/2021 17:07:49  Message: teste: TesteCasesOfUse_2 executado em: -201  milisegundos.   teste passou
+Time: 08/13/2021 17:07:49  Message: teste: TesteChamadaDeObjetoImportado executado em: 30  milisegundos.   teste passou
+Time: 08/13/2021 17:07:52  Message: teste: TesteVariavelVetor executado em: 570  milisegundos.   teste passou
+Time: 08/13/2021 17:07:52  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
+Time: 08/13/2021 17:07:52  Message: teste: TesteCasesOfUse executado em: 26  milisegundos.   teste passou
+Time: 08/13/2021 17:07:52  Message: teste: Atribuicao executado em: 12  milisegundos.   teste passou
+Time: 08/13/2021 17:07:52  Message: teste: TesteIF_Else executado em: 45  milisegundos.   teste passou
+Time: 08/13/2021 17:07:56  Message: teste: TesteFor executado em: -501  milisegundos.   teste nao passou.
 
 
-Time: 04/08/2021 16:51:20  Message: teste passou.
 
 
-Time: 04/08/2021 16:51:20  Message: teste: TesteCasesOfUse_2 executado em: 119milisegundos.
 
 
-Time: 04/08/2021 16:51:20  Message: teste: TesteCasesOfUse_2 executado sem erros fatais.
 
 
-Time: 04/08/2021 16:51:27  Message: teste passou.
+Time: 08/13/2021 17:10:10  Message: teste: TesteImporter executado em: 311  milisegundos.   teste passou
+Time: 08/13/2021 17:10:10  Message: teste: TesteIF executado em: 61  milisegundos.   teste passou
+Time: 08/13/2021 17:10:10  Message: teste: TesteWhile executado em: 34  milisegundos.   teste passou
+Time: 08/13/2021 17:10:10  Message: teste: TesteCasesOfUse_2 executado em: 50  milisegundos.   teste passou
+Time: 08/13/2021 17:10:10  Message: teste: TesteChamadaDeObjetoImportado executado em: 45  milisegundos.   teste passou
+Time: 08/13/2021 17:10:10  Message: teste: TesteVariavelVetor executado em: 6  milisegundos.   teste passou
+Time: 08/13/2021 17:10:10  Message: teste: TesteCreateObjects executado em: 34  milisegundos.   teste passou
+Time: 08/13/2021 17:10:10  Message: teste: TesteCasesOfUse executado em: 27  milisegundos.   teste passou
+Time: 08/13/2021 17:10:10  Message: teste: Atribuicao executado em: 13  milisegundos.   teste passou
+Time: 08/13/2021 17:10:10  Message: teste: TesteIF_Else executado em: 48  milisegundos.   teste passou
+Time: 08/13/2021 17:10:10  Message: teste: TesteFor executado em: 67  milisegundos.   teste nao passou.
 
 
-Time: 04/08/2021 16:51:27  Message: teste: TesteWhile executado em: 263milisegundos.
 
 
-Time: 04/08/2021 16:51:27  Message: teste: TesteWhile executado sem erros fatais.
 
 
-Time: 04/08/2021 16:51:28  Message: teste passou.
 
 
-Time: 04/08/2021 16:51:28  Message: teste: Atribuicao executado em: -203milisegundos.
+Time: 08/13/2021 17:10:51  Message: teste: TesteImporter executado em: 242  milisegundos.   teste passou
+Time: 08/13/2021 17:10:51  Message: teste: TesteIF executado em: 88  milisegundos.   teste passou
+Time: 08/13/2021 17:10:51  Message: teste: TesteWhile executado em: 40  milisegundos.   teste passou
+Time: 08/13/2021 17:10:51  Message: teste: TesteCasesOfUse_2 executado em: 36  milisegundos.   teste passou
+Time: 08/13/2021 17:10:51  Message: teste: TesteChamadaDeObjetoImportado executado em: 21  milisegundos.   teste passou
+Time: 08/13/2021 17:10:51  Message: teste: TesteVariavelVetor executado em: 6  milisegundos.   teste passou
+Time: 08/13/2021 17:10:51  Message: teste: TesteCreateObjects executado em: 6  milisegundos.   teste passou
+Time: 08/13/2021 17:10:51  Message: teste: TesteCasesOfUse executado em: 27  milisegundos.   teste passou
+Time: 08/13/2021 17:10:51  Message: teste: Atribuicao executado em: 14  milisegundos.   teste passou
+Time: 08/13/2021 17:10:51  Message: teste: TesteIF_Else executado em: 64  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:51:28  Message: teste: Atribuicao executado sem erros fatais.
 
 
-Time: 04/08/2021 16:52:11  Message: teste nao passou.
 
 
-Time: 04/08/2021 16:52:11  Message: teste: TesteChamadaDeObjetoImportado executado em: 349milisegundos.
+Time: 08/13/2021 17:13:00  Message: teste: TesteImporter executado em: -780  milisegundos.   teste passou
+Time: 08/13/2021 17:13:00  Message: teste: TesteIF executado em: 57  milisegundos.   teste passou
+Time: 08/13/2021 17:13:00  Message: teste: TesteWhile executado em: 43  milisegundos.   teste passou
+Time: 08/13/2021 17:13:00  Message: teste: TesteCasesOfUse_2 executado em: 28  milisegundos.   teste passou
+Time: 08/13/2021 17:13:00  Message: teste: TesteChamadaDeObjetoImportado executado em: 28  milisegundos.   teste passou
+Time: 08/13/2021 17:13:00  Message: teste: TesteVariavelVetor executado em: 8  milisegundos.   teste passou
+Time: 08/13/2021 17:13:00  Message: teste: TesteCreateObjects executado em: 7  milisegundos.   teste passou
+Time: 08/13/2021 17:13:00  Message: teste: TesteCasesOfUse executado em: 27  milisegundos.   teste passou
+Time: 08/13/2021 17:13:00  Message: teste: Atribuicao executado em: 13  milisegundos.   teste passou
+Time: 08/13/2021 17:13:00  Message: teste: TesteIF_Else executado em: 49  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:52:11  Message: teste: TesteChamadaDeObjetoImportado executado sem erros fatais.
 
 
-Time: 04/08/2021 16:52:11  Message: teste nao passou.
 
 
-Time: 04/08/2021 16:52:11  Message: teste: TesteCreateObjects executado em: 191milisegundos.
+Time: 08/13/2021 17:14:53  Message: teste: TesteImporter executado em: -801  milisegundos.   teste passou
+Time: 08/13/2021 17:14:53  Message: teste: TesteIF executado em: 46  milisegundos.   teste passou
+Time: 08/13/2021 17:14:53  Message: teste: TesteWhile executado em: 26  milisegundos.   teste passou
+Time: 08/13/2021 17:14:53  Message: teste: TesteCasesOfUse_2 executado em: 25  milisegundos.   teste passou
+Time: 08/13/2021 17:14:53  Message: teste: TesteChamadaDeObjetoImportado executado em: 20  milisegundos.   teste passou
+Time: 08/13/2021 17:14:53  Message: teste: TesteVariavelVetor executado em: 5  milisegundos.   teste passou
+Time: 08/13/2021 17:14:53  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
+Time: 08/13/2021 17:14:53  Message: teste: TesteCasesOfUse executado em: 24  milisegundos.   teste passou
+Time: 08/13/2021 17:14:53  Message: teste: Atribuicao executado em: 12  milisegundos.   teste passou
+Time: 08/13/2021 17:14:53  Message: teste: TesteIF_Else executado em: 41  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:52:11  Message: teste: TesteCreateObjects executado sem erros fatais.
 
 
-Time: 04/08/2021 16:52:11  Message: teste: TesteImporter executado em: 195milisegundos.
 
 
-Time: 04/08/2021 16:52:11  Message: teste: TesteImporter executado sem erros fatais.
+Time: 08/13/2021 17:17:28  Message: teste: TesteImporter executado em: 249  milisegundos.   teste passou
+Time: 08/13/2021 17:17:28  Message: teste: TesteIF executado em: 58  milisegundos.   teste passou
+Time: 08/13/2021 17:17:29  Message: teste: TesteWhile executado em: -970  milisegundos.   teste passou
+Time: 08/13/2021 17:17:29  Message: teste: TesteCasesOfUse_2 executado em: 28  milisegundos.   teste passou
+Time: 08/13/2021 17:17:29  Message: teste: TesteChamadaDeObjetoImportado executado em: 32  milisegundos.   teste passou
+Time: 08/13/2021 17:17:29  Message: teste: TesteVariavelVetor executado em: 9  milisegundos.   teste passou
+Time: 08/13/2021 17:17:29  Message: teste: TesteCreateObjects executado em: 7  milisegundos.   teste passou
+Time: 08/13/2021 17:17:29  Message: teste: TesteCasesOfUse executado em: 30  milisegundos.   teste passou
+Time: 08/13/2021 17:17:29  Message: teste: Atribuicao executado em: 16  milisegundos.   teste passou
+Time: 08/13/2021 17:17:29  Message: teste: TesteIF_Else executado em: 51  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:53:28  Message: teste nao passou.
 
 
-Time: 04/08/2021 16:53:28  Message: teste: TesteChamadaDeObjetoImportado executado em: 423milisegundos.
 
 
-Time: 04/08/2021 16:53:28  Message: teste: TesteChamadaDeObjetoImportado executado sem erros fatais.
+Time: 08/13/2021 17:19:54  Message: teste: TesteImporter executado em: -779  milisegundos.   teste passou
+Time: 08/13/2021 17:19:54  Message: teste: TesteIF executado em: 60  milisegundos.   teste passou
+Time: 08/13/2021 17:19:54  Message: teste: TesteWhile executado em: 35  milisegundos.   teste passou
+Time: 08/13/2021 17:19:54  Message: teste: TesteCasesOfUse_2 executado em: 28  milisegundos.   teste passou
+Time: 08/13/2021 17:19:54  Message: teste: TesteChamadaDeObjetoImportado executado em: 27  milisegundos.   teste passou
+Time: 08/13/2021 17:19:54  Message: teste: TesteVariavelVetor executado em: 7  milisegundos.   teste passou
+Time: 08/13/2021 17:19:54  Message: teste: TesteCreateObjects executado em: 11  milisegundos.   teste passou
+Time: 08/13/2021 17:19:54  Message: teste: TesteCasesOfUse executado em: 28  milisegundos.   teste passou
+Time: 08/13/2021 17:19:54  Message: teste: Atribuicao executado em: 15  milisegundos.   teste passou
+Time: 08/13/2021 17:19:54  Message: teste: TesteIF_Else executado em: 51  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:53:28  Message: teste nao passou.
 
 
-Time: 04/08/2021 16:53:28  Message: teste: TesteCreateObjects executado em: 321milisegundos.
 
 
-Time: 04/08/2021 16:53:28  Message: teste: TesteCreateObjects executado sem erros fatais.
 
 
-Time: 04/08/2021 16:53:29  Message: teste: TesteImporter executado em: -752milisegundos.
 
 
-Time: 04/08/2021 16:53:29  Message: teste: TesteImporter executado sem erros fatais.
 
 
-Time: 04/08/2021 16:53:30  Message: teste passou.
+Time: 08/13/2021 17:22:28  Message: teste: TesteImporter executado em: 225  milisegundos.   teste passou
+Time: 08/13/2021 17:22:28  Message: teste: TesteIF executado em: 53  milisegundos.   teste passou
+Time: 08/13/2021 17:22:28  Message: teste: TesteWhile executado em: 30  milisegundos.   teste passou
+Time: 08/13/2021 17:22:28  Message: teste: TesteCasesOfUse_2 executado em: 32  milisegundos.   teste passou
+Time: 08/13/2021 17:22:28  Message: teste: TesteChamadaDeObjetoImportado executado em: 23  milisegundos.   teste passou
+Time: 08/13/2021 17:22:28  Message: teste: TesteVariavelVetor executado em: 7  milisegundos.   teste passou
+Time: 08/13/2021 17:22:28  Message: teste: TesteCreateObjects executado em: 6  milisegundos.   teste passou
+Time: 08/13/2021 17:22:28  Message: teste: TesteCasesOfUse executado em: 27  milisegundos.   teste passou
+Time: 08/13/2021 17:22:28  Message: teste: Atribuicao executado em: 14  milisegundos.   teste passou
+Time: 08/13/2021 17:22:28  Message: teste: TesteIF_Else executado em: 52  milisegundos.   teste passou
+Time: 08/13/2021 17:22:28  Message: teste: TesteFor executado em: 57  milisegundos.   teste nao passou.
 
 
-Time: 04/08/2021 16:53:30  Message: teste: TesteCasesOfUse executado em: 146milisegundos.
 
 
-Time: 04/08/2021 16:53:30  Message: teste: TesteCasesOfUse executado sem erros fatais.
 
 
-Time: 04/08/2021 16:53:31  Message: teste passou.
 
 
-Time: 04/08/2021 16:53:31  Message: teste: TesteCasesOfUse_2 executado em: -213milisegundos.
+Time: 08/13/2021 17:30:01  Message: teste: TesteImporter executado em: -538  milisegundos.   teste passou
+Time: 08/13/2021 17:30:01  Message: teste: TesteIF executado em: 62  milisegundos.   teste passou
+Time: 08/13/2021 17:30:01  Message: teste: TesteWhile executado em: 30  milisegundos.   teste passou
+Time: 08/13/2021 17:30:01  Message: teste: TesteCasesOfUse_2 executado em: 27  milisegundos.   teste passou
+Time: 08/13/2021 17:30:01  Message: teste: TesteChamadaDeObjetoImportado executado em: 22  milisegundos.   teste passou
+Time: 08/13/2021 17:30:01  Message: teste: TesteVariavelVetor executado em: 12  milisegundos.   teste passou
+Time: 08/13/2021 17:30:01  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
+Time: 08/13/2021 17:30:01  Message: teste: TesteCasesOfUse executado em: 29  milisegundos.   teste passou
+Time: 08/13/2021 17:30:01  Message: teste: Atribuicao executado em: 14  milisegundos.   teste passou
+Time: 08/13/2021 17:30:01  Message: teste: TesteIF_Else executado em: 49  milisegundos.   teste passou
+Time: 08/13/2021 17:30:01  Message: teste: TesteFor executado em: 73  milisegundos.   teste nao passou.
 
 
-Time: 04/08/2021 16:53:31  Message: teste: TesteCasesOfUse_2 executado sem erros fatais.
 
 
-Time: 04/08/2021 16:53:34  Message: teste passou.
 
 
-Time: 04/08/2021 16:53:34  Message: teste: TesteWhile executado em: 540milisegundos.
 
 
-Time: 04/08/2021 16:53:34  Message: teste: TesteWhile executado sem erros fatais.
+Time: 08/13/2021 17:30:58  Message: teste: TesteImporter executado em: 232  milisegundos.   teste passou
+Time: 08/13/2021 17:30:58  Message: teste: TesteIF executado em: 57  milisegundos.   teste passou
+Time: 08/13/2021 17:30:58  Message: teste: TesteWhile executado em: 35  milisegundos.   teste passou
+Time: 08/13/2021 17:32:14  Message: teste: TesteCasesOfUse_2 executado em: -264  milisegundos.   teste passou
+Time: 08/13/2021 17:32:14  Message: teste: TesteChamadaDeObjetoImportado executado em: 23  milisegundos.   teste passou
+Time: 08/13/2021 17:32:14  Message: teste: TesteVariavelVetor executado em: 7  milisegundos.   teste passou
+Time: 08/13/2021 17:32:14  Message: teste: TesteCreateObjects executado em: 7  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:53:35  Message: teste passou.
 
 
-Time: 04/08/2021 16:53:35  Message: teste: Atribuicao executado em: -201milisegundos.
 
 
-Time: 04/08/2021 16:53:35  Message: teste: Atribuicao executado sem erros fatais.
+Time: 08/13/2021 17:33:03  Message: teste: TesteImporter executado em: -763  milisegundos.   teste passou
+Time: 08/13/2021 17:33:03  Message: teste: TesteIF executado em: 46  milisegundos.   teste passou
+Time: 08/13/2021 17:33:03  Message: teste: TesteWhile executado em: 27  milisegundos.   teste passou
+Time: 08/13/2021 17:33:03  Message: teste: TesteCasesOfUse_2 executado em: 25  milisegundos.   teste passou
+Time: 08/13/2021 17:33:03  Message: teste: TesteChamadaDeObjetoImportado executado em: 19  milisegundos.   teste passou
+Time: 08/13/2021 17:33:03  Message: teste: TesteVariavelVetor executado em: 6  milisegundos.   teste passou
+Time: 08/13/2021 17:33:03  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
+Time: 08/13/2021 17:34:05  Message: teste: TesteCasesOfUse executado em: 640  milisegundos.   teste passou
+Time: 08/13/2021 17:35:12  Message: teste: Atribuicao executado em: 2  milisegundos.   teste passou
+Time: 08/13/2021 17:36:21  Message: teste: TesteIF_Else executado em: -432  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:53:36  Message: teste passou.
 
 
-Time: 04/08/2021 16:53:36  Message: teste: TesteIF executado em: 72milisegundos.
 
 
-Time: 04/08/2021 16:53:36  Message: teste: TesteIF executado sem erros fatais.
+Time: 08/13/2021 17:38:31  Message: teste: TesteImporter executado em: 290  milisegundos.   teste passou
+Time: 08/13/2021 17:38:31  Message: teste: TesteIF executado em: 55  milisegundos.   teste passou
+Time: 08/13/2021 17:38:31  Message: teste: TesteWhile executado em: 30  milisegundos.   teste passou
+Time: 08/13/2021 17:38:31  Message: teste: TesteCasesOfUse_2 executado em: 26  milisegundos.   teste passou
+Time: 08/13/2021 17:38:31  Message: teste: TesteChamadaDeObjetoImportado executado em: 26  milisegundos.   teste passou
+Time: 08/13/2021 17:38:31  Message: teste: TesteVariavelVetor executado em: 20  milisegundos.   teste passou
+Time: 08/13/2021 17:38:31  Message: teste: TesteCreateObjects executado em: 7  milisegundos.   teste passou
+Time: 08/13/2021 17:38:31  Message: teste: TesteCasesOfUse executado em: 41  milisegundos.   teste passou
+Time: 08/13/2021 17:38:31  Message: teste: Atribuicao executado em: 31  milisegundos.   teste passou
+Time: 08/13/2021 17:38:31  Message: teste: TesteIF_Else executado em: 63  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:53:37  Message: teste passou.
 
 
-Time: 04/08/2021 16:53:37  Message: teste: TesteIF_Else executado em: -58milisegundos.
 
 
-Time: 04/08/2021 16:53:37  Message: teste: TesteIF_Else executado sem erros fatais.
+Time: 08/13/2021 17:39:25  Message: teste: TesteImporter executado em: 498  milisegundos.   teste passou
+Time: 08/13/2021 17:39:25  Message: teste: TesteIF executado em: 55  milisegundos.   teste passou
+Time: 08/13/2021 17:39:26  Message: teste: TesteWhile executado em: -962  milisegundos.   teste passou
+Time: 08/13/2021 17:39:26  Message: teste: TesteCasesOfUse_2 executado em: 27  milisegundos.   teste passou
+Time: 08/13/2021 17:39:26  Message: teste: TesteChamadaDeObjetoImportado executado em: 21  milisegundos.   teste passou
+Time: 08/13/2021 17:39:26  Message: teste: TesteVariavelVetor executado em: 7  milisegundos.   teste passou
+Time: 08/13/2021 17:39:26  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
+Time: 08/13/2021 17:39:26  Message: teste: TesteCasesOfUse executado em: 26  milisegundos.   teste passou
+Time: 08/13/2021 17:39:26  Message: teste: Atribuicao executado em: 13  milisegundos.   teste passou
+Time: 08/13/2021 17:39:26  Message: teste: TesteIF_Else executado em: 53  milisegundos.   teste passou
+Time: 08/13/2021 17:39:35  Message: teste: TesteFor executado em: 197  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:53:39  Message: teste passou.
 
 
-Time: 04/08/2021 16:53:39  Message: teste: TesteFor executado em: 144milisegundos.
 
 
-Time: 04/08/2021 16:53:39  Message: teste: TesteFor executado sem erros fatais.
 
 
-Time: 04/08/2021 16:55:52  Message: teste nao passou.
+Time: 08/13/2021 17:45:53  Message: teste: TesteImporter executado em: -713  milisegundos.   teste passou
+Time: 08/13/2021 17:45:53  Message: teste: TesteIF executado em: 49  milisegundos.   teste passou
+Time: 08/13/2021 17:45:53  Message: teste: TesteWhile executado em: 27  milisegundos.   teste passou
+Time: 08/13/2021 17:45:53  Message: teste: TesteCasesOfUse_2 executado em: 27  milisegundos.   teste passou
+Time: 08/13/2021 17:45:53  Message: teste: TesteChamadaDeObjetoImportado executado em: 23  milisegundos.   teste passou
+Time: 08/13/2021 17:45:53  Message: teste: TesteVariavelVetor executado em: 6  milisegundos.   teste passou
+Time: 08/13/2021 17:45:53  Message: teste: TesteCreateObjects executado em: 12  milisegundos.   teste passou
+Time: 08/13/2021 17:45:53  Message: teste: TesteCasesOfUse executado em: 26  milisegundos.   teste passou
+Time: 08/13/2021 17:45:53  Message: teste: Atribuicao executado em: 23  milisegundos.   teste passou
+Time: 08/13/2021 17:45:53  Message: teste: TesteIF_Else executado em: 47  milisegundos.   teste passou
+Time: 08/13/2021 17:45:53  Message: teste: TesteFor executado em: 58  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:55:52  Message: teste: TesteChamadaDeObjetoImportado executado em: -648milisegundos.
 
 
-Time: 04/08/2021 16:55:52  Message: teste: TesteChamadaDeObjetoImportado executado sem erros fatais.
 
 
-Time: 04/08/2021 16:55:52  Message: teste nao passou.
 
 
-Time: 04/08/2021 16:55:52  Message: teste: TesteCreateObjects executado em: 258milisegundos.
+Time: 08/13/2021 17:50:56  Message: teste: TesteImporter executado em: 237  milisegundos.   teste passou
+Time: 08/13/2021 17:50:56  Message: teste: TesteIF executado em: 52  milisegundos.   teste passou
+Time: 08/13/2021 17:50:56  Message: teste: TesteWhile executado em: 29  milisegundos.   teste passou
+Time: 08/13/2021 17:50:56  Message: teste: TesteCasesOfUse_2 executado em: 30  milisegundos.   teste passou
+Time: 08/13/2021 17:50:56  Message: teste: TesteChamadaDeObjetoImportado executado em: 25  milisegundos.   teste passou
+Time: 08/13/2021 17:50:56  Message: teste: TesteVariavelVetor executado em: 9  milisegundos.   teste passou
+Time: 08/13/2021 17:50:56  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
+Time: 08/13/2021 17:50:56  Message: teste: TesteCasesOfUse executado em: 25  milisegundos.   teste passou
+Time: 08/13/2021 17:50:56  Message: teste: Atribuicao executado em: 12  milisegundos.   teste passou
+Time: 08/13/2021 17:50:56  Message: teste: TesteIF_Else executado em: 49  milisegundos.   teste passou
+Time: 08/13/2021 17:50:56  Message: teste: TesteFor executado em: 60  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:55:52  Message: teste: TesteCreateObjects executado sem erros fatais.
 
 
-Time: 04/08/2021 16:55:52  Message: teste: TesteImporter executado em: 329milisegundos.
+Time: 13/08/2021 17:52:02  Message: 
+Time: 08/13/2021 17:52:02  Message: teste: TesteImporter executado em: 205  milisegundos.   teste passou
+Time: 08/13/2021 17:52:02  Message: teste: TesteIF executado em: 61  milisegundos.   teste passou
+Time: 08/13/2021 17:52:02  Message: teste: TesteWhile executado em: 31  milisegundos.   teste passou
+Time: 08/13/2021 17:52:02  Message: teste: TesteCasesOfUse_2 executado em: 29  milisegundos.   teste passou
+Time: 08/13/2021 17:52:02  Message: teste: TesteChamadaDeObjetoImportado executado em: 23  milisegundos.   teste passou
+Time: 08/13/2021 17:52:02  Message: teste: TesteVariavelVetor executado em: 15  milisegundos.   teste passou
+Time: 08/13/2021 17:52:02  Message: teste: TesteCreateObjects executado em: 6  milisegundos.   teste passou
+Time: 08/13/2021 17:52:02  Message: teste: TesteCasesOfUse executado em: 28  milisegundos.   teste passou
+Time: 08/13/2021 17:52:02  Message: teste: Atribuicao executado em: 14  milisegundos.   teste passou
+Time: 08/13/2021 17:52:02  Message: teste: TesteIF_Else executado em: 62  milisegundos.   teste passou
+Time: 08/13/2021 17:52:02  Message: teste: TesteFor executado em: 80  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:55:52  Message: teste: TesteImporter executado sem erros fatais.
 
 
-Time: 04/08/2021 16:55:54  Message: teste passou.
+Time: 13/08/2021 17:52:44  Message: Testes para avaliacao de instrucoes.
+Time: 08/13/2021 17:52:44  Message: teste: TesteImporter executado em: 225  milisegundos.   teste passou
+Time: 08/13/2021 17:52:44  Message: teste: TesteIF executado em: 64  milisegundos.   teste passou
+Time: 08/13/2021 17:52:44  Message: teste: TesteWhile executado em: 29  milisegundos.   teste passou
+Time: 08/13/2021 17:52:44  Message: teste: TesteCasesOfUse_2 executado em: 32  milisegundos.   teste passou
+Time: 08/13/2021 17:52:44  Message: teste: TesteChamadaDeObjetoImportado executado em: 26  milisegundos.   teste passou
+Time: 08/13/2021 17:52:44  Message: teste: TesteVariavelVetor executado em: 8  milisegundos.   teste passou
+Time: 08/13/2021 17:52:44  Message: teste: TesteCreateObjects executado em: 6  milisegundos.   teste passou
+Time: 08/13/2021 17:52:44  Message: teste: TesteCasesOfUse executado em: 44  milisegundos.   teste passou
+Time: 08/13/2021 17:52:44  Message: teste: Atribuicao executado em: 16  milisegundos.   teste passou
+Time: 08/13/2021 17:52:44  Message: teste: TesteIF_Else executado em: 53  milisegundos.   teste passou
+Time: 08/13/2021 17:52:44  Message: teste: TesteFor executado em: 98  milisegundos.   teste passou
 
 
-Time: 04/08/2021 16:55:54  Message: teste: TesteCasesOfUse executado em: -353milisegundos.
-
-
-Time: 04/08/2021 16:55:54  Message: teste: TesteCasesOfUse executado sem erros fatais.
-
-
-Time: 04/08/2021 16:55:55  Message: teste passou.
-
-
-Time: 04/08/2021 16:55:55  Message: teste: TesteCasesOfUse_2 executado em: -220milisegundos.
-
-
-Time: 04/08/2021 16:55:55  Message: teste: TesteCasesOfUse_2 executado sem erros fatais.
-
-
-Time: 04/08/2021 16:55:58  Message: teste passou.
-
-
-Time: 04/08/2021 16:55:58  Message: teste: TesteWhile executado em: 547milisegundos.
-
-
-Time: 04/08/2021 16:55:58  Message: teste: TesteWhile executado sem erros fatais.
-
-
-Time: 04/08/2021 16:55:59  Message: teste passou.
-
-
-Time: 04/08/2021 16:55:59  Message: teste: Atribuicao executado em: -202milisegundos.
-
-
-Time: 04/08/2021 16:55:59  Message: teste: Atribuicao executado sem erros fatais.
-
-
-Time: 04/08/2021 16:56:00  Message: teste passou.
-
-
-Time: 04/08/2021 16:56:00  Message: teste: TesteIF executado em: 98milisegundos.
-
-
-Time: 04/08/2021 16:56:00  Message: teste: TesteIF executado sem erros fatais.
-
-
-Time: 04/08/2021 16:56:01  Message: teste passou.
-
-
-Time: 04/08/2021 16:56:01  Message: teste: TesteIF_Else executado em: -59milisegundos.
-
-
-Time: 04/08/2021 16:56:01  Message: teste: TesteIF_Else executado sem erros fatais.
-
-
-Time: 04/08/2021 16:56:03  Message: teste passou.
-
-
-Time: 04/08/2021 16:56:03  Message: teste: TesteFor executado em: 136milisegundos.
-
-
-Time: 04/08/2021 16:56:03  Message: teste: TesteFor executado sem erros fatais.

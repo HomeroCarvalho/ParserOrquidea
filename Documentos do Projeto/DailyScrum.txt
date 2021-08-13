@@ -1157,7 +1157,7 @@ Daily Scrum 01.10:
 			  ----> construção de expressões no teste feito, aguardando o teste para obtenção de sequencia resumida genérica.
 
 			  ---> codificar na classe TabelaDeValores, todos métodos com obtenção e manutenção de variáveis, pois houve divisão entre variáveis "int", "float" e "object (genérica)".
-						---> método afetados: GetVariavel(), GetTipoVariavel(), RegistraVariavel().
+						---> método afetados: GetObjetoiavel(), GetTipoVariavel(), RegistraVariavel().
 _______________________________________________________________________________________________________________________________________________________________________________________________________________________
 Daily Scrum 02.10:	
 
@@ -1677,8 +1677,8 @@ RESUMO:
 		---> fixado o loop infinito do método MatchSequencias(), e para sequencia id do loop infinito, retornou a valor correto.
 _______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 Daily Scrum 12.11:
-		----> codificado instruções GetVar() e SetVar().
-		----> método GetVar() retorna o valor da variável na pilha de objetos da classe OperadoresNativos.
+		----> codificado instruções GetObjeto() e SetVar().
+		----> método GetObjeto() retorna o valor da variável na pilha de objetos da classe OperadoresNativos.
 		----> loop infinito no método ExtraiEXPRSS(), fixado, mas diversas modificações. testes, sucessamente, o código pode estar quebrado para outras sequencias id.
 					---> mais a fixar: a instrução "if/else" não aparece no texto do metodo ToString().
 					---> todas sequencias id do teste de instruções passou sem erros fatais.
@@ -1785,7 +1785,7 @@ ________________________________________________________________________________
 Daily Scrum 18.11:
 
 		--> a fixar a atribuição incorreta para a instrução do bloco, de uma instrução if/else e instrução de atribuição.
-					---> fixado! Havia um erro no método GetVariavel() da classe TabelaDeValores.
+					---> fixado! Havia um erro no método GetObjetoiavel() da classe TabelaDeValores.
 					---> fixado os erros na classe TabelaDeValores, para obtencao de nomes atraves do método Find().
 		--> testes para instrução: "while", o termochave "while" não está sendo reconhecido como termo-chave da linguagem.
 					---> fixado.
@@ -2096,7 +2096,7 @@ Daily Scrum 10.12:
 
 				----> (a fazer) planejamento da instrução:"casesOfUse": permitira que tipo de dados? "int", "float", "char","string", e alguma classe que sobrescreva o método "Equals"?
 
-				----> (feito) como acessar variaveis vetores? Métodos como GetVariavelVetor deve ter indices de acesso?
+				----> (feito) como acessar variaveis vetores? Métodos como GetObjetoiavelVetor deve ter indices de acesso?
 								---> planejado e implantado uma nova classe de variavelVetor, que contem uma lista de variavelVetor, e um array de valores para cada variavelVetor.
 
 Algum impedimento para fazer as atividades do dia?
@@ -4015,6 +4015,205 @@ Daily Scrum 05.08:
 
 	---> teste para processamento de uma chamada de metodo de um objeto de classe importada.
 			---> (teste implícito) modificado o codigo de ParserUniversal.GetTokens(), para corrigir erros com tokens de ponto flutuante.
+							---> testes feitos, a funcionalidade de pontos flutuantes está operacional.
 
-			---> fixar o build da instrução "create", para retirar indices de dimensões, se a variavel a ser criada for uma variavel VariavelVetor.
+			---> (codificado, testado) fixar o build da instrução "create", para retirar indices de dimensões, se a variavel a ser criada for uma variavel VariavelVetor.
 						---> codificado, aguardando testes.
+							---> testes feitos, falha em reconhecer a sequencia id da instrução "create".
+										--->fixado o cenario de testes estava com codigo com sintaxe incorreta.
+										--->fixado, a instrução create.
+										---> comando Create para VariavelVetor, com indices de dimensões calculadas previamente, esta operacional.
+
+
+
+			---> (codificado, testado) modificacao na classe linguagemOrquidea, para importar automaticamente todas as classes do assembly deste projeto.
+
+
+
+________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 06.08: 	
+
+	Atividades do dia realizadas:
+
+		  --->nos testes para metodos importados, falha na execução do método, não está calculando o valor esperado no teste.
+									---> falha no metodo ObtemPropriedadesEncadeadas: verificar se há previsão para metodos aninhados.
+													----> (verificado) o metodo create nao instancia objetos importados...
+													----> (fixado) verificando, os construtores da classe Variavel não estava requerendo o tipo da variavel! Até mesmo inserida como tipo como VariavelVetor, o que é muito estranho..
+													----> problema no reconhecimento de um metoodo importado, da chamada de metodo. Verificar se há problema com tipos double e float, o cenario de teste tem um parâmetro double na chamada de objeto importado.
+													----> (codificado) criado uma nova classe: classe com operadores com tipo de dados "double".
+															---> há uma falha no metodo: nao destingue "float" de "double" no formato string.
+																		---> codificado para reconhecer como valido se os tipos forem "double" e "float" ou "float" e "double".
+
+
+									---> modificado o código para compor com tipo "double". Para o processamento de métodos importados, que possuem parâmetros e retorno do tipo "double".
+									---> modificado a execução da instrucao CallerOfFunction, para compor uma avaliação de expressão, com a expressão da ExpressaoFuncao do método da instrução.
+				
+			---> (codificado) codificar a instrucao CallerOfFunction para incluir um objeto caller que é modificado (ou não) com a chamada do método.
+									---> já estava codificado.
+
+			---> (verificado) verificar se o objeto caller de uma função não precisa ser guardado numa lista, pois uma função pode ser chamada sem terminar o processamento de uma chamada de método anterior.
+									--->(codificar) é necessário, codificar guardar o objeto caller numa lista de stack, dentro da classe método.
+
+
+
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 09.08: 	
+
+	Atividades do dia realizadas:
+			----> unificando Variavel, Objeto, e propriedade, está confuso quando é uma variavel estruturada, um objeto, ou uma propriedade.
+									---> removido a classe Variavel, substituida por Objeto, e parcialmente a classe propriedade, por Objeto.
+									---> removido a classe propriedade, subsituida pela classe Objeto.
+
+
+		    ----> os tipos de dados fica então: Vetor, Objeto. O tipo Objeto contem todos tipos basicos (int, float, double, char, string), mais os tipos construidos pelas classes da linguagem, mais os tipos importador da linguagem base.
+			o tipo Objeto expressa também as propriedades estáticas.
+									---> o tipo Objeto contém um valor, que é a instancia criada a partir da classe, e uma lista de Objetos.
+
+
+			---> devido as modificações no código, é necessário testar novamente o processamento de expressões e instruções.
+					----> testes para expressões:
+									---> (fixado) falha na atribuição de valor a um objeto. O metodo ProcessadorID.SetValorNumero() devido às modificações de unificação para a classe Objeto, estava incompleto.
+									---> build de atribuição de variáveis operacional.
+									---> execução da instrução de chamadaDeFuncao, falha, está retornando null para a operação com a expressão de chamada de função.
+													---> fixado a obtencao de valores de parametros: o codigo para obter valor estava certo quando o texto de expressao retornava um numero..
+													---> falha na execução da função. Devido às modificações, a execução da função somente é feita quando se executar as instruções da função.
+																	--->fixado a leitura de instruções da função: no build de definição de instrução, retorna a instruções do bloco de execução da função, e adiconada a lista de instruções da função.
+
+
+					----> atualizado a instrucao Atribuicao, para compor um novo valor para um Objeto, com o campo ou o valor do objeto, sem campo.
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 09.08: 	
+
+	Atividades do dia realizadas:
+					---> teste para a classe TesteExpressoes.
+								---> cenario de teste 1:
+										----> fixado o tipo da expressao: obedece a ordem: tipo de Objeto, tipo de Vetor,  numero int, numero float, numero double.
+										----> o codigo do construtor de Expressao quebrou! está retornando uma expressão não esperada.
+														---> os operadores da classe float não estão registrados: por isso o operador "=" retornava null, há um operador "=" para float, além o operador "*" não estava registrado também.
+
+
+										----> a avaliação de expressão para o teste 1, está calculando, mas incorretamente: retorna o valor de b, ou (int)(a*b).
+														---> (fixado) o build de return quebrou.
+														---> o tipo de operador insiste em ser do tipo "Int32", e deveria ser do tipo "float".
+														---> o problema é determina o tipo dos operadores, GetTipo() resulta em "BINARIO" ou "UNARIO", tem que calcular os tipos de cada parametro, e decidir (casting) para o tipo do operador. Parece que o tipo do operador é o tipo de retorno do operador, pois os operadores são definidos como operadores nativos agrupados em classes.
+																		----> fixado o tipo correto do operador, o tipoRetorno=classe do operador.
+														---> fixado a obtenção de um operador numa expressão: se nomeOperador, tipoRetornoOperador, e tiposOperandos, o operador currente é o operador encontrado.
+
+
+										----> (fixado, testado) avaliação de expressao para o cenario teste 1, calculada acertadamente.
+
+						  ---> : modificações na classe Expressao, para obter o tipo da expressao, e obtencao de operador compativel.
+							   : modificações na classe OperadoresNativos, para retornar o tipo de retorno do operador, e os tipos dos operandos do operador.
+							   : com essas modificações, é possível construir expressões com operadores de tipos de operandos diferentes, e tipo de operadores com retorno de resultado de acordo com uma classe.
+
+
+
+							   ---> cenario de teste 2:
+									---> os tipos dos operandos, tipo de operadores, tipo de retorno de função, estão compatíveis, mas falha no teste.
+														---> a compilação da instrução "return" está gerando exceção na extração de expressões.
+																	---> verificando o codigo do construtor Expressao, está quebrado!: falha na construcao da expressao após a expressão entre parenteses, e os objetos parâmetros estão duplicados, e as ultimas copias estão com valor=null.
+																					----> codificado o metodo Expressao.GetTipoExpressao(), para compor o tipo a partir dos tokens da expressão, e é chamada antes do processamento de expressões dentro da expressão.
+																					----> verificado o código em execução, constatou-se que pode haver expressões dentro de expressões. Modificado o codigo de EvalExpression(), para avaliar expressões dentro de expressões.
+																					----> codificado o caso em compor uma Expressão, após uma expressão entre parenteses, formando uma sub-expressão válida para adicionar aos elementos da expressão principal.
+
+																	---> verificar a duplicação de parâmetros de função: está no método Funcao.ExecuteExpression().
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 11.08: 	
+
+	Atividades do dia realizadas:
+						
+						---> verificar a duplicação de parâmetros de função: está no método Funcao.ExecuteExpression().
+													---> verificando o metodo compilador DefinicaoDeFuncao(), estava extraindo a primeira ocorrencia de uma variavel parametro, quando teria que retirar a ultima ocorrencia da variavel parametro, pois entrou por ultimo na lista de objetos variaveis.
+													---> os metodos de compilação DefinicaoFuncao e DefinicaoMetodo, não estão registrando as instruções do corpo da função!.
+
+						---> (fixado, testado) cenario de teste 2 expressões classe testeExpressoes.
+													--> (fixado) falha no método Expressao.ExtraiExpressoes().
+
+						---> o interessante é que variaveis criadas no corpo de uma função, não é passada para o escopo acima do escopo da função, o que é o desejado.
+
+						---> algo de se notar é que há muitos erros na avaliação de expressões, mas os testes anteriores não estavam processando instruções, do corpo de funções.
+													---> falha na validação do valor da expressão.
+													---> (codificado)a expressao entre parenteses nao está correto, tem que somar os elementos da expressão lista, com a expressão restante, pois nesse caso é apenas uma expressão só.
+													---> (falha) o valor retornado da expressão está diferente do esperado.
+																----> (fixado) o metodo Expressao.PosOrdem() esta devolvendo a expressao sem modificacoes!.
+																		---> foi fixado retornando as expressoes de uma expressao entre parenteses e uma expressao após a expressao entre parenteses, 
+																		     numa só expressao, a expressao que se quer construir com a chamada do construtor. Anteriormente, as expressoes entre parenteses
+																			 e restante era anexada como um dos elementos da expressao em construcao.
+
+						---> (testado) testado o cenario 2 da classe testeExpressoes.
+						---> (testado) testar o cenario de teste 3 da classe testeExpressoes. 
+
+						---> tres cenarios de testes com expressoes, realizado.
+
+						---> (codificado) parada para adicionar uma funcionalidade na classe de SuiteClasseTestes, para retornar uma lista em arquivo contendo um resumos de todas validações em cada teste, melhor que log de cada validação.
+													---> modificação feita, agora o relatorio de testes tem um resumo das validações de todos testes da classe de testes, mas uma linha após a outra, e nao uma linha contendo apenas o resultado de uma validação.
+													     contém também exceções não tratadas, com descrição, stack de chamadas de metodos...
+
+							 ---> (testado) a funcionalidade de lista-resumos da classe SuiteClasseTestes.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 12.08: 	
+
+	Atividades do dia realizadas:
+
+					---> testar a classe TestesInstrucoes.
+
+								---> teste para instrução "importer" realizado.
+								---> testes pra instrução "chamada de função" importado, realizado.
+								---> teste para instruçao "VariavelVetor" realizado.
+								---> teste para instrução "CreateObject", realizado (fixado, uma serie de ifs/elses estava quebrado, e retornando o resultado null, na execução dos operador) instrucao casesOfUse, falha na avaliação do operador ">", os tipos estão certos, para os operandos, e o operador, mas está retornando null.
+
+								---> teste para instrução "casesOfUse" e "caseOfUse 2", realizados.
+								---> teste para instrução "while", falha na classe EvalExpression: estava calculando expressões que são números duas vezes, então a pilha de operandos resultava um valor inválido.
+								---> teste para instrução "atribuicao", realizado.
+								---> (fixado) teste para instrução "if", falha, a expressão do bloco está cortada de "c=3*b" para "c=3".
+											---> verificando a expressão incorreto está no Compilador.
+											---> verificando, o metodo Expressao.ExtraiExpressoes() quebrou! Está retornando "c=3" em vez de "c=3*b", a subExpressao:  "*b"  não está sendo processado..
+																----> verificando este metodo: o operador "*" não está encontrando um operador compativel.
+																----> (codificado, aguardando testes) verificando o metodo GetOperadorCompativel() não obtem operador se um ou dois operandos forem numeros.
+																----> fixado, teste feito para instrução "if" realizado.
+
+
+								
+
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 13.08: 	
+
+	Atividades do dia realizadas:
+					---> (testado) teste para instrução  "if-else", feito.
+					---> (falha) teste para instrução "for", falha, não está modificando os objetos da instrução.
+							---> verificando, a variavel de malha, que é atribuída na instrução "for", está ocorrendo extração de operadores compatíveis, pois o valor da variavel de malha, nem o registro da variavel de malha, foi atribuido.
+							---> codificado e testado a instanciação de uma variavel dentro de uma expressão, se a variavel já não estiver sido instanciada, mas o metodo Expressao.GetOperadorCompativel() não está reconhecendo o operador "=", de um operando numero e outro operando variavel.
+
+							---> falha no metodo Expressao.GetTipoExpressao(), está retornando tipo="float" para uma expressão de apenas objetos "int".
+										--> no metodo GetOperadorCompativel(), nao estava validando o tipo de operador de entrada, e os tipos de operador verificados.
+
+							---> falha na extração das expressoes da instrucao "for": modificações para não registrar previamente a variavel de malha, quebrou o codigo do construtor Expressoes.
+										---> fixado, a duplicação de variaveis, mas a expressao extraida está com duas vezes a variavel de malha. fixado, nao estava consumindo o token da variavel da malha, o caso consumia dois tokens.
+										---> com as expressoes da instrucao "for" consertadas, o teste para a execução da instrução "for" foi feita com êxito.
+										---> apesar do teste ter sido validado, a duplicação das variáveis continua.
+														----> a execução da instrução "for" está duplicando duas das variaveis da instrução. Mas nao está afetando a avaliação da instrução.
+														----> ao utilizar um operador como "+", o operador é modificado, na segunda compilação dos testes.
+
+
+
+
+					---> validando todos testes da classe de testes de instrução, a instrução "while", devida à modificações feitas para validar outras instruções, entra em loop infinito.
+							---> testes na instrucao "while", falha, as expressões estão cortadas!, o que é "x=x+1" fica como "x=x".
+							---> as expressões não estão sendo processadas corretamente.
+										---> miraculosamente, as expressões voltaram ao normal, e não saíram cortadas, depois que bloquei o FireWall, e Reinicializei duas vezes o S.O., para limpar de toda porcariada que o firewall deixava passar, e as expressões não sairam cortadas.
+										---> chamando o processador de ids pela segunda vez, os operadores sai com tipo em vez de "BINARIO", sai como tipo "int", o tipo não é o da classe do operador, é se ele é binario ou unario.
+																---> as classes do Repositorio estão sendo manipuladas, uma "brecha", quando inicializa o sistema do compilador pela segunda vez, o repositorio é alterado...
+
+
+					---> fixado, todos testes da classe testes instrucoes, foram executados com exito.
+									   ----> HA ALGO ERRADO, SE MUDARMOS OS PARAMETROS DO TESTE PARA INSTRUCAO "for", E SETANDO MANUALMENTE, O VALOR ESPERADO, O TESTE FALHA!
+									   --->  HÁ ALGO ERRADO TB: OS TESTES SÃO EXECUTADOS NUMA VELOCIDADE INCRÍVEL, PODE HAVER OTMIZAÇÃO OU MANIPULAÇÃO INDESEJADOS.
+									   ---> há também o problema de duplicação de variáveis, no teste para instrução "for".
+
+
+					---> (a implementar) estudar a possibilidade no metodo Create, para variavel Vetor, se os indices não possam ser expressoes, em vez de numeros fixos.
+								---> adicionar as expressoes, nos indices passados para a execução de instrução.
+								---> na instrucao create, processar as expressoes, e criar o objeto Vetor com os indices calculados.
+___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________

@@ -9,12 +9,13 @@ namespace parser
 {
     public class Objeto
     {
+        private string acessor;
         private string tipo;
         private string nome;
         private object valor;
 
-
-        private List<propriedade> campos { get; set; }
+        public bool isStatic { get; set; }
+        private List<Objeto> campos { get; set; }
         
         public List<Funcao> construtores = new List<Funcao>();
         public Objeto()
@@ -22,43 +23,63 @@ namespace parser
             this.nome = "";
             this.tipo = "";
             this.valor = null;
-            this.campos = new List<propriedade>();
+            this.campos = new List<Objeto>();
+            this.isStatic = false;
         }
         public Objeto(Objeto objeto)
         {
             this.nome = objeto.nome;
             this.tipo = objeto.tipo;
             this.valor = objeto.valor;
+            this.isStatic = objeto.isStatic;
             if ((objeto.campos != null) && (objeto.campos.Count > 0))
-                this.campos = objeto.campos.ToList<propriedade>();
+                this.campos = objeto.campos.ToList<Objeto>();
         }
 
 
-        public Objeto(string nomeClasse, string nomeObjeto, string nomeCampo, object valorCampo, Escopo escopo)
+        public Objeto(string nomeAcessor, string nomeClasse, string nomeObjeto, string nomeCampo, object valorCampo, Escopo escopo)
         {
-            InitObjeto(nomeClasse, nomeObjeto, null);
-            propriedade campoModificar = this.campos.Find(k => k.GetNome() == nomeCampo);
-            campoModificar.valor = valorCampo;
+            InitObjeto(nomeAcessor, nomeClasse, nomeObjeto, null);
+            Objeto campoModificar = this.campos.Find(k => k.GetNome() == nomeCampo);
+            campoModificar.SetValor(valorCampo, escopo); // aciona a otimização de cálculo de expressões.
+            this.isStatic = isStatic;
         }
 
         // inicializa uma instância de um objeto, criando memória para a lista de propriedade, nome do objeto, e o tipo do objeto.
-        public Objeto(string nomeClasse, string nomeObjeto, object valor, Escopo escopo)
+        public Objeto(string nomeAcessor, string nomeClasse, string nomeObjeto, object valor)
         {
-            InitObjeto(nomeClasse, nomeObjeto, valor);
+            InitObjeto(nomeAcessor, nomeClasse, nomeObjeto, valor);
+            this.isStatic = false;
         }// Objeto()
 
-        private void InitObjeto(string nomeClasse, string nomeObjeto, object valor)
+        // inicializa uma instância de um objeto, criando memória para a lista de propriedade, nome do objeto, e o tipo do objeto.
+        public Objeto(string nomeAcessor, string nomeClasse, string nomeObjeto, object valor, bool isStatic)
         {
+            InitObjeto(nomeAcessor, nomeClasse, nomeObjeto, valor);
+            this.isStatic = isStatic;
+        }// Objeto()
+
+        public Objeto(string nomeAcessor, string nomeClasse, string nomeOObjeto, object valor, List<Objeto> campos)
+        {
+            InitObjeto(nomeAcessor, nomeClasse, nomeOObjeto, valor);
+            this.campos = campos.ToList<Objeto>();
+            this.isStatic = false;
+        }
+        private void InitObjeto(string nomeAcessor, string nomeClasse, string nomeObjeto, object valor)
+        {
+            this.acessor = nomeAcessor;
             this.nome = nomeObjeto;
             this.tipo = nomeClasse;
-            if (valor == null)
-                this.valor = valor;
+            this.valor = valor;
             Classe classe = RepositorioDeClassesOO.Instance().ObtemUmaClasse(nomeClasse);
-
-            if ((classe.GetPropriedades() != null) && (classe.GetPropriedades().Count > 0))
-                this.campos = classe.GetPropriedades().ToList<propriedade>();
-            else
-                this.campos = new List<propriedade>();
+            
+            if (classe != null)
+            {
+                if ((classe.GetPropriedades() != null) && (classe.GetPropriedades().Count > 0))
+                    this.campos = classe.GetPropriedades().ToList<Objeto>();
+                else
+                    this.campos = new List<Objeto>();
+            } 
         }
 
         public Funcao GetMetodo(string nome)
@@ -66,13 +87,29 @@ namespace parser
             return  RepositorioDeClassesOO.Instance().ObtemUmaClasse(this.tipo).GetMetodos().Find(k => k.nome == nome);
         }
 
-        public propriedade GetField(string nome)
+        public Objeto GetField(string nome)
         {
             return this.campos.Find(k => k.GetNome() == nome);
         }
 
-
+        public string GetAcessor()
+        {
+            return this.acessor;
+        }
               
+        public void SetAcessor(string acessor)
+        {
+            this.acessor = acessor;
+        }
+        public void SetNomeLongo()
+        {
+            this.nome = this.GetTipo() + "." + this.GetNome();
+        }
+   
+        public void SetValorObjeto(object newValue)
+        {
+            this.valor = newValue;
+        }
         /// <summary>
         /// implementa a otimizacao de expressoes. Se uma expressao conter a variavel
         /// que está sendo modificada, a expressao é setada para modificacao=true.
@@ -82,12 +119,37 @@ namespace parser
         /// <param name="nome">nome da propriedade.</param>
         /// <param name="novoValor">novo valor para a propriedade.</param>
         /// <param name="esopo">contexto onde a propriedade está.</param>
-        public void SetValor(string nome, object novoValor, Escopo escopo)
+        public void SetValorField(string nome, object novoValor, Escopo escopo)
         {
             if (this.GetField(nome) == null)
                 return;
 
             this.GetField(nome).valor = novoValor;
+            int index = this.campos.FindIndex(k => k.tipo == nome);
+            if (index != -1)
+            {
+                List<Expressao> expressoes = escopo.tabela.GetExpressoes();
+                for (int umaExpressao = 0; umaExpressao < expressoes.Count; umaExpressao++)
+                {
+                    for (int variavel = 0; variavel < expressoes[umaExpressao].Elementos.Count; variavel++)
+                    {
+                        if (expressoes[umaExpressao].Elementos[variavel].ToString().Equals(nome))
+                        {
+                            expressoes[umaExpressao].isModdfy = true;
+                            break;
+                        }
+                    } // for variavel
+
+
+                } // for index
+            } // if index
+
+        } // SetValor()
+
+
+        public void SetValor(object novoValor, Escopo escopo)
+        {
+            this.valor = novoValor;
             int index = this.campos.FindIndex(k => k.tipo == nome);
             if (index != -1)
             {
@@ -124,7 +186,7 @@ namespace parser
         {
             this.nome = nome;
         }
-        public string GetClasse()
+        public string GetTipo()
         {
             return this.tipo;
         }
@@ -132,7 +194,7 @@ namespace parser
       
 
 
-        public List<propriedade> GetFields()
+        public List<Objeto> GetFields()
         {
 
             return this.campos;

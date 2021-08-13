@@ -8,41 +8,7 @@ namespace parser
     class CorpoTestes_3
     {
         LinguagemOrquidea linguagem = new LinguagemOrquidea();
-        private void Teste1ProgramaOrquidea(Assercoes assercao)
-        {
-
-            Escopo escopo = null;
-
-
-            List<string> codigoChamadaFuncao = new List<string>() { "int funcaoB(int x); int b= funcaoB(a);" };
-            List<string> tokensChamadaFuncao = new Tokens(new LinguagemOrquidea(), codigoChamadaFuncao).GetTokens();
-            escopo = new Escopo(codigoChamadaFuncao);
-
-            List<Expressao> expressoes = Expressao.Instance.ExtraiExpressoes(escopo, tokensChamadaFuncao);
-
-            escopo = null;
-
-            List<string> codigo3 = new List<string>() { "int funcaoB(int x){ x=x+1;}; int a=1; int b= funcaoB(a);" };
-            escopo = null;
-            CenarioTestesProgramaOrquidea(codigo3, out escopo);
-
-            escopo = null;
-
-            List<string> codigo1 = new List<string>() { "int a=1; int b= 5; int c= a+b;" };
-            CenarioTestesProgramaOrquidea(codigo1, out escopo);
-
-            if (escopo.tabela.GetVar("c", escopo).GetValor().ToString() == "6")
-                assercao.MsgSucess("calculo do codigo feito com exatidao.");
-
-
-
-            List<string> codigo2 = new List<string>() { "int a=1; int b= 5; int x=7; int c= a+b*x;" };
-            escopo = null;
-            CenarioTestesProgramaOrquidea(codigo2, out escopo);
-            if (escopo.tabela.GetVar("c", escopo).GetValor().ToString() == "36")
-                assercao.MsgSucess("calculo do codigo 2 feito com exatidao.");
-        }
-
+   
         private static void CenarioTestesProgramaOrquidea(List<string> codigo, out Escopo escopo)
         {
             escopo = null;
@@ -67,20 +33,20 @@ namespace parser
             List<string> tokens3 = new Tokens(new LinguagemOrquidea(), codigo3).GetTokens();
             escopo = new Escopo(codigo3);
 
-            Variavel v_a = new Variavel("public", "a", "int", 1);
-            Variavel v_b = new Variavel("public", "b", "int", 1);
-            Variavel v_c = new Variavel("public", "c", "int", 1);
+            Objeto v_a = new Objeto("public", "a", "int", 1);
+            Objeto v_b = new Objeto("public", "b", "int", 1);
+            Objeto v_c = new Objeto("public", "c", "int", 1);
 
-            escopo.tabela.GetVariaveis().Add(v_a);
-            escopo.tabela.GetVariaveis().Add(v_b);
-            escopo.tabela.GetVariaveis().Add(v_c);
+            escopo.tabela.GetObjetos().Add(v_a);
+            escopo.tabela.GetObjetos().Add(v_b);
+            escopo.tabela.GetObjetos().Add(v_c);
             
 
 
             expressoes = Expressao.Instance.ExtraiExpressoes(escopo, tokens3);
         }
 
-        private void TesteParaDefinicaoDeVariavelComExpressoesEmAtribuicao(Assercoes assercao)
+        private void TesteParaDefinicaoDeObjetoComExpressoesEmAtribuicao(Assercoes assercao)
         {
             LinguagemOrquidea linguagem = new LinguagemOrquidea();
             List<string> codigo1 = new List<string>() { "int c=funcaoA()+a+b;" };
@@ -88,16 +54,16 @@ namespace parser
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo1);
             processador.escopo.tabela.RegistraFuncao(new Funcao("public", "funcaoA", funcaoVazia, null));
-            processador.escopo.tabela.AddVar("public", "a", "int", "1", processador.escopo, false);
-            processador.escopo.tabela.AddVar("public", "b", "int", "5", processador.escopo, false);
+            processador.escopo.tabela.AddObjeto("public", "a", "int", "1");
+            processador.escopo.tabela.AddObjeto("public", "b", "int", "5");
 
 
             processador.Compile();
 
             assercao.MsgSucess("construcao de codigo de defnicoes de variaveis feito sem erros fatais.");
 
-            if ((processador.escopo.tabela.GetVariaveis().Count == 3) &&
-                (processador.escopo.tabela.GetVar("c", processador.escopo) != null))
+            if ((processador.escopo.tabela.GetObjetos().Count == 3) &&
+                (processador.escopo.tabela.GetObjeto("c", processador.escopo) != null))
                 assercao.MsgSucess("definição de variável a partir de expressao completa feita sem erros.");
         }
 
@@ -138,7 +104,7 @@ namespace parser
             List<string> codeObject = new List<string>() { "obj1.varB.varA=1;" };
 
             escopo = new Escopo(codeObject);
-            Objeto obj = new Objeto("B", "obj1", null, escopo);
+            Objeto obj = new Objeto("private", "B", "obj1", null);
             escopo.tabela.RegistraObjeto(obj);
 
             CenarioTesteProcessamentoParaPropriedadesAninhadas(codeObject, escopo);
@@ -186,7 +152,7 @@ namespace parser
             assercao.MsgSucess("construcao da classe teste feita com sucesso.");
 
             // inicializa um objeto do tipo A.
-            Objeto objeto = new Objeto("A", "obj1", null, processador.escopo);
+            Objeto objeto = new Objeto("private", "A", "obj1", null);
 
 
             assercao.MsgSucess("inicializacao indireta de objeto feita sucessamente");
@@ -268,14 +234,16 @@ namespace parser
 
 
             // cria objetos parametros.
-            Objeto objetoA = new Objeto("int", "a", 1, processador.escopo);
-            Objeto objetoB = new Objeto("int", "b", 1, processador.escopo);
+            Objeto objetoA = new Objeto("private","int", "a", 1);
+            Objeto objetoB = new Objeto("private", "int", "b", 1);
             processador.escopo.tabela.RegistraObjeto(objetoA);
             processador.escopo.tabela.RegistraObjeto(objetoB);
 
             processador.Compile(); // constroi a classe teste.
 
-            Funcao umConstrutor = new Funcao("public", "ClasseB", funcaoVazia, null, new propriedade[] { new propriedade("a", "int", null, false), new propriedade("b", "int", null, false) });
+            Funcao umConstrutor = new Funcao("public", "ClasseB", funcaoVazia, null, new Objeto[] {
+                new Objeto("private","int","a", null, false),
+                new Objeto("private","int", "b", null, false) });
             Classe classeTeste = RepositorioDeClassesOO.Instance().ObtemUmaClasse("ClasseB");
             classeTeste.construtores.Add(umConstrutor);
            
@@ -377,8 +345,8 @@ namespace parser
         
         public CorpoTestes_3()
         {
-            Teste testeProgramaOrquidea1_teste = new Teste(this.Teste1ProgramaOrquidea, "avaliacao de programa orquidea.");
-            Teste testeDefinicoesDeVariaveis_teste = new Teste(this.TesteParaDefinicaoDeVariavelComExpressoesEmAtribuicao, "teste para verificacao de variaveis construidas com atribuicoes de expressoes.");
+          
+            Teste testeDefinicoesDeVariaveis_teste = new Teste(this.TesteParaDefinicaoDeObjetoComExpressoesEmAtribuicao, "teste para verificacao de variaveis construidas com atribuicoes de expressoes.");
             Teste testeImportacaoDeClasse_teste = new Teste(this.TesteImportarClasseDaLinguagemSuporte, "teste de importacao de classe da matriz de suporte.");
             Teste testePropriedadesAninhadas_teste = new Teste(this.TestePropriedadesAninhadas, "teste para processamento de propriedades aninhadas.");
             Teste testeManipulacaoDePropriedadeDeObjetos_teste = new Teste(this.TesteManipulacaoDeObjetos, "teste para manipular atribuicao de propriedades de um objeto.");

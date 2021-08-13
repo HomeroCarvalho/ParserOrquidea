@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
 using parser.ProgramacaoOrentadaAObjetos;
 namespace parser
 {
@@ -8,7 +9,7 @@ namespace parser
     /// </summary>
     public class LinguagemOrquidea : UmaGramaticaComputacional
     {
-
+   
         /// <summary>
         /// inicializa dados da linguagem orquídea.
         /// </summary>
@@ -23,12 +24,14 @@ namespace parser
 
         public void inicializaOperadores()
         {
-
+            
             if (LinguagemOrquidea.Classes != null)
                 return;
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
             List<Operador> op_int = new List<Operador>();
             List<Operador> op_float = new List<Operador>();
+            List<Operador> op_double = new List<Operador>();
             List<Operador> op_string = new List<Operador>();
             List<Operador> op_bool = new List<Operador>();
             List<Operador> op_char = new List<Operador>();
@@ -36,16 +39,18 @@ namespace parser
 
 
 
-            List<Funcao> operadores_int = new _Operador().GetImplentacao("parser.OperadoresInt");
-            List<Funcao> operadores_float = new _Operador().GetImplentacao("parser.OperadoresFloat");
-            List<Funcao> operadores_string = new _Operador().GetImplentacao("parser.OperadoresString");
-            List<Funcao> operadrores_char = new _Operador().GetImplentacao("parser.OperadoresChar");
-            List<Funcao> operadores_boolean = new _Operador().GetImplentacao("parser.OperadoresBoolean");
-            List<Funcao> operadores_matriz = new _Operador().GetImplentacao("parser.OperadoresMatriz");
+            List<Funcao> operadores_int = new OperadoresImplementacao().GetImplentacao("parser.OperadoresInt");
+            List<Funcao> operadores_float = new OperadoresImplementacao().GetImplentacao("parser.OperadoresFloat");
+            List<Funcao> operadores_double = new OperadoresImplementacao().GetImplentacao("parser.OperadoresDouble");
+            List<Funcao> operadores_string = new OperadoresImplementacao().GetImplentacao("parser.OperadoresString");
+            List<Funcao> operadrores_char = new OperadoresImplementacao().GetImplentacao("parser.OperadoresChar");
+            List<Funcao> operadores_boolean = new OperadoresImplementacao().GetImplentacao("parser.OperadoresBoolean");
+            List<Funcao> operadores_matriz = new OperadoresImplementacao().GetImplentacao("parser.OperadoresMatriz");
 
 
             CriaOperadores(op_int, operadores_int);
             CriaOperadores(op_float, operadores_float);
+            CriaOperadores(op_double, operadores_double);
             CriaOperadores(op_string, operadores_string);
             CriaOperadores(op_char, operadrores_char);
             CriaOperadores(op_bool, operadores_boolean);
@@ -57,6 +62,7 @@ namespace parser
 
             adicionaClasse(new Classe("public", "int", null, op_int, null));
             adicionaClasse(new Classe("public", "float", null, op_float, null));
+            adicionaClasse(new Classe("public", "double", null, op_double, null));
             adicionaClasse(new Classe("public", "string", null, op_string, null));
             adicionaClasse(new Classe("public", "bool", null, op_bool, null));
             adicionaClasse(new Classe("public", "char", null, op_char, null));
@@ -64,15 +70,25 @@ namespace parser
           
             GetOperadores().AddRange(op_int);
             GetOperadores().AddRange(op_float);
+            GetOperadores().AddRange(op_double);
             GetOperadores().AddRange(op_string);
             GetOperadores().AddRange(op_bool);
             GetOperadores().AddRange(op_char);
             GetOperadores().AddRange(op_matriz);
 
+
             operadoresCondicionais = this.GetOperadoresCondicionais();
             operadoresBinarios = this.GetOperadoresBinarios();
             operadoresUnarios = this.GetOperadoresUnarios();
-
+            try
+            {
+                ImportadorDeClasses importador = new ImportadorDeClasses("ParserLinguagemOrquidea.exe");
+                importador.ImportAllClassesFromAssembly();
+            }
+            catch
+            {
+                Log.addMessage("Erro no carregamento das classes do programa. Verifique se não mudou o nome do arquivo final compilado, tem que ser [ParserLinguagemOrquidea.exe].");
+            }
         } // inicializaOperadores()
 
         private static void CriaOperadores(List<Operador> operadores, List<Funcao> funcoesImpl)
@@ -92,9 +108,9 @@ namespace parser
             for (int op = 0; op < todosOperadoresDaLinguagem.Count; op++)
             {
                 if ((todosOperadoresDaLinguagem[op].nome == operador.nome) &&
-                    (todosOperadoresDaLinguagem[op].parametrosDaFuncao[0].tipo == operador.parametrosDaFuncao[0].tipo) &&
+                    (todosOperadoresDaLinguagem[op].parametrosDaFuncao[0].GetTipo() == operador.parametrosDaFuncao[0].GetTipo()) &&
                     (todosOperadoresDaLinguagem[op].parametrosDaFuncao.Length > 1) &&
-                    (todosOperadoresDaLinguagem[op].parametrosDaFuncao[1].tipo == operador.parametrosDaFuncao[1].tipo)) 
+                    (todosOperadoresDaLinguagem[op].parametrosDaFuncao[1].GetTipo() == operador.parametrosDaFuncao[1].GetTipo())) 
                     return false;
             } // for op
             this.GetOperadores().Add(operador);

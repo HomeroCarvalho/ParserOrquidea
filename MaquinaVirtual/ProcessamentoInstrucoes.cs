@@ -31,8 +31,8 @@ namespace parser
         internal static int codeBreak = 9;
         internal static int codeContinue = 10;
         internal static int codeDefinitionFunction = 11; // a definição de função não é uma instrução, mas resultado da compilação.
-        internal static int codeGetVariavel = 14;
-        internal static int codeSetVariavel = 16;
+        internal static int codeGetObjeto = 14;
+        internal static int codeSetObjeto = 16;
         internal static int codeOperadorBinario = 17;
         internal static int codeOperadorUnario = 18;
         internal static int codeCasesOfUse = 19;
@@ -49,9 +49,7 @@ namespace parser
         // inicia o programa na VM.
         public void Run(Escopo escopo)
         {
-            ComparerInstruction comparer = new ComparerInstruction();
-            instrucoes.Sort(comparer); // ordena as instruções do programa, de acordo com o ip da instrução.
-
+       
             IP_contador = 0; // inicia a primeira instrução do software.
 
             while (IP_contador < instrucoes.Count)
@@ -85,8 +83,8 @@ namespace parser
                 dicHandlers[codeIfElse] = this.InstrucaoIfElse;
                 dicHandlers[codeFor] = InstrucaoFor;
                 dicHandlers[codeWhile] = InstrucaoWhile;
-                dicHandlers[codeGetVariavel] = InstrucaoGetVariavel;
-                dicHandlers[codeSetVariavel] = InstrucaoSetVariavel;
+                dicHandlers[codeGetObjeto] = InstrucaoGetObjeto;
+                dicHandlers[codeSetObjeto] = InstrucaoSetObjeto;
                 dicHandlers[codeOperadorUnario] = InstrucaoOperadorUnario;
                 dicHandlers[codeOperadorBinario] = InstrucaoOperadorBinario;
                 dicHandlers[codeCasesOfUse] = InstrucaoCasesOfUse;
@@ -170,8 +168,7 @@ namespace parser
 
             if (tipoDoObjeto == "Objeto")
             {
-                List<propriedade> propriedadesDoObjeto = new List<propriedade>();
-
+            
                 List<object> valoresParametrosObjeto = new List<object>();
                 for (int x = 0; x < expressoesParametros.Elementos.Count; x++)
                 {
@@ -181,33 +178,44 @@ namespace parser
                 Objeto objetoCriado = new Objeto();
                 objetoCriado.SetNome(nomeDoObjeto);
 
-                int indexConstructor = ProcessadorDeID.FoundACompatibleConstructor(tipoDoObjeto,expressoesParametros.Elementos);
+                int indexConstructor = ProcessadorDeID.FoundACompatibleConstructor(tipoDoObjeto, expressoesParametros.Elementos);
 
                 Classe classeDoObjeto = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoDoObjeto);
                 object caller = classeDoObjeto.construtores[indexConstructor].caller;
 
                 object novoValorDaPropriedade = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoDoObjeto).construtores[indexConstructor].ExecuteAConstructor(expressoesParametros.Elementos, classeDoObjeto.GetType());
 
-                objetoCriado.SetValor(propriedadeDoObjeto, novoValorDaPropriedade, escopo);
+                objetoCriado.SetValorField(propriedadeDoObjeto, novoValorDaPropriedade, escopo);
                 return objetoCriado;
 
             }
             else
+            if (tipoDoObjeto == "Vetor") 
             {
-                List<object> valoresParametros = ConstroiValoresParametros(expressoesParametros, escopo);
-
-                int indexConstructor = ProcessadorDeID.FoundACompatibleConstructor(tipoDoObjeto, expressoesParametros.Elementos);
-
-                // pode ser inclusive uma Variavel ou VariavelVetor, pois há construtores reflexão para essas classes.
-                object caller = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoDoObjeto).construtores[indexConstructor].InfoConstructor.Invoke(valoresParametros.ToArray());
-
-                // obtem a variavel, já criada no build de create, para mudar seu valor como sendo o valor retornado do construtor.
-                Variavel v = escopo.tabela.GetVar(nomeDoObjeto, escopo);
-                v.valor = caller;
+                Vetor vetor = escopo.tabela.GetVetor(nomeDoObjeto, escopo);
+                return vetor; // os indices de criação do vetor são imutáveis, então a instância da variável e constante e calculada no build de compilação. 
+            }
+            else
+            {
+                object caller = CalcObjectConstructed(escopo, tipoDoObjeto, expressoesParametros);// obtem a variavel, já criada no build de create, para mudar seu valor como sendo o valor retornado do construtor.
+                Objeto v = escopo.tabela.GetObjeto(nomeDoObjeto, escopo);
+                v.SetValor(caller, escopo);
 
                 return caller;
             }
         } // InstrucaoCreateObject()
+
+        private static object CalcObjectConstructed(Escopo escopo, string tipoDoObjeto, Expressao expressoesParametros)
+        {
+            List<object> valoresParametros = ConstroiValoresParametros(expressoesParametros, escopo);
+
+            int indexConstructor = ProcessadorDeID.FoundACompatibleConstructor(tipoDoObjeto, expressoesParametros.Elementos);
+
+            // pode ser inclusive uma Variavel ou VariavelVetor, pois há construtores reflexão para essas classes.
+            object caller = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoDoObjeto).construtores[indexConstructor].InfoConstructor.Invoke(valoresParametros.ToArray());
+
+            return caller;
+        }
 
         private static List<object> ConstroiValoresParametros(Expressao expressoes, Escopo escopo)
         {
@@ -229,7 +237,7 @@ namespace parser
         public object InstrucaoCasesOfUse(Instrucao instrucao, Escopo escopo)
         {
             List<Expressao> expressoes = instrucao.expressoes;
-            string nomeVariavelPrincipal = instrucao.expressoes[0].GetElemento().ToString();
+            string nomeObjetoPrincipal = instrucao.expressoes[0].GetElemento().ToString();
 
 
             List<Expressao> exprssCodicionaisDoCase = instrucao.expressoes.GetRange(1, instrucao.expressoes.Count - 1);
@@ -319,30 +327,21 @@ namespace parser
             return null;
         }
 
-        public object InstrucaoObtemVariavel(Instrucao instrucao, Escopo escopo)
-        {
-            // isntrucao expressão[0]: nome da variavel.
-            // instrucao expressão[1]: valor da variavel, na forma de uma expressão a ser calculada.
-           
-            object valor = new EvalExpression().EvalPosOrdem(instrucao.expressoes[1], escopo);
-            escopo.tabela.SetaVariavel(instrucao.expressoes[0].ToString(), valor, escopo);
-            return null;
-        }
 
         /// obtém o valor de uma variável.
         /// a variavel está na expressão[0].
-        private object InstrucaoGetVariavel(Instrucao instruvcao, Escopo escopo)
+        private object InstrucaoGetObjeto(Instrucao instruvcao, Escopo escopo)
         {
-            object valor = ((ExpressaoVariavel)instruvcao.expressoes[0]).variavel.valor;
+            object valor = ((ExpressaoObjeto)instruvcao.expressoes[0]).objeto.GetValor();
             return valor;
         }
 
         // seta o valor de uma variável.
         // o valor está na expressao[1].
-        private object InstrucaoSetVariavel(Instrucao instrucao, Escopo escopo)
+        private object InstrucaoSetObjeto(Instrucao instrucao, Escopo escopo)
         {
-            Variavel v = ((ExpressaoVariavel)instrucao.expressoes[0]).variavel;
-            v.valor = ((ExpressaoElemento)instrucao.expressoes[1]).elemento;
+            Objeto v = ((ExpressaoObjeto)instrucao.expressoes[0]).objeto;
+            v.SetValor(((ExpressaoElemento)instrucao.expressoes[1]).elemento, escopo);
             return null;
         }
 
@@ -355,24 +354,16 @@ namespace parser
 
         }
 
-        private object InstrucaoWhile(Instrucao instrucao,Escopo escopo)
+        private object InstrucaoWhile(Instrucao instrucao, Escopo escopo)
         {
 
             Expressao exprssControle = instrucao.expressoes[0];
             EvalExpression eval = new EvalExpression();
-            bool bResult = true;
-            while (true)
+            while ((bool)eval.EvalPosOrdem(exprssControle, escopo))
             {
-                bResult = (bool)eval.EvalPosOrdem(exprssControle, escopo);
-                if (!bResult) 
-                    break;
-                if (bResult)
-                {
-                    object result = Executa_bloco(instrucao, escopo, 0);
-                    if (result != null)
-                        return result;
-                } // if
-            } // while()
+                Executa_bloco(instrucao, escopo, 0);
+                exprssControle.isModdfy = true;
+            }
             return null;
         } // WhileInstrucao()
 
@@ -381,24 +372,22 @@ namespace parser
 
             // expresssao controle: expressao[0]
             // blocos: instrucoes.Blocos. (2 para else).
-           
+
             Expressao exprssControle = instrucao.expressoes[0];
             EvalExpression eval = new EvalExpression();
             if ((bool)eval.EvalPosOrdem(exprssControle, escopo))
+                Executa_bloco(instrucao, escopo, 0);
+            else
             {
-                object result = Executa_bloco(instrucao, escopo, 0);
-                return result;
-            }
-            if (instrucao.blocos.Count > 1)  //procesamento da instrução else. O segundo bloco é para instrução else.
-            {
-                object result = Executa_bloco(instrucao, escopo, 1);
-                return result;
+                if (instrucao.blocos.Count > 1)  //procesamento da instrução else. O segundo bloco é para instrução else.
+                Executa_bloco(instrucao, escopo, 1);
             }
             return null;
         } // IfElseInstrucao()
 
         private object Executa_bloco(Instrucao instrucao, Escopo escopo, int bloco)
         {
+            object result = null;
             for (int umaInstrucao = 0; umaInstrucao < instrucao.blocos[bloco].Count; umaInstrucao++)
             {
                 if (instrucao.blocos[bloco][umaInstrucao].code == codeBreak)
@@ -406,11 +395,11 @@ namespace parser
                 if (instrucao.blocos[bloco][umaInstrucao].code == codeContinue)
                     continue;
                 if (instrucao.blocos[bloco][umaInstrucao].code == codeReturn)
-                    return new EvalExpression().EvalPosOrdem(instrucao.blocos[bloco][umaInstrucao].expressoes[0], escopo);
+                    return new EvalExpression().EvalPosOrdem(instrucao.blocos[bloco][umaInstrucao].expressoes[1], escopo);
                 ExecutaUmaInstrucao(instrucao.blocos[bloco][umaInstrucao], escopo);
-
+                result = new object();
             } // for bloco
-            return null;
+            return result;
         }
 
         private object InstrucaoFor(Instrucao instrucao, Escopo escopo)
@@ -438,12 +427,11 @@ namespace parser
    
             while ((bool)eval.EvalPosOrdem(exprsCondicional, escopo))  // avalia a expressão de controle.
             {
+                exprsCondicional.isModdfy = true;
                 if ((instrucao.blocos[0] != null) && (instrucao.blocos[0].Count > 0))
                 {
-                    object result = Executa_bloco(instrucao, escopo, 0);
-                    if (result != null)
-                        return result;
-
+                    Executa_bloco(instrucao, escopo, 0);
+                    exprsIncremento.isModdfy = true;
                     varAtribuicao += (int)eval.EvalPosOrdem(exprsIncremento, escopo); // atualiza a expressão de incremento.
                     if ((int)varAtribuicao >= (int)limiteMalha)
                         break;
@@ -475,41 +463,46 @@ namespace parser
                         Expressao exprssAtribuicao = instrucao.expressoes[1];
                         object novoValorDoCampoDoObjeto = new EvalExpression().EvalPosOrdem(exprssAtribuicao, escopo);
 
-                        Objeto obj1 = escopo.tabela.GetObjeto(nomeDoObjeto);
+                        Objeto obj1 = escopo.tabela.GetObjeto(nomeDoObjeto, escopo);
                         if (obj1 != null)
                         {
                             if (exprssAtribuicao != null)
                             {
-                                obj1.SetValor(campoDoObjeto, novoValorDoCampoDoObjeto, escopo); // guarda o valor calculado, na propriedade do aninhamento.
+                                if (campoDoObjeto != "")
+                                    obj1.SetValorField(campoDoObjeto, novoValorDoCampoDoObjeto, escopo); // guarda o valor calculado, na propriedade do aninhamento.
+                                else
+                                    obj1.SetValorObjeto(novoValorDoCampoDoObjeto);
+
                                 return obj1;
                             } // if
                             return obj1;
                         }
                         break;
-                    case Instrucao.EH_VARIAVEL:
-                        {
-                            string nomeDaVariavel2 = instrucao.expressoes[0].Elementos[1].ToString();
-                            Expressao exprssAtribuicao2 = instrucao.expressoes[1];
-                            object novoValor2 = new EvalExpression().EvalPosOrdem(exprssAtribuicao2, escopo);
-
-                            Variavel v = escopo.tabela.GetVar(nomeDaVariavel2, escopo);
-                            if (v != null)
-                            {
-                                v.SetValor(novoValor2, escopo);
-                                return v;
-                            }
-                            return null;
-                        }
-                    case Instrucao.EH_VARIAVEL_VETOR:
-                        string nomeDaVariavel = instrucao.expressoes[0].Elementos[1].ToString();
+                   
+                    case Instrucao.EH_VETOR:
+                        string nomeObjeto = instrucao.expressoes[0].Elementos[1].ToString();
                         object novoValor3 = new EvalExpression().EvalPosOrdem(instrucao.expressoes[1], escopo);
 
-                        Variavel vVetor = escopo.tabela.GetVarVetor(nomeDaVariavel, escopo);
-                        if (vVetor != null)
+                        Vetor umVetor = escopo.tabela.GetVetor(nomeObjeto, escopo);
+                        if (umVetor != null)
                         {
-                            vVetor.SetValor(novoValor3, escopo);
-                            //return vVetor;
-                            throw new System.Exception("metodo nao terminado, eh preciso setar os indices da celula do vetor, antes de setar o valor de uma das celulas");
+                            List<Expressao> expressoesIndices = instrucao.expressoes[5].Elementos;
+                            List<int> indices = new List<int>();
+
+                            if (expressoesIndices == null)
+                                expressoesIndices = new List<Expressao>();
+                            else
+                            {
+                                EvalExpression eval = new EvalExpression();
+                                for (int x = 0; x < expressoesIndices.Count; x++)
+                                    indices.Add(int.Parse(eval.EvalPosOrdem(expressoesIndices[x], escopo).ToString()));
+                                    
+                            }
+
+                            umVetor.SetValor(novoValor3, escopo);
+                            umVetor.dimensoes = indices.ToArray();
+
+                            return umVetor;
                         }
                         return null;
 
@@ -520,7 +513,7 @@ namespace parser
                         if (classe != null)
                         {
                             object novoValor4 = new EvalExpression().EvalPosOrdem(instrucao.expressoes[1], escopo);
-                            Variavel propriedadeEstatica = classe.propriedadesEstaticas.Find(k => k.GetNome().Equals(nomeDaPropriedadeEstatica));
+                            Objeto propriedadeEstatica = classe.propriedadesEstaticas.Find(k => k.GetNome().Equals(nomeDaPropriedadeEstatica));
                             propriedadeEstatica.SetValor(novoValor4, escopo);
                             return propriedadeEstatica;
 
@@ -551,40 +544,30 @@ namespace parser
                 {
                     case Instrucao.EH_OBJETO:
                         string campoDoObjeto = instrucao.expressoes[0].Elementos[2].ToString();
-                        Objeto obj1 = new Objeto(tipoDoObjeto, nomeDoObjeto, campoDoObjeto, novoValor, escopo);
+                        Objeto obj1 = new Objeto(tipoDoObjeto, nomeDoObjeto, campoDoObjeto, novoValor);
                         escopo.tabela.RegistraObjeto(obj1);
                         return obj1;
                 
-                    case Instrucao.EH_VARIAVEL:
-                        Variavel v = escopo.tabela.GetVar(nomeDoObjeto, escopo);
-                        if (v != null)
-                        {
-                            v.SetValor(novoValor, escopo);
-                            return v;
-                        }
-                        Variavel v1 = new Variavel("public", nomeDoObjeto, tipoDoObjeto, novoValor, false);
-                        escopo.tabela.GetVariaveis().Add(v1);
-                        return v1;
-
-                    case Instrucao.EH_VARIAVEL_VETOR:
-                        VariavelVetor vtJaExistente = escopo.tabela.GetVarVetor(nomeDoObjeto, escopo);
+                   
+                    case Instrucao.EH_VETOR:
+                        Vetor vtJaExistente = escopo.tabela.GetVetor(nomeDoObjeto, escopo);
                         if (vtJaExistente != null)
                         {
                             vtJaExistente.SetValor(novoValor, escopo);
                             return vtJaExistente;
                         }
-                        VariavelVetor vVt = new VariavelVetor("public", tipoDoObjeto, nomeDoObjeto, new int[2]);
-                        escopo.tabela.GetVariaveisVetor().Add(vVt);
+                        Vetor vVt = new Vetor("public", nomeDoObjeto, new int[2]);
+                        escopo.tabela.GetVetores().Add(vVt);
                         return vVt;
 
 
                     case Instrucao.EH_PRPOPRIEDADE_ESTATICA:
-                        Variavel propriedadeEstatica = new Variavel("public", nomeDoObjeto, tipoDoObjeto, novoValor);
+                        Objeto propriedadeEstatica = new Objeto("public", nomeDoObjeto, tipoDoObjeto, novoValor, true);
                         Classe classeDaPropriedadeEstatica = escopo.tabela.GetClasse(tipoDoObjeto, escopo);
                         
                         
                         if (classeDaPropriedadeEstatica.GetPropriedade(propriedadeEstatica.GetNome()) != null)
-                            classeDaPropriedadeEstatica.GetPropriedade(propriedadeEstatica.GetNome()).valor = novoValor;
+                            classeDaPropriedadeEstatica.GetPropriedade(propriedadeEstatica.GetNome()).SetValor(novoValor, escopo);
                         else
                             classeDaPropriedadeEstatica.propriedadesEstaticas.Add(propriedadeEstatica);
                         
@@ -608,8 +591,7 @@ namespace parser
                 ExpressaoChamadaDeFuncao  funcaoExpressao = (ExpressaoChamadaDeFuncao )instrucao.expressoes[1];
                 Funcao funcaoDaChamada = funcaoExpressao.funcao;
                 List<Expressao> expressoesParametros = funcaoExpressao.expressoesParametros;
-                // o objeto que faz a chamada de método é calculada no build de compilação: se for chamada de função, o valor é null (pois o objeto caller é um conceito POO!).
-                return funcaoDaChamada.ExecuteAFunction(expressoesParametros, funcaoDaChamada.caller);
+                return funcaoDaChamada.ExecuteAFunction(funcaoExpressao.expressoesParametros, funcaoDaChamada.caller);
             } // if
             return null;
         }
@@ -647,9 +629,7 @@ namespace parser
 
 
         public const int EH_OBJETO = 1; //: a atribuica é feita sobre um objeto.
-        public const int EH_VARIAVEL = 2; //a atribuição é feita sobre uma variável.
-        public const int EH_VARIAVEL_VETOR = 7; // a atribuicao é feita sobre uma variavel vetor.
-        public const int EH_PROPRIEDADE = 3; //a atribuição é feita sobre uma propriedade.
+        public const int EH_VETOR = 7; // a atribuicao é feita sobre uma variavel vetor.
         public const int EH_PRPOPRIEDADE_ESTATICA = 4; //a atribuição é feita sobre uma propriedade estatica.
      
         public const int EH_DEFINICAO = 5; //é definição (criação)
@@ -672,8 +652,8 @@ namespace parser
             dicNamesOfInstructions[ProgramaEmVM.codeReturn] = "return";
             dicNamesOfInstructions[ProgramaEmVM.codeContinue] = "continue flux";
             dicNamesOfInstructions[ProgramaEmVM.codeBreak] = "break flux";
-            dicNamesOfInstructions[ProgramaEmVM.codeGetVariavel] = "GetVar";
-            dicNamesOfInstructions[ProgramaEmVM.codeSetVariavel] = "SetVar";
+            dicNamesOfInstructions[ProgramaEmVM.codeGetObjeto] = "GetObjeto";
+            dicNamesOfInstructions[ProgramaEmVM.codeSetObjeto] = "SetVar";
             dicNamesOfInstructions[ProgramaEmVM.codeOperadorBinario] = "operador binario";
             dicNamesOfInstructions[ProgramaEmVM.codeOperadorUnario] = "operador unario";
             dicNamesOfInstructions[ProgramaEmVM.codeCasesOfUse] = "casesOfUse";
@@ -704,7 +684,12 @@ namespace parser
                 this.expressoes = expressoesDaInstrucao.ToList<Expressao>();
                 this.blocos = blocos.ToList<List<Instrucao>>();
             }  // if
-      
+            else
+            {
+                this.expressoes = new List<Expressao>();
+                this.blocos = new List<List<Instrucao>>();
+            }
+
         } // Instrucao()
 
 

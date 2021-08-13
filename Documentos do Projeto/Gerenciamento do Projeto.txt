@@ -161,7 +161,7 @@ O que falta:
     
 __________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 SPRINT ANTERIOR: construção de instruções da VM:
-		---> definição de várias instruções: for, while, if/else, break, continue, return, SetVar, GetVar, definicao operador binario, definicao operador unario.
+		---> definição de várias instruções: for, while, if/else, break, continue, return, SetVar, GetObjeto, definicao operador binario, definicao operador unario.
 		---> codificado métodos de construção das instruções (métodos Build).
 		---> codificado métodos que rodam as instruções, num programa na VM.
 

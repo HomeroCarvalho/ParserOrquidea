@@ -6,7 +6,7 @@ using System.Reflection;
 using MATRIZES;
 namespace parser
 {
-    public class _Operador
+    public class OperadoresImplementacao
     {
         public string nome;
         public List<Funcao> funcaoImplOperadores = new List<Funcao>();
@@ -22,9 +22,14 @@ namespace parser
 
         public List<Funcao> GetImplentacao(string classeOperador)
         {
+            // obtem dados de metodos da classe herdada, para retirar os metodos da classe herdada, da lista de metodos implementadores de operadores nativos.
             List<MethodInfo> metodosClasseBase = Type.GetType(classeOperador).BaseType.GetMethods().ToList<MethodInfo>();
+
+            // obtem dados de metodos de uma classe.
             MethodInfo[] metodosmplementadores = Type.GetType(classeOperador).GetMethods();
             this.metodosImpl = metodosmplementadores.ToList<MethodInfo>();
+            
+            
             int prioridadeOperador = 0;
             foreach (MethodInfo umMetodoImpl in metodosmplementadores)
             {
@@ -35,10 +40,15 @@ namespace parser
                 if (umMetodoImpl.GetBaseDefinition().Name.Contains("_Operador"))
                     continue;
 
-                GetNomeOperador(umMetodoImpl, ref nomeOperador, ref tipoOperador); 
+                GetNomeOperador(umMetodoImpl, ref nomeOperador, ref tipoOperador);
+                List<Objeto> parametrosDoOperador = GetTipoParametros(umMetodoImpl);
+
 
                 prioridadeOperador = GetPrioridadeOperador(nomeOperador);
-                Funcao fncImplementador = new Funcao(UtilTokens.Casting(umMetodoImpl.ReturnType.Name), "public", nomeOperador, umMetodoImpl, UtilTokens.Casting(umMetodoImpl.ReturnType.Name));
+                Funcao fncImplementador = new Funcao(umMetodoImpl.DeclaringType.Name, "public", nomeOperador, umMetodoImpl, UtilTokens.Casting(umMetodoImpl.ReturnType.Name), parametrosDoOperador.ToArray());
+
+
+                fncImplementador.tipoReturn = umMetodoImpl.ReturnType.Name;
                 fncImplementador.prioridade = prioridadeOperador;
                 fncImplementador.tipo = tipoOperador;
 
@@ -47,17 +57,40 @@ namespace parser
             return this.funcaoImplOperadores;
         }
 
+        // obtem os tipos dos parametros, necessário quando executar o operador.
+        private List<Objeto> GetTipoParametros(MethodInfo info)
+        {
+            List<Objeto> objetosParametros = new List<Objeto>();
+            for (int x = 0; x < info.GetParameters().Length; x++)
+            {
+                ParameterInfo parametroDados = info.GetParameters()[x];
+                Type umTipoParametro = parametroDados.ParameterType;
+                Objeto obj_param = new Objeto("private", UtilTokens.Casting(umTipoParametro.Name), "a", null);
+                objetosParametros.Add(obj_param);
+            }
+            return objetosParametros;
+
+        }
         /// <summary>
         /// permite a extensão de operadores, com importação da função que executa o operador, atraves de reflexão.
         /// </summary>
         /// <param name="nomeOperador">nome do operador.</param>
         /// <param name="umMetodoImpl">metodo info reflexao que contem os dados da funcao que executa o operador.</param>
         /// <param name="prioridade">prioridade do operador, para calculos em expressoes.</param>
-        public void AdicionaOperadorNativo(string nomeOperador, MethodInfo umMetodoImpl, int prioridade)
+        public void AdicionaOperadorNativo(string nomeOperador, MethodInfo umMetodoImpl, int prioridade, string classeDoOperador)
         {
             string tipoOperador = "";
+            Funcao fncImplementador = null;
             GetNomeOperador(umMetodoImpl, ref nomeOperador, ref tipoOperador);
-            Funcao fncImplementador = new Funcao(UtilTokens.Casting(umMetodoImpl.ReturnType.Name), "public", nomeOperador, umMetodoImpl, UtilTokens.Casting(umMetodoImpl.ReturnType.Name));
+
+            List<Objeto> parametrosObjetos = null;
+            if ((umMetodoImpl.GetParameters() != null) && (umMetodoImpl.GetParameters().Length > 0))
+                parametrosObjetos = GetTipoParametros(umMetodoImpl);
+            if (parametrosObjetos == null)
+                fncImplementador = new Funcao(classeDoOperador, "public", nomeOperador, umMetodoImpl, UtilTokens.Casting(umMetodoImpl.ReturnType.Name));
+            else
+                fncImplementador = new Funcao(classeDoOperador, "public", nomeOperador, umMetodoImpl, UtilTokens.Casting(umMetodoImpl.ReturnType.Name), parametrosObjetos.ToArray());
+
             fncImplementador.prioridade = prioridade;
 
             this.funcaoImplOperadores.Add(fncImplementador);
@@ -162,7 +195,7 @@ namespace parser
     }
 
 
-    public class OperadoresInt: _Operador
+    public class OperadoresInt: OperadoresImplementacao
     {
         public delegate int operadorBinario(int x, int y);
         public delegate int operadorUnario(int x);
@@ -247,7 +280,91 @@ namespace parser
 
 
 
-    public class OperadoresFloat : _Operador
+    public class OperadoresDouble : OperadoresImplementacao
+    {
+        public delegate double operadorBinario(double x, double y);
+        public delegate double operadorUnario(double x);
+
+
+        public double Soma(double x, double y)
+        {
+            return x + y;
+        }
+        public double Sub(double x, double y)
+        {
+            return x - y;
+        }
+
+        public double Mult(double x, double y)
+        {
+            return x * y;
+        }
+
+        public double Div(double x, double y)
+        {
+            if (y == 0)
+                throw new Exception("divisao por zero!");
+            return x / y;
+        }
+
+        public double Igual(double x, double y)
+        {
+            return y;
+        }
+
+        public bool ComparacaoIgual(double x, double y)
+        {
+            return x == y;
+        }
+
+        public bool Desigual(double x, double y)
+        {
+            return x != y;
+        }
+
+        public bool Maior(double x, double y)
+        {
+            return x > y;
+        }
+
+        public bool MaiorOuIgual(double x, double y)
+        {
+            return x >= y;
+        }
+
+        public bool Menor(double x, double y)
+        {
+            return x < y;
+        }
+
+        public bool MenorOuIgual(double x, double y)
+        {
+            return x <= y;
+        }
+
+        public double Atribuicao(double x)
+        {
+            return x;
+        }
+
+        public double IncrementoUnario(double x)
+        {
+            return ++x;
+        }
+
+        public double DecrementoUnario(double x)
+        {
+            return --x;
+        }
+
+        public double Potenciacao(double x, double y)
+        {
+            return (double)Math.Pow(x, y);
+        }
+    }
+
+
+    public class OperadoresFloat : OperadoresImplementacao
     {
         public delegate float operadorBinario(float x, float y);
         public delegate float operadorUnario(float x);
@@ -331,7 +448,7 @@ namespace parser
     }
 
 
-    public class OperadoresString : _Operador
+    public class OperadoresString : OperadoresImplementacao
     {
         public delegate string operadorBinario(string x, string y);
         public delegate string operadorUnario(string x);
@@ -385,7 +502,7 @@ namespace parser
         }
     }
 
-    public class OperadoresChar : _Operador
+    public class OperadoresChar : OperadoresImplementacao
     {
         public delegate Char operadorBinario(Char x, Char y);
         public delegate Char operadorUnario(Char x);
@@ -433,7 +550,7 @@ namespace parser
     }
 
 
-    public class OperadoresBoolean : _Operador
+    public class OperadoresBoolean : OperadoresImplementacao
     {
         public delegate Boolean operadorBinario(Boolean x, Boolean y);
         public delegate Boolean operadorUnario(Boolean x);
@@ -461,7 +578,7 @@ namespace parser
 
 
     }
-    public class OperadoresMatriz:_Operador
+    public class OperadoresMatriz:OperadoresImplementacao
     {
 
 

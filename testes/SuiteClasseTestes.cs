@@ -15,15 +15,16 @@ namespace parser
         private MethodInfo metodoAntes { get; set; }
         private MethodInfo metodoDepois { get; set; }
 
-        
+        private string infoTextoCabacalho { get; set; }
+        public List<string> resumo { get; private set; }
 
-
-     
-        public SuiteClasseTestes()
+  
+        public SuiteClasseTestes(string infoTextoNomeClasse)
         {
-
+            this.infoTextoCabacalho = infoTextoNomeClasse;      
+          
+            this.resumo = new List<string>();
             this.metodosTeste = new List<MethodInfo>();
-           
             List<MethodInfo> metodos = this.GetType().GetMethods().ToList<MethodInfo>();
 
             foreach (MethodInfo umMetodo in metodos) 
@@ -45,6 +46,7 @@ namespace parser
 
         public void ExecutaTestes()
         {
+            
             if (metodosTeste == null)
             {
                 LoggerTests.AddMessage("Nao ha testes a serem executados nesta classe para testes.");
@@ -52,12 +54,16 @@ namespace parser
             }
 
             AssercaoSuiteClasse assercao = new AssercaoSuiteClasse();
-          
+
+            LoggerTests.WriteEmptyLines();
+
+            LoggerTests.AddMessage(this.infoTextoCabacalho);
 
             foreach (MethodInfo metodo in metodosTeste)
             {
                 try
                 {
+                    int indiceAssercaoStart = AssercaoSuiteClasse.contadorValidacoes; 
                     int timeStart = DateTime.Now.Millisecond;
 
 
@@ -73,16 +79,24 @@ namespace parser
                     int timeEnd = DateTime.Now.Millisecond;
                     int timeElapsed = timeEnd - timeStart; // calcula o tempo gasto.
 
+                    int indiceAssercaoEnd = AssercaoSuiteClasse.contadorValidacoes;
 
-                    LoggerTests.AddMessage("teste: " + metodo.Name + " executado em: " + timeElapsed.ToString() + "milisegundos.");
-                    LoggerTests.AddMessage("teste: " + metodo.Name + " executado sem erros fatais.");
+                    for (int x = indiceAssercaoStart; x < indiceAssercaoEnd; x++) 
+                    {
+                        string resumoDoTesteEmUmMetodo = "teste: " + metodo.Name + " executado em: " + timeElapsed.ToString() + "  milisegundos." + "   " + AssercaoSuiteClasse.validacoesFeitas[x];
+                        LoggerTests.AddMessage(resumoDoTesteEmUmMetodo);
+                    }
                 }
                 catch (Exception exc)
                 {
                     LoggerTests.AddMessage("teste: " + metodo.Name + ", na classe: " + this.GetType().Name + " gerou excecao que interrompeu o seu processamento."+" falha porque: "+exc.Message+", Stack: "+exc.StackTrace);
+                    LoggerTests.WriteEmptyLines();
                     continue;
                 }
+
             }
+
+            LoggerTests.WriteEmptyLines();
         }
 
 
@@ -90,16 +104,27 @@ namespace parser
 
     public class AssercaoSuiteClasse
     {
+        public static List<string> validacoesFeitas { get; private set; }
+        public static int contadorValidacoes { get; private set; }
+
+
         public bool IsTrue(bool condicaoValidacao)
         {
+            if (AssercaoSuiteClasse.validacoesFeitas == null)
+            {
+                AssercaoSuiteClasse.validacoesFeitas = new List<string>();
+            }
+
             if (condicaoValidacao)
             {
-                LoggerTests.AddMessage("teste passou.");
+                validacoesFeitas.Add("teste passou");
+                contadorValidacoes++;
                 return true;
             }
             if (!condicaoValidacao)
             {
-                LoggerTests.AddMessage("teste nao passou.");
+                validacoesFeitas.Add("teste nao passou.");
+                contadorValidacoes++;
                 return false;
             }
 

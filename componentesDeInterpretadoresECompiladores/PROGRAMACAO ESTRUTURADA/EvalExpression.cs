@@ -10,7 +10,7 @@ namespace parser
     {
 
         public static LinguagemOrquidea linguagem = new LinguagemOrquidea();
-        public static List<string> nomesTiposNativos = new List<string>() { "int", "float", "bool", "char", "string" };
+        public static List<string> nomesTiposNativos = new List<string>() { "int", "float","double", "bool", "char", "string" };
 
       
         public object EvalPosOrdem(Expressao expss, Escopo escopo)
@@ -55,6 +55,14 @@ namespace parser
                 if (linguagem.VerificaSeEhNumero(expss.Elementos[x].ToString()))
                     pilhaOperandos.Push((object)expss.Elementos[x].ToString());
                 else
+                if (expss.Elementos[x].GetType() == typeof(Expressao))
+                {
+                    // o elemento da expressão é outra expressão.
+                    EvalExpression evalExpressaoElemento = new EvalExpression();
+                    object result = evalExpressaoElemento.EvalPosOrdem(expss.Elementos[x], escopo); // avalia a expressão elemento.
+                    pilhaOperandos.Push(result);
+                }
+                else
                 if (expss.Elementos[x].GetType() == typeof(ExpressaoNumero))
                 {
                     string strNumero = ((ExpressaoNumero)expss.Elementos[x]).numero;
@@ -69,12 +77,18 @@ namespace parser
                         float numero = float.Parse(strNumero);
                         pilhaOperandos.Push(numero);
                     }
+                    else
+                    if (Expressao.Instance.IsTipoDouble(strNumero))
+                    {
+                        double numero = double.Parse(strNumero);
+                        pilhaOperandos.Push(numero);
+                    }
                 }
                 else
-                if (expss.Elementos[x].GetType() == typeof(ExpressaoVariavelVetor))
+                if (expss.Elementos[x].GetType() == typeof(ExpressaoVetor))
                 {
                     // calculo de vetores multidimensionais!
-                    VariavelVetor v = ((ExpressaoVariavelVetor)expss.Elementos[x]).variavel;
+                    Vetor v = ((ExpressaoVetor)expss.Elementos[x]).vetor;
 
                     int[] indices = new int[v.dimensoes.Length];
 
@@ -84,10 +98,10 @@ namespace parser
 
                 }
                 else
-                if (expss.Elementos[x].GetType() == typeof(ExpressaoVariavel))
+                if (expss.Elementos[x].GetType() == typeof(ExpressaoObjeto))
                 {
-                    Variavel v = ((ExpressaoVariavel)expss.Elementos[x]).variavel;
-                    object valor = v.valor;
+                    Objeto v = ((ExpressaoObjeto)expss.Elementos[x]).objeto;
+                    object valor = v.GetValor();
                     pilhaOperandos.Push(valor);
                 }
                 else
@@ -110,9 +124,9 @@ namespace parser
                 {
 
                     // nova funcionalidade: elementos que podem ser o nome de variáveis.
-                    Variavel v = escopo.tabela.GetVar(expss.Elementos[x].GetElemento().ToString(), escopo);
+                    Objeto v = escopo.tabela.GetObjeto(expss.Elementos[x].GetElemento().ToString(), escopo);
                     if (v != null)
-                        pilhaOperandos.Push(v.valor);
+                        pilhaOperandos.Push(v.GetValor());
                 }
                 else
                 if (expss.Elementos[x].GetType() == typeof(ExpressaoOperador))
@@ -125,11 +139,11 @@ namespace parser
                         {
                             if (operador.nome == "=")
                             {
-                                Variavel vAtribuicao = escopo.tabela.GetVar(expss.Elementos[0].ToString(), escopo);
+                                Objeto vAtribuicao = escopo.tabela.GetObjeto(expss.Elementos[0].ToString(), escopo);
                                 if (vAtribuicao != null)
                                 {
                                     object valor = pilhaOperandos.Pop();
-                                    vAtribuicao.SetValor(valor, escopo);
+                                    vAtribuicao.SetValor( valor, escopo);
                                     return valor;
                                 }
                             }
@@ -156,7 +170,7 @@ namespace parser
                         result1 = operador.ExecuteOperador(operador.nome, escopo, oprnd2);
                         pilhaOperandos.Push(result1);
 
-                        Variavel vAtribuicaoUnario = escopo.tabela.GetVar(expss.Elementos[0].ToString(), escopo);
+                        Objeto vAtribuicaoUnario = escopo.tabela.GetObjeto(expss.Elementos[0].ToString(), escopo);
                         if (vAtribuicaoUnario != null)
                         {
                             object valor = result1;

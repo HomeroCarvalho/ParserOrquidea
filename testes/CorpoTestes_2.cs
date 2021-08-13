@@ -241,13 +241,13 @@ namespace parser
             string codigo = "int a[20];";
            
             Escopo escopoVariavelVetor = new Escopo(new List<string>() { codigo });
-            VariavelVetor valorVariavelVetor = new VariavelVetor("public", "int", "a", new int[] { 20 });
+            Vetor valorVariavelVetor = new Vetor("public", "a", new int[] { 20 });
 
 
-            escopoVariavelVetor.tabela.AddVarVetor("public", "a", "int", new int[] { 20 }, escopoVariavelVetor, false);
+            escopoVariavelVetor.tabela.AddObjetoVetor("public", "a", "int", new int[] { 20 }, escopoVariavelVetor, false);
             assercao.MsgSucess("construção de variável vetor construído sem erros fatais.");
 
-            if (escopoVariavelVetor.tabela.GetVariaveisVetor().Count == 1)
+            if (escopoVariavelVetor.tabela.GetVetores().Count == 1)
                 assercao.MsgSucess("construção de variável vetor construido com exatidão.");
 
         } 
@@ -258,9 +258,9 @@ namespace parser
             List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
             Escopo escopo = new Escopo(codigo);
 
-            escopo.tabela.AddVar("public", "a", "int", 1, escopo, true);
-            escopo.tabela.AddVar("public", "b", "int", 5, escopo, true);
-            escopo.tabela.AddVar("public", "c", "int", 3, escopo, true);
+            escopo.tabela.AddObjeto("public", "a", "int", 1);
+            escopo.tabela.AddObjeto("public", "b", "int", 5);
+            escopo.tabela.AddObjeto("public", "c", "int", 3);
 
             Expressao expressao = new Expressao(tokens.ToArray(), escopo);
 
@@ -277,9 +277,9 @@ namespace parser
             tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
             escopo = new Escopo(codigo);
 
-            escopo.tabela.AddVar("public", "a", "int", 1, escopo, true);
-            escopo.tabela.AddVar("public", "b", "int", 5, escopo, true);
-            escopo.tabela.AddVar("public", "c", "int", 3, escopo, true);
+            escopo.tabela.AddObjeto("public", "a", "int", 1);
+            escopo.tabela.AddObjeto("public", "b", "int", 5);
+            escopo.tabela.AddObjeto("public", "c", "int", 3);
 
             expressao = new Expressao(tokens.ToArray(), escopo);
 
@@ -295,8 +295,8 @@ namespace parser
             tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
         
             escopo = new Escopo(codigo);
-            escopo.tabela.AddVar("public", "a", "int", 1, escopo, true);
-            escopo.tabela.AddVar("public", "b", "int", 5, escopo, true);
+            escopo.tabela.AddObjeto("public", "a", "int", 1);
+            escopo.tabela.AddObjeto("public", "b", "int", 5);
             expressao = new Expressao(tokens.ToArray(), escopo);
 
             eval = new EvalExpression();
@@ -311,8 +311,8 @@ namespace parser
             expressao = new Expressao(tokens.ToArray(), escopo);
             escopo = new Escopo(codigo);
 
-            escopo.tabela.AddVar("public", "a", "int", 1, escopo, true);
-            escopo.tabela.AddVar("public", "b", "int", 5, escopo, true);
+            escopo.tabela.AddObjeto("public", "a", "int", 1);
+            escopo.tabela.AddObjeto("public", "b", "int", 5);
             
             
             eval = new EvalExpression();
@@ -327,8 +327,8 @@ namespace parser
             tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
             escopo = new Escopo(codigo);
 
-            escopo.tabela.AddVar("public", "a", "int", 1, escopo, true);
-            escopo.tabela.AddVar("public", "b", "int", 5, escopo, true);
+            escopo.tabela.AddObjeto("public", "a", "int", 1);
+            escopo.tabela.AddObjeto("public", "b", "int", 5);
 
             expressao = new Expressao(tokens.ToArray(), escopo);
 
@@ -348,14 +348,14 @@ namespace parser
             Escopo escopo = new Escopo(new List<string>() { codigo });
 
 
-            Variavel v1 = new Variavel("public", "a", "int", null);
-            Variavel v2 = new Variavel("public", "b", "int", null);
-            Variavel v3 = new Variavel("public", "c", "int", null);
-            Variavel v4 = new Variavel("public", "d", "int", null);
-            escopo.tabela.GetVariaveis().Add(v1);
-            escopo.tabela.GetVariaveis().Add(v2);
-            escopo.tabela.GetVariaveis().Add(v3);
-            escopo.tabela.GetVariaveis().Add(v4);
+            Objeto v1 = new Objeto("public", "a","int", null);
+            Objeto v2 = new Objeto("public", "b", "int", null);
+            Objeto v3 = new Objeto("public", "c", "int", null);
+            Objeto v4 = new Objeto("public", "d", "int", null);
+            escopo.tabela.GetObjetos().Add(v1);
+            escopo.tabela.GetObjetos().Add(v2);
+            escopo.tabela.GetObjetos().Add(v3);
+            escopo.tabela.GetObjetos().Add(v4);
 
 
             
@@ -369,10 +369,10 @@ namespace parser
             List<string> tokens2 = new Tokens(new LinguagemOrquidea(), new List<string>() { codigo2 }).GetTokens();
             Escopo escopo2 = new Escopo(new List<string>() { codigo2 });
 
-            escopo2.tabela.GetVariaveis().Add(v1);
-            escopo2.tabela.GetVariaveis().Add(v2);
-            escopo2.tabela.GetVariaveis().Add(v3);
-            escopo2.tabela.GetVariaveis().Add(v4);
+            escopo2.tabela.GetObjetos().Add(v1);
+            escopo2.tabela.GetObjetos().Add(v2);
+            escopo2.tabela.GetObjetos().Add(v3);
+            escopo2.tabela.GetObjetos().Add(v4);
 
             List<Expressao> expressoes2 = Expressao.Instance.ExtraiExpressoes(escopo2, tokens2);
 
@@ -416,7 +416,7 @@ namespace parser
             Escopo escopo3 = new Escopo(codigo3);
             TesteDeInstrucoes(assercao, codigo3, ref escopo3);
 
-            if ((escopo3.escopoFolhas.Count == 1) && (escopo3.tabela.GetVariaveis().Count == 1) && (escopo3.escopoFolhas[0].tabela.GetVariaveis().Count == 1))
+            if ((escopo3.escopoFolhas.Count == 1) && (escopo3.tabela.GetObjetos().Count == 1) && (escopo3.escopoFolhas[0].tabela.GetObjetos().Count == 1))
                 assercao.MsgSucess("calculos para instrução de for sem erros, feito com exatidão.");
             else
                 assercao.MsgFail("erro na instrução for com erros.");
@@ -427,7 +427,7 @@ namespace parser
             List<string> codigo4 = new List<string>() { "int i=0; int j=1; if (i<j){ i=i+1; }" };
             Escopo escopo4 = new Escopo(codigo4);
             TesteDeInstrucoes(assercao, codigo4, ref escopo4);
-            if ((escopo4.tabela.GetVariaveis().Count == 2) && (escopo4.escopoFolhas.Count == 1))
+            if ((escopo4.tabela.GetObjetos().Count == 2) && (escopo4.escopoFolhas.Count == 1))
                 assercao.MsgSucess("calculos para instrução if sem erros de inicialização de variáveis, feito com exatidão.");
             else
                 assercao.MsgFail("erro na instrução if com erros.");
@@ -607,7 +607,7 @@ namespace parser
 
             assercao.MsgSucess("obtenção de variáveis estáticas feito sem erros fatais.");
 
-            if (processador.escopo.tabela.GetVariaveis().Count == 1)
+            if (processador.escopo.tabela.GetObjetos().Count == 1)
                 assercao.MsgSucess("registro de variável estatica feito com exatidão.");
 
         } // TesteManipulacaoDeVariaveisEstaticas().

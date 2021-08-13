@@ -78,22 +78,22 @@ namespace parser
 
         }
 
-        public void Write(propriedade propriedades, XElement root)
+        public void Write(Objeto propriedades, XElement root)
         {
 
             if (root == null)
                 root = this.GetRootWriteMode();
 
 
-            string acessor = propriedades.acessor;
+            string acessor = propriedades.GetAcessor();
             if (acessor == null)
                 acessor = "private";
-            string valor = propriedades.valor.ToString();
+            string valor = propriedades.GetValor().ToString();
             if (valor == null)
                 valor = "";
 
             XAttribute attributeAcessor = new XAttribute("acessor", acessor);
-            XAttribute attributeTipo = new XAttribute("tipo", propriedades.tipo);
+            XAttribute attributeTipo = new XAttribute("tipo", propriedades.GetTipo());
             XAttribute attributeNome = new XAttribute("nome", propriedades.GetNome());
             XAttribute attributeValor = new XAttribute("valor", valor);
             XAttribute attributeIsStatic = new XAttribute("isStatic", propriedades.isStatic);
@@ -106,7 +106,7 @@ namespace parser
         }
 
 
-        public propriedade Read(XElement root)
+        public Objeto Read(XElement root)
         {
             if (root == null)
                 root = GetRootReadMode();
@@ -120,7 +120,7 @@ namespace parser
                 string valor = umElemento.Attribute("valor").Value;
                 bool isStatic = bool.Parse(umElemento.Attribute("isStatic").Value);
 
-                propriedade umaPropriedade = new propriedade(acessor, nome, tipo, valor, isStatic);
+                Objeto umaPropriedade = new Objeto(acessor, nome, tipo, valor, isStatic);
                 return umaPropriedade;
             }
 
@@ -139,8 +139,9 @@ namespace parser
              * 1- cabecalho definicao de funcao "funcao".
              * 2- acessor
              * 3- nome da funcao
-             * 4- parametros da funcao
-             * 5- instrucoes do corpo da funcao.
+             * 4- classe da funcao.
+             * 5- parametros da funcao
+             * 6- instrucoes do corpo da funcao.
              */
 
             if (raiz == null)
@@ -148,11 +149,12 @@ namespace parser
 
 
 
-            List<propriedade> parametros = new List<propriedade>();
+            List<Objeto> parametros = new List<Objeto>();
             
 
             XElement noAcessor = raiz.Element("acessor");
             XElement noNome = raiz.Element("nomeFuncao");
+            XElement noClasseDaFuncao = raiz.Element("classe");
             XElement noTipoRetorno = raiz.Element("tipoRetorno");
             XElement noParametros = raiz.Element("parametros");
             ReadParameters(parametros, noParametros);
@@ -161,7 +163,7 @@ namespace parser
             string acessorFuncao = noAcessor.Value;
             string nomeFuncao = noNome.Value;
             string retornoDaFuncao = noTipoRetorno.Value;
-
+            string classeDaFuncao = noClasseDaFuncao.Value;
 
 
 
@@ -183,7 +185,7 @@ namespace parser
                 
                 if ((instrucoesDaFuncao != null) && (instrucoesDaFuncao.Count > 0))
                 {
-                    Funcao funcaoLida = new Funcao(retornoDaFuncao, acessorFuncao, nomeFuncao, parametros.ToArray(), retornoDaFuncao, instrucoesDaFuncao, escopo);
+                    Funcao funcaoLida = new Funcao(classeDaFuncao, "public", nomeFuncao, parametros.ToArray(), retornoDaFuncao, instrucoesDaFuncao, escopo);
                     return funcaoLida;
                 }
                 else
@@ -205,7 +207,7 @@ namespace parser
 
         }
 
-        private void ReadParameters(List<propriedade> parametros, XElement umElemento)
+        private void ReadParameters(List<Objeto> parametros, XElement umElemento)
         {
             IEnumerable<XElement> noListaDeParametros = umElemento.Descendants();
             foreach (XElement umParametroXML in noListaDeParametros)
@@ -215,7 +217,7 @@ namespace parser
                 string nomeParametro = umParametroXML.Attribute("nome").Value;
                 string tipoParametro = umParametroXML.Attribute("tipo").Value;
 
-                parametros.Add(new propriedade(nomeParametro, tipoParametro, null, false));
+                parametros.Add(new Objeto("private", tipoParametro, nomeParametro, null, false));
             }  // while
         }
 
@@ -246,12 +248,15 @@ namespace parser
             if (funcao.instrucoesFuncao != null)
             {
 
-
+               
 
                 nomeFuncao = new XElement("nomeFuncao", funcao.nome, new XAttribute("isReflexao", "nao"));
                 root.Add(nomeFuncao);  // nome da funcao
 
-                XElement noTipoRetorno = new XElement("tipoRetorno", funcao.tipoDoRetornoDaFuncao);
+                string classeDaFuncao = funcao.nomeClasse;
+                root.Add(classeDaFuncao);
+                
+                XElement noTipoRetorno = new XElement("tipoRetorno", funcao.tipoReturn);
                 root.Add(noTipoRetorno);
 
                 XElement noParametros= WriteALLParameters(funcao); // parametros da funcao.
@@ -286,22 +291,22 @@ namespace parser
             XElement rootParametros = new XElement("parametros");
 
             if (funcao.parametrosDaFuncao != null) // escreve a lista de parametros da funcao.
-                WriteParameters(funcao.parametrosDaFuncao.ToList<propriedade>(), rootParametros);
+                WriteParameters(funcao.parametrosDaFuncao.ToList<Objeto>(), rootParametros);
 
             return rootParametros;
 
         }
 
-        private void WriteParameters(List<propriedade> parametros, XElement rootParams)
+        private void WriteParameters(List<Objeto> parametros, XElement rootParams)
         {
             List<string> nomesParametros = new List<string>();
             List<string> tiposParametros = new List<string>();
             for (int x = 0; x < parametros.Count; x++)
             {
                 nomesParametros.Add(parametros[x].GetNome());
-                tiposParametros.Add(parametros[x].tipo);
+                tiposParametros.Add(parametros[x].GetTipo());
 
-                XElement umParametroEmXML = new XElement("parametro", new XAttribute("nome", nomesParametros[x]), new XAttribute("tipo", parametros[x].tipo));
+                XElement umParametroEmXML = new XElement("parametro", new XAttribute("nome", nomesParametros[x]), new XAttribute("tipo", parametros[x].GetTipo()));
                 rootParams.Add(umParametroEmXML);
             }
 
@@ -530,13 +535,13 @@ namespace parser
                 }
 
 
-            propriedade[] tipoParametros = ReadParametrosOperador(noDadosOperador);
+            Objeto[] tipoParametros = ReadParametrosOperador(noDadosOperador);
 
             List<Instrucao> instrucoesCorpoOperador = ReadInstrucoesOperador(noDadosOperador);
             if ((instrucoesCorpoOperador != null) && (instrucoesCorpoOperador.Count > 0))
             {
-                Operador operadorLido = new Operador(nomeClasse, nome, int.Parse(prioridade), tipoRetorno, instrucoesCorpoOperador, tipoParametros, escopo);
-                return operadorLido;
+                Operador op = new Operador(nomeClasse, nome, int.Parse(prioridade), tipoParametros, tipoRetorno, null, escopo);
+                return op;
             }
             else
             {
@@ -615,7 +620,7 @@ namespace parser
         {
             
             XElement _umParametroXml = new XElement("parametros");
-            foreach (propriedade umParametro in operador.parametrosDaFuncao)
+            foreach (Objeto umParametro in operador.parametrosDaFuncao)
             {
                 PropriedadesXML propriedadesXML = new PropriedadesXML();
                 propriedadesXML.Write(umParametro, _umParametroXml);
@@ -624,15 +629,15 @@ namespace parser
             root.Add(_umParametroXml);
         }
 
-        private propriedade[] ReadParametrosOperador(XElement root)
+        private Objeto[] ReadParametrosOperador(XElement root)
         {
-            List<propriedade> propriedadesLidas = new List<propriedade>();
+            List<Objeto> propriedadesLidas = new List<Objeto>();
             List<XElement> nosParametros= root.Elements("parametro").ToList<XElement>();
             foreach (XElement noParams in nosParametros)
             {
                 PropriedadesXML propriedadesXML = new PropriedadesXML();
 
-                propriedade umParemtro = propriedadesXML.Read(noParams);
+                Objeto umParemtro = propriedadesXML.Read(noParams);
                 propriedadesLidas.Add(umParemtro);
             }
 
@@ -664,7 +669,7 @@ namespace parser
             XElement rootMetodos = root.Element("metodos");
             XElement rootOperadores = root.Element("operadores");
 
-            List<propriedade> propriedadesLidas = ReadPropriedadesDaClasse(rootPropriedades);
+            List<Objeto> propriedadesLidas = ReadPropriedadesDaClasse(rootPropriedades);
             List<Funcao> metodosLidos = ReadMetodosDaClasse(rootMetodos);
             List<Operador> operadoresLidos = ReadOperadoresDaClasse(rootOperadores);
 
@@ -689,9 +694,9 @@ namespace parser
             return metodosLidos;
         }
 
-        private List<propriedade> ReadPropriedadesDaClasse(XElement rootPropriedades)
+        private List<Objeto> ReadPropriedadesDaClasse(XElement rootPropriedades)
         {
-            List<propriedade> propriedadesDaClasseLida = new List<propriedade>();
+            List<Objeto> propriedadesDaClasseLida = new List<Objeto>();
 
             List<XElement> propsXML = rootPropriedades.Elements("propriedade").ToList();
             if (propsXML != null)
@@ -699,7 +704,7 @@ namespace parser
                 foreach (XElement umaPropriedadeXml in propsXML)
                 {
                     PropriedadesXML propriedadesXML = new PropriedadesXML();
-                    propriedade prop = propriedadesXML.Read(umaPropriedadeXml);
+                    Objeto prop = propriedadesXML.Read(umaPropriedadeXml);
                     propriedadesDaClasseLida.Add(prop);
                 }
             }
@@ -741,7 +746,7 @@ namespace parser
         {
             if (root == null)
                 root = this.GetRootWriteMode();
-            List<propriedade> propriedadesDaClasse = this._classe.GetPropriedades();
+            List<Objeto> propriedadesDaClasse = this._classe.GetPropriedades();
             List<Funcao> metodosDaClasse = this._classe.GetMetodos();
 
             root.Add(new XElement("acessor", _classe.acessor));
@@ -769,11 +774,11 @@ namespace parser
 
         private void WritePropriedadesDaClasse(XElement root)
         {
-            List<propriedade> propriedadesDaClasse = _classe.GetPropriedades();
+            List<Objeto> propriedadesDaClasse = _classe.GetPropriedades();
             if (propriedadesDaClasse != null)
             {
                 XElement noPropriedades = new XElement("propriedades");
-                foreach (propriedade umaPropriedadeDaClasse in propriedadesDaClasse)
+                foreach (Objeto umaPropriedadeDaClasse in propriedadesDaClasse)
                 {
                     PropriedadesXML propXML = new PropriedadesXML();
                     propXML.Write(umaPropriedadeDaClasse, noPropriedades);
