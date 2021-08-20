@@ -21,7 +21,7 @@ namespace parser.PROLOG
         // 10- comparacao (compara duas variáveis).
 
         // funcionalidades de ComandosProlog:
-        // 1- AdicionaFuncionalidade(): torna a linguagem estendível, seguindo o padrão de projeto Command.
+        // 1- AdicionaFuncionalidade(): torna a linguagem extendível, seguindo o padrão de projeto Command.
         // 2- IsComando(): retorna [true] se o predicativo linha de texto da entrada é um comando da linguagem.
         // 3- ExecutaComando(): executa o método associado ao comando predicado.
         // 4- métodos de comandos pré-definidos em ComandosProlog.

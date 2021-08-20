@@ -3880,26 +3880,20 @@ Daily Scrum 27.07:
 						---> (fixado) do jeito que está é impossível localizar um elemento dentro de outro elemento do vetor.
 						---> suporte para acesso com indices de dimensões, como [3,2,5], ou como [[3,2],5].
 
+				----> o operador "++" está como "++;".
+					----> fixado o bug.
+					----> fixado o bug de obter operadores no construtor de Expressao.
+				---> o metodo Expressao.GetTipoExpressao() não está funcionando.
+					---> removido o metodo GetTipoExpressao().
+				---> falha no metodo de construcao de blocos, na instrucao "for".
+					---> metodo Expressaio.ExtraiExpressoes() nao esta extraindo a expressao de atribuicao corretamente. Construtor Expressao na esta construindo a expressao de atribuicao corretamente. fixado um "else" estava incluindo duas vezes a mesma variavel: uma da variavel ja declarada, e uma de id não inicializado.
 
-				----> inicio dos testes da classe TestesInstrucoes.
-						---> falha no metodo ExtraiExpressoes: o codigo foi corrompido!!! Relatado modificações no método ExtraiExpressoes, com codigos embaralhados, e sequencias erradas!!
-										----> nao ha duvida! o codigo foi sabotado, instrucoes estranhas, dificilmente de se codificar incorretamente, foram econtrados... jacobinos a vista!!
-                        				----> o operador "++" está como "++;".
-										----> fixado o bug.
-
-						---> fixado o bug de obter operadores no construtor de Expressao.
-						---> o metodo Expressao.GetTipoExpressao() não está funcionando.
-										---> removido o metodo GetTipoExpressao().
-
-						---> falha no metodo de construcao de blocos, na instrucao "for".
-										---> metodo Expressaio.ExtraiExpressoes() nao esta extraindo a expressao de atribuicao corretamente. Construtor Expressao na esta construindo a expressao de atribuicao corretamente. fixado um "else" estava incluindo duas vezes a mesma variavel: uma da variavel ja declarada, e uma de id não inicializado.
-
-					    ---> processamento de instrucao "for", sem execução do programa VM, passou.
-						---> processamento de instrução "while", sem execução do programa VM passou.
-						---> processamento da instrução "if", falha não está reconhecendo a instrução do "if". fixado (cenario de teste estava com um ponto e virgula a mais no final do bloco de instrucoes). processamento sem execução da instrução passou...
-						---> processamento da instrução "if/else", falha não está reconhecendo o segundo bloco de instruções, o bloco da instrução "else".
-										---> é um problema serio: falha na construção da sequencia currente: está quebrando o "if/else" em duas sequencias. porque a sequencia id termina com um bloco "{}", e nao deveria terminar com o bloco "{}", deveria continuar o processamento. fixado, o termino de sequencias id não acaba com o termo-chave bloco {}.
-										---> continua a falha: o bloco do "else" nao está sendo processado...
+				---> processamento de instrucao "for", sem execução do programa VM, passou.
+				---> processamento de instrução "while", sem execução do programa VM passou.
+				---> processamento da instrução "if", falha não está reconhecendo a instrução do "if". fixado (cenario de teste estava com um ponto e virgula a mais no final do bloco de instrucoes). processamento sem execução da instrução passou...
+				---> processamento da instrução "if/else", falha não está reconhecendo o segundo bloco de instruções, o bloco da instrução "else".
+							---> é um problema serio: falha na construção da sequencia currente: está quebrando o "if/else" em duas sequencias. porque a sequencia id termina com um bloco "{}", e nao deveria terminar com o bloco "{}", deveria continuar o processamento. fixado, o termino de sequencias id não acaba com o termo-chave bloco {}.
+							---> continua a falha: o bloco do "else" nao está sendo processado...
 __________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 Daily Scrum 28.07: 	
 				
@@ -4202,18 +4196,110 @@ Daily Scrum 13.08:
 					---> validando todos testes da classe de testes de instrução, a instrução "while", devida à modificações feitas para validar outras instruções, entra em loop infinito.
 							---> testes na instrucao "while", falha, as expressões estão cortadas!, o que é "x=x+1" fica como "x=x".
 							---> as expressões não estão sendo processadas corretamente.
-										---> miraculosamente, as expressões voltaram ao normal, e não saíram cortadas, depois que bloquei o FireWall, e Reinicializei duas vezes o S.O., para limpar de toda porcariada que o firewall deixava passar, e as expressões não sairam cortadas.
-										---> chamando o processador de ids pela segunda vez, os operadores sai com tipo em vez de "BINARIO", sai como tipo "int", o tipo não é o da classe do operador, é se ele é binario ou unario.
-																---> as classes do Repositorio estão sendo manipuladas, uma "brecha", quando inicializa o sistema do compilador pela segunda vez, o repositorio é alterado...
-
+										
 
 					---> fixado, todos testes da classe testes instrucoes, foram executados com exito.
-									   ----> HA ALGO ERRADO, SE MUDARMOS OS PARAMETROS DO TESTE PARA INSTRUCAO "for", E SETANDO MANUALMENTE, O VALOR ESPERADO, O TESTE FALHA!
-									   --->  HÁ ALGO ERRADO TB: OS TESTES SÃO EXECUTADOS NUMA VELOCIDADE INCRÍVEL, PODE HAVER OTMIZAÇÃO OU MANIPULAÇÃO INDESEJADOS.
-									   ---> há também o problema de duplicação de variáveis, no teste para instrução "for".
+							---> há também o problema de duplicação de variáveis, no teste para instrução "for".
 
 
 					---> (a implementar) estudar a possibilidade no metodo Create, para variavel Vetor, se os indices não possam ser expressoes, em vez de numeros fixos.
 								---> adicionar as expressoes, nos indices passados para a execução de instrução.
 								---> na instrucao create, processar as expressoes, e criar o objeto Vetor com os indices calculados.
 ___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 16.08: 	
+
+	Atividades do dia a serem realizadas:
+
+					---> (já codificado, aguardando testes de expressões (construtor Expressao) que formam indices matriciais.) formação de expressões matriciais.
+					---> (feito) planejamento do problema de declarar variaveis, após uma expressão que a utiliza, no mesmo escopo.
+						---> (planejado) se houver instruções não tratadas, reservar numa lista a sequencia id da instrução não tratada,
+		     				     uma nova compilação, apenas para a lista de sequencias id não tratadas, pegará os valores de outras variáveis já processadas na primeira compilação.
+
+						---> (planejado, classe para guardar sequencias e indices) um hook no método ProcessadorID.GeraMensagemDeErros(), para guardar numa lista a sequencia id não tratada, boa solução. Um fato problemático é conseguir o indice da sequencia id não tratada. Tem que guardar
+						     no método ProcessadorID.CompileEscopos(), o indice currente da sequencia a ser tratada.
+						
+									---> (codificado) lembrar de guardar o indice de insercao da instrução não tratada. (criar uma classe com sequencia id de instruçao nao tratada, e indice da instrucao, na lista de instrucoes do compilador).
+									---> (feito) codificado o indice de posição da sequencia id currente, a utilizar na armazenagem de sequencias id não tratadas.
+									---> (feito) codificado uma classe para guardar sequencias id não tratadas, com um campo: lista de sequencias id, cada sequencia id guarda o indice de posição.
+									---> (a codificar) o método é simples: para instruções que não puderem serem tratadas, são adicionas na classe de sequencias id não tratadas.
+										 Após a compilação, varrer a lista de sequencias id e chamar novamente o compilador para tratar essas sequencias, sem inicializar o ProcessadorID.
+
+					---> (a codificar) uma dificuldade em usar herança em OO, é a falta de visibilidade dos métodos/propriedades herdados, sem uma IDE para dar suporte. Uma funcionalidade
+					     de pouca complexidade seria gravar em arquivo texto, uma classe com suas classes herdadas, interfaces, métodos/propriedades.
+									---> um fato interessante é que a varredura de classes, pega também classes importadas...
+
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 17.08: 	
+
+	Atividades do dia a serem ealizadas:
+
+					-----> O problema da variavel que chama uma funcao, antes do codigo da funcao ser compilada.
+						   Ha também o problema de uso de variavel cuja definicao esta no escopo-pai, linhas apos do uso da variavel.
+								---> (codificado) o método é como segue: para instruções que não puderem serem tratadas, são adicionadas na classe de ContainerDeSequencias id não tratadas.
+									 Após a compilação, varrer a lista de sequencias id e chamar novamente o compilador para tratar essas sequencias, sem inicializar o ProcessadorID.
+												---> falha no teste, a logica do algoritmo parece nao estar certo.
+				   ----> formação de expressões matriciais.
+
+________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Daily Scrum 18.08: 	
+
+	Atividades do dia realizadas:
+			
+			----> testes com o resolvedor de instrucoes nao tratadas, falha: a sequencia da instrução nao tratada não está sendo reconhecida, com o processador id da classe Resolve.
+							---> verificando, a sequencia a ser tratada nao esta prevista!
+							---> inserindo a sequencia com tratadores, como uma sequencia id de definicao de variavel com atribuição.
+										---> falha, a sequencia nao pode ser tratada como uma sequencia id de definicao de variavel com atribuicao.
+										---> codificado um novo metodo de processamento da sequencia nao tratada.
+														---> a falha está na obtenção de operador compativel, operador="=".
+																	--> há um caso de que o objeto deve ser uma funcao, para compatibilizar os operandos para obter o operador compativel.
+																	--> fixado, o sistema de recuperacao de instrucao nao tratada, está funcionando corretamente, mas há falha no indice de posicionamento da instrucao para ser reintegrada nas instrucoes tratadas. o sistema reconheceu a sequencia como nao tratada, registro, resolveu, mas quando inserir, o indice de insercao é inválido...
+							---> (testado) teste um, para chamadas de função não reconhecida, feito com êxito.
+
+
+							---> teste dois, atribuicao de variavel não reconhecida, falha,
+							     (fixado) não está chegando ao container de sequencias nao tratadas.
+								 (fixado) Modificacao no container de sequencias nao tratadas entrou em loop infinito!!!
+											---> verificando, a instrucao válida não está sendo tratada, daí entrar em loop infinito, pois não reconhece a instrucao valida, devolvendo sempre a sequencia id nao tratada.
+											---> fixar o tratamento da instrução válida, que não está sendo reconhecida.
+
+											---> o codigo do metodo tratador, modificado no cenario teste 1, de atribuicao a uma variavel, quebrou!!
+														---> verificando o metodo Expressao.ExtraiExpressoes(), está retornando null para a sequencia: "int c=3".
+																		---> as mensagens de erro, com texto da sequencia nao tratada, estava impedindo o retorno adequado do metodo Expressao.ExtraiExpressoes(),
+																		fixado com um contador para retornar somente mensagens de erros durante a construcao de expressoes, retornou valores validos, para os dois cenarios de testes.
+
+
+					 	 ----> (testado) teste dois, para atribuições não reconhecidas, feito com êxito.
+											---> uma observação é que a atribuição não tratada, está processando para o mesmo nivel de escopo. isto nao é adequado, deveria
+											estar para um escopo acima. Mas foi como se definiu o tratamento no container. 
+
+
+						----> (codificado) codificar no container, para reconhecer sequencias de atribuicao nao tratadas, somente se a definicao estiver um ou mais escopo acima.
+											---> o mecanismo está feito e testado, apenas o modo como tratar é que precisa ser codificado.
+											---> feito a modificação, falha ou no cenario teste ou no metodo de resolver sequencias nao tratadas.
+																		---> o problema é como criar o cenario de teste onde o escopo-pai contem a definicao da variavel, e o escopo-filho, a atribuição, sendo o escopo-pai está depois da atribuicao a ser tratado.
+																		---> como criar o escopo-pai???
+																		---> falha no cenario teste: a definição de função estava sem tipo de retorno.
+																		---> houve loop infinito se tratarmos sequencias id que não foram reconhecidas em padrões já mapeados.
+																		---> (fixado) o problema de loop infinito no tratamento de sequencias não validadas.
+
+											---> cenario para atribuição nao tratada, feita com êxito.
+
+																		
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 19.08: 	
+
+	Atividades do dia a serem realizadas:
+
+		---> expressões matriciais.
+				---> testes para obtencao de indices e operadores matricial, feito com êxito.
+				---> testes para extração de expressão, falha ao determinar o tipo dos items de um vetor.
+						---> fixado, mas foi necessário alterar o metodo GetOperando(), para suporte de variáveis Vetor.
+						---> falha, não consegue obter os operadores para a expressão vetor.
+						---> instrução "Create", contem no 5o token, o tipo do elemento do vetor, se o objeto a criar for um vetor.
+						---> a fixar a obtencao do operador "=" para o tipo vetor, no metodo Expressao.GetOperando().
+						---> simplificando o codigo, o operador "=" foi reconhecido, para uma expressão com vetores.
+										
+
+				---> testes para obter expressos matriciais, cenario 1 e 2, obtiveram êxito.
+_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________

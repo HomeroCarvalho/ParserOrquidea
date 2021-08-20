@@ -197,7 +197,20 @@ namespace parser
 
         public override string ToString()
         {
-            return vetor.nome + "[ ]";
+            string str_total = vetor.nome;
+           
+            List<string> str_indices = new List<string>();
+
+            for (int k = 0; k < this.indicesVetor.Elementos.Count; k++)
+                str_indices.Add(this.indicesVetor.Elementos[k].ToString());
+
+            str_total += " [ ";
+            for (int k = 0; k < str_indices.Count - 1; k++)
+                str_total += str_indices[k] + ",";
+            str_total += str_indices[str_indices.Count - 1];
+            str_total += " ] ";
+
+            return str_total;
         }
     }
 
@@ -275,12 +288,7 @@ namespace parser
         /// constroi a expressão, sem colocá-la em Pos-Ordem.
         public Expressao(string[] tokens, Escopo escopo)
         {
-            if ((tokens[0] == "int") && (tokens[1] == "x"))
-            {
-                int k = 0;
-                k++;
-            }
-
+        
             if (escopo == null)
                 return;
 
@@ -301,27 +309,12 @@ namespace parser
             }// if
 
             this.tipo = GetTipoExpressao(tokens, escopo, this.tipo);
-
+            int indiceUltimoVetorAProcessar = -1;
             escopoDaExpressao = escopo;
             for (int i = 0; i < tokens.Length; i++)
             {
-                if (tokens[1]=="++")
-                {
-                    int k = 0;
-                    k++;
-                }
 
-                if (((i + 1) < tokens.Length) && (RepositorioDeClassesOO.Instance().ObtemUmaClasse(tokens[i]) != null)) 
-                {
-                    // o token é de um objeto que está sendo instanciado dentro da expressão.
-                    string nomeObjeto = tokens[i + 1];
-                    string tipoObjeto = tokens[i];
-                    Objeto objetoAInstanciar = new Objeto("private", tipoObjeto, nomeObjeto, null);
-
-                    if (escopo.tabela.GetObjeto(objetoAInstanciar.GetNome(), escopo) == null)
-                        escopo.tabela.GetObjetos().Add(objetoAInstanciar);
-                }
-                else
+              
                 // ______________________________________________________________________________________________________________________________________________________
                 // token de bloco, termina de processar os elementos da expressao currente.
                 if (tokens[i] == "{")
@@ -338,14 +331,6 @@ namespace parser
                     return;
                 }
                 else
-                //__________________________________________________________________________________________________________________________________________________________
-                // o token é um operador matricial: [], retira os indices do operador, e adiciona na lista de expressoes currente.
-                if (tokens[i] == "[")
-                {
-                    Expressao operadorMatricial = ExtraiOperadorMatricial(tokens, escopo, ref i);
-                    this.Elementos.Add(operadorMatricial);
-                }
-            else
             //_______________________________________________________________________________________________________________________________________________________________
             // o token é um nome de função? (regra de uma chamada de um função).
             if (escopo.tabela.IsFunction(tokens[i], escopo) != null)
@@ -410,7 +395,7 @@ namespace parser
                     this.indiceProcessamentoDaProximaExpressao = i + 1;
                     return;
                 }
-            else
+                else
             //_______________________________________________________________________________________________________________________________________________
             // expressao entre parenteses, e nao eh chamada de funcao.
             if (tokens[i] == "(")
@@ -469,7 +454,7 @@ namespace parser
                         }
                     }
                 }
-            else
+                else
             //_________________________________________________________________________________________________________________________________________________________
             // o token é nome de uma Variavel?
             if (escopo.tabela.GetObjeto(tokens[i], escopo) != null)
@@ -479,7 +464,7 @@ namespace parser
                     this.Elementos.Add(expressaoObjeto);
 
                 } // if
-            else
+                else
             // o token é nome de um Vetor?
             if (escopo.tabela.GetVetor(tokens[i], escopo) != null)
                 {
@@ -489,13 +474,14 @@ namespace parser
 
                     this.Elementos.Add(expressaoVetor);
 
+                    indiceUltimoVetorAProcessar = i;
                 }
                 else
                 //__________________________________________________________________________________________________________________________________________________________
                 // o token é um operador binario? operador unario?
                 if ((linguagem.VerificaSeEhOperadorBinario(tokens[i])) || (linguagem.VerificaSeEhOperadorUnario(tokens[i])))
                 {
-                   
+
 
                     string nomeOperador = tokens[i];
 
@@ -514,17 +500,39 @@ namespace parser
                             this.Elementos.Add(exprssOPUnario);
                         }
                         else
+                        if (indiceUltimoVetorAProcessar != -1)
                         {
-                            PosicaoECodigo posicao = new PosicaoECodigo(tokens.ToList<string>(), escopo.codigo);
-                            escopo.GetMsgErros().Add("operador nao localizado, linha: " + posicao.linha.ToString() + ", coluna: " + posicao.coluna.ToString() + ".");
-                            return;
+                            Vetor v = escopo.tabela.GetVetor(tokens[indiceUltimoVetorAProcessar], escopo);
+                            Operador op = Operador.GetOperador(tokens[i], v.GetTipo(), "BINARIO", linguagem);
+                            if (op != null)
+                            {
+                                ExpressaoOperador exprssOpBinario = new ExpressaoOperador(op);
+                                this.Elementos.Add(exprssOpBinario);
+                            }
+                            else
+                            {
+                                Operador opUnario = Operador.GetOperador(tokens[i], v.GetTipo(), "UNARIO", linguagem);
+                                if (opUnario != null)
+                                {
+                                    ExpressaoOperador exprssUnario = new ExpressaoOperador(opUnario);
+                                    this.Elementos.Add(exprssUnario);
+                                }
+                                else
+                                {
+                                    PosicaoECodigo posicao = new PosicaoECodigo(tokens.ToList<string>(), escopo.codigo);
+                                    escopo.GetMsgErros().Add("operador nao localizado, linha: " + posicao.linha.ToString() + ", coluna: " + posicao.coluna.ToString() + ".");
+                                    return;
+
+                                }
+
+                            }
 
                         }
                     }
 
 
                 } // else
-            else
+                else
             //_________________________________________________________________________________________________________________________________________________________________
             // o token é um operador binario, unario, ternario?
             if (linguagem.VerificaSeEhOperador(tokens[i]))
@@ -533,7 +541,7 @@ namespace parser
                     ExpressaoOperador expressaoOP = new ExpressaoOperador(operador);
                     this.Elementos.Add(expressaoOP);
                 }
-            else
+                else
             //________________________________________________________________________________________________________________________________________________________________
             // o token é um numero?
             if (linguagem.VerificaSeEhNumero(tokens[i]))
@@ -544,11 +552,25 @@ namespace parser
                 } //else
                 //________________________________________________________________________________________________________________________________________________________________
                 else
-            // o token é uma variável não inicializada? Como uma Vetor? ou Objeto?
-            if (linguagem.VerificaSeEhID(tokens[i]))
-                    this.Elementos.Add(new ExpressaoElemento(tokens[i]));
-
-
+            if ((RepositorioDeClassesOO.Instance().ObtemUmaClasse(tokens[i]) != null) && ((i + 1) < tokens.Length) && (linguagem.VerificaSeEhID(tokens[i + 1])))
+                {
+                    if (escopo.tabela.GetObjeto(tokens[i+1], escopo) == null)
+                    {
+                        Objeto obj1 = new Objeto("private", tokens[i], tokens[i + 1], null);
+                        escopo.tabela.GetObjetos().Add(obj1);
+                        ExpressaoObjeto objetoExpressao = new ExpressaoObjeto(obj1);
+                        this.Elementos.Add(objetoExpressao);
+                        i = i + 1; // consome o segundo token deste caso.
+                    }
+                    else
+                    {
+                        Objeto obj1 = escopo.tabela.GetObjeto(tokens[i + 1], escopo);
+                        ExpressaoObjeto objetoExpressao = new ExpressaoObjeto(obj1);
+                        this.Elementos.Add(objetoExpressao);
+                        i = i + 1;
+                    }
+                }
+        
             } // for i
 
             this.isModdfy = true;
@@ -565,8 +587,12 @@ namespace parser
                     this.Elementos.Add(expressoesAUnificar[umaExpressao].Elementos[umElemento]);
             }
         }
-        private Expressao ExtraiOperadorMatricial(string[] tokens, Escopo escopo, ref int indexInicioOperador)
+        private Expressao ExtraiOperadorMatricial(string[] _tokens, Escopo escopo, ref int indexInicioOperador)
         {
+
+            int indexStart = _tokens.ToList<string>().IndexOf("[");
+            List<string> tokens = _tokens.ToList<string>().GetRange(indexStart, _tokens.Length - indexStart);
+
             Expressao exprssOperadorMatricial = new Expressao();
             //___________________________________________________________________________________________________________________________________________________________________________________________
             // o token é um operador matricial?
@@ -604,7 +630,7 @@ namespace parser
 
         public List<Expressao> ExtraiExpressoes(Escopo escopo, List<string> tokensExpressoes)
         {
-
+            int indexErros = escopo.GetMsgErros().Count;
             List<Expressao> expressoesExtraidas = new List<Expressao>();
             List<string> tokensRaw = tokensExpressoes.ToList<string>();
 
@@ -613,12 +639,10 @@ namespace parser
             int x = 0;
             while ((x < tokensRaw.Count) && (indiceDeUmaExpressao != -1))
             {
-                if ((tokensRaw[0] == "x") && (tokensRaw[1] == "++"))
-                {
-                    int k = 0;
-                    k++;
-                }
                 Expressao umaExpressao = new Expressao(tokensRaw.ToArray(), escopo);
+                if (escopo.GetMsgErros().Count > indexErros)
+                    return null;
+
                 if (umaExpressao != null)
                 {
                     expressoesExtraidas.Add(umaExpressao);
@@ -644,97 +668,139 @@ namespace parser
 
         }
 
+        private Operador GetOperadorCompativel(object objectCaller, string nomeOperador,  string tipoDaExpressao)
+        {
+            Operador op = linguagem.GetOperador(nomeOperador, tipoDaExpressao);
+            if ((op == null) && (tipoDaExpressao == "Vetor"))
+            {
+                Vetor vtCaller = (Vetor)objectCaller;
+                string tipoElementosVetor = vtCaller.GetTiposElemento();
+                op = RepositorioDeClassesOO.Instance().GetOperador(nomeOperador, tipoElementosVetor);
+                return op;
+            }
+            else
+            {
+                return null;
+            }
+           
+        }
+
+
         // obtém um operador compativel: se tipoDeRetorno, e tipos dos operandos forem iguais ou casting, retorna o operador, dentro de uma lista de operadores registrado na linguagem.Operadores.
         private Operador GetOperadorCompativel(string nomeOperador, int indexToken, List<string> tokens, string tipoDaExpressao, Escopo escopo, string tipoOperador)
         {
-            if (tokens.Count==2)
-            {
-                int k = 0;
-                k++;
-            }
-            Operador op= linguagem.GetOperador(nomeOperador, tipoDaExpressao);
 
-            List<Operador> operadores = linguagem.GetOperadores();
-
-            if ((tipoOperador.Contains("BINARIO")) && (op.tipo.Contains("BINARIO")))  
+            Operador op = linguagem.GetOperador(nomeOperador, tipoDaExpressao);
+            if (op != null)
             {
-                if ((indexToken == 0) && ((indexToken + 1) < tokens.Count))
+                if ((tipoOperador.Contains("BINARIO")) && (op.tipo.Contains("BINARIO")))
                 {
-                    // o caso é de uma expressão que começa com um operador binario. É quando há uma sub-expressão após uma expressão entre parenteses.
-                    string nomeOperando = tokens[1];
-                    Objeto operando = escopo.tabela.GetObjeto(nomeOperando, escopo);
-                    if (operando != null)
+                    if ((indexToken == 0) && ((indexToken + 1) < tokens.Count))
                     {
-                        for (int x = 0; x < operadores.Count; x++)
-                            if ((operadores[x].nome == nomeOperador) && (operadores[x].GetTipo()==tipoOperador) &&
-                                (UtilTokens.Casting(operadores[x].tipoRetorno) == UtilTokens.Casting(tipoDaExpressao)) &&
-                                (UtilTokens.Casting(operadores[x].parametrosDaFuncao[0].GetTipo()) == UtilTokens.Casting(operando.GetTipo())))
-                                return operadores[x];
+                        // o caso é de uma expressão que começa com um operador binario. É quando há uma sub-expressão após uma expressão entre parenteses.
+                        Objeto operando = this.ObtemOperando(tokens[1], escopo, tokens, 1, tipoOperador);
+                        if (operando != null)
+                        {
+                            if ((op.nome == nomeOperador) && (op.GetTipo() == tipoOperador) &&
+                                (UtilTokens.Casting(op.tipoRetorno) == UtilTokens.Casting(tipoDaExpressao)) &&
+                                (UtilTokens.Casting(op.parametrosDaFuncao[0].GetTipo()) == UtilTokens.Casting(operando.GetTipo())))
+                                return op;
+                        }
                     }
-                }
-                if ((indexToken - 1 < 0) || ((indexToken + 1) > tokens.Count))
-                    return null;
-                string nomeOperando1 = tokens[indexToken - 1];
-                string nomeOperando2 = tokens[indexToken + 1];
-
-                Objeto operando1 = escopo.tabela.GetObjeto(nomeOperando1, escopo);
-                Objeto operando2 = escopo.tabela.GetObjeto(nomeOperando2, escopo);
-
-                // converte operandos para um Objeto de classe do numero.
-                if (IsNumero(nomeOperando1))
-                    operando1 = ConverteNumeroParaObjeto(nomeOperando1);
-                if (IsNumero(nomeOperando2))
-                    operando2 = ConverteNumeroParaObjeto(nomeOperando2);
-
-                
-
-                if ((operando1 == null) || (operando2 == null))
-                    return null;
+                    if ((indexToken - 1 < 0) || ((indexToken + 1) > tokens.Count))
+                        return null;
 
 
-                for (int x = 0; x < operadores.Count; x++)
-                    if ((operadores[x].nome == nomeOperador) && (operadores[x].GetTipo() == tipoOperador) &&
-                        (UtilTokens.Casting(operadores[x].tipoRetorno) == UtilTokens.Casting(tipoDaExpressao)) &&
-                        (UtilTokens.Casting(operadores[x].parametrosDaFuncao[0].GetTipo()) == UtilTokens.Casting(operando1.GetTipo())) &&
-                        (UtilTokens.Casting(operadores[x].parametrosDaFuncao[1].GetTipo()) == UtilTokens.Casting(operando2.GetTipo())))
-                        return operadores[x];
-                return null;
-            }
-            else
-            if (tipoOperador.Contains("UNARIO"))
-            {
-                if ((indexToken - 1) >= 0)
-                {
-                    string nomeOperando1 = tokens[indexToken - 1];
-                    Objeto operando1 = escopo.tabela.GetObjeto(nomeOperando1, escopo);
-                    if (operando1 != null)
-                        for (int x = 0; x < operadores.Count; x++)
-                            if ((operadores[x].nome == nomeOperador) && (operadores[x].GetTipo() == tipoOperador) &&
-                                (UtilTokens.Casting(operadores[x].tipoRetorno) == UtilTokens.Casting(tipoDaExpressao)) &&
-                                (UtilTokens.Casting(operadores[x].parametrosDaFuncao[0].GetTipo()) == UtilTokens.Casting(operando1.GetTipo())))
-                                return operadores[x];
-                }
-                if ((indexToken + 1) < tokens.Count)
-                {
                     string nomeOperando2 = tokens[indexToken + 1];
-                    Objeto operando2 = null;
+                    string nomeOperando1 = tokens[indexToken - 1];
 
-                    // converte o operando para um Objeto de classe do numero.
-                    if (IsNumero(nomeOperando2))
-                        operando2 = ConverteNumeroParaObjeto(nomeOperando2);
-                    else
-                        operando2 = escopo.tabela.GetObjeto(nomeOperando2, escopo);
-                    if (operando2 != null)
-                        for (int x = 0; x < operadores.Count; x++)
-                            if ((operadores[x].nome == nomeOperador) && (operadores[x].GetTipo() == tipoOperador) &&
-                                (UtilTokens.Casting(operadores[x].tipoDoRetornoDaFuncao) == UtilTokens.Casting(tipoDaExpressao)) &&
-                                (UtilTokens.Casting(operadores[x].parametrosDaFuncao[0].GetTipo()) == UtilTokens.Casting(operando2.GetTipo())))
-                                return operadores[x];
+                    // obttem operandos, se existir objeto com nome do operando, um objeto temporario se for um numero, ou se for a instanciar um objeto.
+                    Objeto operando2 = ObtemOperando(nomeOperando2, escopo, tokens, indexToken + 1, this.tipo);
+                    Objeto operando1 = ObtemOperando(nomeOperando1, escopo, tokens, indexToken - 1, this.tipo);
+
+                    if ((operando1 == null) || (operando2 == null))
+                        return null;
+
+                    if ((op.nome == nomeOperador) && (op.GetTipo() == tipoOperador) &&
+                        (UtilTokens.Casting(op.tipoRetorno) == UtilTokens.Casting(tipoDaExpressao)) &&
+                        (UtilTokens.Casting(op.parametrosDaFuncao[0].GetTipo()) == UtilTokens.Casting(operando1.GetTipo())) &&
+                        (UtilTokens.Casting(op.parametrosDaFuncao[1].GetTipo()) == UtilTokens.Casting(operando2.GetTipo())))
+                        return op;
                     return null;
+                }
+                else
+                if ((tipoOperador.Contains("UNARIO")) && (tipoOperador.Contains("UNARIO")))
+                {
+                    if ((indexToken - 1) >= 0)
+                    {
+                        string nomeOperando1 = tokens[indexToken - 1];
+                        Objeto operando1 = this.ObtemOperando(nomeOperando1, escopo, tokens, indexToken - 1, this.tipo);
 
+                        if (operando1 != null)
+                            if ((op.nome == nomeOperador) && (op.GetTipo() == tipoOperador) &&
+                                (UtilTokens.Casting(op.tipoRetorno) == UtilTokens.Casting(tipoDaExpressao)) &&
+                                (UtilTokens.Casting(op.parametrosDaFuncao[0].GetTipo()) == UtilTokens.Casting(operando1.GetTipo())))
+                                return op;
+                    }
+                    else
+                    if ((indexToken + 1) < tokens.Count)
+                    {
+                        string nomeOperando2 = tokens[indexToken + 1];
+                        Objeto operando2 = this.ObtemOperando(nomeOperando2, escopo, tokens, indexToken + 1, this.tipo);
+
+                        if (operando2 != null)
+                            if ((op.nome == nomeOperador) && (op.GetTipo() == tipoOperador) &&
+                                (UtilTokens.Casting(op.tipoReturn) == UtilTokens.Casting(tipoDaExpressao)) &&
+                                (UtilTokens.Casting(op.parametrosDaFuncao[0].GetTipo()) == UtilTokens.Casting(operando2.GetTipo())))
+                                return op;
+                        return null;
+
+                    }
                 }
             }
             return null;
+        }
+
+        private Objeto ObtemOperando(string nomeOperando1, Escopo escopo, List<string> tokens, int indexOperando, string tipoOperando1)
+        {
+            // obtem diretamente o objeto ja registrado no escopo.
+            Objeto operando1 = escopo.tabela.GetObjeto(nomeOperando1, escopo);
+            if (operando1 != null)
+                return operando1;
+
+            Vetor vetorOperando = escopo.tabela.GetVetor(nomeOperando1, escopo);
+            if (vetorOperando != null)
+                return new Objeto("private", vetorOperando.GetTiposElemento(), "b", null); // o caso em que o operando é um nome de um vetor.
+            else
+            {
+                Funcao funcaoObjeto = escopo.tabela.GetFuncao(nomeOperando1, tipoOperando1, escopo); // há o caso em que o operando é um nome de uma função.
+                if (funcaoObjeto != null)
+                    return new Objeto("private", funcaoObjeto.tipoReturn, "b", null);
+                else
+                {
+                    // converte operandos para um Objeto de classe do numero.
+                    if (IsNumero(nomeOperando1))
+                        operando1 = ConverteNumeroParaObjeto(nomeOperando1);
+                    if (operando1 != null)
+                        return operando1;
+                    else
+                    {
+                        // eh o caso da expressao: int x=0 
+                        if (((indexOperando - 1) >= 0) && (linguagem.VerificaSeEhID(tokens[indexOperando])) && (RepositorioDeClassesOO.Instance().ObtemUmaClasse(tokens[indexOperando - 1]) != null))
+                        {
+                            string classeDoOperando = tokens[indexOperando - 1];
+                            string nomeDoOperando = tokens[indexOperando];
+
+                            Objeto operandoTmp = new Objeto("private", classeDoOperando, nomeDoOperando, null);
+                            return operandoTmp;
+                        }
+
+
+                    }
+                }
+            }
+
+            return operando1;
         }
 
         /// <summary>
@@ -783,11 +849,7 @@ namespace parser
         public static string GetTipoExpressao(string[] tokensDaExpressao, Escopo escopo, string tipoDaExpressaoAnterior)
         {
 
-            if (((tokensDaExpressao.Length - 1) >= 0) && (tokensDaExpressao[1] == "=") && (tokensDaExpressao[0] == "x"))
-            {
-                int k = 0;
-                k++;
-            }
+         
 
             string tipoDaExpressao = tipoDaExpressaoAnterior;
 
@@ -827,7 +889,7 @@ namespace parser
                 else
                 if (escopo.tabela.GetVetor(elemento, escopo) != null)
                 {
-                    tipoDaExpressao = escopo.tabela.GetVetor(elemento, escopo).GetTipo();
+                    tipoDaExpressao = escopo.tabela.GetVetor(elemento, escopo).GetTiposElemento();
                     return tipoDaExpressao;
                 }
             }
@@ -1279,8 +1341,7 @@ namespace parser
                     str += ((ExpressaoObjeto)Elementos[x]).ToString() + " ";
 
                 if (this.Elementos[x].GetType() == typeof(ExpressaoVetor))
-                    str += ((ExpressaoVetor)Elementos[x]).ToString() + "[ ]" + " ";
-
+                    str += ((ExpressaoVetor)Elementos[x]).ToString() + " ";
                 if (this.Elementos[x].GetType() == typeof(ExpressaoOperador))
                     str += ((ExpressaoOperador)Elementos[x]).ToString() + " ";
 

@@ -556,9 +556,8 @@ namespace parser
                             vtJaExistente.SetValor(novoValor, escopo);
                             return vtJaExistente;
                         }
-                        Vetor vVt = new Vetor("public", nomeDoObjeto, new int[2]);
-                        escopo.tabela.GetVetores().Add(vVt);
-                        return vVt;
+                        else
+                            return null;
 
 
                     case Instrucao.EH_PRPOPRIEDADE_ESTATICA:

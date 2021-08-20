@@ -90,6 +90,7 @@ namespace parser
             if (tipoDoObjeto == "Vetor")
             {
                 List<int> indicesVetor = new List<int>();
+                string tipoDosElementosDoVetor = sequencia.original[5]; // o primeiro elemento do create é reservado para o tipo do elemento do vetor, se for um vetor.
                 EvalExpression eval = new EvalExpression();
                 try
                 {
@@ -109,7 +110,8 @@ namespace parser
                     return null;
                 }
 
-                escopo.tabela.GetVetores().Add(new Vetor("private", nomeDoObjeto, indicesVetor.ToArray())); // adiciona a variavel vetor criada, para a compilação das próximas instruções, em outros builds.
+                escopo.tabela.GetVetores().Add(new Vetor("private", nomeDoObjeto, tipoDosElementosDoVetor, indicesVetor.ToArray())); // adiciona a variavel vetor criada, para a compilação das próximas instruções, em outros builds.
+                   
             }
             else
             {
@@ -718,9 +720,12 @@ namespace parser
         // gera mensagem de erros configurável.
         protected static void GeraMensagemDeErroEmUmaInstrucao(UmaSequenciaID sequencia, Escopo escopo, string mensagem)
         {
+
             PosicaoECodigo posicaoDoErro = new PosicaoECodigo(sequencia.original, escopo.codigo);
             escopo.GetMsgErros().Add(mensagem + "  na linha: " + posicaoDoErro.linha + ", coluna: " + posicaoDoErro.coluna);
         }
 
     } // class
+
+ 
 } // namespace

@@ -154,7 +154,7 @@ namespace parser
             return true;
         } // isEmptyWord()
 
-        public static void RetiraEmptyWords(ref List<string> tokens)
+        internal static void RetiraEmptyWords(ref List<string> tokens)
         {
             List<string> tokensSemVazios = new List<string>();
             for (int x = 0; x < tokens.Count; x++)
@@ -220,7 +220,7 @@ namespace parser
             return true;
         }
 
-        public static List<string> ObtemPontosFlutuantes(List<string> todosTokensObtidos)
+        internal static List<string> ObtemPontosFlutuantes(List<string> todosTokensObtidos)
         {
             LinguagemOrquidea linguagem = new LinguagemOrquidea();
             for (int x = 0; x < todosTokensObtidos.Count; x++)
@@ -259,7 +259,7 @@ namespace parser
         }
 
 
-        public class TokenComPosicao
+        internal class TokenComPosicao
         {
             public string token { get; set; }
             public int coluna { get; set; }
@@ -276,7 +276,7 @@ namespace parser
             }
         } // class
 
-        public class ComparerTokensPosicao : IComparer<TokenComPosicao>
+        internal class ComparerTokensPosicao : IComparer<TokenComPosicao>
         {
             public int Compare(TokenComPosicao x, TokenComPosicao y)
             {
@@ -289,7 +289,7 @@ namespace parser
             }
         }
 
-        public class ComparerTexts : IComparer<string>
+        internal class ComparerTexts : IComparer<string>
         {
             public int Compare(string x, string y)
             {

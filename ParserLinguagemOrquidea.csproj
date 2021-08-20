@@ -159,6 +159,8 @@
   <ItemGroup>
     <Content Include="componentesDeInterpretadoresECompiladores\GramaticaComponentes\readme.txt" />
     <Content Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\classes de Apoio\readme.txt" />
+    <Content Include="Documentos do Projeto\comandos e funcoes interpretador Prolog.txt" />
+    <Content Include="Documentos do Projeto\comandos e instrucoes  do interpretador lisp.txt" />
     <Content Include="Documentos do Projeto\DailyScrum.txt" />
     <Content Include="Documentos do Projeto\Entregas do Projeto.txt" />
     <Content Include="Documentos do Projeto\ManutencaoCorritivaEAditiva.txt" />

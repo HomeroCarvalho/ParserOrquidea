@@ -407,7 +407,7 @@ namespace parser
 
         public void AddObjetoVetor(string acessor, string nome, string tipo, int[] dims, Escopo escopo, bool isStatic)
         {
-            Vetor v = new Vetor(acessor, nome, dims);
+            Vetor v = new Vetor(acessor, nome, tipo , dims);
             v.SetAcessor(acessor);
             v.isStatic = isStatic;
             escopo.tabela.VariaveisVetor.Add(v);
@@ -458,7 +458,7 @@ namespace parser
 
         private static Vetor GetElementoVetor(int[] indices, ref Vetor v)
         {
-            Vetor vt_result = new Vetor(v.GetAcessor(), v.GetNome(), v.dimensoes);
+            Vetor vt_result = new Vetor(v.GetAcessor(), v.GetNome(), v.GetTiposElemento(), v.dimensoes);
             for (int index = 0; index < indices.Length; index++)
                 vt_result = vt_result.tailVetor[indices[index]];
             return vt_result;
@@ -556,6 +556,7 @@ namespace parser
 
     public class Vetor: Objeto
     {
+        // o valor de um elemento do vetor é o valor do Objeto associado.
         public string nome;
         private string tipo;
 
@@ -564,7 +565,7 @@ namespace parser
         public int[] dimensoes;
 
 
-        public new string GetTipo()
+        public string GetTiposElemento()
         {
             return tipo;
         }
@@ -574,28 +575,27 @@ namespace parser
         {
             this.tailVetor = new List<Vetor>();
             this.nome = "";
-            this.tipo = "Vetor";
+            this.tipo = "";
            
             this.dimensoes = new int[1]; 
         }
 
 
-        public Vetor(string acessor, string nome, int[] dims) : base(acessor, "Vetor", nome, null)
+        public Vetor(string acessor, string nome, string tipoElementoVetor, params int[] dims) : base(acessor, "Vetor", nome, null)
         {
-            
-            Init(nome, dims);
+            Init(nome, tipoElementoVetor, dims);
 
             for (int x = 0; x < dims.Length; x++) // inicializa as variaveis vetor de elementos, para evitar recursão inifinita.
             {
                 this.tailVetor.Add(new Vetor());
-                this.tailVetor[tailVetor.Count - 1].Init(nome, dims);
+                this.tailVetor[tailVetor.Count - 1].Init(nome, tipoElementoVetor, dims);
             }
 
         }
 
-        private void Init(string nomeVariavel, int[] dims)
+        private void Init(string nomeVariavel, string tipoElemento, int[] dims)
         {
-            this.tipo ="Vetor";
+            this.tipo = tipoElemento;
             this.nome = nomeVariavel;
             this.dimensoes = dims;
 
@@ -607,14 +607,54 @@ namespace parser
 
 
 
+        /// <summary>
+        /// seta o elemento com os indices matriciais de entrada. 
+        /// Util para modificar um elemento com dimensões bem definidas: M[1,5,8] um vetor, e queremos acessar
+        /// a variavel: m[0,0,3].
+        /// </summary>
+        public void SetElementoPorOffset(List<Expressao> exprssIndices, object newValue, Escopo escopo)
+        {
+            EvalExpression eval = new EvalExpression();
+            List<int> indices = new List<int>();
+            for (int x = 0; x < exprssIndices.Count; x++)
+                indices.Add(int.Parse(eval.EvalPosOrdem(exprssIndices[x], escopo).ToString()));
+
+            int indexOffet = this.BuildIndex(indices.ToArray());
+            this.tailVetor[indexOffet].SetValor(newValue, escopo);
+            
+        }
+
+        /// <summary>
+        /// seta elemento com elementos vetor dentro de vetores, como: [[1,5],2,6,8,[1,3,5]].
+        /// </summary>
+        public void SetElementoAninhado(object newValue, Escopo escopo, params Expressao[] exprssoesIndices)
+        {
+            List<int> indices = new List<int>();
+            EvalExpression eval = new EvalExpression();
+            for (int k = 0; k< exprssoesIndices.Length; k++)
+                indices.Add(int.Parse(eval.EvalPosOrdem(exprssoesIndices[k], escopo).ToString()));
+               
+            Vetor v = this;
+            for (int x = 0; x < indices.Count - 1; x++)
+                if (v.tailVetor[indices[x]].GetType() == typeof(Vetor))
+                    v = v.tailVetor[indices[x]]; // o elemento do vetor eh outro vetor.
+                else
+                {
+                    v.tailVetor[indices[x]].SetValor(newValue, escopo); // o elemento eh um objeto, não um Vetor.
+                    break;
+                }
+
+            v = v.tailVetor[indices[indices.Count - 1]];
+            v.SetValor(newValue, escopo);
+
+        }
+
 
         /// <summary>
         /// constroi um indice de acessso de vetores com varias dimensoes. Eh um offset de
         /// endereço onde esta localizado a variavel que queremos acessar, dentro da variavel vetor.
         /// Util quando temos um vetor como: vetor[4,5,7], e queremos o elemento vetor[1,2,5].
         /// </summary>
-        /// <param name="indices"></param>
-        /// <returns></returns>
         public int BuildIndex(int[] indices)
         {
             if (indices.Length != this.dimensoes.Length)
@@ -630,42 +670,10 @@ namespace parser
             return indiceTotal;
         }
 
-        /// <summary>
-        /// seta o elemento com os indices matriciais de entrada. 
-        /// Util para modificar um elemento com dimensões bem definidas: M[1,5,8] um vetor, e queremos acessar
-        /// a variavel: m[0,0,3].
-        /// </summary>
-        /// <param name="indices">indices matriciais.</param>
-        /// <param name="newValue">novo valor para o elemento.</param>
-        /// <param name="escopo">contexto onde expressoes que contém a variavel com novo valor.</param>
-        public void SetElementoPorOffset(int[] indices, object newValue, Escopo escopo)
-        {
-            int indiceElemento = this.BuildIndex(indices);
-            this.tailVetor[indiceElemento].SetValor(newValue, escopo);
-            
-        }
-
-        /// <summary>
-        /// seta elemento com elementos vetor dentro de vetores, como: [[1,5],2,6,8,[1,3,5]].
-        /// </summary>
-        /// <param name="newValue">valor do elemento que queremos atribuir.</param>
-        /// <param name="escopo">escopo que contém expressões que contém este vetor currente.</param>
-        /// <param name="indices">indices matriciais para localização do elemento a ter novo valor.</param>
-        public void SetElementoAninhado(object newValue, Escopo escopo, params int[] indices)
-        {
-            Vetor v = this;
-            int x = 0;
-            for (x = 0; x < indices.Length - 1; x++)
-                if (v.tailVetor[indices[x]].GetType() == typeof(Vetor))
-                    v = v.tailVetor[indices[x]];
-            v = v.tailVetor[indices[indices.Length - 1]];
-            v.SetValor(newValue, escopo);
-        }
-
 
         public object GetElemento(params int[] indices)
         {
-            Vetor vt = new Vetor(this.GetAcessor(), this.GetNome(), this.dimensoes);
+            Vetor vt = new Vetor(this.GetAcessor(), this.GetNome(), this.GetTiposElemento(), this.dimensoes);
             for (int x = 0; x < indices.Length; x++)
                 vt = vt.tailVetor[indices[x]];
             return vt.GetValor();
@@ -674,7 +682,7 @@ namespace parser
 
         public override string ToString()
         {
-            string str = this.GetTipo() + " " + this.nome + " [ ";
+            string str = this.GetTiposElemento() + " " + this.nome + " [ ";
 
             int x = 0;
             for (x = 0; x < this.tailVetor.Count - 1; x++)

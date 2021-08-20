@@ -241,7 +241,7 @@ namespace parser
             string codigo = "int a[20];";
            
             Escopo escopoVariavelVetor = new Escopo(new List<string>() { codigo });
-            Vetor valorVariavelVetor = new Vetor("public", "a", new int[] { 20 });
+            Vetor valorVariavelVetor = new Vetor("public", "a", "int", new int[] { 20 });
 
 
             escopoVariavelVetor.tabela.AddObjetoVetor("public", "a", "int", new int[] { 20 }, escopoVariavelVetor, false);

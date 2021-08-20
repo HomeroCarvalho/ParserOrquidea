@@ -675,3 +675,405 @@ Time: 08/13/2021 17:52:44  Message: teste: TesteIF_Else executado em: 53  milise
 Time: 08/13/2021 17:52:44  Message: teste: TesteFor executado em: 98  milisegundos.   teste passou
 
 
+
+
+Time: 17/08/2021 14:11:11  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 17/08/2021 14:19:33  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 17/08/2021 14:20:07  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 17/08/2021 14:23:40  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 17/08/2021 14:25:08  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 17/08/2021 14:25:59  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:05:44  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:07:40  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:08:27  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:10:25  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 09:12:09  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: -392  milisegundos.   teste passou
+
+
+
+
+Time: 18/08/2021 09:12:16  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 09:13:38  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 222  milisegundos.   teste passou
+
+
+Time: 18/08/2021 09:15:50  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:16:28  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:16:57  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:19:58  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:23:59  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:24:49  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:25:03  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:25:21  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:26:49  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:29:09  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:38:37  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:40:12  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:44:42  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 09:44:42  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 414  milisegundos.   teste passou
+
+
+
+
+Time: 18/08/2021 09:44:47  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 09:44:47  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 222  milisegundos.   teste passou
+
+
+
+
+Time: 18/08/2021 09:45:01  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 09:45:01  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 209  milisegundos.   teste passou
+
+
+
+
+Time: 18/08/2021 09:45:07  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 09:58:05  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 09:58:11  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 694  milisegundos.   teste passou
+
+
+
+
+Time: 18/08/2021 09:58:34  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 09:58:34  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 193  milisegundos.   teste passou
+
+
+
+
+Time: 18/08/2021 09:59:03  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 09:59:25  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 434  milisegundos.   teste passou
+
+
+
+
+Time: 18/08/2021 10:00:41  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 10:00:48  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: -375  milisegundos.   teste passou
+
+
+
+
+Time: 18/08/2021 10:01:06  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 10:02:09  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 10:02:23  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 10:22:05  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 10:24:57  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 10:26:27  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 10:27:59  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 10:31:53  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 10:46:04  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 10:46:16  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 10:50:06  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 10:57:04  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:06:19  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:07:50  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:11:34  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:14:33  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:17:08  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:24:04  Message: Testes para recuperar instrucoes invalidas
+Time: 18/08/2021 11:24:04  Message: teste: TesteRecuperacaoAtribuicao, na classe: TestesRecoverInstructions gerou excecao que interrompeu o seu processamento. falha porque: O objeto de tipo 'parser.AssercaoSuiteClasse' não pode ser convertido no tipo 'ModuloTESTES.Assercoes'., Stack:    em System.RuntimeType.TryChangeType(Object value, Binder binder, CultureInfo culture, Boolean needsSpecialCast)
+   em System.Reflection.MethodBase.CheckArguments(Object[] parameters, Binder binder, BindingFlags invokeAttr, CultureInfo culture, Signature sig)
+   em System.Reflection.RuntimeMethodInfo.InvokeArgumentsCheck(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   em System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   em System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)
+   em parser.SuiteClasseTestes.ExecutaTestes() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\testes\SuiteClasseTestes.cs:linha 74
+
+
+
+
+Time: 18/08/2021 11:24:40  Message: Testes para recuperar instrucoes invalidas
+Time: 18/08/2021 11:24:40  Message: teste: TesteRecuperacaoAtribuicao, na classe: TestesRecoverInstructions gerou excecao que interrompeu o seu processamento. falha porque: O objeto de tipo 'parser.AssercaoSuiteClasse' não pode ser convertido no tipo 'ModuloTESTES.Assercoes'., Stack:    em System.RuntimeType.TryChangeType(Object value, Binder binder, CultureInfo culture, Boolean needsSpecialCast)
+   em System.Reflection.MethodBase.CheckArguments(Object[] parameters, Binder binder, BindingFlags invokeAttr, CultureInfo culture, Signature sig)
+   em System.Reflection.RuntimeMethodInfo.InvokeArgumentsCheck(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   em System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   em System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)
+   em parser.SuiteClasseTestes.ExecutaTestes() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\testes\SuiteClasseTestes.cs:linha 74
+
+
+
+
+Time: 18/08/2021 11:26:17  Message: Testes para recuperar instrucoes invalidas
+Time: 18/08/2021 11:26:17  Message: teste: TesteRecuperacaoAtribuicao, na classe: TestesRecoverInstructions gerou excecao que interrompeu o seu processamento. falha porque: O objeto de tipo 'parser.AssercaoSuiteClasse' não pode ser convertido no tipo 'ModuloTESTES.Assercoes'., Stack:    em System.RuntimeType.TryChangeType(Object value, Binder binder, CultureInfo culture, Boolean needsSpecialCast)
+   em System.Reflection.MethodBase.CheckArguments(Object[] parameters, Binder binder, BindingFlags invokeAttr, CultureInfo culture, Signature sig)
+   em System.Reflection.RuntimeMethodInfo.InvokeArgumentsCheck(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   em System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   em System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)
+   em parser.SuiteClasseTestes.ExecutaTestes() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\testes\SuiteClasseTestes.cs:linha 74
+
+
+
+
+Time: 18/08/2021 11:26:52  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:29:00  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:31:55  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:36:08  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:40:04  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:49:07  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:52:04  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:55:53  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:56:01  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:56:20  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:57:31  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 11:59:40  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 12:02:41  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 12:04:14  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 12:04:58  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 12:06:02  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 12:07:00  Message: teste: TesteRecuperacaoAtribuicao executado em: 65  milisegundos.   teste passou
+Time: 08/18/2021 12:07:03  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 210  milisegundos.   teste passou
+
+
+
+
+Time: 18/08/2021 14:38:07  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 14:40:06  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 14:41:43  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 14:44:29  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 14:45:44  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 14:46:10  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 14:47:14  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 14:48:28  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 14:55:34  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 14:55:35  Message: teste: TesteRecuperacaoAtribuicao executado em: -421  milisegundos.   teste nao passou.
+
+
+Time: 18/08/2021 14:56:48  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 14:56:48  Message: teste: TesteRecuperacaoAtribuicao executado em: 274  milisegundos.   teste nao passou.
+
+
+Time: 18/08/2021 14:57:20  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 14:57:20  Message: teste: TesteRecuperacaoAtribuicao executado em: 240  milisegundos.   teste nao passou.
+
+
+Time: 18/08/2021 14:57:56  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 14:57:57  Message: teste: TesteRecuperacaoAtribuicao executado em: -747  milisegundos.   teste nao passou.
+Time: 08/18/2021 14:57:57  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 37  milisegundos.   teste passou
+
+
+
+
+Time: 18/08/2021 15:05:01  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 15:05:01  Message: teste: TesteRecuperacaoAtribuicao executado em: 238  milisegundos.   teste nao passou.
+
+
+Time: 18/08/2021 15:11:09  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 15:11:44  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 15:12:04  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 15:14:34  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 15:17:10  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 15:18:58  Message: Testes para recuperar instrucoes invalidas
+
+
+Time: 18/08/2021 15:21:22  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 15:22:41  Message: teste: TesteRecuperacaoAtribuicao executado em: 613  milisegundos.   teste passou
+
+
+Time: 18/08/2021 15:43:53  Message: Testes para recuperar instrucoes invalidas
+Time: 08/18/2021 15:44:19  Message: teste: TesteRecuperacaoAtribuicao executado em: 463  milisegundos.   teste passou
+Time: 08/18/2021 15:44:19  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 25  milisegundos.   teste passou
+
+
+
+
+Time: 19/08/2021 08:54:45  Message: teste para operadores de matriz
+Time: 08/19/2021 08:55:06  Message: teste: TesteOperadorMatriz executado em: 738  milisegundos.   teste passou
+
+
+
+
+Time: 19/08/2021 09:05:00  Message: teste para operadores de matriz
+
+
+Time: 19/08/2021 09:05:27  Message: teste para operadores de matriz
+Time: 08/19/2021 09:05:27  Message: teste: TesteOperadorMatriz_1 executado em: 144  milisegundos.   teste passou
+Time: 08/19/2021 09:05:54  Message: teste: TesteOperadorMatriz_2 executado em: -305  milisegundos.   teste passou
+
+
+
+
+Time: 19/08/2021 09:41:43  Message: teste para operadores de matriz
+
+
+Time: 19/08/2021 09:44:35  Message: teste para operadores de matriz
+Time: 08/19/2021 09:44:37  Message: teste: TesteExpressaoComOperadorMatricial executado em: 694  milisegundos.   teste passou
+Time: 08/19/2021 09:44:37  Message: teste: TesteOperadorMatriz_1 executado em: 1  milisegundos.   teste passou
+Time: 08/19/2021 09:44:37  Message: teste: TesteOperadorMatriz_2 executado em: 1  milisegundos.   teste passou
+
+
+
+
+Time: 19/08/2021 09:55:34  Message: teste para operadores de matriz
+Time: 08/19/2021 09:55:34  Message: teste: TesteExpressaoComOperadorMatricial executado em: 507  milisegundos.   teste passou
+Time: 08/19/2021 09:55:34  Message: teste: TesteOperadorMatriz_1 executado em: 1  milisegundos.   teste passou
+Time: 08/19/2021 09:55:34  Message: teste: TesteOperadorMatriz_2 executado em: 0  milisegundos.   teste passou
+
+
+
+
+Time: 19/08/2021 09:56:38  Message: teste para operadores de matriz
+Time: 08/19/2021 09:57:57  Message: teste: TesteExpressaoComOperadorMatricial executado em: -370  milisegundos.   teste passou
+Time: 08/19/2021 09:57:57  Message: teste: TesteOperadorMatriz_1 executado em: 1  milisegundos.   teste passou
+Time: 08/19/2021 09:57:57  Message: teste: TesteOperadorMatriz_2 executado em: 5  milisegundos.   teste passou
+
+
+
+
+Time: 19/08/2021 09:58:35  Message: teste para operadores de matriz
+
+
+Time: 19/08/2021 10:01:35  Message: teste para operadores de matriz
+
+
+Time: 19/08/2021 10:47:00  Message: teste para operadores de matriz
+
+
+Time: 19/08/2021 10:50:49  Message: teste para operadores de matriz
+
+
+Time: 19/08/2021 11:07:04  Message: teste para operadores de matriz
+
+
+Time: 19/08/2021 11:22:02  Message: teste para operadores de matriz
+
+
+Time: 19/08/2021 11:51:46  Message: teste para operadores de matriz
+Time: 08/19/2021 11:53:06  Message: teste: TesteExpressaoComOperadorMatricial executado em: 344  milisegundos.   teste passou
+Time: 08/19/2021 11:53:06  Message: teste: TesteOperadorMatriz_1 executado em: 1  milisegundos.   teste passou
+Time: 08/19/2021 11:53:06  Message: teste: TesteOperadorMatriz_2 executado em: 1  milisegundos.   teste passou
+
+
+
+
+Time: 19/08/2021 11:56:33  Message: teste para operadores de matriz

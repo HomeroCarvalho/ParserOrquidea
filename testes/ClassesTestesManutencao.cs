@@ -13,6 +13,86 @@ namespace ParserLinguagemOrquidea.testes
 {
     class ClassesTestesManutencao
     {
+
+
+        private class TestesExpressoesMatriciais:SuiteClasseTestes
+        {
+            public TestesExpressoesMatriciais():base("teste para operadores de matriz")
+            {
+
+            }
+
+            public void TesteExpressaoComOperadorMatricial(AssercaoSuiteClasse assercao)
+            {
+                string codigo = "vetorTeste[1,1]=5";
+
+                Escopo escopo = new Escopo(new List<string>() { codigo });
+                escopo.tabela.AddObjetoVetor("private", "vetorTeste", "int", new int[] { 2, 2 }, escopo, false);
+                
+                
+                List<string> tokensExpressao = ParserUniversal.GetTokens(codigo);
+                Expressao exprssVetor = new Expressao(tokensExpressao.ToArray(), escopo);
+
+                assercao.IsTrue(exprssVetor != null);
+               
+            }
+
+
+            public void TesteOperadorMatriz_1(AssercaoSuiteClasse assercao)
+            {
+                string codigo = "m[1,1]=5;";
+                List<string> tokensCodigo = GetExpressaoMatricial(codigo);
+                assercao.IsTrue(tokensCodigo.Contains("["));
+
+            }
+
+
+            public void TesteOperadorMatriz_2(AssercaoSuiteClasse assercao)
+            {
+                string codigo = "m[x+1,y*b]=5;";
+                List<string> tokensCodigo = GetExpressaoMatricial(codigo);
+                assercao.IsTrue(tokensCodigo.Contains("[") && (tokensCodigo.Contains("]")));
+            }
+
+
+            private static List<string> GetExpressaoMatricial(string codigo)
+            {
+                List<string> codigoTokens = new List<string>() { codigo };
+                codigoTokens = ParserUniversal.GetTokens(codigo);
+
+                return codigoTokens;
+
+            }
+
+
+        }
+        private class TestesRecoverInstructions : SuiteClasseTestes
+        {
+            private ProcessadorDeID processador;
+        
+            public TestesRecoverInstructions():base("Testes para recuperar instrucoes invalidas")
+            {
+                
+            }
+
+            public void TesteRecuperacaoAtribuicao(AssercaoSuiteClasse assercao)
+            {
+                string codigo = "int funcaoA(){c=1;}; int c=3;"; // a definição está no escopo-pai, mas o escopo-pai está depois da atribuição.
+                this.processador = new ProcessadorDeID(new List<string>() { codigo });
+                this.processador.Compile();
+
+                assercao.IsTrue(this.processador.GetInstrucoes().Count == 2);
+            }
+
+            public void TesteRecuperacaoChamadaDeFuncao(AssercaoSuiteClasse assercao)
+            {
+                string codigo = "int b=1; int c=funcaoA(b); int funcaoA(int x){return x;};";
+                this.processador = new ProcessadorDeID(new List<string>() { codigo });
+                this.processador.Compile();
+
+                assercao.IsTrue(this.processador.GetInstrucoes().Count==3); // essa assercao foi definida apos o teste com exito, com o fim de em outros testes, gere um cenario de testes válido, em casos como verificação se o código não quebrou, ao mexer em outras partes do código;
+            }
+        }
         private class TestesExpressoes : SuiteClasseTestes
         {
             private ProcessadorDeID processador;
@@ -231,12 +311,19 @@ namespace ParserLinguagemOrquidea.testes
 
         public ClassesTestesManutencao()
         {
-             //TestesExpressoes testesDeExpressoes = new TestesExpressoes();
-             //testesDeExpressoes.ExecutaTestes();
+            //TestesExpressoes testesDeExpressoes = new TestesExpressoes();
+            //testesDeExpressoes.ExecutaTestes();
 
 
-             TestesAvaliacaoDeInstrucoes  testesInstrucoes = new TestesAvaliacaoDeInstrucoes();
-             testesInstrucoes.ExecutaTestes();
+            //TestesAvaliacaoDeInstrucoes  testesInstrucoes = new TestesAvaliacaoDeInstrucoes();
+            //testesInstrucoes.ExecutaTestes();
+
+            // TestesRecoverInstructions testesRecuperarInstrucoes = new TestesRecoverInstructions();
+            // testesRecuperarInstrucoes.ExecutaTestes();
+
+            TestesExpressoesMatriciais testeExpressoesDeMatrizes = new TestesExpressoesMatriciais();
+            testeExpressoesDeMatrizes.ExecutaTestes();
+           
         }
     }
 }

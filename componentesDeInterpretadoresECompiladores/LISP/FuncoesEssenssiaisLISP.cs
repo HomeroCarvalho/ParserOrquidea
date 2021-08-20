@@ -130,7 +130,7 @@ namespace parser.LISP
             return (valuelist.GetType() == typeof(ListaLISP));
         }
         /// <summary>
-        /// retorn true se  entrada é um número [int] ou [float].
+        /// retorna true se  entrada é um número [int] ou [float].
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
