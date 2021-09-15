@@ -15,8 +15,12 @@ namespace parser
         private object valor;
 
         public bool isStatic { get; set; }
-        private List<Objeto> campos { get; set; }
-        
+        private List<Objeto> campos = new List<Objeto>();
+
+        private List<Expressao> expressoesComObjetoPresentes = new List<Expressao>();
+
+      
+
         public List<Funcao> construtores = new List<Funcao>();
         public Objeto()
         {
@@ -30,18 +34,21 @@ namespace parser
         {
             this.nome = objeto.nome;
             this.tipo = objeto.tipo;
+            this.campos = new List<Objeto>();
             this.valor = objeto.valor;
             this.isStatic = objeto.isStatic;
             if ((objeto.campos != null) && (objeto.campos.Count > 0))
                 this.campos = objeto.campos.ToList<Objeto>();
+
+          
         }
 
 
-        public Objeto(string nomeAcessor, string nomeClasse, string nomeObjeto, string nomeCampo, object valorCampo, Escopo escopo)
+        public Objeto(string nomeAcessor, string nomeClasse, string nomeObjeto, string nomeCampo, object valorCampo)
         {
             InitObjeto(nomeAcessor, nomeClasse, nomeObjeto, null);
             Objeto campoModificar = this.campos.Find(k => k.GetNome() == nomeCampo);
-            campoModificar.SetValor(valorCampo, escopo); // aciona a otimização de cálculo de expressões.
+            campoModificar.SetValor(valorCampo); // aciona a otimização de cálculo de expressões.
             this.isStatic = isStatic;
         }
 
@@ -53,13 +60,13 @@ namespace parser
         }// Objeto()
 
         // inicializa uma instância de um objeto, criando memória para a lista de propriedade, nome do objeto, e o tipo do objeto.
-        public Objeto(string nomeAcessor, string nomeClasse, string nomeObjeto, object valor, bool isStatic)
+        public Objeto(string nomeAcessor, string nomeClasse, string nomeObjeto, object valor, Escopo escopo, bool isStatic)
         {
             InitObjeto(nomeAcessor, nomeClasse, nomeObjeto, valor);
             this.isStatic = isStatic;
         }// Objeto()
 
-        public Objeto(string nomeAcessor, string nomeClasse, string nomeOObjeto, object valor, List<Objeto> campos)
+        public Objeto(string nomeAcessor, string nomeClasse, string nomeOObjeto, object valor, List<Objeto> campos, Escopo escopo)
         {
             InitObjeto(nomeAcessor, nomeClasse, nomeOObjeto, valor);
             this.campos = campos.ToList<Objeto>();
@@ -67,6 +74,8 @@ namespace parser
         }
         private void InitObjeto(string nomeAcessor, string nomeClasse, string nomeObjeto, object valor)
         {
+         
+
             this.acessor = nomeAcessor;
             this.nome = nomeObjeto;
             this.tipo = nomeClasse;
@@ -80,6 +89,11 @@ namespace parser
                 else
                     this.campos = new List<Objeto>();
             } 
+        }
+
+        public List<Expressao> GetExpressoesComOObjeto()
+        {
+            return this.expressoesComObjetoPresentes;
         }
 
         public Funcao GetMetodo(string nome)
@@ -101,9 +115,9 @@ namespace parser
         {
             this.acessor = acessor;
         }
-        public void SetNomeLongo()
+        public void SetNomeLongo(string classeDoObjeto)
         {
-            this.nome = this.GetTipo() + "." + this.GetNome();
+            this.nome = classeDoObjeto + "." + this.GetNome();
         }
    
         public void SetValorObjeto(object newValue)
@@ -114,12 +128,10 @@ namespace parser
         /// implementa a otimizacao de expressoes. Se uma expressao conter a variavel
         /// que está sendo modificada, a expressao é setada para modificacao=true.
         /// isso auxilia nos calculos de valor da expressao, que é avaliada apenas se 
-        /// se alguma variavel-componente da expressao for modificada.
+        /// se alguma variavel-componente da expressao for modificada. Util para
+        /// expressoes com variaveis que mudam de valor em tempo de reação humana, ou em tempo-real.
         /// </summary>
-        /// <param name="nome">nome da propriedade.</param>
-        /// <param name="novoValor">novo valor para a propriedade.</param>
-        /// <param name="esopo">contexto onde a propriedade está.</param>
-        public void SetValorField(string nome, object novoValor, Escopo escopo)
+        public void SetValorField(string nome, object novoValor)
         {
             if (this.GetField(nome) == null)
                 return;
@@ -127,50 +139,43 @@ namespace parser
             this.GetField(nome).valor = novoValor;
             int index = this.campos.FindIndex(k => k.tipo == nome);
             if (index != -1)
-            {
-                List<Expressao> expressoes = escopo.tabela.GetExpressoes();
-                for (int umaExpressao = 0; umaExpressao < expressoes.Count; umaExpressao++)
-                {
-                    for (int variavel = 0; variavel < expressoes[umaExpressao].Elementos.Count; variavel++)
-                    {
-                        if (expressoes[umaExpressao].Elementos[variavel].ToString().Equals(nome))
-                        {
-                            expressoes[umaExpressao].isModdfy = true;
-                            break;
-                        }
-                    } // for variavel
-
-
-                } // for index
-            } // if index
-
+                for (int x = 0; x < this.campos[index].expressoesComObjetoPresentes.Count; x++)
+                    this.campos[index].expressoesComObjetoPresentes[x].isModify = true;
+    
         } // SetValor()
 
-
-        public void SetValor(object novoValor, Escopo escopo)
+        /// <summary>
+        /// implementa a otimizacao de expressoes. Se uma expressao conter a variavel
+        /// que está sendo modificada, a expressao é setada para modificacao=true.
+        /// isso auxilia nos calculos de valor da expressao, que é avaliada apenas se 
+        /// se alguma variavel-componente da expressao for modificada. Util para
+        /// expressoes com variaveis que mudam de valor em tempo de reação humana, ou em tempo-real.
+        /// </summary>
+        public void SetValor(object novoValor)
         {
             this.valor = novoValor;
             int index = this.campos.FindIndex(k => k.tipo == nome);
             if (index != -1)
-            {
-                List<Expressao> expressoes = escopo.tabela.GetExpressoes();
-                for (int umaExpressao = 0; umaExpressao < expressoes.Count; umaExpressao++)
-                {
-                    for (int variavel = 0; variavel < expressoes[umaExpressao].Elementos.Count; variavel++)
-                    {
-                        if (expressoes[umaExpressao].Elementos[variavel].ToString().Equals(nome))
-                        {
-                            expressoes[umaExpressao].isModdfy = true;
-                            break;
-                        }
-                    } // for variavel
-
-
-                } // for index
-            } // if index
-
+                for (int x = 0; x < this.expressoesComObjetoPresentes.Count; x++)
+                    this.expressoesComObjetoPresentes[x].isModify = true;
+           
         } // SetValor()
 
+        public static Objeto GetCampo(string classeObjeto, string nomeCampo)
+        {
+            Classe classe = RepositorioDeClassesOO.Instance().classesRegistradas.Find(k => k.GetNome() == classeObjeto);
+            if (classe == null)
+                return null;
+            else
+            {
+                Objeto objetoCampo = classe.GetPropriedades().Find(k => k.GetNome() == nomeCampo);
+                if (objetoCampo == null)
+                   return null;
+                else
+                    return new Objeto(objetoCampo);
+            }
+        }
+     
         public object GetValor()
         {
             return this.valor;

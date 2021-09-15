@@ -120,7 +120,7 @@ namespace parser
                 string valor = umElemento.Attribute("valor").Value;
                 bool isStatic = bool.Parse(umElemento.Attribute("isStatic").Value);
 
-                Objeto umaPropriedade = new Objeto(acessor, nome, tipo, valor, isStatic);
+                Objeto umaPropriedade = new Objeto(acessor, nome, tipo, valor, null, isStatic: isStatic);
                 return umaPropriedade;
             }
 
@@ -217,7 +217,7 @@ namespace parser
                 string nomeParametro = umParametroXML.Attribute("nome").Value;
                 string tipoParametro = umParametroXML.Attribute("tipo").Value;
 
-                parametros.Add(new Objeto("private", tipoParametro, nomeParametro, null, false));
+                parametros.Add(new Objeto("private", tipoParametro, nomeParametro, null, escopo, isStatic: false));
             }  // while
         }
 

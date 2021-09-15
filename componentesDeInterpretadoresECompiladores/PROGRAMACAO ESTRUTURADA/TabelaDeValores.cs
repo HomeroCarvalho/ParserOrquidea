@@ -88,6 +88,23 @@ namespace parser
         
         private List<string> codigo { get; set; }
 
+
+        public TablelaDeValores Clone()
+        {
+            TablelaDeValores tabelaClone = new TablelaDeValores(this.codigo);
+            if (tabelaClone != null)
+            {
+                tabelaClone.Classes = this.Classes.ToList<Classe>();
+                tabelaClone.operadores = this.operadores.ToList<Operador>();
+                tabelaClone.expressoes = this.expressoes.ToList<Expressao>();
+                tabelaClone.Funcoes = this.Funcoes.ToList<Funcao>();
+                tabelaClone.VariaveisVetor = this.VariaveisVetor.ToList<Vetor>();
+                tabelaClone.objetos = this.objetos.ToList<Objeto>();
+                tabelaClone.codigo = this.codigo.ToList<string>();
+            }
+            return tabelaClone;
+        }
+
         private static LinguagemOrquidea lng = new LinguagemOrquidea();
         public TablelaDeValores(List<string> _codigo)
         {
@@ -203,22 +220,22 @@ namespace parser
         {
             TablelaDeValores tabelaClone = new TablelaDeValores(tabela.codigo);
             if (tabela.GetClasses().Count > 0)
-                tabelaClone.GetClasses().AddRange(tabela.GetClasses());
+                tabelaClone.GetClasses().AddRange(tabela.GetClasses().ToList<Classe>());
             
             if (tabela.GetExpressoes().Count > 0)
-                tabelaClone.GetExpressoes().AddRange(tabela.GetExpressoes());
+                tabelaClone.GetExpressoes().AddRange(tabela.GetExpressoes().ToList<Expressao>());
 
             if (tabela.GetFuncoes().Count > 0)
-                tabelaClone.GetFuncoes().AddRange(tabela.GetFuncoes());
+                tabelaClone.GetFuncoes().AddRange(tabela.GetFuncoes().ToList<Funcao>());
 
             if (tabela.GetObjetos().Count > 0)
-                tabelaClone.GetObjetos().AddRange(tabela.GetObjetos());
+                tabelaClone.GetObjetos().AddRange(tabela.GetObjetos().ToList<Objeto>());
 
             if (tabela.GetOperadores().Count > 0)
-                tabelaClone.GetOperadores().AddRange(tabela.GetOperadores());
+                tabelaClone.GetOperadores().AddRange(tabela.GetOperadores().ToList<Operador>());
 
             if (tabela.GetVetores().Count > 0)
-                tabelaClone.GetVetores().AddRange(tabela.GetVetores());
+                tabelaClone.GetVetores().AddRange(tabela.GetVetores().ToList<Vetor>());
 
 
             return tabelaClone;
@@ -241,9 +258,8 @@ namespace parser
 
             if (escopo.ID != Escopo.tipoEscopo.escopoGlobal)
                 return GetObjeto(nomeObjeto, escopo.escopoPai);
-   
-            Objeto obj = objetos.Find(k => k.GetNome().Trim(' ') == nomeObjeto.Trim(' '));
-            return obj;
+
+            return null;
         } // GetObjeto().
 
      
@@ -353,40 +369,6 @@ namespace parser
         } //GetPropriedadeEncadeadaDeUmaExpressao()
 
 
-
-
-        /// <summary>
-        /// obtém uma propriedade, se tiver especificada na classe do objeto de entrada.
-        /// </summary>
-        private Objeto ObtemPropriedade(string tipoObjeto, string propriedadeDoObjeto)
-        {
-            Classe clsObjeto = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoObjeto);
-            if (clsObjeto == null)
-                return null;
-
-            int indexProp = clsObjeto.GetPropriedades().FindIndex(k => k.GetNome() == tipoObjeto + "." + propriedadeDoObjeto);
-            if (indexProp != -1)
-                return clsObjeto.GetPropriedades()[indexProp];
-            return null;
-
-        } //GetPropriedadeDeUmaExpressao()
-
-        
-
-        private Funcao ObtemMetodoDeUmObjeto(string tipoObjeto, string metodoDoObjeto)
-        {
-            Classe clsObjeto = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoObjeto);
-            if (clsObjeto == null)
-                return null;
-
-            int indexMetodo = clsObjeto.GetMetodos().FindIndex(k => k.nome == metodoDoObjeto);
-            if (indexMetodo != -1)
-                return clsObjeto.GetMetodos()[indexMetodo];
-            return null;
-
-        } // ObtemMetodoDeUmObjeto()
-
-
         public bool IsClasse(string nomeClasse, Escopo escopo)
         {
             if (escopo == null)
@@ -407,17 +389,16 @@ namespace parser
 
         public void AddObjetoVetor(string acessor, string nome, string tipo, int[] dims, Escopo escopo, bool isStatic)
         {
-            Vetor v = new Vetor(acessor, nome, tipo , dims);
+            Vetor v = new Vetor(acessor, nome, tipo, escopo, dims);
             v.SetAcessor(acessor);
             v.isStatic = isStatic;
             escopo.tabela.VariaveisVetor.Add(v);
         } // RegistraVetor()
 
-        public void AddObjeto(string acessor,string nome, string tipo, object valor)
+        public void AddObjeto(string acessor,string nome, string tipo, object valor, Escopo escopo)
         {
             Objeto objeto = new Objeto(acessor, tipo, nome, valor);
             this.objetos.Add(objeto);
-
         }
 
    
@@ -428,12 +409,12 @@ namespace parser
             Vetor v = escopo.tabela.VariaveisVetor.Find(k => k.GetNome() == nomeVariavel);
             if (v != null)
             {
-                return GetElementoVetor(indices, ref v);
+                return GetElementoVetor(escopo, indices, ref v);
             } // if
             Vetor vEstatica = escopo.tabela.VariaveisVetor.Find(k => k.GetNome() == "static." + nomeVariavel);
             if (vEstatica != null)
             {
-                return GetElementoVetor(indices, ref v);
+                return GetElementoVetor(escopo, indices, ref v);
             }
 
             if (escopo.ID != Escopo.tipoEscopo.escopoGlobal)
@@ -456,9 +437,9 @@ namespace parser
         } // GetObjetoVetor()
 
 
-        private static Vetor GetElementoVetor(int[] indices, ref Vetor v)
+        private static Vetor GetElementoVetor(Escopo escopo, int[] indices, ref Vetor v)
         {
-            Vetor vt_result = new Vetor(v.GetAcessor(), v.GetNome(), v.GetTiposElemento(), v.dimensoes);
+            Vetor vt_result = new Vetor(v.GetAcessor(), v.GetNome(), v.GetTiposElemento(), escopo, v.dimensoes);
             for (int index = 0; index < indices.Length; index++)
                 vt_result = vt_result.tailVetor[indices[index]];
             return vt_result;
@@ -581,7 +562,7 @@ namespace parser
         }
 
 
-        public Vetor(string acessor, string nome, string tipoElementoVetor, params int[] dims) : base(acessor, "Vetor", nome, null)
+        public Vetor(string acessor, string nome, string tipoElementoVetor, Escopo escopo, params int[] dims) : base(acessor, "Vetor", nome, null)
         {
             Init(nome, tipoElementoVetor, dims);
 
@@ -620,7 +601,7 @@ namespace parser
                 indices.Add(int.Parse(eval.EvalPosOrdem(exprssIndices[x], escopo).ToString()));
 
             int indexOffet = this.BuildIndex(indices.ToArray());
-            this.tailVetor[indexOffet].SetValor(newValue, escopo);
+            this.tailVetor[indexOffet].SetValor(newValue);
             
         }
 
@@ -640,12 +621,12 @@ namespace parser
                     v = v.tailVetor[indices[x]]; // o elemento do vetor eh outro vetor.
                 else
                 {
-                    v.tailVetor[indices[x]].SetValor(newValue, escopo); // o elemento eh um objeto, não um Vetor.
+                    v.tailVetor[indices[x]].SetValor(newValue); // o elemento eh um objeto, não um Vetor.
                     break;
                 }
 
             v = v.tailVetor[indices[indices.Count - 1]];
-            v.SetValor(newValue, escopo);
+            v.SetValor(newValue);
 
         }
 
@@ -671,9 +652,9 @@ namespace parser
         }
 
 
-        public object GetElemento(params int[] indices)
+        public object GetElemento(Escopo escopo, params int[] indices)
         {
-            Vetor vt = new Vetor(this.GetAcessor(), this.GetNome(), this.GetTiposElemento(), this.dimensoes);
+            Vetor vt = new Vetor(this.GetAcessor(), this.GetNome(), this.GetTiposElemento(), escopo, this.dimensoes);
             for (int x = 0; x < indices.Length; x++)
                 vt = vt.tailVetor[indices[x]];
             return vt.GetValor();

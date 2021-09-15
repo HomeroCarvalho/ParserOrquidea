@@ -102,24 +102,24 @@ namespace parser
 
 
             if ((escopo.tabela.GetClasses() != null) && (escopo.tabela.GetClasses().Count > 0))
-                this.tabela.GetOperadores().AddRange(escopo.tabela.GetOperadores());
+                this.tabela.GetClasses().AddRange(escopo.tabela.GetClasses().ToList<Classe>());
 
             if ((escopo.tabela.GetObjetos() != null)&& (escopo.tabela.GetObjetos().Count>0))
-                this.tabela.GetObjetos().AddRange(escopo.tabela.GetObjetos());
+                this.tabela.GetObjetos().AddRange(escopo.tabela.GetObjetos().ToList<Objeto>());
 
             if ((escopo.tabela.GetFuncoes() != null) && (escopo.tabela.GetFuncoes().Count > 0))
-                this.tabela.GetFuncoes().AddRange(escopo.tabela.GetFuncoes());
+                this.tabela.GetFuncoes().AddRange(escopo.tabela.GetFuncoes().ToList<Funcao>());
 
             if ((escopo.tabela.GetVetores() != null) && (escopo.tabela.GetVetores().Count > 0))
-                this.tabela.GetVetores().AddRange(escopo.tabela.GetVetores());
+                this.tabela.GetVetores().AddRange(escopo.tabela.GetVetores().ToList<Vetor>());
 
 
             if ((escopo.tabela.GetOperadores() != null) && (escopo.tabela.GetOperadores().Count > 0))
-                this.tabela.GetOperadores().AddRange(escopo.tabela.GetOperadores());
+                this.tabela.GetOperadores().AddRange(escopo.tabela.GetOperadores().ToList<Operador>());
 
 
             if ((escopo.tabela.GetExpressoes() != null) && (escopo.tabela.GetExpressoes().Count > 0))
-                this.tabela.GetExpressoes().AddRange(escopo.tabela.GetExpressoes());
+                this.tabela.GetExpressoes().AddRange(escopo.tabela.GetExpressoes().ToList<Expressao>());
 
             this.escopoFolhas = escopo.escopoFolhas.ToList<Escopo>();
             this.sequencias = escopo.sequencias.ToList<UmaSequenciaID>();
@@ -194,7 +194,7 @@ namespace parser
         public Escopo Clone()
         {
             Escopo escopo = new Escopo(this.codigo);
-            escopo.tabela = this.tabela;
+            escopo.tabela = this.tabela.Clone();
             return escopo;
         } // Clone()
 
@@ -209,22 +209,6 @@ namespace parser
             str += chamadaAMetodo[indexChamada][chamadaAMetodo[indexChamada].Count - 1] + ")";
             return str;
         }  //WriteCallMethods()
-
-        private void ListaExpressoesDoEscopo(TablelaDeValores tabela)
-        {
-            if (tabela.GetExpressoes() != null)
-            {
-                System.Console.WriteLine();
-                System.Console.WriteLine();
-                Expressao exprssConversao = new Expressao();
-                for (int x = 0; x < tabela.GetExpressoes().Count; x++)
-                {
-
-                    string expressao = Util.UtilString.UneLinhasLista(exprssConversao.Convert());
-                    System.Console.WriteLine("Expressão encontrada: " +  expressao + " linha: " + tabela.GetExpressoes()[x].posicaoDaExpressao.linha);
-                } // for x
-            }  // if
-        } // ListaExpressoesDoEscopo()
 
 
         /*     

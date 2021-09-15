@@ -241,7 +241,7 @@ namespace parser
             string codigo = "int a[20];";
            
             Escopo escopoVariavelVetor = new Escopo(new List<string>() { codigo });
-            Vetor valorVariavelVetor = new Vetor("public", "a", "int", new int[] { 20 });
+            Vetor valorVariavelVetor = new Vetor("public", "a", "int", escopoVariavelVetor, new int[] { 20 });
 
 
             escopoVariavelVetor.tabela.AddObjetoVetor("public", "a", "int", new int[] { 20 }, escopoVariavelVetor, false);
@@ -258,9 +258,9 @@ namespace parser
             List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
             Escopo escopo = new Escopo(codigo);
 
-            escopo.tabela.AddObjeto("public", "a", "int", 1);
-            escopo.tabela.AddObjeto("public", "b", "int", 5);
-            escopo.tabela.AddObjeto("public", "c", "int", 3);
+            escopo.tabela.AddObjeto("public", "a", "int", 1, escopo);
+            escopo.tabela.AddObjeto("public", "b", "int", 5, escopo);
+            escopo.tabela.AddObjeto("public", "c", "int", 3, escopo);
 
             Expressao expressao = new Expressao(tokens.ToArray(), escopo);
 
@@ -277,9 +277,9 @@ namespace parser
             tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
             escopo = new Escopo(codigo);
 
-            escopo.tabela.AddObjeto("public", "a", "int", 1);
-            escopo.tabela.AddObjeto("public", "b", "int", 5);
-            escopo.tabela.AddObjeto("public", "c", "int", 3);
+            escopo.tabela.AddObjeto("public", "a", "int", 1, escopo);
+            escopo.tabela.AddObjeto("public", "b", "int", 5, escopo);
+            escopo.tabela.AddObjeto("public", "c", "int", 3, escopo);
 
             expressao = new Expressao(tokens.ToArray(), escopo);
 
@@ -295,8 +295,8 @@ namespace parser
             tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
         
             escopo = new Escopo(codigo);
-            escopo.tabela.AddObjeto("public", "a", "int", 1);
-            escopo.tabela.AddObjeto("public", "b", "int", 5);
+            escopo.tabela.AddObjeto("public", "a", "int", 1, escopo);
+            escopo.tabela.AddObjeto("public", "b", "int", 5, escopo);
             expressao = new Expressao(tokens.ToArray(), escopo);
 
             eval = new EvalExpression();
@@ -311,8 +311,8 @@ namespace parser
             expressao = new Expressao(tokens.ToArray(), escopo);
             escopo = new Escopo(codigo);
 
-            escopo.tabela.AddObjeto("public", "a", "int", 1);
-            escopo.tabela.AddObjeto("public", "b", "int", 5);
+            escopo.tabela.AddObjeto("public", "a", "int", 1, escopo);
+            escopo.tabela.AddObjeto("public", "b", "int", 5, escopo);
             
             
             eval = new EvalExpression();
@@ -327,8 +327,8 @@ namespace parser
             tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
             escopo = new Escopo(codigo);
 
-            escopo.tabela.AddObjeto("public", "a", "int", 1);
-            escopo.tabela.AddObjeto("public", "b", "int", 5);
+            escopo.tabela.AddObjeto("public", "a", "int", 1, escopo);
+            escopo.tabela.AddObjeto("public", "b", "int", 5, escopo);
 
             expressao = new Expressao(tokens.ToArray(), escopo);
 
@@ -348,7 +348,7 @@ namespace parser
             Escopo escopo = new Escopo(new List<string>() { codigo });
 
 
-            Objeto v1 = new Objeto("public", "a","int", null);
+            Objeto v1 = new Objeto("public", "a", "int", null);
             Objeto v2 = new Objeto("public", "b", "int", null);
             Objeto v3 = new Objeto("public", "c", "int", null);
             Objeto v4 = new Objeto("public", "d", "int", null);
@@ -487,7 +487,7 @@ namespace parser
             Escopo escopo = new Escopo(codigo);
             ExtratoresOO extrator = new ExtratoresOO(escopo, new LinguagemOrquidea(), tokens);
 
-            Classe umaClasse = extrator.ExtaiUmaClasse();
+            Classe umaClasse = extrator.ExtaiUmaClasse(Classe.tipoBluePrint.EH_CLASSE);
 
             System.Console.WriteLine(umaClasse);
             System.Console.ReadLine();

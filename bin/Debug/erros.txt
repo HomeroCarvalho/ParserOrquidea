@@ -3,3 +3,16 @@ Time: 05/08/2021 10:07:05  Message: Erro no carregamento das classes do programa
 Time: 05/08/2021 10:07:54  Message: Erro no carregamento das classes do programa. Verifique se não mudou o nome do arquivo final compilado, tem que ser [ParserOrquidea.exe].
 Time: 05/08/2021 10:08:11  Message: Erro no carregamento das classes do programa. Verifique se não mudou o nome do arquivo final compilado, tem que ser [ParserOrquidea.exe].
 Time: 05/08/2021 10:08:28  Message: Erro no carregamento das classes do programa. Verifique se não mudou o nome do arquivo final compilado, tem que ser [ParserOrquidea.exe].
+Time: 09/14/2021 08:48:13  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 09/14/2021 08:49:01  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 09/14/2021 08:49:51  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 09/14/2021 08:50:15  Message: Erro no processamento de tokens. Stack: 

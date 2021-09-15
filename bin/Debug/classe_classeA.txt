@@ -1,1 +1,28 @@
-class classeA { public int a ; public int funcaoB ( int x ){ int c=1;} } 
+classe: classeA
+
+propriedades: 
+a: int
+
+
+metodos: 
+int  MetodoA( x: int , y: int )
+
+
+
+
+
+interface Herdada: 
+
+interface: interfaceCertaA
+
+
+
+metodos: 
+int  MetodoA( x: int , y: int )
+int  MetodoB( x: int )
+
+
+
+
+
+

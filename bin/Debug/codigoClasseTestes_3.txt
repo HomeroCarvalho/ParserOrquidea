@@ -1,0 +1,1 @@
+public class classeA { public int a=5 ; public classeA(){ a=1;}; public int MetodoA(int x,int y){return x+y;}; public int MetodoB ( int x ){ while (x>0) {x=x-1;}} } 

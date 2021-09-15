@@ -25,8 +25,8 @@ namespace parser
     public class ProcessadorDeID : BuildInstrucoes
     {
 
-
-        // trecho de código a ser analisados.
+        public static List<string> codigoTotal { get; set; }
+       
         public static List<string> codigo { get; set; }
 
         // linguagem contendo classes, métodos, propriedades, funções, variáveis, e operadores.
@@ -58,8 +58,8 @@ namespace parser
 
         public enum TipoPropriedadeAtribuicao { OBJETO, VARIAVEL, VARIAVEL_VETOR, PROPRIEDADE };
 
-
-
+  
+        private static int pilhaInteiroEscopos = 0;
         public List<Instrucao> GetInstrucoes()
         {
             return this.instrucoes;
@@ -79,7 +79,7 @@ namespace parser
                 linguagem = new LinguagemOrquidea();
 
             this.instrucoes = new List<Instrucao>();
-            codigo = new List<string>();  // guarda o trecho de código.
+            codigo = new List<string>();  
             codigo.AddRange(code);
             this.escopo = new Escopo(code); // obtém um escopo para o processador de sequencias ID.
 
@@ -104,20 +104,20 @@ namespace parser
                 // definição sequências ID Estruturadas.
                 string str_chamadaAFuncaoSemRetornoESemParametros = "ID ( )";
                 string str_definicaoDeVariavelComAtribuicaoDeChamadaDeFuncao = "ID ID = ID (";
+                string str_definicaoDeVariavelComAtribuicaoDeChamadaDeMetodo = "ID ID = ID. ID (";
                 string str_definicaoComTipoDefinidoEOperadorUnarioPosOrdem = "OP ID";
                 string str_definicaoComTipoDefinidoEOperadorUnarioPreOrdem = "ID OP";
                 string str_definicaoVariavelNaoEstaticaSemAtribuicao = "ID ID ;";
 
-
                 string str_definicaoVariavelVetor = "vector ID (ID, dims)";
 
 
-                // definicao de funções estruturadas, e defnição de métodos.
+                // definicao de funções estruturadas, e defnição de funções.
                 string str_definicaoDeFuncaoComRetornoComUmOuMaisParametrosComCorpoOuSemCorpo = "ID ID ( ID ID";
                 string str_definicaoDeFuncaoComRetornoSemParametrosSemCorpo = "ID ID ( ) ;";
                 string str_defnicaoDeFuncaoComRetornoSemParametrosComCorpo = "ID ID ( )";
 
-                // definição sequências estruturada.
+                // definição sequências POO.
                 string str_inicializacaoPropriedadeEstaticaComAtribuicao = "ID static ID ID = ID";
                 string str_inicializacaoPropriedadeEstaticaSemAtribuicao = "ID static ID ID";
 
@@ -125,18 +125,25 @@ namespace parser
                 string str_inicializacaoPropriedadeEAtribuicao = "ID ID ID = ID ;";
                 string str_inicializacaoPropriedadeSemAtribuicao = "ID ID ID ;";
 
+
+                // sequencias de propriedades/chamada de metodos, aninhados.
+                string str_propriedadesEncadeadasComOuSemAtribuicao = "ID . ID  =";
+                string str_chamadaAMetodoSemParametros = "ID . ID ( ";
+                string str_chamadaDeMetodoComAtribuicao = "ID ID = ID . ID (";
+                string str_chamadaDeMetodoComAtribuicaoSemInicializacao = "ID = ID . ID (";
+
                 // definicao de metodos POO.
-                string str_definicaoDeMetodoComParametrosComCorpoOuSemCorpo = "ID ID ID ( ID ID";
+                string str_definicaoDeMetodoComParametrosComCorpoOuSemCorpo = "ID ID ID ( ID ";
                 string str_definicaoMetodoSemParametrosComOuSemCorpo = "ID ID ID ( )";
 
 
                 string str_chamadaAFuncaoComParametrosESemRetorno = "ID ( ID";
-                string str_chamadaAMetodoSemParametros = "ID . ID ( )";
-                string str_chamadaAMetodoComParametros = "ID . ID ( ID ";
-
+                
 
                 // sequencias de instruções da linguagem.
-                string str_CreateNewObject = "ID ID = create ( ID , ID ";
+                string str_CreateNewObject = "ID ID = create (";
+
+             
 
                 // seuencias de interapolidade.
                 string str_Importer = "importer ( ID . ID ) ;";
@@ -158,6 +165,7 @@ namespace parser
                 string DefinicaoInstrucaoGetObjeto = "ID GetObjeto ( ID )";
 
 
+                
                 string AtribuicaoDeVariavelSemDefinicao = "ID = ID ;";
 
                 string str_definicaoDeVariavelNaoEsttaticaComAtribuicao = "ID ID = ID ;";
@@ -172,29 +180,35 @@ namespace parser
                 LoadHandler(OperacaoUnarioPreOrder, str_definicaoComTipoDefinidoEOperadorUnarioPreOrdem);
 
                 // SEQUENCIAS ESTRUTURADAS.
-                LoadHandler(BuildInstrucaoDefinicaoDeVariavelSemAtribuicao, str_definicaoVariavelNaoEstaticaSemAtribuicao);
-                LoadHandler(BuildInstrucaoDefinicaoDeVariavelComAtribuicao, str_definicaoDeVariavelComAtribuicaoDeChamadaDeFuncao);
-                LoadHandler(BuildInstrucaoDefinicaoDeVariavelComAtribuicao, str_definicaoDeVariavelNaoEsttaticaComAtribuicao);
-                LoadHandler(BuildInstrucaoDeVariavelJaDefinidaComAtribuicao, str_chamadaAFuncaoSemRetornoESemParametros);
+                LoadHandler(Atribuicao, str_definicaoVariavelNaoEstaticaSemAtribuicao);
+                LoadHandler(Atribuicao, str_definicaoDeVariavelComAtribuicaoDeChamadaDeFuncao);
+             
+                LoadHandler(Atribuicao, str_definicaoDeVariavelNaoEsttaticaComAtribuicao);
+                LoadHandler(Atribuicao, str_chamadaAFuncaoSemRetornoESemParametros);
 
-                
+            
                 // propriedades estaticas.
-                LoadHandler(BuildInstrucaoDefinicaoPropriedadeEstaticaComAtribuicao, str_inicializacaoPropriedadeEstaticaComAtribuicao);
-                LoadHandler(BuildInstrucaoDefinicaoPropriedadeEstaticaoSemAtribuicao, str_inicializacaoPropriedadeEstaticaSemAtribuicao);
+                LoadHandler(AtribuicaoEstatica, str_inicializacaoPropriedadeEstaticaComAtribuicao);
+                LoadHandler(AtribuicaoEstatica, str_inicializacaoPropriedadeEstaticaSemAtribuicao);
+                LoadHandler(BuildInstrucaoDefinicaoDePropriedadeAninhadasOuNaoSemInicializacao, str_propriedadesEncadeadasComOuSemAtribuicao);
+
 
                 // propriedaedes nao estaticas.
-                LoadHandler(BuildInstrucaoDefinicaoDePropriedadeComAcessorComAtribuicao, str_inicializacaoPropriedadeEAtribuicao);
-                LoadHandler(BuildInstrucaoDefinicaoDePropriedadeSemAtribuicao, str_inicializacaoPropriedadeSemAtribuicao);
+                LoadHandler(Atribuicao, str_inicializacaoPropriedadeEAtribuicao);
+                LoadHandler(Atribuicao, str_inicializacaoPropriedadeSemAtribuicao);
 
 
 
 
+
+                LoadHandler(BuildInstrucaoDefinicaoDePropriedadeAninhadasOuNaoSemInicializacao, str_definicaoDeVariavelComAtribuicaoDeChamadaDeMetodo);
                 LoadHandler(ChamadaMetodo, str_chamadaAMetodoSemParametros);
-                LoadHandler(ChamadaMetodo, str_chamadaAMetodoComParametros);
                 LoadHandler(ChamadaFuncao, str_chamadaAFuncaoComParametrosESemRetorno);
-               
 
-                // SEQUENCIAS INTORAPABILIDADE:
+                LoadHandler(ChamadaDeMetodoComAtribuicao, str_chamadaDeMetodoComAtribuicao);
+                LoadHandler(ChamadaDeMetodoComAtribuicao, str_chamadaDeMetodoComAtribuicaoSemInicializacao);
+
+                // SEQUENCIAS INTEROPABILIDADE:
                 LoadHandler(BuildInstrucaoImporter, str_Importer);
 
                 // sequencias definição de métodos.
@@ -217,7 +231,7 @@ namespace parser
                 LoadHandler(BuildInstrucaoReturn, DefinicaoInstrucaoReturn);
 
                 LoadHandler(BuildInstrucaoCreate, str_CreateNewObject);
-                LoadHandler(BuildInstrucaoDefinicaoDePropriedadeSemInicializacao, AtribuicaoDeVariavelSemDefinicao);
+                LoadHandler(Atribuicao, AtribuicaoDeVariavelSemDefinicao);
 
 
                 LoadHandler(BuildVariavelVetor, str_definicaoVariavelVetor);
@@ -277,90 +291,145 @@ namespace parser
         /// <param name="code">codigo, nao tokens.</param>
         public void Compile()
         {
-            List<string> tokens = new Tokens(linguagem, codigo).GetTokens();
-            this.CompileEscopos(this.escopo, tokens);
-        }
 
-        private int FindIndexEndClasse(List<string> tokens, int indexStart)
-        {
-            int pilhaOperadores = 0;
-            int indiceCurrente = tokens.IndexOf("{", indexStart);
-            while (indiceCurrente < tokens.Count)
+            try
             {
-                if (tokens[indiceCurrente] == "{")
-                    pilhaOperadores++;
-                if (tokens[indiceCurrente] == "}")
+                if (ProcessadorDeID.pilhaInteiroEscopos == 0)
+                    ProcessadorDeID.codigoTotal = new Tokens(linguagem, codigo).GetTokens();
+                ProcessadorDeID.pilhaInteiroEscopos++;
+                List<string> tokens = new Tokens(linguagem, codigo).GetTokens();
+
+
+                this.CompileEscopos(this.escopo, tokens);
+
+
+
+                AtualizaOtimizacaoDeExpressoes(this.instrucoes);
+
+
+                ProcessadorDeID.pilhaInteiroEscopos--;
+
+
+                if (ProcessadorDeID.pilhaInteiroEscopos == 0)
                 {
-                    pilhaOperadores--;
-                    if (pilhaOperadores == 0)
-                        return ++indiceCurrente;
+                    if ((this.escopo.GetMsgErros() != null) && (this.escopo.GetMsgErros().Count > 0))
+                        this.escopo.GetMsgErros().Clear();
+
+                    this.instrucoes.Clear(); // retira as instruções encontradas, pois vai ser processado na compilação com correção.
+                                             // sistema de correção de propriedades instanciadas depois de utilização em expressoes.
+                    ProcessadorDeID.pilhaInteiroEscopos++;
+
+
+                    this.CompileEscopos(this.escopo, ProcessadorDeID.codigoTotal);
+                    this.EliminaRedundanciasCausadosPeloSistemeDeRecuperacao(this.escopo);
+
                 }
-                indiceCurrente++;
+
             }
-            return -1;
+            catch (Exception excecao)
+            {
+                ModuloTESTES.LoggerTests.AddMessage("Erro no processamento de tokens. Stack: " + excecao.StackTrace);
+            }
+         
         }
 
         /// <summary>
-        /// compoe entradas e saidas de escopos, construindo classes, variáveis/propriedades, funções/métodos, operadores.
+        /// faz a compilacao de um escopo.
         /// </summary>
-        private void CompileEscopos(Escopo escopo, List<string> tokens)
+        internal void CompileEscopos(Escopo escopo, List<string> tokens)
         {
-            ContainerSequenciasNaoTratadas sequenciasNaoTratadas = new ContainerSequenciasNaoTratadas();
-            int contadorDeInstrucoesValidas = 0;
-            List<string> originais = tokens.ToList<string>();
+            
+      
             int umToken = 0;
-            while (umToken < originais.Count)
+            while (umToken < tokens.Count)
             {
 
-                if (((umToken + 1) < originais.Count) &&
-                    (acessorsValidos.Find(k => k.Equals(originais[umToken])) != null) &&
-                    (originais[umToken + 1].Equals("class")))
-                {
+                if (((umToken + 1) < tokens.Count) &&
+                    (acessorsValidos.Find(k => k.Equals(tokens[umToken])) != null) &&
+                    ((tokens[umToken + 1].Equals("class")) ||
+                    (tokens[umToken + 1].Equals("interface")))) 
+                { 
                     try
                     {
-                        int indexEndClass = FindIndexEndClasse(tokens, umToken);
-                        List<string> tokensDaClasse = originais.GetRange(umToken, indexEndClass - umToken);
-
-                        ExtratoresOO extratorDeClasses = new ExtratoresOO(escopo, linguagem, tokensDaClasse);
-                        Classe umaClasse = extratorDeClasses.ExtaiUmaClasse();
-
-                        if (umaClasse != null)
+                        string classeOuInterface = tokens[umToken + 1];
+                        if (classeOuInterface == "interface")
                         {
-                            umToken += umaClasse.tokensDaClasse.Count; // atualiza o ponteiro da malha de tokens, pois foi utilizados os tokens na compilacao da classe.
-                            umToken--; // para obter o token seguinte, passando pela malha de tokens.
+
+                            List<string> tokensDaInterface= UtilTokens.GetCodigoEntreOperadores(umToken, "{", "}", tokens);
+
+
+                            ExtratoresOO extratorDeClasses = new ExtratoresOO(escopo, linguagem, tokensDaInterface);
+                            Classe umaInterface = extratorDeClasses.ExtraiUmaInterface();
                             if (extratorDeClasses.MsgErros.Count > 0)
-                                this.escopo.GetMsgErros().AddRange(extratorDeClasses.MsgErros); // retransmite erros na extracao da classe, para a mensagem de erros do escopo.
-                            contadorDeInstrucoesValidas += 1;
-                        } // if
+                                this.escopo.GetMsgErros().AddRange(extratorDeClasses.MsgErros);
+
+                            if (umaInterface != null)
+                            {
+
+                                umToken += umaInterface.tokensDaClasse.Count;
+                                continue;
+                            }
+
+                        }
+                        else
+                        if (classeOuInterface == "class")
+                        {
+
+                
+
+                            List<string> tokensDaClasse = UtilTokens.GetCodigoEntreOperadores(umToken, "{", "}", tokens);
+                            ExtratoresOO extratorDeClasses = new ExtratoresOO(escopo, linguagem, tokensDaClasse);
+
+
+                            Classe umaClasse = extratorDeClasses.ExtaiUmaClasse(Classe.tipoBluePrint.EH_CLASSE);
+
+                            if (umaClasse != null)
+                            {
+                                umToken += umaClasse.tokensDaClasse.Count; // +1 do acessor (public, private, protected).
+
+                                if (extratorDeClasses.MsgErros.Count > 0)
+                                    this.escopo.GetMsgErros().AddRange(extratorDeClasses.MsgErros); // retransmite erros na extracao da classe, para a mensagem de erros do escopo.
+                                continue;
+
+                            } // if
+
+                        }
                     }
                     catch
                     {
-                        escopo.GetMsgErros().Add("Erro na extracao de tokens de uma classe, verifique a sintaxe das especificacoes de classe.");
+                        UtilTokens.WriteAErrorMensage(escopo, "Erro na extracao de tokens de uma classe ou interface, verifique a sintaxe das especificacoes de classe.", tokens);
                         return;
                     }
                 }
                 else
-                if (linguagem.VerificaSeEhID(originais[umToken]) || (linguagem.isTermoChave(originais[umToken])))
+                if (linguagem.VerificaSeEhID(tokens[umToken]) || (linguagem.isTermoChave(tokens[umToken])))
                 {
+                    // funcaoA(1,2)
 
-                    UmaSequenciaID sequenciaCurrente = UmaSequenciaID.ObtemUmaSequenciaID(umToken, originais, codigo); // obtem a sequencia  seguinte.
-                   
+                    
 
+                    UmaSequenciaID sequenciaCurrente = UmaSequenciaID.ObtemUmaSequenciaID(umToken, tokens, codigo); // obtem a sequencia  seguinte.
+
+                  
                     if (sequenciaCurrente == null)
-                    {
-                        PosicaoECodigo posicao = new PosicaoECodigo(originais.GetRange(umToken, originais.Count - umToken), codigo);
-                        escopo.GetMsgErros().Add("sequencia de tokens não reconhecida: " + sequenciaCurrente.ToString() + ", linha: " + posicao.linha + ", coluna: " + posicao.coluna + "  verifique a sintaxe, incluindo operadores ponto-e-virgula.");
-                        break;
-                    } // if
-
+                        UtilTokens.WriteAErrorMensage(escopo, "sequencia de tokens não reconhecida: " + sequenciaCurrente.ToString(), sequenciaCurrente.original);  // continua o processamento, para verificar se há mais erros no codigo orquidea.
+           
                     MatchSequencias(sequenciaCurrente, escopo); // obtém o indice de metodo tratador.
+
                     if (sequenciaCurrente.indexHandler == -1)
                     {
-                        sequenciaCurrente.indexPosicao = contadorDeInstrucoesValidas;
-                        umToken += sequenciaCurrente.original.Count;
+                        Instrucao instrucaoExpressaoCorreta = BuildExpressaoValida(sequenciaCurrente, escopo); // a sequencia id pode ser uma expressao correta, há build para expressoes corretas.
+                        if (instrucaoExpressaoCorreta != null)
+                        {
+                            this.instrucoes.Add(instrucaoExpressaoCorreta); // a sequencia id é uma expressao correta, processa e adiciona a instrucao de expressao correta.
+                            umToken += sequenciaCurrente.original.Count;
+                            continue;
+                        }
+
+                        // trata de problemas de sintaxe da sequencia currente, emitindo uma mensagem de erro.
                         GeraMensagemDeErroEmUmaInstrucao(sequenciaCurrente, escopo, "sequencia de tokens não reconhecida: " + sequenciaCurrente.ToString() + " ");
-                        contadorDeInstrucoesValidas += 1;
-                        continue;     
+                        umToken += sequenciaCurrente.original.Count;
+                        continue;  // continua, para capturar mais erros em outras sequencias currente.   
                     }
                     else
                     {
@@ -369,15 +438,18 @@ namespace parser
                             // chamada do método tratador para processar a costrução de escopos, da 0sequencia de entrada.
                             Instrucao instrucaoTratada = tratadores[sequenciaCurrente.indexHandler].metodo(sequenciaCurrente, escopo);
                             if (instrucaoTratada != null)
-                            {
                                 this.instrucoes.Add(instrucaoTratada);
-                                contadorDeInstrucoesValidas += 1;
-                            }
                             else
                             {
-                                sequenciasNaoTratadas.IsToRegisterInstruction(sequenciaCurrente, escopo, contadorDeInstrucoesValidas);
-                                contadorDeInstrucoesValidas += 1;
-                                GeraMensagemDeErroEmUmaInstrucao(sequenciaCurrente, escopo, "sequencia de tokens: " + sequenciaCurrente + " nao reconhecida, verifique a sintaxe, incluindo operadores ponto-e-virgula.");
+                                Instrucao instrucaoExpressaoCorreta = BuildExpressaoValida(sequenciaCurrente, escopo); // a sequencia id pode ser uma expressao correta, há build para expressoes corretas.
+                                if (instrucaoExpressaoCorreta != null)
+                                {
+                                    this.instrucoes.Add(instrucaoExpressaoCorreta); // a sequencia id é uma expressao correta, processa e adiciona a instrucao de expressao correta.
+                                    umToken += sequenciaCurrente.original.Count;
+                                    continue;
+                                }
+                                else
+                                    GeraMensagemDeErroEmUmaInstrucao(sequenciaCurrente, escopo, "sequencia de tokens: " + sequenciaCurrente + " nao reconhecida, verifique a sintaxe, incluindo operadores ponto-e-virgula.");
                             }
                             umToken += sequenciaCurrente.original.Count; // atualiza o iterator de tokens, consumindo os tokens que foram utilizados no processamento da seuencia id currente.
                             continue;
@@ -385,7 +457,7 @@ namespace parser
                         }
                         catch
                         {
-                            escopo.GetMsgErros().Add("Erro de compilacao da sequencia: " + sequenciaCurrente.ToString() + ". Verifique a sintaxe, com terminos de fim de instrucao, tambem. ");
+                            UtilTokens.WriteAErrorMensage(escopo, "Erro de compilacao da sequencia: " + sequenciaCurrente.ToString() + ". Verifique a sintaxe, com terminos de fim de instrucao, tambem. ", tokens);
                             return;
                         }
                     } // if tokensSequenciaOriginais.Count>0
@@ -394,19 +466,63 @@ namespace parser
                 umToken++;
             } // while
 
-            if (sequenciasNaoTratadas.GetSequenciasNaoTratadas().Count > 0) // resolve problemas de escopo e sequencias nao tratadas.
-                sequenciasNaoTratadas.Resolve(escopo, this);
         }// CompileEcopos()
+      
 
+        private void AtualizaOtimizacaoDeExpressoes(List<Instrucao> instrucoes)
+        {
+            if (this.instrucoes == null)
+                return;
 
+            for (int x = 0; x < instrucoes.Count; x++)
+            {
+                if (instrucoes[x].expressoes != null)
+                {
+                    for (int exprss = 0; exprss < instrucoes[x].expressoes.Count; exprss++)
+                    {
+                        Expressao expressao = instrucoes[x].expressoes[exprss];
+                        List<Objeto> objetosDestaExpressao = ExtraiObjetosDeExpressao(expressao);
+                        if (objetosDestaExpressao == null)
+                            continue;
+                        else
+                            for (int obj = 0; obj < objetosDestaExpressao.Count; obj++)
+                                if (objetosDestaExpressao[obj] != null)
+                                    objetosDestaExpressao[obj].GetExpressoesComOObjeto().Add(expressao);
 
+                    }
+
+                    if (instrucoes[x].blocos != null)
+                        for (int b = 0; b < instrucoes[x].blocos.Count; b++)
+                            if ((instrucoes[x] != null) && (instrucoes[x].blocos != null) && (instrucoes[x].blocos[b].Count > 0))
+                                AtualizaOtimizacaoDeExpressoes(instrucoes[x].blocos[b]);
+
+                }
+            }
+        }
+
+        private List<Objeto> ExtraiObjetosDeExpressao(Expressao umaExpressao)
+        {
+            List<Objeto> objetosPresentes = new List<Objeto>();
+            for (int x = 0; x < umaExpressao.Elementos.Count; x++)
+            {
+                if (umaExpressao.Elementos[x] != null)
+                {
+                    if (umaExpressao.Elementos[x].GetType() == typeof(ExpressaoObjeto))
+                        objetosPresentes.Add(((ExpressaoObjeto)umaExpressao.Elementos[x]).objeto);
+                    if (umaExpressao.Elementos[x].GetType() == typeof(ExpressaoVetor))
+                        objetosPresentes.Add(((ExpressaoVetor)umaExpressao).vetor);
+                }
+            }
+            return objetosPresentes;
+
+        }
+
+       
         /// <summary>
         /// encontra indices de métodos tratadores para a sequencia ID de entrada.
         /// </summary>
         private void MatchSequencias(UmaSequenciaID sequencia, Escopo escopo)
         {
-
-          
 
             if (tokensSemResumir.FindIndex(k => k.Equals(sequencia.original[0])) != -1)
             {
@@ -456,7 +572,7 @@ namespace parser
         {
             List<string> aResumir = new List<string>();
             int umToken = 0;
-
+           
 
             while ((umToken >= 0) && (umToken < tokensExpressao.Count))
             {
@@ -512,7 +628,8 @@ namespace parser
 
         // resume expressoes em id, unindo "id+operador+id" em um unico "id", se o operador for binario.
         // e resume tb expressoes em id, unindo tb "id+operadorUnario" em "id".
-        // e resume tb expressoes em id, unindo "operadorUnario+id.
+        // e resume tb expressoes em id, unindo "operadorUnario+id".
+        // e resume tb expressoes de um token id, para em "id".
         private void SimplificarUmaExpressaoSemTermosChave(List<string> aResumir, List<string> tokensNaoResumiveis)
         {
 
@@ -578,46 +695,14 @@ namespace parser
         {
             return tokensNaoResumiveis.Find(k => k.Equals(token)) == null;
         }
-        /// <summary>
-        ///  este metodo resume items id como: id.id, ou id.id(.
-        ///  1- se for "x.y", substitui por "x".
-        ///  2- se for "x.y()", substitui por "y()".
-        ///  3- se for x.y().z, substitui por z;
-        ///  4- a regra geral é: apenas o ultimo aninhamento de propriedades ou metodos é que retorna.
-        /// </summary>
-        private List<string> ResumeAninhamento(List<string> tokens)
-        {
-            int lastIndexDot = tokens.LastIndexOf(".");
-            if (lastIndexDot == -1)
-                return tokens;
-            List<string> tokensAninhamentoFeito = tokens.GetRange(lastIndexDot + 1, tokens.Count - lastIndexDot - 1);
-            return tokensAninhamentoFeito;
-        }
-
-        // verifica se o token é um token não resumivel: 1- se tiver na lista de tokens essenciais para sequencias, ou 2- se for um termo-chave.
-        private static bool isTokenNaoResumivel(string token, List<string> tokensNaoResumiveis, LinguagemOrquidea linguagem)
-        {
-
-            int indexToken = tokensNaoResumiveis.FindIndex(k => k.Equals(token));
-            if (indexToken != -1)
-                return true;
-
-            if ((linguagem.isTermoChave(token)) && (!linguagem.VerificaSeEhOperador(token)))
-                return true;
-
-            return false;
-        }
+      
 
         /// <summary>
         /// verifica as expressões Amapear, e JaMapeado são iguais, contando como elementos da expressão de JaMapeado.
         /// </summary>
         private bool isEqualsExpressoes(List<string> AMapear, List<string> JaMapeado)
         {
-            if (JaMapeado.Contains("create"))
-            {
-                int k = 0;
-                k++;
-            }
+           
 
             if ((JaMapeado != null) && (JaMapeado.Count > 0) && (AMapear != null) && (AMapear.Count > 0))
             {
@@ -633,31 +718,29 @@ namespace parser
             return true;
         }
 
-        protected Instrucao OperacaoUnarioPreOrder(UmaSequenciaID umaSequenciaID, Escopo escopo)
+        protected Instrucao OperacaoUnarioPreOrder(UmaSequenciaID sequencia, Escopo escopo)
         {
             //   OP. ID
 
-            if ((linguagem.VerificaSeEhID(umaSequenciaID.original[0]) && (linguagem.VerificaSeEhOperadorUnario(umaSequenciaID.original[1]))))
+            if ((linguagem.VerificaSeEhID(sequencia.original[0]) && (linguagem.VerificaSeEhOperadorUnario(sequencia.original[1]))))
             {
 
 
-                string nomeObjeto = umaSequenciaID.original[1];
+                string nomeObjeto = sequencia.original[1];
                 Objeto v = escopo.tabela.GetObjeto(nomeObjeto, escopo);
+                
                 if (v == null)
-                {
-                    PosicaoECodigo posicao = new PosicaoECodigo(umaSequenciaID.original, escopo.codigo);
-                    escopo.GetMsgErros().Add("objeto: " + nomeObjeto + "  inexistente. linha: " + posicao.linha + " coluna: " + posicao.coluna + ".");
-                }// if
+                    UtilTokens.WriteAErrorMensage(escopo, "objeto: " + nomeObjeto + "  inexistente.", sequencia.original);
+                
 
-                string nomeOperador = umaSequenciaID.original[0];
+                string nomeOperador = sequencia.original[0];
                 Operador umOperador = Operador.GetOperador(nomeOperador, v.GetTipo(), "UNARIO", linguagem);
 
                 if (umOperador == null)
-                {
-                    PosicaoECodigo posicao = new PosicaoECodigo(umaSequenciaID.original, escopo.codigo);
-                    escopo.GetMsgErros().Add("operador: " + nomeOperador + "  não é unário. linha: " + posicao.linha + " coluna: " + posicao.coluna + ".");
-                } // if
-
+                    UtilTokens.WriteAErrorMensage(escopo, "operador: " + nomeOperador + "  não é unário.", sequencia.original);
+        
+                
+                
                 bool isFoundClass = false;
                 foreach (Classe umaClasse in escopo.tabela.GetClasses())
 
@@ -668,7 +751,7 @@ namespace parser
                     } //if
                 if (!isFoundClass)
                 {
-                    PosicaoECodigo posicao = new PosicaoECodigo(umaSequenciaID.original, escopo.codigo);
+                    PosicaoECodigo posicao = new PosicaoECodigo(sequencia.original, escopo.codigo);
                     escopo.GetMsgErros().Add("operador: " + nomeObjeto + "  inexistente. linha: " + posicao.linha + " coluna: " + posicao.coluna + ".");
                     return null;
                 }
@@ -681,30 +764,24 @@ namespace parser
             return null;
         } // OperacaoUnarioPreOrder()
 
-        protected Instrucao OperacaoUnarioPosOrder(UmaSequenciaID umaSequenciaID, Escopo escopo)
+        protected Instrucao OperacaoUnarioPosOrder(UmaSequenciaID sequencia, Escopo escopo)
         {
             // ID OPERADOR
 
-            if ((linguagem.VerificaSeEhID(umaSequenciaID.original[1]) && (linguagem.VerificaSeEhOperadorUnario(umaSequenciaID.original[0]))))
+            if ((linguagem.VerificaSeEhID(sequencia.original[1]) && (linguagem.VerificaSeEhOperadorUnario(sequencia.original[0]))))
             {
 
-                string nomeObjeto = umaSequenciaID.original[1];
+                string nomeObjeto = sequencia.original[1];
                 Objeto v = escopo.tabela.GetObjeto(nomeObjeto, escopo);
 
                 if (v == null)
-                {
-                    PosicaoECodigo posicao = new PosicaoECodigo(umaSequenciaID.original, escopo.codigo);
-                    escopo.GetMsgErros().Add("objeto: " + nomeObjeto + "  inexistente. linha: " + posicao.linha + " coluna: " + posicao.coluna + ".");
-                }// if
-
-                string nomeOperador = umaSequenciaID.original[0];
+                    UtilTokens.WriteAErrorMensage(escopo, "objeto: " + nomeObjeto + "  inexistente.", sequencia.original);
+      
+                string nomeOperador = sequencia.original[0];
                 Operador umOperador = Operador.GetOperador(nomeOperador, v.GetTipo(), "UNARIO", linguagem);
                 if (umOperador.GetTipo() != "OPERADOR UNARIO")
-                {
-                    PosicaoECodigo posicao = new PosicaoECodigo(umaSequenciaID.original, escopo.codigo);
-                    escopo.GetMsgErros().Add("operador: " + nomeOperador + "  não é unário. linha: " + posicao.linha + " coluna: " + posicao.coluna + ".");
-                } //if
-
+                    UtilTokens.WriteAErrorMensage(escopo, "operador: " + nomeOperador + "  não é unário.", sequencia.original);
+     
                 bool isFoundClass = false;
                 foreach (Classe umaClasse in escopo.tabela.GetClasses())
 
@@ -714,8 +791,7 @@ namespace parser
                         break;
                     } //if
                 if (!isFoundClass)
-                    GeraMensagemDeErroEmUmaInstrucao(umaSequenciaID, escopo, "operador: " + nomeObjeto + "  inexistente.");
-
+                    UtilTokens.WriteAErrorMensage(escopo, "operador: " + nomeObjeto + "  inexistente.", sequencia.original);
                 else
                 {
                     escopo.tabela.GetExpressoes().Add(new Expressao(new string[] { nomeObjeto + " " + nomeOperador }, escopo));
@@ -743,331 +819,137 @@ namespace parser
             string nomeDaVariavelVetor = sequencia.original[1];
             int dimensoesVariavelVetor = int.Parse(sequencia.original[5]);
 
-            Vetor vvt = new Vetor("private", nomeDaVariavelVetor, tipoDaVariavelVetor, new int[dimensoesVariavelVetor]);
+            Vetor vvt = new Vetor("private", nomeDaVariavelVetor, tipoDaVariavelVetor, escopo, new int[dimensoesVariavelVetor]);
             escopo.tabela.AddObjetoVetor(vvt.GetAcessor(), nomeDaVariavelVetor, tipoDaVariavelVetor, vvt.dimensoes, escopo, false);
 
             Expressao exprssDeclaracaoPropriedade = new Expressao();
             Instrucao instrucaoDeclaracao = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
-            SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(exprssDeclaracaoPropriedade, tipoDaVariavelVetor, nomeDaVariavelVetor, null, Instrucao.EH_DEFINICAO, Instrucao.EH_VETOR, instrucaoDeclaracao);
+            SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(tipoDaVariavelVetor, nomeDaVariavelVetor, null, Instrucao.EH_DEFINICAO, Instrucao.EH_VETOR, instrucaoDeclaracao, null);
 
 
             return instrucaoDeclaracao;
 
         }
-        protected Instrucao BuildInstrucaoDefinicaoDePropriedadeSemAtribuicao(UmaSequenciaID sequencia, Escopo escopo)
+
+        protected Instrucao BuildExpressaoValida(UmaSequenciaID sequencia, Escopo escopo)
         {
-
-            string acessorObjeto = sequencia.original[0];
-            string tipoObjeto = sequencia.original[1];
-            string nomeObjeto = sequencia.original[2];
-
-            if (escopo.tabela.GetObjeto(nomeObjeto, escopo) != null)
+            Expressao expressaoCorreta = new Expressao(sequencia.original.ToArray(), escopo);
+            if ((expressaoCorreta != null) && (expressaoCorreta.Elementos.Count > 0))
             {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "propriedade/variavel já definida anteriormente neste escopo.");
-                return null;
+                // adiciona a expressao correta, para a lista de expressoes do escopo, para fins de otimização.
+                escopo.tabela.GetExpressoes().Add(expressaoCorreta);
+
+                // cria a instrucao para a expressao correta.
+                Instrucao instrucaoExpressaoCorreta = new Instrucao(ProgramaEmVM.codeExpressionCorrect, new List<Expressao>() { expressaoCorreta }, new List<List<Instrucao>>());
+                return instrucaoExpressaoCorreta;       
             }
-            Classe tipoPropriedade = RepositorioDeClassesOO.Instance().ObtemUmaClasse(sequencia.original[1]);
-            if (tipoPropriedade == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro no tipo de propriedade, tipo nao existente ou erro de sintaxe");
-                return null;
-            }
-
-            escopo.tabela.GetObjetos().Add(new Objeto(acessorObjeto, tipoObjeto, nomeObjeto, null));
-
-
-            Instrucao instrucaoPropriedade = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
-            Expressao exprssDeclaracaoDePropriedade = new Expressao();
-            SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(exprssDeclaracaoDePropriedade, tipoObjeto, nomeObjeto, null, Instrucao.EH_DEFINICAO, Instrucao.EH_OBJETO, instrucaoPropriedade);
-
-
-            return instrucaoPropriedade;
+            return null;
         }
-
-        protected Instrucao BuildInstrucaoDefinicaoDePropriedadeSemInicializacao(UmaSequenciaID sequencia, Escopo escopo)
+        protected Instrucao Atribuicao(UmaSequenciaID sequencia, Escopo escopo)
         {
-            /// registra também o tipo da variavel. ainda que a instrucao de atribuicao eh sem inicializacao (sem definicao de variavel).
+   
+            string acessorObjetoAtribuicao = "private";
+            //int indiceNomeTipo = 0;
+            bool isInstanciacao = false;
+            if (acessorsValidos.IndexOf(sequencia.original[0]) != -1)
+                acessorObjetoAtribuicao = sequencia.original[0];
 
+            string nomeObjetoAtribuicao = "";
+            string tipoObjetoAtribuicao = "";
+            Expressao expressaoTotal = new Expressao(sequencia.original.ToArray(), escopo);
 
-            string nomeObjeto = sequencia.original[0];
-
-
-
-            object propriedadeAninhada = ValidaPropriedadesEncadeadas(sequencia.original, escopo);
-            if (propriedadeAninhada == null)
+            if (RepositorioDeClassesOO.Instance().ObtemUmaClasse(expressaoTotal.Elementos[0].ToString()) != null)
             {
-                Objeto v = escopo.tabela.GetObjeto(nomeObjeto, escopo);
-                if (v != null)
-                    propriedadeAninhada = new Objeto(v.GetAcessor(), v.GetTipo(), v.GetNome(), v.GetValor(), false);
-                else
-                if ((escopo.tabela.GetVetor(nomeObjeto, escopo) == null) && ((escopo.tabela.GetObjeto(nomeObjeto, escopo) == null)))
+
+                tipoObjetoAtribuicao = expressaoTotal.Elementos[0].ToString();
+                nomeObjetoAtribuicao = expressaoTotal.Elementos[1].ToString();
+                isInstanciacao = true;
+                escopo.tabela.GetObjetos().Add(new Objeto(acessorObjetoAtribuicao, tipoObjetoAtribuicao, nomeObjetoAtribuicao, null));
+                expressaoTotal.Elementos.RemoveAt(0); // para compatibilizar com a instrucao de atribuicao.
+            }
+            else
+            {
+                nomeObjetoAtribuicao = expressaoTotal.Elementos[0].ToString();
+                Objeto objJaInstanciado = escopo.tabela.GetObjeto(nomeObjetoAtribuicao, escopo);
+                if (objJaInstanciado == null)
                 {
-                    GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "propriedade aninhada nao reconhecida.");
+                    UtilTokens.WriteAErrorMensage(escopo, "Objeto: " + nomeObjetoAtribuicao + " nao instanciado.", sequencia.original);
                     return null;
-                } // if
-
-
-            }
-            Objeto propriedadeAReceberAAtribuicao = (Objeto)propriedadeAninhada;
-            string tipoObjeto = propriedadeAReceberAAtribuicao.GetTipo();
-
-            if (sequencia.original.IndexOf(".") != -1)
-            {
-                int indexEndPropriedadeAninhada = sequencia.original.IndexOf("=");
-                if (indexEndPropriedadeAninhada == -1)
-                    nomeObjeto = Util.UtilString.UneLinhasLista(sequencia.original);
-                else
-                    nomeObjeto = Util.UtilString.UneLinhasLista(sequencia.original.GetRange(0, indexEndPropriedadeAninhada));  // modifica o nome da variavel para conter a sequencia de propriedades aninhadas.
+                }
+                tipoObjetoAtribuicao = objJaInstanciado.GetTipo();
+                isInstanciacao = false;
             }
 
-            List<Expressao> exprssAtribuicao = Expressao.Instance.ExtraiExpressoes(escopo, sequencia.original);
-            if ((exprssAtribuicao == null) || (exprssAtribuicao.Count == 0))
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "atribuicao a variavel sem expressao de atribuicao.");
-                return null;
-            }
+            Expressao expressaoAtribuicao = new Expressao();
 
-            if ((sequencia.original.IndexOf(".") == -1) && (escopo.tabela.GetObjeto(nomeObjeto, escopo) == null))
-            {
-                // a variavel é um objeto, não uma propriedade. Remove a propriedade, e adiciona um objeto com o mesmo nome.
-                Objeto objetoAninhado = new Objeto("private", tipoObjeto, nomeObjeto, null);
-                escopo.tabela.RemoveObjeto(nomeObjeto);
-                escopo.tabela.RegistraObjeto(objetoAninhado);
-            }
+            if (sequencia.original.Contains("="))
+                expressaoAtribuicao = expressaoTotal;
+            else
+                expressaoAtribuicao = new Expressao();
 
-            escopo.tabela.GetExpressoes().AddRange(exprssAtribuicao); // registra a expressao, para fins de otimização sobre o valor da expressão.
+            Instrucao instrucaoAtribuicao = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
+            
+            
+            instrucaoAtribuicao.expressoes.Add(expressaoTotal);
+            escopo.tabela.GetExpressoes().Add(expressaoTotal);
+            
+            
+            int flag_tipoInstanciacao = 0;
+            if (isInstanciacao)
+                flag_tipoInstanciacao = Instrucao.EH_DEFINICAO;
+            else
+                flag_tipoInstanciacao = Instrucao.EH_MODIFICACAO;
+                this.SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(tipoObjetoAtribuicao, nomeObjetoAtribuicao, null, flag_tipoInstanciacao, Instrucao.EH_OBJETO, instrucaoAtribuicao, expressaoAtribuicao);
 
-            Expressao exprssNomeObjeto = new Expressao();
-
-            Instrucao instrucaoPropriedade = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
-
-            this.SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(exprssNomeObjeto, tipoObjeto, nomeObjeto, null, Instrucao.EH_MODIFICACAO, Instrucao.EH_OBJETO, instrucaoPropriedade);
-            instrucaoPropriedade.expressoes.AddRange(new List<Expressao>() { exprssNomeObjeto, exprssAtribuicao[0] });
-
-
-            return instrucaoPropriedade;
-        }
-        protected Instrucao BuildInstrucaoDefinicaoDePropriedadeComAcessorComAtribuicao(UmaSequenciaID sequencia, Escopo escopo)
-        {
-            string nomeObjeto = sequencia.original[2];
-            string tipoObjeto = sequencia.original[1];
-            string acessorObjeto = sequencia.original[0];
-            if (escopo.tabela.GetObjeto(nomeObjeto, escopo) != null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "propriedade/variavel já definida anteriormente neste escopo.");
-                return null;
-            }
-
-
-
-            Classe classeDaVariavel = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoObjeto);
-            if (classeDaVariavel == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro no tipo de propriedade, tipo nao existente ou erro de sintaxe");
-                return null;
-            }
-
-            Instrucao instrucaoDefinicaoPropriedade = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
-
-            Expressao exprssDeclaracaoPropriedde = new Expressao();
-            SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(exprssDeclaracaoPropriedde, tipoObjeto, nomeObjeto, null, Instrucao.EH_DEFINICAO, Instrucao.EH_OBJETO, instrucaoDefinicaoPropriedade);
-
-
-
-            if (exprssDeclaracaoPropriedde == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro na declaracao da propriedade.");
-                return null;
-            }
-
-            List<Expressao> exprssAtribuicaoPropriedade = Expressao.Instance.ExtraiExpressoes(escopo, sequencia.original);
-
-            if ((exprssAtribuicaoPropriedade == null) || (exprssAtribuicaoPropriedade.Count == 0))
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro na atribuicao da propriedade.");
-                return null;
-            }
-
-
-            PosicaoECodigo posicao = new PosicaoECodigo(sequencia.original, escopo.codigo);
-            Objeto v = new Objeto(acessorObjeto, tipoObjeto, nomeObjeto, null);
-            SetValorNumero(v, exprssAtribuicaoPropriedade[0], escopo); // se a atribuicao for por numero, seta o valor da variavel, para fins de debug,
-
-            escopo.tabela.GetObjetos().Add(v);
-
-            escopo.tabela.GetExpressoes().AddRange(exprssAtribuicaoPropriedade); // registra as expressoes de atribuicao, para fins de otimização sobre o valor.
-
-            instrucaoDefinicaoPropriedade.expressoes.AddRange(new List<Expressao>() { exprssDeclaracaoPropriedde, exprssAtribuicaoPropriedade[0] });
-            return instrucaoDefinicaoPropriedade;
-
-
+            return instrucaoAtribuicao;
         }
 
-        protected Instrucao BuildInstrucaoDefinicaoDePropriedadeSemAcessorESemTipoComAtribuicao(UmaSequenciaID sequencia, Escopo escopo)
+        
+        protected Instrucao BuildInstrucaoDefinicaoDePropriedadeAninhadasOuNaoSemInicializacao(UmaSequenciaID sequencia, Escopo escopo)
         {
+            Expressao aninhadas = new Expressao(sequencia.original.ToArray(), escopo);
 
-            string acessorObjeto = "private";
+            ExpressaoAtribuicaoPropriedadesAninhadas exprssaoAninhadas = (ExpressaoAtribuicaoPropriedadesAninhadas)aninhadas.Elementos[0];
+            if (exprssaoAninhadas == null)
+            {
+                UtilTokens.WriteAErrorMensage(escopo, "expressao de propriedades aninhadas nao reconhecida.", sequencia.original);
+                return null;
+            }
             string tipoObjeto = sequencia.original[0];
             string nomeObjeto = sequencia.original[1];
+         
+            
+            escopo.tabela.GetExpressoes().Add(exprssaoAninhadas); // registra a expressao, para fins de otimização sobre o valor da expressão.
+            Expressao exprssDeclarativa = new Expressao();
 
-            Classe classetipoPropriedade = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoObjeto);
-            if (classetipoPropriedade == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro no tipo de propriedade, tipo nao existente ou erro de sintaxe");
-                return null;
-            }
-
-            if (escopo.tabela.GetObjeto(nomeObjeto, escopo) != null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "propriedade/variavel já definida anteriormente neste escopo.");
-                return null;
-            }
-
-            Instrucao instrucaoDefinicaoPropriedade = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
-
-            Expressao exprssDeclaracaoDePropriedade = new Expressao();
-            SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(exprssDeclaracaoDePropriedade, tipoObjeto, nomeObjeto, null, Instrucao.EH_DEFINICAO, Instrucao.EH_OBJETO, instrucaoDefinicaoPropriedade);
-
-            PosicaoECodigo posicao = new PosicaoECodigo(sequencia.original, escopo.codigo);
-            Objeto v = new Objeto(acessorObjeto, tipoObjeto, nomeObjeto, null);
-            escopo.tabela.GetObjetos().Add(v); // registra a variavel na tabela de valores.
+            Expressao Atribuicao = exprssaoAninhadas.expresaoAtribuicao;
 
 
-            if (exprssDeclaracaoDePropriedade == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro na declaracao da propriedade.");
-                return null;
-            }
-
-            List<Expressao> expressaoAtribuicaoProprieade = Expressao.Instance.ExtraiExpressoes(escopo, sequencia.original);
-
-            if (expressaoAtribuicaoProprieade == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "sequencia nao completamente definida ainda.");
-                return null;
-            }
-
-            escopo.tabela.GetExpressoes().AddRange(expressaoAtribuicaoProprieade); // registra as expressoes de atribuição, para fins de otimização sobre o valor.
+            Objeto objetoAInstanciar = exprssaoAninhadas.aninhamento[exprssaoAninhadas.aninhamento.Count - 1];
+            if (objetoAInstanciar != null)
+                SetValorNumero(objetoAInstanciar, Atribuicao, escopo);
 
 
-            if ((expressaoAtribuicaoProprieade == null) || (expressaoAtribuicaoProprieade.Count == 0))
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro na atribuicao da propriedade.");
-                return null;
-            }
-
-            SetValorNumero(v, expressaoAtribuicaoProprieade[0], escopo); // seta o valor da variavel, se for um numero, para fins de debug.
-
-            instrucaoDefinicaoPropriedade.expressoes.AddRange(new List<Expressao>() { exprssDeclaracaoDePropriedade, expressaoAtribuicaoProprieade[0] });
-            return instrucaoDefinicaoPropriedade;
-
-        }
-
-
-        protected Instrucao BuildInstrucaoDefinicaoPropriedadeSemAtribuicao(UmaSequenciaID sequencia, Escopo escopo)
-        {
-            string acessorObjeto = sequencia.original[0];
-            string tipoObjeto = sequencia.original[1];
-            string nomeObjeto = sequencia.original[2];
-
-            Classe classetipoPropriedade = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoObjeto);
-            if (classetipoPropriedade == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro no tipo de propriedade, tipo nao existente ou erro de sintaxe");
-                return null;
-            }
-
-            if (escopo.tabela.GetObjeto(nomeObjeto, escopo) != null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "propriedade/variavel já definida anteriormente neste escopo.");
-                return null;
-            }
 
             Instrucao instrucaoPropriedade = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
-            Expressao exprssDeclaracaoPropriedade = new Expressao();
-            SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(exprssDeclaracaoPropriedade, tipoObjeto, nomeObjeto, null, Instrucao.EH_DEFINICAO, Instrucao.EH_OBJETO, instrucaoPropriedade);
-            if (exprssDeclaracaoPropriedade == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro na declaracao de propriedade.");
-                return null;
-            }
+            
+            
+            instrucaoPropriedade.expressoes.Add(exprssaoAninhadas);
+           
 
-            Objeto v = new Objeto(acessorObjeto, tipoObjeto, nomeObjeto, null);
-            escopo.tabela.GetObjetos().Add(v);  // registra a variavel na tabela de valores.
+            if (sequencia.original.IndexOf("=") != -1)
+                this.SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(tipoObjeto, nomeObjeto, new List<Expressao> { exprssaoAninhadas, Atribuicao }, Instrucao.EH_MODIFICACAO, Instrucao.EH_OBJETO, instrucaoPropriedade, null);
+            else
+                this.SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(tipoObjeto, nomeObjeto, exprssaoAninhadas.Elementos, Instrucao.EH_DEFINICAO, Instrucao.EH_OBJETO, instrucaoPropriedade, null);
+           
 
-            instrucaoPropriedade.expressoes.Add(exprssDeclaracaoPropriedade);
+
             return instrucaoPropriedade;
         }
+ 
+          
 
-
-        protected Instrucao BuildInstrucaoDefinicaoPropriedadeComAtribuicao(UmaSequenciaID sequencia, Escopo escopo)
-        {
-
-            string acessorObjeto = sequencia.original[0];
-            string tipoObjeto = sequencia.original[1];
-            string nomeObjeto = sequencia.original[2];
-
-            Classe classetipoPropriedade = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoObjeto);
-            if (classetipoPropriedade == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro no tipo de objeto, tipo nao existente ou erro de sintaxe");
-                return null;
-            }
-
-            if (escopo.tabela.GetObjeto(nomeObjeto, escopo) != null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "objeto já definido anteriormente neste escopo.");
-                return null;
-            }
-
-            PosicaoECodigo posicao = new PosicaoECodigo(sequencia.original, escopo.codigo);
-            Objeto v = new Objeto(acessorObjeto, tipoObjeto, nomeObjeto, null);
-            escopo.tabela.GetObjetos().Add(v);  // registra a variavel na tabela de valores.
-
-
-            Instrucao instrucaoPropriedde = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
-
-            Expressao exprssDeclaracaoDaPropriedade = new Expressao();
-            SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(exprssDeclaracaoDaPropriedade, nomeObjeto, tipoObjeto, null, Instrucao.EH_DEFINICAO, Instrucao.EH_OBJETO, instrucaoPropriedde);
-
-
-
-            if (exprssDeclaracaoDaPropriedade == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro na declaracao de propriedade.");
-                return null;
-            }
-
-            int indexTokenAtribuicao = sequencia.original.IndexOf("=");
-            if (indexTokenAtribuicao == -1)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro na declaracao de propriedade.");
-                return null;
-            }
-
-            List<Expressao> exprssAtribuicao = Expressao.Instance.ExtraiExpressoes(escopo, sequencia.original);
-            if (exprssAtribuicao == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "sequencia nao completamente definida ainda.");
-                return null;
-            }
-
-            escopo.tabela.GetExpressoes().AddRange(exprssAtribuicao); // registra as expressões de atribuição, para fins de otimização sobre o valor modificado.
-
-            if ((exprssAtribuicao == null) || (exprssAtribuicao.Count == 0))
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro na atribuicao da propriedade.");
-                return null;
-            }
-
-            SetValorNumero(v, exprssAtribuicao[0], escopo);
-
-            instrucaoPropriedde.expressoes.AddRange(new List<Expressao>() { exprssDeclaracaoDaPropriedade, exprssAtribuicao[0] });
-            return instrucaoPropriedde;
-
-        }
-
-        protected Instrucao BuildInstrucaoDefinicaoPropriedadeEstaticaComAtribuicao(UmaSequenciaID sequencia, Escopo escopo)
+        protected Instrucao AtribuicaoEstatica(UmaSequenciaID sequencia, Escopo escopo)
         {
             string acessorDaVariavel = sequencia.original[0];
             Classe tipoDaVariavel = RepositorioDeClassesOO.Instance().ObtemUmaClasse(sequencia.original[2]);
@@ -1085,7 +967,7 @@ namespace parser
                 return null;
             }
 
-            Objeto propriedadeEstatica = new Objeto(acessorDaVariavel, tipoDaVariavel.GetNome(), nomeDaVariavel, null, true);
+            Objeto propriedadeEstatica = new Objeto(acessorDaVariavel, tipoDaVariavel.GetNome(), nomeDaVariavel, null, escopo, (Boolean)true);
             propriedadeEstatica.isStatic = true;
 
 
@@ -1097,207 +979,42 @@ namespace parser
                     classeDoRepostorio.propriedadesEstaticas.Add(propriedadeEstatica);
             }
 
+            Expressao exprssAtribuicaoDePropriedadeEstatica = new Expressao(sequencia.original.ToArray(), escopo);
+
+            if (exprssAtribuicaoDePropriedadeEstatica != null)
+                SetValorNumero(propriedadeEstatica, exprssAtribuicaoDePropriedadeEstatica, escopo);
+            else
+                exprssAtribuicaoDePropriedadeEstatica = new Expressao();
 
             Expressao exprssDeclaracaoPropriedadeEstatica = new Expressao();
             Instrucao instrucaoAtribuicao = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
 
-            SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(exprssDeclaracaoPropriedadeEstatica, tipoDaVariavel.GetNome(), nomeDaVariavel, null, Instrucao.EH_DEFINICAO, Instrucao.EH_PRPOPRIEDADE_ESTATICA, instrucaoAtribuicao);
+            SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(tipoDaVariavel.GetNome(), nomeDaVariavel, null, Instrucao.EH_DEFINICAO, Instrucao.EH_PRPOPRIEDADE_ESTATICA, instrucaoAtribuicao, exprssAtribuicaoDePropriedadeEstatica);
 
-            List<Expressao> exprssAtribuicaoDePropriedadeEstatica = Expressao.Instance.ExtraiExpressoes(escopo, sequencia.original);
             if (exprssAtribuicaoDePropriedadeEstatica == null)
             {
                 GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "sequencia nao completamente definida ainda.");
                 return null;
             }
 
-            escopo.tabela.GetExpressoes().AddRange(exprssAtribuicaoDePropriedadeEstatica); // registra as expressoes de atribuicao no escopo, para fins de otimização.
+            if (exprssAtribuicaoDePropriedadeEstatica.Elementos.Count > 0)
+                escopo.tabela.GetExpressoes().Add(exprssAtribuicaoDePropriedadeEstatica); // registra as expressoes de atribuicao no escopo, para fins de otimização.
 
 
-            if ((exprssAtribuicaoDePropriedadeEstatica == null) || (exprssAtribuicaoDePropriedadeEstatica.Count == 0))
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro na atribuicao da propriedade.");
-                return null;
-            }
 
-            SetValorNumero(propriedadeEstatica, exprssAtribuicaoDePropriedadeEstatica[0], escopo);
-
-            instrucaoAtribuicao.expressoes.AddRange(new List<Expressao>() { exprssDeclaracaoPropriedadeEstatica, exprssAtribuicaoDePropriedadeEstatica[0] });
+            instrucaoAtribuicao.expressoes.AddRange(new List<Expressao>() { exprssDeclaracaoPropriedadeEstatica, exprssAtribuicaoDePropriedadeEstatica });
             return instrucaoAtribuicao;
 
 
         }
 
-        protected Instrucao BuildInstrucaoDefinicaoPropriedadeEstaticaoSemAtribuicao(UmaSequenciaID sequencia, Escopo escopo)
-        {
-            string acessor = sequencia.original[0];
-            Classe tipoObjeto = RepositorioDeClassesOO.Instance().ObtemUmaClasse(sequencia.original[2]);
-            if (tipoObjeto == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "tipo da variavel estatica nao definida anteriormente.");
-                return null;
-            }
-
-            string nomeObjeto = sequencia.original[3];
-
-
-            if (tipoObjeto.GetPropriedade(nomeObjeto) != null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "propriedade estatica ja definida anteriormente.");
-                return null;
-            }
-
-            Objeto propriedadeEstatica = new Objeto(acessor, tipoObjeto.GetNome(), nomeObjeto, null, true);
-            propriedadeEstatica.isStatic = true;
-
-
-            Classe classeDoRepostorio = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoObjeto.nome);
-            if (classeDoRepostorio != null)
-            {
-                if (classeDoRepostorio.propriedadesEstaticas.Find(k => k.GetNome().Equals(propriedadeEstatica.GetNome())) == null)
-                    classeDoRepostorio.propriedadesEstaticas.Add(propriedadeEstatica);
-            }
-
-            Instrucao instrucaoDefinicaoDePropriedade = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
-
-            Expressao exprssDefinicaoDePropriedadeEstatica = new Expressao();
-            SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(exprssDefinicaoDePropriedadeEstatica, nomeObjeto, tipoObjeto.GetNome(), null, Instrucao.EH_DEFINICAO, Instrucao.EH_OBJETO, instrucaoDefinicaoDePropriedade);
-
-            instrucaoDefinicaoDePropriedade.expressoes.AddRange(new List<Expressao>() { exprssDefinicaoDePropriedadeEstatica });
-            return instrucaoDefinicaoDePropriedade;
-
-
-        }
-
-        protected Instrucao BuildInstrucaoDefinicaoDeVariavelComAtribuicao(UmaSequenciaID sequencia, Escopo escopo)
-        {
-            string tipoDaVariavel = sequencia.original[0];
-            string nomeDaVariavel = sequencia.original[1];
-
-            Classe classetipoPropriedade = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoDaVariavel);
-            if (classetipoPropriedade == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro no tipo de propriedade, tipo nao existente ou erro de sintaxe");
-                return null;
-            }
-            Objeto v = new Objeto("private", tipoDaVariavel, nomeDaVariavel, null);
-            escopo.tabela.GetObjetos().Add(v);
-
-            Instrucao instrucaoDefinicaoVariavel = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
-            Expressao exprssDeclaracaoPropriedade = new Expressao();
-            SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(exprssDeclaracaoPropriedade, tipoDaVariavel, nomeDaVariavel, null, Instrucao.EH_DEFINICAO, Instrucao.EH_OBJETO, instrucaoDefinicaoVariavel);
-
-
-            if (exprssDeclaracaoPropriedade == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro na declaracao da variavel.");
-                return null;
-            }
-
-
-            List<string> tokensDaExpressaoAtribuicao = sequencia.original.ToList<string>();
-            
-
-            List<Expressao> exprssAtribuicao = Expressao.Instance.ExtraiExpressoes(escopo, tokensDaExpressaoAtribuicao);
-            if (exprssAtribuicao == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "sequencia nao completamente definida ainda.");
-                return null;
-            }
-            escopo.tabela.GetExpressoes().AddRange(exprssAtribuicao); // registra as expressoes de atribuicao, para fins de otimização sobre o valor.
-
-
-
-            if ((exprssAtribuicao == null) || (exprssAtribuicao.Count == 0))
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro na atribuicao da propriedade.");
-                return null;
-            }
-
-            SetValorNumero(v, exprssAtribuicao[0], escopo);
-            
-            instrucaoDefinicaoVariavel.expressoes.AddRange(new List<Expressao>() { exprssDeclaracaoPropriedade, exprssAtribuicao[0] });
-            return instrucaoDefinicaoVariavel;
-
-        }
-        protected Instrucao BuildInstrucaoDefinicaoDeVariavelSemAtribuicao(UmaSequenciaID sequencia, Escopo escopo)
-        {
-
-            string tipoDaVariavel = sequencia.original[0];
-            string nomeDaVariavel = sequencia.original[1];
-
-            Classe classetipoPropriedade = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoDaVariavel);
-            if (classetipoPropriedade == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro no tipo de propriedade, tipo nao existente ou erro de sintaxe");
-                return null;
-            }
-            escopo.tabela.GetObjetos().Add(new Objeto("private", tipoDaVariavel, nomeDaVariavel, null));
-
-            Expressao exprssDeclaracaoDeVariavel = new Expressao();
-            Instrucao instrucaoDeclaracaoVariavel = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
-            SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(exprssDeclaracaoDeVariavel, tipoDaVariavel, nomeDaVariavel, null, Instrucao.EH_DEFINICAO, Instrucao.EH_OBJETO, instrucaoDeclaracaoVariavel);
-
-
-            instrucaoDeclaracaoVariavel.expressoes.Add(exprssDeclaracaoDeVariavel);
-
-            return instrucaoDeclaracaoVariavel;
-        }
-
-
-        protected Instrucao BuildInstrucaoDeVariavelJaDefinidaComAtribuicao(UmaSequenciaID sequencia, Escopo escopo)
-        {
-
-            string tipoDaVariavel = sequencia.original[0];
-            string nomeDaVariavel = sequencia.original[1];
-
-            Classe classetipoPropriedade = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoDaVariavel);
-            if (classetipoPropriedade == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro no tipo de propriedade, tipo nao existente ou erro de sintaxe");
-                return null;
-            }
-
-            Objeto v = new Objeto("private", tipoDaVariavel, nomeDaVariavel, null);
-            escopo.tabela.GetObjetos().Add(v);
-
-
-
-            Instrucao instrucaoDefinicaoVariavel = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
-            Expressao exprssDeclaracaoPropriedade = new Expressao();
-            SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(exprssDeclaracaoPropriedade, tipoDaVariavel, nomeDaVariavel, null, Instrucao.EH_DEFINICAO, Instrucao.EH_OBJETO, instrucaoDefinicaoVariavel);
-
-
-            if (exprssDeclaracaoPropriedade == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro na declaracao da variavel.");
-                return null;
-            }
-
-
-            List<Expressao> exprssAtribuicaoDeVariavel = Expressao.Instance.ExtraiExpressoes(escopo, sequencia.original);
-   
-            if ((exprssAtribuicaoDeVariavel == null) || (exprssAtribuicaoDeVariavel.Count == 0))
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "erro na atribuicao da propriedade.");
-                return null;
-            }
-
-            escopo.tabela.GetExpressoes().AddRange(exprssAtribuicaoDeVariavel); // registra as expressoes de atribuicao, para fins de otimização sobre o valor.
-
-
-            SetValorNumero(v, exprssAtribuicaoDeVariavel[0], escopo);
-
-            instrucaoDefinicaoVariavel.expressoes.AddRange(new List<Expressao>() { exprssDeclaracaoPropriedade, exprssAtribuicaoDeVariavel[0] });
-            return instrucaoDefinicaoVariavel;
-        }
+ 
+ 
 
         internal static void SetValorNumero(Objeto v, Expressao expressaoNumero, Escopo escopo)
         {
-            int indexSignalEquals = expressaoNumero.Elementos.FindIndex(k => k.ToString() == "=");
-            if ((indexSignalEquals == -1) || ((indexSignalEquals + 1) > expressaoNumero.Elementos.Count))
-                return;
 
-            string possivelNumero = expressaoNumero.Elementos[indexSignalEquals + 1].ToString().Replace(" ", "");
+            string possivelNumero = expressaoNumero.ToString().Replace(" ", "");
 
             if (Expressao.Instance.IsTipoInteiro(possivelNumero))
                 v.SetValorObjeto(int.Parse(possivelNumero)); // seta o valor previamente, pois em modo de depuracao, é necessario este valor. Em um programa, a atribuicao é feito pela instrucao atribuicao.
@@ -1316,53 +1033,26 @@ namespace parser
             // ID ( ID )
 
             string nomeFuncao = sequencia.original[0];
-            if (escopo.tabela.GetFuncoes().Find(k => k.nome.Equals(nomeFuncao)) == null)
+
+            Expressao exprssChamadaDeFuncao = new Expressao(sequencia.original.ToArray(), escopo);
+            if (exprssChamadaDeFuncao.GetType() != typeof(ExpressaoChamadaDeFuncao))
             {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "metodo: " + nomeFuncao + " inexistente no escopo atual.");
-                return null;
-            }
-            int indexChamadaUltimoParentesesFecha = sequencia.original.LastIndexOf(")");
-            int indexChamadaUltimoParentesesAbre = sequencia.original.LastIndexOf("(");
-
-            List<string> tokensParametros = sequencia.original.GetRange(indexChamadaUltimoParentesesAbre, indexChamadaUltimoParentesesFecha - indexChamadaUltimoParentesesAbre);
-
-
-            int tokenUltimoParentesesFecha = sequencia.original.LastIndexOf(")");
-            int tokenPrimeiroParentesesAbre = sequencia.original.IndexOf("(");
-
-
-            List<string> tokensChamada = sequencia.original.GetRange(tokenPrimeiroParentesesAbre, tokenUltimoParentesesFecha - tokenPrimeiroParentesesAbre + 1);
-            tokensChamada.RemoveAt(0);
-            tokensChamada.RemoveAt(tokensChamada.Count - 1);
-
-            List<Expressao> expressoesChamada = Expressao.Instance.ExtraiExpressoes(escopo, tokensChamada);
-
-
-            Funcao funcaoCompativel = this.ObtemFuncaoCompativelComAChamadaDeFuncao(nomeFuncao, expressoesChamada[0], escopo);
-            if (funcaoCompativel == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "Nao encontrada funcao/metodo com mesmos parametros.");
+                UtilTokens.WriteAErrorMensage(escopo, "chamada de funcao invalido!", sequencia.original);
                 return null;
             }
 
-            List<Expressao> expressoesParametros = Expressao.Instance.ExtraiExpressoes(escopo, tokensParametros);
+            Funcao funcaoCompativel = ((ExpressaoChamadaDeFuncao)exprssChamadaDeFuncao).funcao;
+            List<Expressao> expressoesParametros = ((ExpressaoChamadaDeFuncao)exprssChamadaDeFuncao).expressoesParametros;
 
-            funcaoCompativel.nomeClasse = null; // a funcao nao pertence a uma classe, e programacao estruturada.
-            ExpressaoChamadaDeFuncao exprssFuncaoChamada = new ExpressaoChamadaDeFuncao(funcaoCompativel);
-            if (expressoesParametros != null)
-                exprssFuncaoChamada.expressoesParametros.AddRange(expressoesParametros);
-
+            ExpressaoChamadaDeFuncao exprssFuncaoChamada = (ExpressaoChamadaDeFuncao)exprssChamadaDeFuncao;
+  
             Expressao exprssDefinicaoDaChamada = new Expressao();
             exprssDefinicaoDaChamada.Elementos.Add(new ExpressaoElemento("chamada"));
             exprssDefinicaoDaChamada.Elementos.Add(exprssFuncaoChamada);
 
 
-            if (expressoesParametros != null)
-                exprssDefinicaoDaChamada.Elementos.AddRange(expressoesParametros); // inclui as expressoes de parametros da chamada.
 
             escopo.tabela.GetExpressoes().AddRange(expressoesParametros); // registra as expessoes parametros, no escopo, para fins de otimização sobre o valor.
-
-
             Instrucao instrucaoChamada = new Instrucao(ProgramaEmVM.codeCallerFunction, new List<Expressao>() { exprssDefinicaoDaChamada }, new List<List<Instrucao>>());
             return instrucaoChamada;
         } // ChamadaFuncaoSemRetornoEComParametros()
@@ -1370,219 +1060,42 @@ namespace parser
 
         protected Instrucao ChamadaMetodo(UmaSequenciaID sequencia, Escopo escopo)
         {
+
+            /// expressao containerr: 
+            /// elemento 0: "chamada"
+
             //  ID . ID ( ID )";
-            int tokenFirstDot = sequencia.original.IndexOf(".");
-
-            List<string> tokens = sequencia.original.GetRange(0, tokenFirstDot + 1 + 1); // +1 do token da propriedae, +1 do token abre parenteses.
-            List<string> tokensInterFaceParametros = UtilTokens.GetCodigoEntreOperadores(tokenFirstDot + 1 + 1, "(", ")", sequencia.original);
-
-            if ((tokensInterFaceParametros == null) || (tokensInterFaceParametros.Count == 0))
+            Expressao chamadaAMetodo = new Expressao(sequencia.original.ToArray(), escopo);
+            if ((chamadaAMetodo == null) || (chamadaAMetodo.Elementos[0].GetType() != typeof(ExpressaoChamadaDeMetodo)))
             {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "chamada de método sem definicao de interface de parâmetros: ()");
+                UtilTokens.WriteAErrorMensage(escopo, "erro em chamada de metodo.", sequencia.original);
                 return null;
             }
 
-            tokens.AddRange(tokensInterFaceParametros);
-            Funcao caller = (Funcao)ValidaPropriedadesEncadeadas(tokens, escopo);
+            List<Expressao> expressoesParametros = ((ExpressaoChamadaDeMetodo)chamadaAMetodo.Elementos[0]).chamadaDoMetodo[0].expressoesParametros;
+            
 
-            if (caller == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "objeto da chamada é nulo.");
-                return null;
-            }
-
-            string nomeMetodo = sequencia.original[tokenFirstDot + 1];
-            string nomeClasseDoMetodo = caller.nomeClasse;
-
-
-            int tokenUltimoParentesesFecha = sequencia.original.LastIndexOf(")");
-            int tokenPrimeiroParentesesAbre = sequencia.original.IndexOf("(");
-
-            List<string> tokensChamada = sequencia.original.GetRange(tokenPrimeiroParentesesAbre, tokenUltimoParentesesFecha - tokenPrimeiroParentesesAbre + 1);
-            tokensChamada.RemoveAt(0);
-            tokensChamada.RemoveAt(tokensChamada.Count - 1);
-
-
-
-            List<Expressao> expressoesParametros = Expressao.Instance.ExtraiExpressoes(escopo, tokensChamada); // obtem as expressoes que formam os parametros da chamada.
-            escopo.tabela.GetExpressoes().AddRange(expressoesParametros); // registra as expressoes parametros, para fins de otimização sobre a modificacao sobre o valor.
-
-            Funcao funcaoCompativel = this.ObtemFuncaoCompativelComAChamadaDeFuncao(nomeMetodo, expressoesParametros[0], escopo);
-
-            if (funcaoCompativel == null)
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "Nao encontrada funcao/metodo com mesmos parametros.");
-                return null;
-            }
-
-            funcaoCompativel.nomeClasse = nomeClasseDoMetodo; // faz a ligacao do metodo à classe que definiu o metodo.
-            funcaoCompativel.caller = caller; // consegue o sonhado objeto que chamou o método!
-
-            ExpressaoChamadaDeFuncao expressaoDaChamada = new ExpressaoChamadaDeFuncao(funcaoCompativel);
-            if (expressoesParametros != null)
-                expressaoDaChamada.expressoesParametros.AddRange(expressoesParametros);
-
+            // forma a estrutura de dados que contem os dados da chamada do metodo: chamadas de metodos aninhados, propriedades aninhadas.
             Expressao exprssDefinicaoDaChamada = new Expressao();
             exprssDefinicaoDaChamada.Elementos.Add(new ExpressaoElemento("chamada"));
-            exprssDefinicaoDaChamada.Elementos.Add(expressaoDaChamada);
+            exprssDefinicaoDaChamada.Elementos.Add(chamadaAMetodo);
 
+            escopo.tabela.GetExpressoes().AddRange(expressoesParametros); // inclui na funcionalidade de otimização de expressoes, as expressões parâmetros.
 
-            Instrucao instrucaoChamada = new Instrucao(ProgramaEmVM.codeCallerFunction, new List<Expressao>() { exprssDefinicaoDaChamada }, new List<List<Instrucao>>());
+            Instrucao instrucaoChamada = new Instrucao(ProgramaEmVM.codeCallerMethod, new List<Expressao>() { exprssDefinicaoDaChamada }, new List<List<Instrucao>>());
             return instrucaoChamada;
 
         } // ChamadaAMetodoComParametro()
 
-        private Funcao ObtemFuncaoCompativelComAChamadaDeFuncao(string nomeMetodo, Expressao expressaoParametros, Escopo escopo)
+        protected Instrucao ChamadaDeMetodoComAtribuicao(UmaSequenciaID sequencia, Escopo escopo)
         {
-            List<Funcao> FuncoesCandidatosDaChamada = new List<Funcao>();
+            Expressao chamadaMetodoComAtribuicao = new Expressao(sequencia.original.ToArray(), escopo);
+            ExpressaoElemento expressaoCabecalho = new ExpressaoElemento("AtribuicaoChamadaDeMetodo");
 
-            for (int x = 0; x < RepositorioDeClassesOO.Instance().classesRegistradas.Count; x++)
-            {
-                Classe classeAProcurarMetodo = RepositorioDeClassesOO.Instance().classesRegistradas[x];
-                List<Funcao> metodosDaClasse = classeAProcurarMetodo.GetMetodos();
-                if (metodosDaClasse != null)
-                {
-                    List<Funcao> metodosCompativeis = metodosDaClasse.FindAll(k => k.nome.Equals(nomeMetodo));
-                    if ((metodosCompativeis != null) && (metodosCompativeis.Count > 0))
-                        FuncoesCandidatosDaChamada.AddRange(metodosCompativeis);
-                }
-            }
-            Funcao funcaoCompativel = null;
-
-            for (int umaFuncao = 0; umaFuncao < FuncoesCandidatosDaChamada.Count; umaFuncao++)
-            {
-                if (FuncoesCandidatosDaChamada[umaFuncao].parametrosDaFuncao.Length != expressaoParametros.Elementos.Count) // numero de parametros nao combinam.
-                    continue;
-
-                bool isFound = true;
-                for (int x = 0; x < expressaoParametros.Elementos.Count; x++)
-                {
-                    string tipoAnteriorExpressao = "int";
-                    string tipoExpressaoChamada = UtilTokens.Casting(Expressao.GetTipoExpressao(expressaoParametros.tokens.ToArray(), escopo, tipoAnteriorExpressao));
-
-                    string tipoFuncaoCandidata = UtilTokens.Casting(FuncoesCandidatosDaChamada[umaFuncao].parametrosDaFuncao[x].GetTipo());
-                    if (((tipoExpressaoChamada == "float") && (tipoFuncaoCandidata == "double")) ||
-                        (tipoExpressaoChamada == "double") && (tipoFuncaoCandidata == "float"))
-                        continue;
-
-                    if (tipoExpressaoChamada != tipoFuncaoCandidata)
-                    {
-                        isFound = false;
-                        break;
-                    }
-
-                }
-                if (isFound)
-                {
-                    funcaoCompativel = FuncoesCandidatosDaChamada[umaFuncao];
-                    break;
-                }
-            }
-            return funcaoCompativel;
-        }
-
-        private object ValidaPropriedadesEncadeadas(List<string> tokens, Escopo escopo)
-        {
-            /// exemplo: x.y.z É preciso validar y (tokens[n+1]) como propriedade de x (token[n]), e validar z (token[n+2]) como propriedade da classe de y (token[n+1]).
-            UmaSequenciaID sequencia = new UmaSequenciaID(tokens.ToArray(), escopo.codigo);
-
-            try
-            {
-                if (tokens.IndexOf(".") == -1)
-                {
-                    GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "propriedade aninhada sem operador de composicao de propriedades ou metodos.");
-                    return null;
-                }
-                int firsDot = tokens.IndexOf(".");
-                string nomePropriedadeEncadeada = tokens[firsDot - 1];
-                object propriedadeOuMetodoFinal = null;
-                string nomeClasseCurrente = "";
-
-
-                Objeto variavelInicial = escopo.tabela.GetObjeto(nomePropriedadeEncadeada, escopo);
-                if (variavelInicial != null)
-                    nomeClasseCurrente = variavelInicial.GetTipo();
-                else
-                if (variavelInicial == null)
-                {
-                    GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "propriedade ou objeto encadeado nao encontrado.");
-                    return null;
-                }
-
-                for (int x = 1; x < tokens.Count; x++)
-                {
-                    if (tokens[x] == ";")
-                        return propriedadeOuMetodoFinal;
-
-                    if (tokens[x] == "=")
-                        return propriedadeOuMetodoFinal;
-
-                    if (tokens[x].Equals(".")) // pula o operador de especificacao de propriedade.
-                        continue;
-
-                    if (nomeClasseCurrente == null)
-                    {
-                        GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "tipo do objeto: " + tokens[x - 1] + " nao reconhecida.");
-                        return null;
-                    }
-
-                    Objeto propriedadeCurrente = RepositorioDeClassesOO.Instance().ObtemUmaClasse(nomeClasseCurrente).GetPropriedade(tokens[x]);
-
-                    if (propriedadeCurrente != null)
-                        propriedadeOuMetodoFinal = propriedadeCurrente;
-
-                    if (propriedadeCurrente == null)
-                    {
-                        // se nao eh propriedade, tenta verificar se eh uma chamada de metodo.
-                        List<Funcao> metodosAninhados = RepositorioDeClassesOO.Instance().ObtemUmaClasse(nomeClasseCurrente).GetMetodo(tokens[x]);
-
-                        if ((metodosAninhados == null) || (metodosAninhados.Count == 0))
-                        {
-                            GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "propriedade ou metodo encadeada: " + tokens[x] + " nao reconhecida na classe: " + nomeClasseCurrente + ".");
-                            return null;
-                        } // if
-
-                        propriedadeOuMetodoFinal = metodosAninhados[0];
-
-
-                        List<string> chamadaFuncao = UtilTokens.GetCodigoEntreOperadores(x + 1, "(", ")", tokens);
-                        if ((chamadaFuncao == null) || (chamadaFuncao.Count == 0))
-                        {
-                            GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "metodo: " + tokens[x] + " sem chamada de metodo valido " + nomeClasseCurrente + ".");
-                            return null;
-                        }
-
-                        x += chamadaFuncao.Count;
-                        continue;
-                    } // if
-                    nomeClasseCurrente = propriedadeCurrente.GetTipo();
-
-                } // for x
-                return propriedadeOuMetodoFinal;
-            }
-            catch
-            {
-                GeraMensagemDeErroEmUmaInstrucao(sequencia, escopo, "Erro no processamento de propriedades ou metodos encadeados.");
-                return false;
-
-            }
-        }
-
-        /// seta dados da instrucao de atribuicao, para variaveis, objetos, ou propriedades.
-        private void SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(Expressao exprssCabecalho, string tipoPropriedade, string nomePropriedade, string nomeCampoObjeto, int flag_tipoAtribuicao, int flag_tipoPropriedade, Instrucao instrucaoDeclarativa)
-        {
-            if (exprssCabecalho == null)
-                exprssCabecalho = new ExpressaoElemento("configuracao");
-
-            exprssCabecalho.Elementos.Add(new ExpressaoElemento(tipoPropriedade));
-            exprssCabecalho.Elementos.Add(new ExpressaoElemento(nomePropriedade));
-            if (nomeCampoObjeto != null)
-                exprssCabecalho.Elementos.Add(new ExpressaoElemento(nomeCampoObjeto));
-            else
-                exprssCabecalho.Elementos.Add(new ExpressaoElemento(""));
-
-            instrucaoDeclarativa.flags.Add(flag_tipoAtribuicao);
-            instrucaoDeclarativa.flags.Add(flag_tipoPropriedade);
+            Instrucao instrucaoPropriedade = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
+            instrucaoPropriedade.expressoes.Add(expressaoCabecalho);
+            instrucaoPropriedade.expressoes.Add(chamadaMetodoComAtribuicao);
+            return instrucaoPropriedade;
         }
 
         protected Instrucao BuildDefinicaoDeMetodo(UmaSequenciaID sequencia, Escopo escopo)
@@ -1608,16 +1121,18 @@ namespace parser
                 return null;
             }
             // constroi os parâmetros da definição da função.
-            ExtraiParametrosDaFuncao(sequencia, parametrosDoMetodo, indexParentesAbre);
+            ExtraiParametrosDaFuncao(sequencia, parametrosDoMetodo, indexParentesAbre, escopo);
 
 
 
             // constroi a função.
-            Funcao umaFuncaoComCorpo = new Funcao();// escopo.tabela.GetFuncao(nomeMetodo, tipoRetornoFuncao.tipo);
-            umaFuncaoComCorpo.nome = nomeMetodo;
-            umaFuncaoComCorpo.tipoReturn = tipoRetornoMetodo;
+            Funcao umMetodoComCorpo = new Funcao();// escopo.tabela.GetFuncao(nomeMetodo, tipoRetornoFuncao.tipo);
+            umMetodoComCorpo.nome = nomeMetodo;
+            umMetodoComCorpo.tipoReturn = tipoRetornoMetodo;
+            umMetodoComCorpo.acessor = acessor;
+
             if (parametrosDoMetodo.Count > 0)
-                umaFuncaoComCorpo.parametrosDaFuncao = parametrosDoMetodo.ToArray();
+                umMetodoComCorpo.parametrosDaFuncao = parametrosDoMetodo.ToArray();
 
 
 
@@ -1628,18 +1143,24 @@ namespace parser
                 escopo.tabela.GetObjetos().Add(objParametro);
             }
 
-            escopo.tabela.RegistraFuncao(umaFuncaoComCorpo); // registra a função com bloco.
-            umaFuncaoComCorpo.escopo = new Escopo(escopo); // faz uma copia do escopo principal, que será modificado no corpo da função.
+            escopo.tabela.RegistraFuncao(umMetodoComCorpo); // registra a função com bloco.
+            umMetodoComCorpo.escopo = new Escopo(escopo); // faz uma copia do escopo principal, que será modificado no corpo da função.
 
             Instrucao instrucoesCorpoDaFuncao = new Instrucao(ProgramaEmVM.codeDefinitionFunction, null, null);
-            this.BuildBloco(0, sequencia.original, ref umaFuncaoComCorpo.escopo, instrucoesCorpoDaFuncao);
 
-
+            if (sequencia.original.Contains("{"))
+            {
+                ProcessadorDeID processadorBloco = null;
+                this.BuildBloco(0, sequencia.original, ref umMetodoComCorpo.escopo, instrucoesCorpoDaFuncao, ref processadorBloco);
+      
+                umMetodoComCorpo.instrucoesFuncao.AddRange(instrucoesCorpoDaFuncao.blocos[0]);
+            }
+        
             // RETIRA OS PARÂMETROS DA FUNÇÃO, o que é logico tambem, pois o escopo da funcao ja foi copiado,paa a funcao, e a variavel parametro nao tem que ficar no escopo principal.
             for (int x = 0; x < parametrosDoMetodo.Count; x++)
                 escopo.tabela.RemoveObjeto(parametrosDoMetodo[x].GetNome());
 
-            umaFuncaoComCorpo.instrucoesFuncao.AddRange(instrucoesCorpoDaFuncao.blocos[0]);
+
 
             return instrucoesCorpoDaFuncao;
 
@@ -1661,7 +1182,7 @@ namespace parser
                 return null;
             }
             // constroi os parâmetros da definição da função.
-            ExtraiParametrosDaFuncao(sequencia, parametrosDoMetodo, indexParentesAbre);
+            ExtraiParametrosDaFuncao(sequencia, parametrosDoMetodo, indexParentesAbre, escopo);
 
             // REGISTRA OS PARÂMETROS DA FUNÇÃO, COMO UMA ATRIBUICAO, O QUE É LOGICO POIS A DEFINICAO DE PARAMETROS É UMA ATRIBUICAO!!!
             for (int x = 0; x < parametrosDoMetodo.Count; x++)
@@ -1681,9 +1202,15 @@ namespace parser
 
 
             Instrucao instrucaoDefinicaoDeMetodo = new Instrucao(ProgramaEmVM.codeDefinitionFunction, null, null);
-            this.BuildBloco(0, sequencia.original, ref umaFuncaoComCorpo.escopo, instrucaoDefinicaoDeMetodo);
 
 
+            ProcessadorDeID processadorBloco = null;
+            
+            
+            this.BuildBloco(0, sequencia.original, ref umaFuncaoComCorpo.escopo, instrucaoDefinicaoDeMetodo, ref processadorBloco); // constroi o bloco de instruções, retornado o bloco de instrucoes, e o processador id do bloco.
+            
+            
+    
             // RETIRA OS PARÂMETROS DA FUNÇÃO, o que é logico tambem, pois o escopo da funcao ja foi copiado,paa a funcao, e a variavel parametro nao tem que ficar no escopo principal.
             for (int x = 0; x < parametrosDoMetodo.Count; x++)
                 escopo.tabela.RemoveObjeto(parametrosDoMetodo[x].GetNome());
@@ -1693,7 +1220,7 @@ namespace parser
 
         } // BuildDefinicaoDeFuncao()
 
-        protected static void ExtraiParametrosDaFuncao(UmaSequenciaID sequencia, List<Objeto> parametrosDoMetodo, int indexParentesAbre)
+        protected static void ExtraiParametrosDaFuncao(UmaSequenciaID sequencia, List<Objeto> parametrosDoMetodo, int indexParentesAbre, Escopo escopo)
         {
             if (indexParentesAbre != -1)
             {
@@ -1728,7 +1255,7 @@ namespace parser
                             pilhaInteiropParenteses++;
                         }
                         // inicializa um parâmetro da função/método.
-                        Objeto umParametro = new Objeto("private", tokensParametros[indexToken], tokensParametros[indexToken + 1], null, false);
+                        Objeto umParametro = new Objeto("private", tokensParametros[indexToken], tokensParametros[indexToken + 1], null, escopo, false);
                         parametrosDoMetodo.Add(umParametro); // adiciona o parametro construido.
                         indexToken += 3; // 1 token para o nome do parametro; 1 token para o tipo do parametro, 1 token para a vigula.
 
@@ -1829,8 +1356,8 @@ namespace parser
                 expressaoElementosOperador.Add(new ExpressaoElemento(prioridade.ToString()));
                 expressaoElementosOperador.Add(new ExpressaoChamadaDeFuncao(escopo.tabela.GetFuncao(nomeMetodoOperador, nomeClasseOperadorETipoDeRetorno, escopo)));
 
-                Objeto operandoA = new Objeto("private", tipoOperando1, nomeOperando1, null, false);
-                Objeto operandoB = new Objeto("private", tipoOperando2, nomeOperando2, null, false);
+                Objeto operandoA = new Objeto("private", tipoOperando1, nomeOperando1, null, escopo, false);
+                Objeto operandoB = new Objeto("private", tipoOperando2, nomeOperando2, null, escopo, false);
 
                 Instrucao instrucaoOperadorBinario = new Instrucao(ProgramaEmVM.codeOperadorBinario, expressaoElementosOperador, new List<List<Instrucao>>());
                 Operador opNovo = new Operador(nomeClasseOperadorETipoDeRetorno, nomeOperador, prioridade, new Objeto[] { operandoA, operandoB }, "BINARIO", funcaoOPeradorEncontrada.InfoMethod, escopo);
@@ -1915,7 +1442,7 @@ namespace parser
 
                 Instrucao instrucaoOperadorUnario = new Instrucao(ProgramaEmVM.codeOperadorUnario, expressaoOperador, new List<List<Instrucao>>());
 
-                Objeto operandoA = new Objeto("private", tipoOperando1, nomeOperando1, null, false);
+                Objeto operandoA = new Objeto("private", tipoOperando1, nomeOperando1, null, escopo, false);
 
                 Operador opNovo = new Operador(tipoRetornoDoOperador, nomeOperador, prioridade, new Objeto[] { operandoA }, "UNARIO", escopo.tabela.GetFuncao(nomeDaFuncaoQueImplementaOperador, tipoRetornoDoOperador, escopo).InfoMethod, escopo);
                 escopo.tabela.GetOperadores().Add(opNovo);
@@ -1930,9 +1457,111 @@ namespace parser
             return null;
         } // DefinicaoDeUmOperador()
 
+        /// seta dados da instrucao de atribuicao, para variaveis, objetos, ou propriedades. seta também as propriedades/metodos aninhados.
+        private void SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(string tipoPropriedade, string nomePropriedade, List<Expressao> aninhamento, int flag_tipoAtribuicao, int flag_tipoPropriedade, Instrucao instrucaoDeclarativa, Expressao atribuicao)
+        {
+            Expressao exprssCabecalho = new Expressao();
+           
+            if (aninhamento != null) // propriedades aninhadas.
+            {
+                exprssCabecalho.Elementos.Add(new Expressao());
+                exprssCabecalho.Elementos[exprssCabecalho.Elementos.Count - 1].Elementos.AddRange(aninhamento);
+            }
+            else // objeto nao aninhados.
+            {
+                exprssCabecalho.Elementos.Add(new ExpressaoElemento(tipoPropriedade));
+                exprssCabecalho.Elementos.Add(new ExpressaoElemento(nomePropriedade));
+            }
+            if (atribuicao != null)
+                exprssCabecalho.Elementos.Add(atribuicao);
+            else
+                exprssCabecalho.Elementos.Add(new ExpressaoElemento(""));
+
+            instrucaoDeclarativa.flags.Add(flag_tipoAtribuicao);
+            instrucaoDeclarativa.flags.Add(flag_tipoPropriedade);
+        }
+
+        private void EliminaRedundanciasCausadosPeloSistemeDeRecuperacao(Escopo escopo)
+        {
+            List<Classe> classesNoEscopo = escopo.tabela.GetClasses();
+            for (int x = 0; x < classesNoEscopo.Count; x++)
+            {
+                int index = escopo.tabela.GetClasses().FindIndex(k => k.GetNome() == classesNoEscopo[x].GetNome());
+                int contadorClasses = escopo.tabela.GetClasses().FindAll(k => k.GetNome() == classesNoEscopo[x].GetNome()).Count;
+                if ((index != -1) && (contadorClasses > 1))
+                    escopo.tabela.GetClasses().RemoveAt(index);
+            }
+
+            List<Objeto> objetosNoEscopo = escopo.tabela.GetObjetos();
+            for (int x = 0; x < objetosNoEscopo.Count; x++)
+            {
+                int index = escopo.tabela.GetObjetos().FindIndex(k => k.GetNome() == objetosNoEscopo[x].GetNome());
+                int contadorObjetos = escopo.tabela.GetObjetos().FindAll(k => k.GetNome() == objetosNoEscopo[x].GetNome()).Count;
+                if ((index != -1) && (contadorObjetos > 1))
+                    escopo.tabela.GetObjetos().RemoveAt(index);
+
+            }
+
+            List<Objeto> vetoresNoEscopo = escopo.tabela.GetObjetos();
+            for (int x = 0; x < objetosNoEscopo.Count; x++)
+            {
+                int index = escopo.tabela.GetVetores().FindIndex(k => k.GetNome() == vetoresNoEscopo[x].GetNome());
+                int contadorVetores = escopo.tabela.GetVetores().FindAll(k => k.GetNome() == vetoresNoEscopo[x].GetNome()).Count;
+                if ((index != -1) && (contadorVetores > 1))
+                    escopo.tabela.GetVetores().RemoveAt(index);
+            }
+
+
+            List<Expressao> expressoesNoEscopo = escopo.tabela.GetExpressoes(); // elimina redundâncias em expressões, pelo sistema de recuperação de sequencias nao tratadas.
+            for (int x = 0; x < expressoesNoEscopo.Count; x++)
+                for (int y = x + 1; y < expressoesNoEscopo.Count; y++)
+                    if (IguaisFuncoes(expressoesNoEscopo[x], expressoesNoEscopo[y]))
+                        expressoesNoEscopo.RemoveAt(y);
+
+            escopo.tabela.GetExpressoes().Clear();
+            escopo.tabela.GetExpressoes().AddRange(expressoesNoEscopo);
+        }
+
+
+
+        private bool IguaisFuncoes(Expressao exprss1, Expressao exprss2)
+        {
+            if (exprss1.tipo != exprss2.tipo)
+                return false;
+            if (exprss1.Elementos.Count != exprss2.Elementos.Count)
+                return false;
+
+            List<string> nomesObjetosExprss1 = NomesObjetosEmUmaExpressao(exprss1);
+            List<string> nomesObjetosExprss2 = NomesObjetosEmUmaExpressao(exprss2);
+
+            if ((nomesObjetosExprss1 == null) && (nomesObjetosExprss2 == null))
+                return true;
+            if ((nomesObjetosExprss1 == null) && (nomesObjetosExprss2 != null))
+                return false;
+            if ((nomesObjetosExprss1 != null) && (nomesObjetosExprss2 == null))
+                return false;
+            if (nomesObjetosExprss1.Count != nomesObjetosExprss2.Count)
+                return false;
+
+            for (int x = 0; x < nomesObjetosExprss1.Count; x++)
+                if (nomesObjetosExprss1[x] != nomesObjetosExprss2[x])
+                    return false;
+            return true;
+        }
+
+
+        private List<string> NomesObjetosEmUmaExpressao(Expressao exprssCurrente)
+        {
+            List<string> nomesDeObjetos = new List<string>();
+            for (int x = 0; x < exprssCurrente.Elementos.Count; x++)
+                if ((exprssCurrente.Elementos[x].GetType() == typeof(ExpressaoObjeto)) && (((ExpressaoObjeto)exprssCurrente.Elementos[x]).objeto != null))
+                    nomesDeObjetos.Add(((ExpressaoObjeto)exprssCurrente.Elementos[x]).objeto.GetNome());
+            return nomesDeObjetos;
+        }
+
         //______________________________________________________________________________________________________________________
 
-
+        
 
 
         private class ComparerStringDecrescentemente : IComparer<string>
@@ -1991,105 +1620,34 @@ namespace parser
 
     } // class ProcessadorDeID
 
-    public class ContainerSequenciasNaoTratadas
+    public class DadosRecuperacao
     {
-        private List<UmaSequenciaID> sequencias { get; set; }
+        public UmaSequenciaID sequenciasNaoTratadas { get; set; }
+        public Funcao funcoesIntratadas { get; set; }
 
-     
-        public void AddSequenciaNaoTratada(UmaSequenciaID id, int indiceDentroDoCompilador, Instrucao instrucaoNaoTradata)
-        {
-            id.indexPosicao = indiceDentroDoCompilador;
-            sequencias.Add(id);
-        }
+        public ProcessadorDeID processador { get; set; }
 
-        public void RemoveSequenciaNaoTratada(int index)
-        {
-            this.sequencias.RemoveAt(index);
-            
-        }
-        public List<UmaSequenciaID> GetSequenciasNaoTratadas()
-        {
-            return this.sequencias;
-        }
-
-        /*  Trata de sequencias nao tratadas, nos casos em que é possível tratar:
-        	1- O problema da variavel que chama uma funcao, antes do codigo da funcao ser compilada.
-			2- Ha também o problema de uso de variavel cuja definicao esta no escopo-pai, linhas apos do uso da variavel.
-
-         */
-        public ContainerSequenciasNaoTratadas()
-        {
-            
-            this.sequencias = new List<UmaSequenciaID>();
-        }
-
-        public bool IsToRegisterInstruction(UmaSequenciaID sequencia, Escopo escopo, int indiceDaInstrucao)
-        {
-            sequencia.indexPosicao = indiceDaInstrucao;
-            sequencias.Add(sequencia);
-           
-            return true;
-        }
-
-        public void Resolve(Escopo escopo, ProcessadorDeID processador)
-        {
-            List<Instrucao> instrucoes = processador.GetInstrucoes();
-            if ((instrucoes == null) || (instrucoes.Count == 0))
-                return;
-
-            for (int x = 0; x < this.sequencias.Count; x++)
-            {
-                if (TratarSequenciasChamadaDeFuncao(escopo, this.sequencias[x]))
-                    TrataUmaSequencia(escopo, processador, sequencias[x]);
-                if (TratarSequenciasAtribuicao(escopo, this.sequencias[x])) 
-                    TrataUmaSequencia(escopo, processador, sequencias[x]);
-            }
-
-        }
-
-        /// <summary>
-        /// retorna true se a expressão de chamada de função não registrou a função no escopo.
-        /// </summary>
-        private bool TratarSequenciasChamadaDeFuncao(Escopo escopo,UmaSequenciaID sequencia)
-        {
-            Expressao exprssChamada = new Expressao(sequencia.original.ToArray(), escopo);
+        public string nomeObjetoNaoTratado { get; set; }
         
-            if ((exprssChamada.GetType() == typeof(ExpressaoChamadaDeFuncao)) &&
-               (escopo.tabela.GetFuncoes().Find(k => k == ((ExpressaoChamadaDeFuncao)exprssChamada).funcao) == null))
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
-        /// retorna true se a expressão for uma variável, e não foi registrada no escopo.
-        /// </summary>
-        private bool TratarSequenciasAtribuicao(Escopo escopo, UmaSequenciaID sequencia)
+  
+      
+        public DadosRecuperacao(Funcao funcao, UmaSequenciaID sequencia, ProcessadorDeID processador)
         {
-            Expressao exprssAtribuicao = new Expressao(sequencia.original.ToArray(), escopo);
-
-
-            if (escopo.escopoPai.tabela.GetObjeto(exprssAtribuicao.ToString(), escopo.escopoPai) == null)
-                return true;
-            else
-            if (escopo.escopoPai.tabela.GetVetor(exprssAtribuicao.Elementos[0].ToString(), escopo.escopoPai) == null)
-                return true;
-            else
-                return false;
+            this.sequenciasNaoTratadas = sequencia;
+            this.funcoesIntratadas = funcao;
+            this.processador = processador;
+            
         }
 
-        private void TrataUmaSequencia(Escopo escopo, ProcessadorDeID processador, UmaSequenciaID sequencia)
+        public DadosRecuperacao(UmaSequenciaID sequencia, string nomeObjeto, ProcessadorDeID processador)
         {
-            // tenta compilar a sequencia nao tratada.
-            ProcessadorDeID processadorResolve = new ProcessadorDeID(sequencia.original);
-            processadorResolve.escopo = escopo.Clone(); // garante que o escopo do processamento da chamada contenha as definicoes de variaveis, funcoes, metodos, classes, etcc.. já processadas.
-            processadorResolve.Compile();
+          
+            this.nomeObjetoNaoTratado = nomeObjeto;
 
-
-            if ((processadorResolve.GetInstrucoes() != null) && (processadorResolve.GetInstrucoes().Count == 1))
-                processador.GetInstrucoes().Insert(sequencia.indexPosicao, processadorResolve.GetInstrucoes()[0]); // devolve a instrucao, pois a compilacao validou  a chamada de funcao.
+            this.sequenciasNaoTratadas = sequencia;
+            this.processador = processador;
+           
         }
-
-
     }
+
 } // namespace

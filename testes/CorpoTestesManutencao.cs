@@ -218,7 +218,7 @@ namespace parser.Manutencao
 
             XDocument document = new XDocument();
 
-            Objeto propriedadeASalvar1 = new Objeto("propriedadeA", "int", "a","0", false);
+            Objeto propriedadeASalvar1 = new Objeto("propriedadeA", "int", "a", "0", null, isStatic: false);
 
 
             PropriedadesXML escritaEmArquivoXml = new PropriedadesXML("arquivoPropriedadesTeste.xml");

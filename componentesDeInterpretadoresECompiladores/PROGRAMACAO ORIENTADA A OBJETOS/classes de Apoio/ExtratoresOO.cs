@@ -14,14 +14,8 @@ namespace parser
 {
     public class ExtratoresOO
     {
-        /// ConstroiClasse()
-        /// ObtemMetodosEPropriedadesDeClassesHerdadas(): obtém métodos e propriedades públicas ou protegidas da hierarquia de herança.
-        /// ObtemUmaHeranca():obtem uma classe ou interface herdada a partir de seu nome.
-        /// Desheranca(): retira da hierarquia classes ou interfaces a serem deserdadas.
-        /// 
-
-
-
+        // constroi a estrutura de uma classe ou interface, a partir de tokens vindo da compilação.
+        
         private LinguagemOrquidea linguagem { get; set; }
         private Escopo escopo { get; set; }
         private List<string> codigo { get; set; }
@@ -32,7 +26,7 @@ namespace parser
         public List<string> MsgErros { get; set; }
         public Escopo escopoDaClasse { get; set; }
 
-
+        public string nomeClasse { get; set; }
         public ExtratoresOO(Escopo escopo, LinguagemOrquidea lng, List<string> tokensRaw)
         {
             this.escopo = escopo;
@@ -42,13 +36,51 @@ namespace parser
             this.tokensRaw = tokensRaw.ToList<string>();
         } // ExtratoresOO()
 
-        /// <summary>
+
+
+
+
+        /// extrai uma interface do codigo fonte texto.
+        public Classe ExtraiUmaInterface()
+        {
+            if (tokensRaw[1] == "interface")
+            {
+                Classe classeInterface = ExtaiUmaClasse(Classe.tipoBluePrint.EH_INTERFACE);
+                if (classeInterface != null)
+                {
+                    if (classeInterface.GetPropriedades().Count > 0)
+                    {
+                        this.MsgErros.Add("interface: " + tokensRaw[2] + "  nao pode ter propriedades!");
+                        return null;
+                    }
+                    else
+                    {
+                        for (int x = 0; x < classeInterface.GetMetodos().Count; x++)
+
+                        {
+                            if (classeInterface.GetMetodos()[x].acessor != "public")
+                                this.MsgErros.Add("metodo: " + classeInterface.GetMetodos()[x].nome + " precisa ser public!");
+
+                        }
+                    }
+                    return classeInterface;
+                } // if
+                else return null;
+            }
+
+            return null;
+        }
+
+
+
+        private Classe.tipoBluePrint templateBluePrint;
+
         /// constroi classe dentro do código especificado no construtor da classe.
-        /// </summary>
-        public Classe ExtaiUmaClasse()
+        public Classe ExtaiUmaClasse(Classe.tipoBluePrint bluePrint)
         {
 
-
+            this.templateBluePrint = bluePrint;
+           
             List<string> tokensTotais = new List<string>();
 
             // nome da classe, a ser encontrada.
@@ -62,6 +94,7 @@ namespace parser
             // obtém o código da classe, incluindo nome, cabeçalho da herança, e o corpo da classe.
             this.ExtraiCodigoDeUmaClasse(this.tokensRaw, out nomeDaClasse, out nomeDaInterface, out tokensDoCabecalhoDaClasse,out acessorDaClasseOuInterface, out tokensDoCorpoDaClasse);
 
+            this.nomeClasse = nomeDaClasse;
 
             tokensTotais = tokensDoCabecalhoDaClasse.ToList<string>();
             tokensTotais.AddRange(tokensDoCorpoDaClasse.ToList<string>());
@@ -80,42 +113,75 @@ namespace parser
             tokensDoCorpoDaClasse.RemoveAt(0);
             tokensDoCorpoDaClasse.RemoveAt(tokensDoCorpoDaClasse.Count - 1);
 
-            ProcessadorDeID procesador = new ProcessadorDeID(tokensDoCorpoDaClasse);
-          
-           
-
+            ProcessadorDeID processador = new ProcessadorDeID(tokensDoCorpoDaClasse);
             // constroi o corpo da classe, com os tokens formadores do conteúdo da classe.
-            procesador.Compile();
+            processador.Compile();
 
-            this.escopoDaClasse = new Escopo(procesador.escopo);
 
-            //**********************************************************************************************
-            // obtém os métodos da classe.
-            List<Funcao> metodosDaClasse = this.ExtraiMetodos(nomeDeClasseOuInterface, escopoDaClasse);
+            if (escopo.tabela.GetClasse(this.nomeClasse, escopo) != null)
+            {
+                // sistema de correcao de codigo com erro por posicao de expressoes antes da instanciacao.
+                List<Objeto> objetos = processador.escopo.tabela.GetObjetos();
+                for (int x = 0; x < objetos.Count; x++)
+                {
+                    string token = objetos[x].GetTipo() + " " + objetos[x].GetNome();
+                    if (objetos[x].GetValor() != null)
+                        token += "= " + objetos[x].GetValor().ToString();
+                    token += ";";
+
+                    List<string> tokensDoObjeto = ParserUniversal.GetTokens(token);
+
+
+                    for (int i = 0; i < tokensDoObjeto.Count; i++)
+                        tokensDoCorpoDaClasse.Insert(i, tokensDoObjeto[i]); // garante que a propriedade seja instanciada antes de expressoes com essa propriedade.
+                }
+
+                this.escopoDaClasse = new Escopo(escopo);
+                processador.CompileEscopos(this.escopoDaClasse, tokensDoCorpoDaClasse);
+                
+            }
+            else
+                this.escopoDaClasse = new Escopo(processador.escopo);
+
+
+            List<Classe> interfacesHerdadas = new List<Classe>();
+
+            // constroi a classe, com nome, métodos e propriedades.
+            Classe umaClasse = new Classe(acessorDaClasseOuInterface, nomeDeClasseOuInterface, new List<Funcao>(), new List<Operador>(), new List<Objeto>());
+
+
+            // a nome de classes e interfaces herdados ou deserdados.
+            this.ProcessamentoDeHerancaEDeseranca(tokensDoCabecalhoDaClasse, umaClasse);
 
             //********************************************************************************************************
             // obtém as propriedades da classe.
-            List<Objeto> propriedadesDaClasse = this.ExtraiPropriedades(nomeDeClasseOuInterface, escopoDaClasse);
+            this.ExtraiPropriedades(umaClasse, escopoDaClasse);
 
-            //**********************************************************************************************       
+            //**********************************************************************************************
+            // obtém os métodos da classe.
+            this.ExtraiMetodos(umaClasse, escopoDaClasse);
 
 
-            // constroi a classe, com nome, métodos e propriedades.
-            Classe umaClasse = new Classe(acessorDaClasseOuInterface, nomeDeClasseOuInterface, metodosDaClasse, null, null);
+            umaClasse.construtores = new List<Funcao>();
+            List<Funcao> construtoresDestaClasse = umaClasse.GetMetodos().FindAll(k => k.nome == umaClasse.GetNome());
 
+            if ((construtoresDestaClasse != null) && (construtoresDestaClasse.Count > 0))
+                umaClasse.construtores.AddRange(construtoresDestaClasse);
+            else
+            if (bluePrint == Classe.tipoBluePrint.EH_CLASSE)
+            {
+                UtilTokens.WriteAErrorMensage(escopo, "nao ha nenhum construtores codificado para esta classe!", codigo);
+                return null;
+            }
+
+            
             //********************************************************************************************************
-            umaClasse.tokensDaClasse = tokensTotais; // guarda os tokens da classe.
-            umaClasse.escopoDaClasse = escopoDaClasse; // guarda o escopo da classe.
+            umaClasse.tokensDaClasse = tokensTotais;
+            umaClasse.escopoDaClasse = escopoDaClasse.Clone(); // guarda o escopo da classe.
+           
 
-            List<string> interfacesHerdadas = new List<string>();
-
-            // registra as propriedades encontradas na classe. O registro
-            // foi feito depois,pois é preciso registrar a classe para obter os tipos presentes na classe currente.
-            if (propriedadesDaClasse != null)
-                umaClasse.GetPropriedades().AddRange(propriedadesDaClasse);
-
-            // obtem itens de heranca, deseranca, fazendo a adição ou remoção dos itens herdados ou deserdados.
-            this.ProcessamentoDeHerancaEDeseranca(tokensDoCabecalhoDaClasse, umaClasse, interfacesHerdadas);
+            // verifica se há conflitos de nomes de metodos, propriedaddes, e operadores, que tem o mesmo nome, mas vêem de classes herdadas diferentes.
+            this.VerificaConflitoDeMetodosHerdados(umaClasse);
 
 
             if (nomeDaClasse != null)
@@ -124,6 +190,9 @@ namespace parser
                 RepositorioDeClassesOO.Instance().RegistraUmaClasse(umaClasse);
                 // registra a classe no escopo da classe.
                 escopo.tabela.RegistraClasse(umaClasse);
+                // recompoe os tokens consumidos pela construção da classe.
+                umaClasse.tokensDaClasse = tokensTotais.ToList<string>();
+
             } // if
             else
             if (nomeDaInterface != null)
@@ -134,46 +203,31 @@ namespace parser
                 return umaClasse;
 
 
-            // Faz a validacao de interfaces herdadas.
-            if ((interfacesHerdadas != null) || (interfacesHerdadas.Count > 0))
+            // Faz a validacao de interfaces herdadas (se foram implementadas pela classe ou outra interface.
+            if ((umaClasse.interfacesHerdadas != null) && (umaClasse.interfacesHerdadas.Count > 0)) 
             {
-                for (int i = 0; i < interfacesHerdadas.Count; i++)
+                for (int i = 0; i < umaClasse.interfacesHerdadas.Count; i++)
                 {
-                    if (RepositorioDeClassesOO.Instance().ObtemUmaInterface(interfacesHerdadas[i]) != null)
-                    {
-                        bool valida = this.ValidaInterface(umaClasse, RepositorioDeClassesOO.Instance().ObtemUmaInterface(interfacesHerdadas[i]));
-                        if (!valida)
-                        {
-                            PosicaoECodigo posicao = new PosicaoECodigo(tokensDaClasse, escopo.codigo);
-                            this.MsgErros.Add("Interface:" + interfacesHerdadas[i] + " nao implementada completamente. linha: " + posicao.linha + " coluna: " + posicao.coluna);
-                        } // if
-
-                    }
+                    bool valida = this.ValidaInterface(umaClasse, umaClasse.interfacesHerdadas[i]);
+                    if (!valida)
+                        this.MsgErros.Add("Interface:" + umaClasse.interfacesHerdadas[i].nome + " nao implementada completamente na classe: " + umaClasse.nome + ".");
                 }
             }
-            if (umaClasse != null)
-                // recompoe os tokens consumidos pela construção da classe.
-                umaClasse.tokensDaClasse = tokensTotais.ToList<string>();
+           
 
             return umaClasse;
         }  // ConstroiClasses() 
 
 
 
-        /// <summary>
         /// extrai nomes de heranca e deseranca.
-        /// </summary>
-        /// <param name="code">codigo mesmo, não tokens.</param>
         private void ProcessamentoDeHerancaEDeseranca(
-              List<string> tokens, Classe classeHerdeira, List<string> txt_interfacesHerdadas)
+              List<string> tokens, Classe classeHerdeira)
         {
-         
 
-            List<string> classesHerdadas = new List<string>();
             List<string> classesDeserdadas = new List<string>();
-
-            List<string> interfacesHerdadas = new List<string>();
             List<string> interfacesDeserdadas = new List<string>();
+          
 
             int startTokensHeranca = tokens.IndexOf("+");
             int startTokensDeseheranca = tokens.IndexOf("-");
@@ -187,11 +241,23 @@ namespace parser
             while (posicaoTokenHeranca >0)
             {
                 if (EhClasse(tokens[posicaoTokenHeranca]))
-                    classesHerdadas.Add(tokens[posicaoTokenHeranca]);
-                        
-                if (EhInterface(tokens[posicaoTokenHeranca]))
-                    interfacesHerdadas.Add(tokens[posicaoTokenHeranca]);
+                {
+                    string nomeClasseHerdada = tokens[posicaoTokenHeranca];
+                    Classe classeHerdada = RepositorioDeClassesOO.Instance().classesRegistradas.Find(k => k.nome == nomeClasseHerdada);
+                    if (classeHerdada != null)
+                        classeHerdeira.classesHerdadas.Add(classeHerdada);
+                    else
+                        MsgErros.Add("classe: " + nomeClasseHerdada + " inexistente. verifique a sintaxe do nome da classe.");
+                }
 
+                if (EhInterface(tokens[posicaoTokenHeranca]))
+                {
+                    Classe classeInterface = RepositorioDeClassesOO.Instance().interfacesRegistradas.Find(k => k.nome == tokens[posicaoTokenHeranca]);
+                    if (classeInterface != null)
+                        classeHerdeira.interfacesHerdadas.Add(classeInterface);
+                    else
+                        MsgErros.Add("interface: " + tokens[posicaoTokenHeranca] + "  nao existente.");
+                }
                 posicaoTokenHeranca = tokens.IndexOf("+", posicaoTokenHeranca + 1) + 1; // posiciona o ponteiro de inteiros para o proximo nome da classe herdada.
             } // while
 
@@ -209,76 +275,116 @@ namespace parser
                 posicaoTokenDeseranca = tokens.IndexOf("-", posicaoTokenDeseranca) + 1; // posiciona o ponteiro de inteiros para o proximo nome de classe deserdada.
             } // while
 
-            txt_interfacesHerdadas = interfacesHerdadas.ToList<string>();
-
-            // obtem os metodos, propriedades e operadores a serem adicionados ou removidos na classe herdeira.
-            AdicionarItensDeClassesHerdadas(classeHerdeira, classesHerdadas);
-            AdicionarItensDeClassesHerdadas(classeHerdeira, interfacesHerdadas);
-
             RemoveItensDeClassesDeserdadas(classeHerdeira, classesDeserdadas);
             RemoveItensDeClassesDeserdadas(classeHerdeira, interfacesDeserdadas);
         }  // ExtraiClassesHerdeirasEInterfaces()
 
 
-       
 
-     
+
         /// <summary>
-        ///  adiciona metodos, propriedades, e operadores vindos das classes que herda.
+        /// resolve problemas de conflito de nomes de metodos,propriedades, operadores, que vem de classes herdadas diferentes, mas que possuem nome igual.
+        /// Os metodo, propriedades, e operaores de todas classes herdadas ja foram adicionadas a classe herdeira (classe currente que está sendo construida.
         /// </summary>
-        private  void AdicionarItensDeClassesHerdadas(Classe classeHerdeira, List<string> txt_nomesHeranca)
+        private void VerificaConflitoDeMetodosHerdados(Classe currente)
         {
-           
-            // adciona os metodos e propriedades herdados.
-            for (int index = 0; index < txt_nomesHeranca.Count; index++)
+
+            if (currente.GetPropriedades() != null)
             {
-                Classe classeHerdada = RepositorioDeClassesOO.Instance().ObtemUmaClasse(txt_nomesHeranca[index]);
-                if (classeHerdada != null)
+                for (int x = 0; x < currente.GetPropriedades().Count; x++)
                 {
+                    List<Objeto> propriedadesNomesIguais = currente.GetPropriedades().FindAll(k => k.GetNome() == currente.GetPropriedades()[x].GetNome());
+                    if (propriedadesNomesIguais.Count > 1) 
+                    {
 
-                    for (int m = 0; m < classeHerdada.GetMetodos().Count; m++)
-                        // adiciona metodos das classes herdadeas, para a classe herdeira, se são publico ou protegido.
-                        if ((classeHerdada.GetMetodos()[m].acessor == "public") ||
-                            (classeHerdada.GetMetodos()[m].acessor == "protected"))
+
+                        string avisoNomeLongo = "Aviso: propriedades: " + propriedadesNomesIguais[0].GetNome() + " de classes herdadas:" +
+                       " possuem nomes iguais. Fazendo nome longo para as propriedades, para evitar conflitos de chamada destas propriedades, pela classe herdeira. Utilize o nome longo ( nomeClasse+nomePropriedade) para acessar estas propriedades.";
+                        UtilTokens.WriteAErrorMensage(escopo, avisoNomeLongo, this.tokensDaClasse);
+
+
+                        string nomePropriedade = currente.GetPropriedades()[x].GetNome();
+                        currente.GetPropriedades().RemoveAll(k => k.GetNome() == nomePropriedade); // remove as propriedades em conflito, pois possuem o mesmo nome e nao se pode codificar com uma propriedade com dois nomes iguais.
+                        for (int c = 0; c < currente.classesHerdadas.Count; c++)
                         {
-                            classeHerdeira.GetMetodos().Add(classeHerdada.GetMetodos()[m]);
-                            int indexMetodo = classeHerdeira.GetMetodos().Count - 1;
-
-                            // adiciona o nome da classe ao nome do método, evitando problemas como o losango mortal de classes com multiplas herancas.
-                            classeHerdeira.GetMetodos()[indexMetodo].nomeClasseDoOperador = classeHerdada.GetNome();
-                            if (classeHerdeira.GetMetodos().Find(k => k.nome.Equals(classeHerdada.GetMetodos()[indexMetodo].nome)) != null)
+                            Objeto obj1 = currente.classesHerdadas[c].GetPropriedades().Find(k => k.GetNome() == nomePropriedade);
+                            if (obj1 != null) 
                             {
-                                this.MsgErros.Add("Aviso: metodo: " + classeHerdeira.GetMetodos()[indexMetodo].nome + " ja foi definido em outras classes herdadas. Utilize o nome longo do metodo (nomeDaClasse.nomeDoMetodo) para acessa-lo");
-                                classeHerdeira.GetMetodos()[indexMetodo].SetNomeLongo(); // adiciona o nome da classe herdada ao nome do metodo, para impedir o problema do losango mortal.
-                            }
-                        } // if
 
-                    for (int p = 0; p < classeHerdada.GetPropriedades().Count; p++)
-                        // adiciona propriedades das classes herdadas, para a classe herdeira, para a classe herdeira, se são publico ou protegido.
-                        if ((classeHerdada.GetPropriedades()[p].GetAcessor() == "public") || (classeHerdada.GetPropriedades()[p].GetAcessor() == "protected")) 
+
+                                // cria uma nova propriedade com nome longo, e adiciona a classe herdeira, que teve as propriedades em conflito retiradas, justamente por nao ser possivel distinguir com nomes iguais.
+                                Objeto propriedadeComNomeLongo = new Objeto(obj1);
+                                propriedadeComNomeLongo.SetNomeLongo(currente.classesHerdadas[c].GetNome());
+
+                                currente.GetPropriedades().Add(propriedadeComNomeLongo);
+                            }
+                        }
+
+                    }
+                }
+            }
+            if (currente.GetMetodos() != null)
+            {
+                // obtem os metodos em conflito, remove da classe herdeira, obtem os metodos em conflito nas classes herdeiras, seta para nome longo, e adiciona a classe herdeira.
+
+                for (int x = 0; x < currente.GetMetodos().Count; x++)
+                {
+                    List<Funcao> metodosNomesIguais = currente.GetMetodos().FindAll(k => k.nome == currente.GetMetodos()[x].nome);
+                    if (metodosNomesIguais.Count > 1)
+                    {
+
+                        string avisoNomeLongo = "Aviso: metodos: " + metodosNomesIguais[0].nome + " de classes herdadas:" +
+                       " possuem nomes iguais. Fazendo nome longo para estes metodos, para evitar conflitos de chamada destes metodos, pela classe herdeira. Utilize o nome longo ( nomeClasse+nomeMetodo) para acessar estes metodos.";
+                        escopo.GetMsgErros().Add(avisoNomeLongo);
+
+                        string nomeMetodoNomeIgual = metodosNomesIguais[0].nome;
+                      
+                        currente.GetMetodos().RemoveAll(k => k.nome == nomeMetodoNomeIgual);
+                        for (int c = 0; c < currente.classesHerdadas.Count; c++)
                         {
-                            classeHerdeira.GetPropriedades().Add(classeHerdada.GetPropriedades()[p]);
-
-                            int indexPropriedade = classeHerdeira.GetPropriedades().Count - 1;
-                            string nomeDaPropriedade = classeHerdada.GetPropriedades()[p].GetNome();
-                            if (classeHerdeira.GetPropriedade(nomeDaPropriedade) != null) 
+                            List<Funcao> metodosEmConflito = currente.classesHerdadas[c].GetMetodos().FindAll(k => k.nome == nomeMetodoNomeIgual).ToList<Funcao>();
+                            for (int m = 0; m < metodosEmConflito.Count; m++)
                             {
-                                this.MsgErros.Add("Aviso: propriedade: " + nomeDaPropriedade + " ja foi definida em outras classes herdadas. Utilize o nome longo da propriedade (nomeDaClasse.nomeDaPropriedade) para acessa-la.");
-                                // o caso em que a classe herdeira ja tem uma propriedade de mesmo nome da classe herdada. ajusta os nomes com o nome longo.
-                                classeHerdeira.GetPropriedade(nomeDaPropriedade).SetNomeLongo();
-                                classeHerdada.GetPropriedade(nomeDaPropriedade).SetNomeLongo();// adiciona o nome da classe ao nome da propriedade, evitando problemas como losango mortal de classes com multiplas herancas.
-          
+                                Funcao metodoComNomeLongo = metodosEmConflito[m].Clone();
+                                metodoComNomeLongo.SetNomeLongo(currente.classesHerdadas[c].GetNome());
+                                currente.GetMetodos().Add(metodoComNomeLongo);
                             }
-                        } // if
+                        }
+                    }
+                }
+            }
 
+            if (currente.GetOperadores() != null)
+            {
+                for (int x = 0; x < currente.GetOperadores().Count; x++)
+                {
+                    List<Operador> operadoresNomesIguais = currente.GetOperadores().FindAll(k => k.nome == currente.GetOperadores()[x].nome);
+                    if (operadoresNomesIguais.Count > 1)
+                    {
+                        string avisoNomeLongo = "Aviso: operadores: " + operadoresNomesIguais[0].nome + " de classes herdadas:" +
+                      " possuem nomes iguais. Fazendo nome longo para estes operadores, para evitar conflitos de chamada destes operadores, pela classe herdeira. Utilize o nome longo ( nomeClasse+nomeOperador) para acessar estes operadores.";
+                        
+                        UtilTokens.WriteAErrorMensage(escopo, avisoNomeLongo, this.tokensDaClasse);
 
-                    for (int op = 0; op < classeHerdada.GetOperadores().Count; op++)
-                        // adiciona operadores das classes herdadas, para a classe herdeira.
-                        classeHerdeira.GetOperadores().AddRange(classeHerdada.GetOperadores());
+                        string nomeOperadorIgual = operadoresNomesIguais[x].nome;
 
-                } // if
-            } // for x
+                        currente.GetOperadores().RemoveAll(k => k.nome == nomeOperadorIgual);
+                        for (int c = 0; c < currente.classesHerdadas.Count; c++)
+                        {
+                            Operador operadorEmConflito = currente.classesHerdadas[c].GetOperadores().Find(k => k.nome == nomeOperadorIgual);
+                            if (operadorEmConflito != null)
+                            {
+                                Operador operador = operadorEmConflito.Clone();
+                                operador.prioridade = operadorEmConflito.prioridade;
+                                operador.SetNomeLongo(currente.classesHerdadas[c].nome);
+                                currente.GetOperadores().Add(operador);
+                            }
+                        }
+                    }
+                }
+            }
 
+  
         }
 
         private static void RemoveItensDeClassesDeserdadas(Classe classeHerdeira, List<string> txt_nomesDeseranca)
@@ -321,7 +427,11 @@ namespace parser
                     }
 
                 } // if
+
+                classeHerdeira.classesHerdadas.Remove(umaClasseDeserdada);
             } // for x
+
+           
         }
 
         /// <summary>
@@ -333,9 +443,7 @@ namespace parser
             return (RepositorioDeClassesOO.Instance().classesRegistradas.FindIndex(k => k.nome == nomeClasse) != -1);
         } // EhClasseHerdada()
 
-        /// <summary>
         /// valida o nome de interface, se existe no repositório de interfaces.
-        /// </summary>
         private bool EhInterface(string nomeInterface)
         {
             // trata do caso em que há classes no repositório.
@@ -343,86 +451,60 @@ namespace parser
 
         } // EhClasseHerdada()
 
-        /// <summary>
+
         /// Verifica se uma interface foi implementada na classe herdeira.
-        /// </summary>
         private bool ValidaInterface(Classe _classe, Classe _interface)
         {
-          
-
             if ((_interface.GetMetodos() == null) || (_interface.GetMetodos().Count == 0))
                 return true;
 
-            bool isImplementada = true;
             for (int x = 0; x < _interface.GetMetodos().Count; x++)
             {
 
                 int index = _classe.GetMetodos().FindIndex(k => k.nome == _interface.GetMetodos()[x].nome);
                 if (index == -1)
                 {
-                    PosicaoECodigo posicao = new PosicaoECodigo(tokensDaClasse, escopo.codigo);
-                    this.MsgErros.Add("metodo: " + _interface.GetMetodos()[x].nome + "  da interface: " + _interface.nome + " nao implementado. linha: " + posicao.linha + ", coluna: " + posicao.coluna);
-                    isImplementada = false;
-                    // continua a malha, para ver se há mais métodos não implementados.
+                    this.MsgErros.Add("metodo: " + _interface.GetMetodos()[x].nome + "  da interface: " + _interface.nome + " nao implementado.");
+                    return false;
                 }
-
-            } // for k
+            } // for x
 
 
             if ((_interface.GetPropriedades() == null) || (_interface.GetPropriedades().Count == 0))
                 return true;
 
-            for (int x = 0; x < _interface.GetPropriedades().Count; x++)
-            {
-
-                int index = _interface.GetPropriedades().FindIndex(p => p.GetNome() == _interface.GetNome());
-                if (index == -1)
-                {
-                    PosicaoECodigo posicao = new PosicaoECodigo(tokensDaClasse, escopo.codigo);
-                    this.MsgErros.Add("propriedade: " + _interface.GetMetodos()[x].nome + "  da interface: " + _interface.nome + " nao implementada. linha: " + posicao.linha + ", coluna: " + posicao.coluna);
-                    isImplementada = false;
-                    // continua a malha, para veer se há mais propriedades não implementadas.
-                }
-            }  /// for k
-            return isImplementada;
+            return true;
         } // ValidaInterface()
 
 
-        /// extrai métodos a partir de codigo da clase.
-        private List<Funcao> ExtraiMetodos(string nomeClasse, Escopo escopo)
+        /// extrai métodos e operadores a partir de codigo da clase.
+        private void ExtraiMetodos(Classe classeCurrente, Escopo escopo)
         {
 
-            List<Funcao> metodosDaClasse = new List<Funcao>();
+
 
             if ((escopo.tabela.GetFuncoes() != null) &&
                 (escopo.tabela.GetFuncoes().Count > 0)) // é um escopo folha porque a própria definição de classe tem um bloco, que delimita um escopo da classe.
+                classeCurrente.GetMetodos().AddRange(escopo.tabela.GetFuncoes());
+
+
+            if ((escopo.tabela.GetOperadores() != null) && (escopo.tabela.GetOperadores().Count > 0))
+                classeCurrente.GetOperadores().AddRange(escopo.tabela.GetOperadores());
+
+            for (int x = 0; x < classeCurrente.classesHerdadas.Count; x++)
             {
+                List<Funcao> metodosHerdados = classeCurrente.classesHerdadas[x].GetMetodos().FindAll(k => k.acessor == "public" || k.acessor == "protected");
+                if ((metodosHerdados != null) && (metodosHerdados.Count > 0))
+                    classeCurrente.GetMetodos().AddRange(metodosHerdados);
 
-                foreach (Funcao classCaller in escopo.tabela.GetFuncoes()) // adiciona as funções-métodos encontrados no procesamento do escopo.
-                {
+                List<Operador> operadoresHerdados = classeCurrente.classesHerdadas[x].GetOperadores();
+                if ((operadoresHerdados != null) && (operadoresHerdados.Count > 0))
+                    classeCurrente.GetOperadores().AddRange(operadoresHerdados);
+            }
 
-                    int indexFuncaoDefinidaAnteriormente = metodosDaClasse.FindIndex(k => k.nome.Equals(classCaller.nome));
-                    if (indexFuncaoDefinidaAnteriormente != -1)
-                    {
-                        classCaller.SetNomeLongo(); // muda o nome da funcao para o nome-longo, pois há conflito entre nomes de funções em classes herdadas.
-                        metodosDaClasse[indexFuncaoDefinidaAnteriormente].SetNomeLongo();
-                        metodosDaClasse.Add(classCaller);
-                    }
-                    else
-                    {
-                        metodosDaClasse.Add(classCaller);
-                    }
 
-                    classCaller.caller = nomeClasse;
-                } // foreach
 
-            } // if
-            if ((escopo.tabela.GetClasse(nomeClasse, escopo) != null) && (escopo.tabela.GetClasse(nomeClasse, escopo).GetOperadores() != null))
-                foreach (Operador umOperador in escopo.tabela.GetClasse(nomeClasse, escopo).GetOperadores())
-                    metodosDaClasse.Add(umOperador);
-
-            return metodosDaClasse;
-        }// ExtraiMetodos()
+    }// ExtraiMetodos()
 
 
 
@@ -448,8 +530,9 @@ namespace parser
         }
 
         /// Extrai propriedades (campos) a partir do código da classe.
-        private List<Objeto> ExtraiPropriedades(string nomeClasse, Escopo escopo)
+        private void ExtraiPropriedades(Classe classeCurrente, Escopo escopo)
         {
+
             // obtém uma lista de variáveis declaradas na construção do escopo da classe.
             List<Objeto> objetosCampos = escopo.tabela.GetObjetos();
 
@@ -473,31 +556,29 @@ namespace parser
                         umObjeto.SetNome("static." + umObjeto.GetNome());
 
 
-                    int  indexPropriedadeJaDefinidaEmOutraClasseHerdada= propriedadesDaClasse.FindIndex(k => k.GetNome().Equals(nome));
-                    if (indexPropriedadeJaDefinidaEmOutraClasseHerdada != -1)
-                    {
-                        // muda o nome das variaveis para o seu nome longo, pois há conflito em nomes de variaveis de diferentes classes herdadas.
-                        propriedadesDaClasse[indexPropriedadeJaDefinidaEmOutraClasseHerdada].SetNomeLongo();
-                        propriedadesDaClasse.Add(new Objeto(umObjeto.GetAcessor(), umObjeto.GetTipo(), umObjeto.GetNome(), umObjeto.GetValor()));
+                    // inicializa uma propriedade, com tipo obtido no repositório de classes.
+                    classeCurrente.GetPropriedades().Add(new Objeto(umObjeto.GetAcessor(), umObjeto.GetTipo(), umObjeto.GetNome(), umObjeto.GetValor()));
 
-                    }
-                    else
-                    {
-                        // inicializa uma propriedade, com tipo obtido no repositório de classes.
-                        propriedadesDaClasse.Add(new Objeto(umObjeto.GetAcessor(), umObjeto.GetTipo(), umObjeto.GetNome(),  umObjeto.GetValor()));
-                    }
                 } // foreach
-                return propriedadesDaClasse;
+
+                for (int x = 0; x < classeCurrente.classesHerdadas.Count; x++)
+                {
+                    List<Objeto> propriedadesHerdadas = classeCurrente.classesHerdadas[x].GetPropriedades().FindAll(k => k.GetAcessor() == "public" || (k.GetAcessor() == "protected"));
+                    classeCurrente.GetPropriedades().AddRange(propriedadesHerdadas);
+                }
+
+               
             } //if
-            return null;
+        
         } // ExtraiPropriedades()
 
 
-        /// <summary>
+      
         /// obtém o corpo da classe ou interface, a partir de uma lista de codigo, não tokens.
-        /// </summary>
         private void ExtraiCodigoDeUmaClasse(List<string> codigo, out string nomeDaClasse, out string nomeDaInterface, out List<string> tokensCabecalhoDaClasse,out string acessor, out List<string> tokensCorpoDaClasse)
         {
+            
+
             nomeDaClasse = null; 
             nomeDaInterface = null;
 

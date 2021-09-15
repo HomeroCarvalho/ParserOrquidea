@@ -23,10 +23,10 @@ namespace parser
 
         public string nomeClasseDoOperador { get; set; }
 
-        public void SetNomeLongo()
+        public void SetNomeLongo(string nomeClasse)
         {
             // muda o nome do metodo para o nome longo (nomeDaClasseDoMetodo+"."+ nomeDoMetodo).
-            this.nomeLongo = nomeClasseDoOperador + "." + nome;
+            this.nomeLongo = nomeClasse + "." + nome;
             this.nome = this.nomeLongo;
         }
         public int prioridade { get; set; } // prioridade de execução em expressões.
@@ -52,33 +52,32 @@ namespace parser
 
         public Escopo escopo;
 
-        private List<List<Objeto>> stackVariaveisLocais { get; set; } // pilha de variáveis locais. A remoção das variáveis da stack é direto: remove da lista todas as variaveis, quando terminar o processamento currente da função/método.
-
-        private List<Objeto> variaveisLocais { get; set; } // guarda uma copia das variaveis locais da função/método, para inicializarem o escopo.
-
-        private int contadorVariaveis = 0;
+  
+    
 
         // Modos de execucao da função:
         //     1- via instruções da linguagem orquidea.
         //     2- via metodo via reflexao (é preciso setar o objeto que fará a chamada do método).
-        public object ExecuteAFunction(List<object> parametros)
+        protected object ExecuteAFunction(List<object> parametros, Escopo escopo)
         {
+            Escopo escopoFuncao = null;
+            if (escopo != null)
+                escopoFuncao = escopo.Clone(); // cria uma cópia para cada chamada de função, para que possa criar variáveis locais, durante o processamento da funcao.
+            else
+                return null;
+
+            for (int x = 0; x < parametros.Count; x++)
+                escopoFuncao.tabela.GetObjetos().Add(new Objeto("private", this.parametrosDaFuncao[x].GetTipo(), parametrosDaFuncao[x].GetNome(), parametros[x]));
+           
+          
 
             if (this.instrucoesFuncao != null) // avaliação da função via instruções da linguagem orquidea.
             {
-                // atualiza as expressoes da funcao.
-                for (int x = 0; x < this.instrucoesFuncao.Count; x++)
-                    for (int exprss = 0; exprss < this.instrucoesFuncao[x].expressoes.Count; exprss++)
-                        this.CarregaValoresParaUmaExpressaoParametro(this.instrucoesFuncao[x].expressoes[exprss], parametros, this.escopo);
-
-                this.stackVariaveisLocais[contadorVariaveis++].AddRange(this.variaveisLocais.ToList<Objeto>());
-                this.escopo.tabela.GetObjetos().AddRange(variaveisLocais.ToList<Objeto>()); // faz uma copia das variaveis para a pilha.
-
                 ProgramaEmVM program = new ProgramaEmVM(this.instrucoesFuncao);
-                program.Run(escopo);
-                object result = program.resultLastInstruction; 
-
-                this.stackVariaveisLocais.RemoveAt(--contadorVariaveis);
+                program.Run(escopoFuncao);
+                object result = program.resultLastInstruction;
+                if (result.GetType() == typeof(Objeto))
+                    result = ((Objeto)result).GetValor();
                 return result;
             } // if 
             else
@@ -92,70 +91,56 @@ namespace parser
 
         } // ExecuteAFunction()
 
-        private void CarregaValoresParaUmaExpressaoParametro(Expressao expressaoParametro, List<object> valoresEscopo, Escopo escopo)
+       
+
+
+        /// <summary>
+        /// executa um metodo, da classe do objeto chamador (caller).
+        /// O escopo tem referencias das propriedades da classe.
+        /// </summary>
+        public object ExecuteAMethod(List<Expressao> parametos, Escopo escopo, Objeto objetoCaller)
         {
-            int contadorValores = 0;
+            Escopo escopoDoMetodo = new Escopo(escopo); // objetos sem referencia serao coletados, se nao tiver nenhuma referencia apontando para o objeto.
+            Classe classeDoObjeto = RepositorioDeClassesOO.Instance().ObtemUmaClasse(objetoCaller.GetTipo());
 
-            for (int exprss = 0; exprss < expressaoParametro.Elementos.Count; exprss++)
+            // faz copias das propriedades e operadores, sem referencia, pois os valores das propriedades podem ser modificadas.
+            List<Objeto> propriedadesEstaticasDaClasse = classeDoObjeto.propriedadesEstaticas; // faz por referencia para que a modificao modifique a propriedade estatica.
+            List<Objeto> propriedadesDaClasse = classeDoObjeto.GetPropriedades().ToList<Objeto>();
+            List<Operador> operadoresDaClasse = classeDoObjeto.GetOperadores().ToList<Operador>();
+
+            escopoDoMetodo.tabela.GetObjetos().AddRange(propriedadesEstaticasDaClasse);
+            escopoDoMetodo.tabela.GetObjetos().AddRange(propriedadesDaClasse);
+            escopo.tabela.GetOperadores().AddRange(operadoresDaClasse);
+
+            object result= ExecuteAFunction(parametos, objetoCaller, escopoDoMetodo);
+            for (int x = 0; x < propriedadesDaClasse.Count; x++)
             {
-                if (expressaoParametro.Elementos[exprss].GetType() == typeof(ExpressaoOperador))
-                    continue;
-
-                for (int x = 0; x < this.parametrosDaFuncao.Length; x++)
-                {
-                    string nomeParametro = this.parametrosDaFuncao[x].GetNome().ToString().Trim(' ');
-                    string nomeParametroExpressao = expressaoParametro.Elementos[exprss].ToString().Trim(' ');
-                    if ((escopo.tabela.GetObjeto(nomeParametro, escopo) != null) && (nomeParametro.Equals(nomeParametroExpressao))) 
-                    {
-                        Objeto objetoParametro = escopo.tabela.GetObjeto(nomeParametro, escopo);
-                        objetoParametro.SetValor(valoresEscopo[contadorValores++], escopo);
-                        expressaoParametro.Elementos[exprss] = new ExpressaoObjeto(objetoParametro);
-                    }
-                    else
-                    if ((escopo.tabela.GetVetor(nomeParametro, escopo) != null) && (nomeParametro.Equals(nomeParametroExpressao)))
-                    {
-                        Vetor vvt = escopo.tabela.GetVetor(nomeParametro, escopo);
-                        vvt.SetValor(valoresEscopo[contadorValores++], escopo);
-                        expressaoParametro.Elementos[exprss] = new ExpressaoVetor(vvt);
-                    }
-                }
+                Objeto propriedade = escopoDoMetodo.tabela.GetObjetos().Find(k => k.GetNome() == propriedadesDaClasse[x].GetNome());
+                objetoCaller.GetField(propriedade.GetNome()).SetValor(propriedade.GetValor()); // atualiza os valores de propriedades para o objeto que chamou a execução do método.
             }
-        }
 
+            return result;
+        }
+        /// <summary>
         ///  avalia uma função, tendo como parâmetros expressões, muito apreciada nas chamadas de função, que utiliza expressões como parâmetros.
-        ///  o objeto "caller" é conseguido com a chamada do construtor, em cada variavel, Vetor, objeto.
-        public object ExecuteAFunction(List<Expressao> parametros, object caller)
+        ///  o objeto "caller" é utilizado para funções de objetos importados.
+        /// </summary>
+        public object ExecuteAFunction(List<Expressao> parametros, object caller, Escopo escopo)
         {
          
             List<object> valoresParametro = new List<object>();
+            EvalExpression eval = new EvalExpression();
 
             for (int x = 0; x < parametros.Count; x++)
             {
-
-
-                object valor = null;
-                if (escopo.tabela.GetVetor(parametros[x].ToString(), escopo) != null)
-                {
-                    valor = escopo.tabela.GetVetor(parametros[x].ToString(), escopo).GetValor();
-                    valoresParametro.Add(valor);
-                }
-                else
-                if (escopo.tabela.GetObjeto(parametros[x].ToString(),escopo) != null)
-                {
-                    valor = escopo.tabela.GetObjeto(parametros[x].ToString(), escopo).GetValor();
-                    valoresParametro.Add(valor);
-                }
-                
+                object valorParametro = eval.EvalPosOrdem(parametros[x], escopo);
+                valoresParametro.Add(valorParametro);
             } // for x
 
 
-            // carrega os parametros da função com os valores atuais das variaveis.
-            for (int paramFnc = 0; paramFnc < this.parametrosDaFuncao.Length; paramFnc++)
-                this.parametrosDaFuncao[paramFnc].SetValor(valoresParametro[paramFnc], this.escopo);
-
-
+         
             if (this.InfoMethod == null)
-                return ExecuteAFunction(valoresParametro);
+                return ExecuteAFunction(valoresParametro, escopo);
             else
             if ((this.InfoMethod != null) && (caller != null))
                 return this.InfoMethod.Invoke(caller, valoresParametro.ToArray());
@@ -163,27 +148,84 @@ namespace parser
             return null;
         } // ExecuteAFunction()
   
-        public object ExecuteAConstructor(List<Expressao> parametros, Type classeDoConstrutor)
+        public object ExecuteAConstructor(List<Expressao> parametros, string nomeClasse, Escopo escopoFuncao)
         {
+            Escopo escopo = escopoFuncao.Clone();
+           
+            if (this.InfoConstructor != null)
+            {
+                int indexConstrutor = parser.ProcessadorDeID.FoundACompatibleConstructor(nomeClasse, parametros);
+                if (indexConstrutor == -1)
+                    return null;
+
+                List<object> valoresParametro = new List<object>();
+
+                for (int x = 0; x < parametros.Count; x++)
+                {
+                    object valor = new EvalExpression().EvalPosOrdem(parametros[x], escopo);
+                    valoresParametro.Add(valor);
+                }
+
+                Classe classeDOconstrutor = RepositorioDeClassesOO.Instance().ObtemUmaClasse(nomeClasse);
+                if (classeDOconstrutor != null)
+                    return classeDOconstrutor.construtores[indexConstrutor].InfoConstructor.Invoke(valoresParametro.ToArray()); ;
+            }
+            else
+            {
+                int indexConstrutor = parser.ProcessadorDeID.FoundACompatibleConstructor(nomeClasse, parametros);
+                if (indexConstrutor == -1)
+                    return null;
+
+                Objeto objetoInstanciado = InstanciaObjeto(nomeClasse, parametros, escopo, indexConstrutor);
+                return objetoInstanciado; // retorna o objeto instanciado.
+
+            }
+            return null;
+        }
+
+        private Objeto InstanciaObjeto(string nomeClasse, List<Expressao> parametros, Escopo escopo, int indexConstructor)
+        {
+
             List<object> valoresParametro = new List<object>();
+            int indexConstrutor = parser.ProcessadorDeID.FoundACompatibleConstructor(nomeClasse, parametros);
+            if (indexConstrutor == -1)
+                return null;
+
             for (int x = 0; x < parametros.Count; x++)
             {
                 object valor = new EvalExpression().EvalPosOrdem(parametros[x], escopo);
                 valoresParametro.Add(valor);
             }
-            if (this.InfoConstructor != null)
-            {
 
-                int indexConstrutor = parser.ProcessadorDeID.FoundACompatibleConstructor(classeDoConstrutor.Name, parametros);
-                if (indexConstrutor == -1)
-                    return null;
-                else
-                    return classeDoConstrutor.GetConstructors()[indexConstrutor].Invoke(valoresParametro.ToArray());
+            Classe classeDoObjeto = RepositorioDeClassesOO.Instance().ObtemUmaClasse(nomeClasse);
+
+    
+            escopo.tabela.GetObjetos().AddRange(classeDoObjeto.escopoDaClasse.tabela.GetObjetos());
+            escopo.tabela.GetVetores().AddRange(classeDoObjeto.escopoDaClasse.tabela.GetVetores());
+
+            classeDoObjeto.construtores[indexConstructor].ExecuteAFunction(valoresParametro, escopo);
+
+            
+            Objeto objetoInstanciado = new Objeto("private", classeDoObjeto.GetNome(), "b", null);
+            List<Objeto> propriedades = objetoInstanciado.GetFields();
+    
+            
+            
+            for (int x = 0; x < propriedades.Count; x++)
+            {
+                if ((propriedades != null) && (propriedades.Count > 0))
+                {
+                    Objeto objPropriedade = escopo.tabela.GetObjetos().Find(k => k.GetNome() == propriedades[x].GetNome());
+                    if (objPropriedade != null)
+                        propriedades[x].SetValor(objPropriedade.GetValor());
+                }
+
             }
-            return null;
+
+
+            return objetoInstanciado;
         }
 
-        
         public Funcao()
         {
             this.escopo = null;
@@ -194,11 +236,21 @@ namespace parser
             this.prioridade = 300;  // seta a prioridade da função em avaliação de expressões. A regra de negócio é que a função sempre tem prioridade sobre os operadores.
    
             this.instrucoesFuncao = new List<Instrucao>();
-            this.stackVariaveisLocais = new List<List<Objeto>>();
-            this.stackVariaveisLocais.Add(new List<Objeto>());
-            this.variaveisLocais = new List<Objeto>();
         } //Funcao()
 
+        public Funcao Clone()
+        {
+            Funcao fncClone = new Funcao(this.nomeClasse, this.acessor, this.nome, this.InfoMethod, this.tipoReturn, this.parametrosDaFuncao);
+            fncClone.escopo = this.escopo.Clone();
+            if (this.instrucoesFuncao != null)
+                fncClone.instrucoesFuncao = this.instrucoesFuncao.ToList<Instrucao>();
+            else
+                fncClone.instrucoesFuncao = new List<Instrucao>();
+            if (this.InfoConstructor != null)
+                fncClone.InfoConstructor = this.InfoConstructor;
+
+            return fncClone;
+        }
         public Funcao(string acessor, string nome, FuncaoGeral fncImplementa, string tipoRetorno, params Objeto[] parametrosMetodo)
         {
             this.escopo = null;
@@ -211,9 +263,6 @@ namespace parser
             this.tipoReturn = tipoRetorno;
             if (parametrosMetodo != null)
                 this.parametrosDaFuncao = parametrosMetodo.ToArray<Objeto>();
-            this.stackVariaveisLocais = new List<List<Objeto>>();
-            this.stackVariaveisLocais.Add(new List<Objeto>());
-            this.variaveisLocais = new List<Objeto>();
             this.instrucoesFuncao = new List<Instrucao>();
         }
 
@@ -239,10 +288,9 @@ namespace parser
 
 
             this.escopo = escopoDaFuncao.Clone();
-            this.variaveisLocais = this.escopo.tabela.GetObjetos().ToList<Objeto>(); // faz uma copia por valor das variaveis do escopo principal.
-
-            for (int x = 0; x < this.parametrosDaFuncao.Length; x++) 
-                escopo.tabela.GetObjetos().Add(new Objeto("private",parametrosDaFuncao[x].GetTipo(), parametrosDaFuncao[x].GetNome(), null, false));
+    
+            for (int x = 0; x < this.parametrosDaFuncao.Length; x++)
+                escopo.tabela.GetObjetos().Add(new Objeto("private", parametrosDaFuncao[x].GetTipo(), parametrosDaFuncao[x].GetNome(), null, escopo, false));
 
 
             if (instrucoesCorpo != null)
@@ -265,9 +313,7 @@ namespace parser
             this.InfoConstructor = null;
             this.instrucoesFuncao = new List<Instrucao>();
             this.nomeClasse = nomeClasse;
-      
-
-            Type classeOperador = this.InfoMethod.DeclaringType;
+     
             List<Type> tiposDosParametros = new List<Type>();
             List<object> nomesDosParametros = new List<object>();
 
@@ -285,11 +331,7 @@ namespace parser
             this.instrucoesFuncao = new List<Instrucao>();
             this.parametrosDaFuncao = parametrosMetodo.ToArray<Objeto>();
             if (escopoDaFuncao != null)
-            {
                 this.escopo = escopoDaFuncao.Clone();
-                this.stackVariaveisLocais = new List<List<Objeto>>();
-                this.variaveisLocais = this.escopo.tabela.GetObjetos().ToList<Objeto>();
-            }
             
         }
 
@@ -305,7 +347,7 @@ namespace parser
             {
                 for (int x = 0; x < this.parametrosDaFuncao.Length; x++)
                 {
-                    str += this.parametrosDaFuncao[x].GetTipo() + " " + this.parametrosDaFuncao[x].GetNome();
+                    str += this.parametrosDaFuncao[x] + " ";
                     if (x < (parametrosDaFuncao.Length - 1))
                         str += ",";
                 } // for x
@@ -323,13 +365,12 @@ namespace parser
         internal int indexPosOrdem = 0; // utilizada para processamento de PosOrdem().
 
 
-        //*********************************************tipos de funcao que implementam a avaliacao do  operador.
-        // metodo para operador com função nativa da linguagem Base (C sharp).
-        public Funcao.CallFunction metodoNativoOperador { get; set; }
+      
+    
 
         // função com instrucoes orquidea.
         public Funcao funcaoImplementadoraDoOperador { get; set; }
-        //*****************************************************************************************************
+    
 
         public int GetPrioridade()
         {
@@ -415,6 +456,13 @@ namespace parser
 
         }
 
+        public new Operador Clone()
+        {
+            Operador operador = new Operador(this.nomeClasse, this.nome, this.prioridade, this.parametrosDaFuncao, this.tipo, this.InfoMethod, this.escopo);
+            operador.tipoRetorno = this.tipoRetorno;
+            operador.tipoReturn = this.tipoReturn;
+            return operador;
+        }
 
 
 
@@ -441,11 +489,11 @@ namespace parser
                 throw new Exception("objeto que chama a execucao de funcao eh nulo.");
 
 
-            if (this.InfoMethod != null) 
+            if (this.InfoMethod != null)
                 result = InfoMethod.Invoke(caller, valoresParametros);
             else
             if (this.instrucoesFuncao != null)
-                result = this.ExecuteAFunction(valoresParametros.ToList<object>());
+                result = this.ExecuteAFunction(valoresParametros.ToList<object>(), escopo);
             else
             if (this.tipoRetorno == "int")
                 return (int)result;

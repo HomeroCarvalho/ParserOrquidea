@@ -4205,6 +4205,8 @@ Daily Scrum 13.08:
 					---> (a implementar) estudar a possibilidade no metodo Create, para variavel Vetor, se os indices não possam ser expressoes, em vez de numeros fixos.
 								---> adicionar as expressoes, nos indices passados para a execução de instrução.
 								---> na instrucao create, processar as expressoes, e criar o objeto Vetor com os indices calculados.
+
+
 ___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 Daily Scrum 16.08: 	
 
@@ -4231,15 +4233,15 @@ Daily Scrum 16.08:
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 Daily Scrum 17.08: 	
 
-	Atividades do dia a serem ealizadas:
+	Atividades do dia a serem realizadas:
 
 					-----> O problema da variavel que chama uma funcao, antes do codigo da funcao ser compilada.
 						   Ha também o problema de uso de variavel cuja definicao esta no escopo-pai, linhas apos do uso da variavel.
 								---> (codificado) o método é como segue: para instruções que não puderem serem tratadas, são adicionadas na classe de ContainerDeSequencias id não tratadas.
 									 Após a compilação, varrer a lista de sequencias id e chamar novamente o compilador para tratar essas sequencias, sem inicializar o ProcessadorID.
 												---> falha no teste, a logica do algoritmo parece nao estar certo.
-				   ----> formação de expressões matriciais.
-
+				       ----> formação de expressões matriciais.
+	
 ________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 Daily Scrum 18.08: 	
@@ -4289,7 +4291,7 @@ Daily Scrum 18.08:
 ____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 Daily Scrum 19.08: 	
 
-	Atividades do dia a serem realizadas:
+	Atividades do dia realizadas:
 
 		---> expressões matriciais.
 				---> testes para obtencao de indices e operadores matricial, feito com êxito.
@@ -4303,3 +4305,559 @@ Daily Scrum 19.08:
 
 				---> testes para obter expressos matriciais, cenario 1 e 2, obtiveram êxito.
 _______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 20.08: 	
+
+	Atividades do dia realizadas:
+			----> cenarios de testes para classes "classe".
+						---> (codificado, testado) cenario 1 de teste de processamento de classes, obteve exito.
+						---> teste cenario 2 de teste para classes, falha: não reconhece classes herdadas.
+									---> (fixado) para reconhecer classes herdadas.
+									---> (a fixar) o metodo de resolucao de nomes de propriedades, metodos, e operadores, nomes conflitantes: o codigo está quebrado.
+											---> (a fixar) nos metodos, tem de obter a interface de parâmetros, para obter o metodo certo.
+											---> (fixado) a obtencao de propriedades e metodos de classes herdadas, nao está sendo feita nos metodos ExtratorOO.ExtraiPropriedades(), ExtratorOO.ExtraiMetodos()
+
+									---> (fixado) fixar o problema de duplicação de propriedades, na obtencao de classes.
+														---> o construtor de Expressao criava o objeto se nao estivesse no escopo, para fins de guardar na expressao contruida a expressaoObjeto, nao era necessario guarda no escopo o objeto criado para ser acrescentado na expressao construida.
+		
+									---> (testado, com êxito) devido as modificacoes nos metodos de obtencao de propriedades e metodos, eh necessario retestar o cenario 1 de teste.
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Proximo Daily Scrum:
+
+
+
+		----> (codificado, aguardando testes) fixar o metodo ExtratorOO.ResolvedorDeConflitos.
+						---> em caso de conflito de propriedades:
+							1- remover as propriedades da classe herdeira.
+							2- criar propriedades a partir das classes herdadas em conflito.
+							3- setar o nome longo para as propriedades criadas.
+							4- adicionar as propriedades criadas, para a classe herdeira.
+
+		----> codificar um metodo para retornar se dois metodos possuem a mesma interface de parametros, nomes, e tipo de retorno, a ser utilizados na resolução de conflitos de multiplas classes herdadas.
+		----> codificar o OperatorMaker: quando um método de uma classe tem 1 ou 2 argumentos, implementar um operador para esse método. Ex: FuncaoA(x,y) ----> x FuncaoA y.
+
+
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Resumo da Semana, permite uma melhor mensuração do andamento do projeto.
+
+Atividades - Resumo da semana:
+		---> implementação de expressoes matriciais, indices de vetores, que tem processamento por expressão matricial.
+		---> implementação de Recuperação de instruções não tratadas.
+		---> completado operações com Vetor.
+		---> inicio de testes para processamento de classes.
+		---> correção da classe ExtratorOO, que faz o processamento de classes da linguagem, ainda não completado, aguardando testes.	
+
+
+	Visto a lista de atividades completadas, testadas, conclui-se que o andamento do projeto está meio devagar...
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+ Daily Scrum 24.08:
+
+ Atividades a serem realizadas:
+		---> (feito) executado teste para validação de classes, com herança, e conflito de nomes de propriedades, feito com êxito.
+		---> (feito) validação de implementação de métodos de interfaces. 
+		---->(feito) metodo para extrair uma interface já está codificada, validado pelo metodo de verificar apenas metodos publicos.
+
+					----> (testado)testando a classe ExtratoresOO para extrair uma interface.
+									---> extração de interface feito com exito. mas a interface está sendo registrada duas vezes no repositorio. fixado, estava registrando no metodo ExtraiClasse(que eh chamado para extrair metodos da interface), e tb no metodo ExtraiInterface.
+
+					----> (testado) testando para validação de interface implementada numa classe, com implementação incompleta da interface.
+									---> fixado, teste executado com exito.
+
+					----> (testado) testando para validação de interface implementada completamente numa classe.
+									---> construido o cenario de testes, executado com exito.
+
+		---> (codficando o cenario) métodos para save/load de definição de classes/interfaces, já implementados na classe "classe". Testar essa funcionalidade.
+									----> teste feito com êxito, no entanto, o codigo está incompleto: tem que listar os metodos e propriedades herdados, e metodos de interfaces herdadas. (que aparecem também na classe herdeira, claro).
+									----> fixado, teste com êxito. No entanto, falta a descrição de classes herdadas, e isso é primordial para o objetivo da descrição em texto da classe: serve como view para programar, mostrando todos metodos, propriedades, e operadores, herdados ou nao.
+
+
+									----> (a fixar) teste com exito parcial, mas o texto descritivo de um metodo está pulando o ultimo parametro.
+													---> falha na escrita para a tela, um Objeto: o nome e o tipo do objeto está incorreto, e o ultimo parametro nao aparece, porque foi registrado apenas um parametro.
+													---> investigando, o cenario de teste estava com código quebrado! Não estava incluindo o tipo dos parâmetros na definição dos métodos.
+
+									----> teste completado com exito, para save de definição de classes/interfaces.
+
+
+		----> (implementado) implementar a funcionalidade de modificação de expressões, quando as variáveis
+			   da expressão mudam de valor. Para fins de otimização.
+									----> retestar as expressões onde se criam objetos.
+
+
+
+Resumo do Dia:
+			---> teste para Verificacao de conflitos de nomes, para multiplas classes herdadas.
+			---> codificação e teste com êxito, para processamento/validação de interfaces.
+			---> codificação completada para Salvar resumo de classes/interfaces, como um documento informativo sobre todas propriedades/métodos/operadores de classes/ interfaces.
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 25.08:
+
+Atividades a serem realizadas:
+			---> modificação na maneira como a lista de expressões onde o objeto está presente: método em Compile(), verifica as expressões das instruções, e registra as expressões para cada objeto presente.
+						---> testado novamente a classe de testes para expressões, ante a modificação no código para Objetos, com êxito.
+										---> verificado, o teste passou com as listas de expressoes onde os objetos estão presentes.
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 26.08:
+
+			---> (testado) validação de testes para instruções, ante as modificações do termno de codificação da otimização de expressões.
+						--> (fixado) testes na instrução "for", justamente a instrução que dava resultado certo até na modificação do código, dando mesma resolução.
+										---> a falha está no processamento da variavel de malha, depois da extração de expressões, mas nas expressões, a variável de malha está presente, o que resulta numa expressão sem a variavel de malha...
+										---> eliminado a duplicação de objetos quando criados no processamento da instrução.
+										---> (fixado) verificando o teste automatizado, o calculo para a variavel de resultado deveria ser "3" e não "1", como está no teste, e no resultado gerado.
+														---> a verificação de valor da variavel de malha-controle, estava sendo contado como "valor<= valorLimite" da malha, quando deveria ser "valor< valorLimite"
+
+			---> execução de um codigo de uma classe de instruções.
+						---> (codificado) codificando um cenario de teste para classes.
+						---> executando os testes. Falha no metodo tratador correto para a sequencia: "int a= b.funcaoA()"; a expressão de atribuição deveria retornar "b.funcaoB()", que está sem processamento.
+										--->a falha está no metodo Expressao.ExtraiExpressoes(), para a expessão: "int a= b.funcaoA()".
+										---> o operador "." (dot) não está incluído nos tokens a gerar expressões!
+
+
+						---> analisando o codigo, há partes que podem ser resumidas, pois há várias situações com um mesmo tipo de ação de processamento de expressao.
+										---> refatorado, pronto para incluir o token dot (".").
+
+						---> testes após a refatoração, falha ao caso dos objetos a receberem um valor dentro da expressão.
+										---> codificado um metodo de extrair a expressao de atribuicao, se apos o nome do objeto/vetor tiver um operador de atribuicao "=".
+										---> anexado às classes de expressao objeto, e expressao vetor, o metodo de extrair expressao de atribuicao.									
+
+					   ---> falha na avaliação de expressão, pelo método EvalExpression(). Na função de chamada, está retornando "null".
+										---> verificando, o metodo tratador DfinicaoDeFuncao(), não está processamento o bloco da instrução de chamada de funcao.	
+										---> executando o teste novamente, a falha cai no metodo Expressao.ExtraiExpressoes(), numa expressão entre parênteses, que não é chamada de função.
+________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 27.08:
+					   ---> fixado o problema com as expressoes entre parênteses.
+										---> no entanto, ha problemas na classe EvalExpression: um operador "+" está sem "caller", e a expressão entre parênteses está recortado erroneamente...
+										---> verificando, o operador "+" da expressão: (x+y)*z, está como operador unario, quando deveria ser binario.
+
+					   
+					   ---> teste para uma avaliação rápida, com instanciação de objetos com codigo C sharp, obteve êxito.
+										--> todos testes para expressoes obteve êxito.
+
+						
+					  ---> pronto para incluir o token dot ("."), no construtor de Expressao.
+										---> codificado no construtor Expressao() o processamento de "." (dot). Semelhantemente em versoes anteriores, o 
+										operador e seu elemento referenciado é incluído como um ElementoExpressao.
+										---> teste com token "." obteve êxito.
+										---> terminar o processamento de token ".", especificando as propriedades/metodos dentro da expressao com ".".
+
+
+					  ---> executando os testes para classes. o metodo tratador correto para a sequencia: "int a= b.funcaoA()"; a expressão de atribuição deveria retornar "b.funcaoB()", que está sem processamento.
+										---> fixado, mas testes, a extração da expressao de atribuicao: "b.funcaoA()", nao está funcionando corretamente. O metodo Expressao.ExtraiExpressoes() não está retornando valor.
+										---> codificado novamente o processamento em expressoes com o token: ".", para capturar objetos, e chamadas de funcao.
+														----> codificar o caso em que a propriedade aninhada for campo de um objeto inicial.
+														----> codificado, o processamento de expressões pode ser feito por propriedades aninhadas: "a.b.c=5", e/ou chamadas de métodos aninhadas: "a.b()", ou combinação de "int c= a.b().c".
+
+					  ---> testar o construtor de Expressao(), para propriedades/metodos aninhados.
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 30.08:
+
+	Atividades Realizadas:
+
+					---> codificado um novo metodo para obter o tipo da expressao: Expressao.GetTipoExprssao().
+					---> (feito) fixar a classe ExpressaoChamadaDeFuncao, para retornar a função com tipo compatível de parâmetros.
+					---> (feito) fixar o processamento com operador ".", para compor quando o objeto anterior a ".", é um nome de uma classe: classeB.a=2, o operador neste
+       caso ou é para uma propriedade estática, ou está resolvendo conflitos de propriedades herdadas.
+
+
+					---> efetuar novamente os testes de expressoes, ante a modificação do código.
+								---> teste, falha na obtencao da expressao, está retornando a expressão de atribuição, sendo que teria que ser processada dentro da expressao currente, nao como uma sub-expressao.
+								---> teste, falha na obtenção de expressoes-parametros, nos metodos de ExpressaoChamadaFuncao().
+
+
+					---> modificar o metodo: UtilTokens.ObtemFuncaoCompativelComAChamadaDeFuncao(), para processar as expressoes-parametros, com o Expressao.GetTipoExpressao().
+					---> testes 1, 5 teve êxito.
+					---> teste 4  falha no retorno: valor esperado era: "2.2", valor encontrado: "2". (está processando os valores como se fossem inteiros).
+								---> os parametros da chamada de função da expressão não estava sendo carregados corretamente, e o metodo Expressao.ObtemFuncaoCompativel(), e
+								outras modificações neste dia estavam fazendo referência incorreto à lista de parâmetros.
+								---> teste 4 obteve êxito.
+
+					---> teste 3, falha na obtencao da expressao da instrucao "return".
+								---> falha incerta, que foi corrigida ante a um "mau" processamento.
+
+					---> (fixado) teste 2, nao passou. Neste teste, a chamada da função "funcaoA", nao esta sendo processada. Erro de lógica no algoritmo de Expressao.GetTipoExpressao()..
+
+					---> teste 1 a 5 obteve êxito.
+
+					---> teste de expressao de propriedade/metodo aninhada (Teste 6), a fazer.
+									---> um erro na classe container de testes de classes, testando o parametro do metodo a ser avaliado, estava como nome do parametro, nao tipo do parametro...
+									---> aparentemente, a expressão não está sendo reconhecida, mensagem de erro emitida que a expressao a ser avaliada nao está sendo reconhecida,
+									justamente porque os metodos compiladores, para expressões com aninhamento não foram mudados para as modificações deste dia...
+
+									---> padronizando o teste para a classe de Teste, falha, o Teste 6 entrou em loop infinito!!!
+													---> o objeto do teste foi criado, com uma instrução "create", que não o construtor, mas registrou o objeto na tabela de valores. legal. (A verificar a instrução no programa VM, se está encontrando o construtor compativel).
+													---> fixado o loop infinito, havia um erro de lógica que impedia o incremento da variavel de malha while do metodo.
+													---> fixado tambem a obtencao de token do campo da propriedade aninhada.
+													---> (verificado que não) verificando, nao houve processamento das propriedades da classe: a classe ExtratorOO quebrou!!.
+																---> houve um erro de sintaxe no cenario de teste: cada definição de método deve terminar com um ";" (ponto e vírgula), então o que aconteceu foi que a sequencia id currente anexou o construtor com a sequencia id da propriedade.
+													---> um erro no metodo GetTipoExpressao(), essencial para o processamento correto de Expressoes, não estava obtendo o nome da classe do objeto a receber a atribuição da expressão.
+													---> fixado no que foi possível, continuar o teste 6.													
+
+
+
+
+					---> INCLUIR NA DOCUMENTAÇÃO O AVISO QUE DEPOIS DE MÉTODOS, DEVE-SE INCLUIR UM ";" (PONTO E VIRGULA), senão o compilador não reconhecerá o que vem depois do método.	
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 31.08:
+				  ---> continuar com o teste 6.
+							A importância de tratar na formação de expressão aninhada, é que poupa um monte de código no compilador, que por estar sem muita clareza, e meio confuso, além de complexo, melhoraria a qualidade do código.
+							----> fixado, o teste passou, mas houve uma descoberta, que o operador "=" é um operador universal, sendo incluido no processamento de ExpressaoOperador.
+								  Tem previsão do operador "=" ser tratado universalmente, na classe EvalExpression()...
+								  
+				  ---> fixar o metodo compilador com propriedades/metodos aninhados, na classe ProcessadorID.
+							---> eliminado codigo sujeito a falhas, por estar meio confuso, faltando lógica de programação, que foi adquirida no desenvolver do projeto.
+							---> por sorte, há um campo na expressao container, que pode ser utilizada pelas propriedades/metodosAninhados aninhadas.
+
+
+
+				  ---> modificar o metodo handler "ChamadaDeMetodo" para incluir na lista de propriedades, expressoes de chamada de função.
+							---> feito, mas poderia ser um pouco melhor: conter toda lista de propriedades/chamada de metodos, para um campo de declaracao de expressao container, no handler de compilacao de chamada de metodos, e definicao de propriedades aninhadas.
+										--> incluido no handler de chamada de metodo, para conter a lista de propriedades/metodos aninhados, validando se a ultima expressao deve ser uma chamada de funcao:
+										permite instrucoes como: "a.b.c().a.d(x)", desde que a sequencia seja válida, com metodos e propriedades dentro das classes envolvidas.
+
+				  
+
+
+				  ---> (verificado) verificar se o metodo Expressao.ExtraiExpressoes(), retorna uma expressão contendo em seus Elementos as expressoes, ou retorna uma lista de expressoes.
+										---> para o caso interessante, propriedades/metodos aninhados, recebe uma lista de expressoes contendo ExpressaoObjeto, e ExpressaoChamadaDeFuncao:
+										no metodo Expressao.ProcessamentoPropriedesEMetodosAninhados(), retorna as expressoes de objeto e de chamada, como sub-expressoes, da classe currente.
+
+
+				
+				
+				PARA TARDE:
+					----> (feito, testado) INCLUIR NO ProcessadorID.InitMapeamento(), uma sequencia para propriedades aninhadas, e verificar se ha uma sequencia de metodos aninhados.
+					----> (a fazer) verificar se expressoes aninhadas (com operador "."), são processadas no avaliador de expressões EvalExpression.Eval().
+
+				    ----> pronto para a proxima atividade: compilação de chamada de metodos, propriedades aninhadas.
+								---> fixado um erro que definia como handler uma atribuição de variável o mesmo handler de propriedades/metodos aninhados.
+								---> testes falha no metodo handler da propriedade aninhada: chegou ao handler correto, mas o Expressao.ExtraiExpressoes() retornou uma lista de expressões nula...
+											---> utilizando o construtor de Expressao, em vez do metodo Expressao.ExtraiExpressao(), a sequencia foi reconhecida!
+														---> (codificado) mudar o metodo Expressao.ExtraiExpressao() para construtor de Expressao, nos metodos handler compiladores.
+
+								---> cenario de teste 1, para propriedades aninhadas, obteve êxito.
+
+								---> (codificado) codificar cenario de teste 2, para metodos aninhados.
+														---> testes, falha na obtencao de metodo aninhado: nao está reconhecendo a chamada de funcao da expressao. fixado, nao havia previsao para parametros= numeros, na obtencao de funcao compativel para a chamada de funcao.
+								---> cenario de teste 2, para metodo aninhado, obteve êxito.
+
+
+
+			Resumo do dia: (andamento do projeto)
+				---> atualizado os handlers para propriedades/metodos aninhados, para utilizar as funcionalidades de expressões aninhadas no construtor de Expressao(). 
+				---> atualização do mapeamento de instrucoes na classe ProcessadorID, para conter handler para propriedades aninhados, e handler metodos aninhados.
+				---> atualizacao de chamadas de funções/metodos, para efetuar processamento padronizado de expressão container, para instrucao de chamada, para passar dados para o processamento de instrucoes.
+				---> codificacao de classe de teste para compilação de expressões com propriedades/metodos aninhados ("a.b=1", "a.funcaoB(1)").
+				---> testes com êxito para propriedades/metodos aninhados.										
+___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 01.09:
+
+		-----> fixar o problema de sequencias id nao tratadas. Aparentemente, o metodo Resolve() retorna a instrucao tratada no escopo correto, pois registra o processador id que gerou a ocorrencia.
+		mas do jeito que estava, a cada compilacao, de um novo processador id, inicializava um objeto de sequenciaNaoTratada. 
+					-----> (codficado) incluir no objeto de sequencia nao tratada, um comando para limpar a lista de instrucoes nao tratadas, quando conseguir tratar a instrucao nao tratada.
+					-----> uma tentativa de nao instanciar um objeto de tratamento de sequencias id, foi criar um objeto estatico, que é visível para todos processador ids.
+
+
+
+		---> testes ante a modificacao do codigo, verificar se nao quebrou, a extração de classes entrou em loop infinito! fixado, o resolvedor de sequencias nao tratadas chamava toda vez, para cada compilação do codigo.
+					----> o problema é: uma instrucao nao tratada, entre as instrucoes de uma funcao, como recuperar e inserir a sequencia para dentro do método?
+					----> uma das solucoes implementada, recorre ao nao tratamento de instrucoes do corpo de uma funcao.
+					----> outra das soluções implementada, ocorre depois de uma classe ser processada.
+								--> mas nao está muito claro como e o quê registrar como sequencia id. Quais outros tipos de erro podem ocorrer por força de posição no código?
+
+			---> testes de classe para verificar se o codigo nao quebrou, ante a codificacao do sistema de sequencias nao tratadas.
+					---> testes de classe, sem utilizacao do sistema de sequencias nao tratadas, obteve êxito.
+					---> a questao é que a instrucao do corpo da funcao classeA(){a=1;}, NAO está sendo registrada, pois a definicao do objeto "a" está após a definicao da funcao.
+								---> nao está sendo registrado porque o escopo utilizado no processamento é o escopo do processador, que está ligado nos tokens do corpo da funcao.
+
+
+
+    			   ---> o processamento de sequencias nao tratadas, se faz quando todo o escopo do codigo estiver completamente formado; 
+						tenta resolver problemas de instrucoes de expressao com objetos nao estanciados, por causa da posição da instanciacao estiver após o codigo da expressao.
+
+				   ---> sistema de recuperacao de instancias codificado, testado com êxito.
+
+				   
+
+		Resumo do dia:
+				---> planejamento, codificacao, e teste de um sistema de recuperacao de sequencias id nao tratadas por problemas de utilização do id antes da instanciacao deste id.
+
+
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 02.09:
+	
+	Atividades do Dia Realizada:
+		---> testes para execução de programas orquidea, utilizando classes com funcoes que entram no calculo de chamadas de funcao, ou instruções orquidea.
+					--> testes, falha na execução da função que entra no cálculo do comando que se quer validar.
+									---> (fixado) verificando o codigo do construtor de Expreesao, não está incluindo o operador "." (dot). em propriedades/metodos aninhados.
+									---> codificado funcionalidade no metodo de eliminacao de redundancias, para eliminar expressoes e funcoes repetidas.
+									---> a falha esta no reconhecimento da sequencia de propriedades aninhadas: há confusão de  "ID ID = ID.ID( ",  com  "ID = ID.ID".
+												---> nao está errado, o correto é mesmo o "ID ID = ID.ID( ", pois a sequencia em questao: int "c= objetoA.funcaoA(" , o handler estava setado erradamente, para a sequencia id em questão.
+												---> mais um case para construtor de Expressao(): definição de variavel, com atribuicao aninhado.
+												---> (fixado) a construcao da expressão aninhada em questão. 
+					
+					--> verificar se o processamento de atribuicao de variaveis, se esta utilizando a expressao correta, na instrucao Atribuicao da VM.
+					
+
+
+					--> a instrucao "create" foi testada, mas no caso do teste, falhou, exigindo correções.... porque no caso do teste anterior, havia parâmetros, e no teste currente,
+					    a instrucao nao tinha parâmetros.
+										----> para classes construidas com codigo orquidea, nao registra os construtores. (fixado).
+										----> nao havia previsao para construtores com codigo orquidea... (fixado, aguardando testes).
+
+										---> (Planejamento, codificado, A TESTAR) como criar um objeto orquidea, que tenha inicializado o seu construtor?
+													---> é obtido a classe, do repositorio de classe, executa o construtor, e adiciona as propriedades da classe, ao objeto criado.
+													---> é obtida valores de propriedade, no escopo da classe, que contém as propriedades da classe, e se executar uma função, o registro da propriedade estará nesse escopo.
+													---> o escopo da classe contém as propriedades da classe, se no construtor referenciar pelo escopo da classe, vai obter esta lista de propriedades.
+
+
+										---> (verificado, fixado, testado)  verificar o por que as propriedades da classe estão no escopo principal. As propriedades da classe deve estar apenas no escopo da classe.
+													---> regressao para o cenario de testes de Teste de Processamento de Classes, para verificar se as propriedades da classe estão "vazando" para o escopo principal. parece um problema de vazamento de referencia (passagem por referencia).
+																	---> verificado, há vazamento de propriedades e metodos para o escopo principal. verificado que o vazamento se dá no reprocessamento do escopo, para corrigir problemas de instanciacao/atribuicao, ou devido ao posicionamento no codigo.
+																	---> era um problema de ponteiros de referencia, nas classes Escopos e TabelaDeValores.
+
+
+					---> (codificado, teste junto com a teste do construtor) codificar para inicializar as propriedades de uma classe com um valor "null", quando chamar um construtor da classe.
+					
+					---> (FIXAR) a ultima verificacao de processmento de classes, houve problemas na instanciação de classes que herdam interfaces.
+					
+					---> ao terminar o teste com construtores, transferir o metodo Funcao.Instanciacao() para a classe Objeto.
+
+					---> fixando erros de chamada de metodo, que para objetos importados, precisa de um objeto para fazer a invocação do método.
+
+
+	Resumo do dia até agora:
+					---> resolvido a chamada de construtores orquidea. Registro, Execucao da função construtor, acesso às propriedades da classe. Aguardando testes.
+					---> instanciação de objetos, atraves do escopo da classe a que pertence o objeto.( instrucao "create").
+					---> resolvido chamadas de método, para objetos importados, que precisam de um valor ("caller") para executar um método de classe importada.
+
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 03.09:
+	
+	Atividades do Dia Realizadas:
+				---> fixado o erro de nao processamento de interaces, e de interfaces presentes em classes.
+							---> instanciacao de objeto em teste bem sucedido. O objeto é construido, e com um construtor da classe, implicita na instrucao "create".
+
+				---> durante o teste de construtores e da instruação "currente", constatou-se que a instrucao "Atribuicao", para o caso de definicao, quebrou!.
+							---> para continuar os testes de classes (compilação e execução), é cruscial fixar a instrução "Atribuicao".
+
+				---> na instrucao atribuicao, não há na estrutura de dados previsão para o campo do objeto a modificar. Pode estar no aninhamento, como a expressao de indice 1 (indice 0 é o objeto inicial da atribuicao, ou seja o objeto que tem o campo a ser atribuido).
+
+________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Daily Scrum 08.09:
+	
+	Atividades do Dia Realizadas:
+				
+					---> codificacao de um novo tipo de expressao, ExpressaoChamadaDeMetodo: metodo de reconhecer a expressao, e metodo para processamento dos elementos da expressao.
+									---> modificacao do handler de ProcessadorID.ChamadaAMetodo().
+									---> criação de novo tipo de instrucao, chamada a metodo instrucao, mas a codificar o metodo que implementa a instrucao.
+											---> codificado o metodo ToString() para a expressao chamada de metodo.
+
+									---> codificado a avaliacao da expressao, na classe EvalExpression.
+
+					----> codificacao de um novo tipo de expressao, ExpressaoPropriedadesAninhadas: metodo para reconhecer a expressao, e metodo para processamento dos elementos da expressao.
+												---> codificado o metodo ToString() para a expressao  ExpressaoPropriedadesAninhadas.
+
+									---> (modificado) do handler de ProcessadorID.AtribuicaoPropriedadeAninhada.
+									---> (codificado) a avaliação da expressão, na classe EvalExpression.
+
+					---> classe Funcao, remoção da lista de variaveis locais e stack, a serem substituida por um objeto escopo.
+
+		O que falta:
+  				       
+					---> construcao de instrucao ChamadaMetodo, e modificacao na instrucao Atribuicao.
+					---> testes para a ChamadaDeMetodo e atribuicaoPropriedadesAninhadas.
+									---> ante a modificacao do codigo nos locais onde os novos tipos de expressao estao codificados, foi testado para classe de testes de expressoes.
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Daily Scrum 09.09:
+	
+	Atividades do Dia Realizadas:
+					---> teste para uma expressão de atribuicao de propriedade aninhadas, obteve êxito.
+					---> (fixado, havia erro na execução de função/método, no carregamento de parâmetros) teste para expressão com pontos flutuantes, falha: encontra 0 quando o esperado é 2.2f.
+					---> testes para expressões com aninhamento, fixado, testado.
+
+					(codficado, aguardando testes)
+										---> testes para chamadaDeMetodo, falha na obtencao dos parametros da chamada.
+										---> nao está reconhecendo a sequencia de id, era para ser chamada de metodo, mas esta retornando propriedades ininhadas.
+										---> encontrado um novo tipo de sequencia id: atribuicao com chamada de metodo (com inicializacao ou nao).
+													---> mapeamento feito, para um novo handler.
+																	----> (codificado) o metodo handler para a nova sequencia id.
+																	----> (codificado) a instrucao da nova sequencia id, como uma atribuicao (instrucao Atribuicao).
+																	----> modfificado a instrucao para modificar propriedade de um objeto.
+
+
+					---> (testado) modificacao na estrutura de dados formados por expressões, continha uma expressao a mais, quando a expressao era aninhada.
+
+					---> codificar na instrucao, o caso de expressoesPropriedadesAninhadas.
+									---> codificando a instrucao Atribuicao, com cenario de teste de TestesClassesCompilacaoExecucao.
+
+					---> com visao mais clara da construcao de Expressoes, foi unificado os handlers de Atribuicao de Objetos, e Atribuicao de propriedades estaticas.
+
+					---> TESTAR a formação de Expressoes.
+									---> teste mais simples, com atribuicao e inicializacao, teve êxito.
+									---> teste com atribuicao sem inicializacao, teve êxito.
+									--->  (CODIFICAR) novos testes para Atribuicao: atribuicao com acessor, atribuicao de propriedade estática.
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 10.09:
+	
+	Atividades do Dia Realizadas:
+					---> fixando o metodo Expressao.GetTipo(), está confuso em logica de programacao.
+									---> testes, o metodo Expressao.GetTipo() até os presente testes, esta trabalhando corretamente.
+
+					---> testes para expressoes obteve êxito, mas a instrucao Create() não está criando as propriedades da classe, para um objeto desta classe.
+									--->(fixado) investigando, a criacao de uma propriedade da classe nao está sendo feita!. Metodo handler: Atribuicao está quebrado! (fixado, houve confusao entre o indice dos tokens e o indice da expressao formada).
+															---> testes para atribuicao com acessor, obteve êxito. Faltando testes para atribuicao de propriedade estática.
+					---> testes para propriedades aninhadas, falha no cálculo da expressao aninhada.
+									---> a fixar nao o calculo da expressao aninhada, mas na composicao da expressao aninhada, está como uma sub-expressao da expressao principal. A expressao aninhada deveria ser a expressao principal.
+									---> falha ao calcular a expressao aninhada, devidamente referenciada. O metodo EvalExpression.Eval() não está calculando devidamente a expressao aninhada.
+
+					---> modificacao para o caso em que o processamento de tipos de processamento falha. os metodo atualizadores retorna true se a operação foi válida, false se não.
+									---> (fixado, o processamento de expressoes objeto retornava false mesmo quando a atualizacao fosse bem sucedida) testes de expressoes, ante a modificacao do codigo, falha no construtor de expressoes, para uma expressao definida no cenario do teste.
+									---> testes de expressoes, obteve êxito.
+
+					---> (fixar) o calculo de expressoes aninhadas, no metodo EvalExpression.Eval().
+									---> (fixado, aguardando testes) erro na formacao da expressao aninhada. na malha do processamento, estava considerando o campo do objeto, como um objeto (que de fato é) registrado no escopo, o que nao está correto.
+
+
+					---> UM INSIGHT! analisando a construcao de Expressoes, pode-se projetar uma instrucao que receba sequencias id que nao estao previstas no mapeamento,
+					mas que forma uma expressao valida: a codificacao é simples: na malha do CompileEscopos(), quando nao reconhecer uma sequencia id,
+					fazer uma chamada para o handler que analisa se a sequencia id forma uma expressao, se formar, constroi uma instrucao, que simplesmente chama o metodo EvalExpression.Eval(),
+					que processa a expressao válida. Seria como codificar em Python: 1+2, e o interpretador retorna: 3, mas nao é inutil, pois pode haver expressoes como: funcaoA(1)+3+ funcaoB(2),
+					que pode alterar variaveis processada dentro das chamadas das funcoes.
+									---> mudança aprovada. implementacao a ser feita, DEPOIS que terminar testes de expressoes de Programacao Orientada a Objeto..,
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Resumo da semana (controle do andamento do projeto):
+					
+					---> criado duas novas expressoes: ChamadaMetodo, AtribuicaoPropriedadesAninhadas, que completa a analise de expressoes para Programacao Orientada a Objetos.
+					---> fixado o metodo Expressao.GetTipoExpressao(), para incluir as expressoes formadas, o que é útil quando o processamento das subs-expressoes termina, no construtor de Expressao,
+					---> término do construtor de Expressao, para compor com as subs-expressoes definidas, com funcionalidade de terminar a construcao, quando uma atualização termina sem o processamento devido.
+					----> testes de expressoes, excetuando expressoes ExpressaoChamadaMetodo, e AtribuicaoPropriedadesAninhadas.
+
+_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 11.09:
+	
+	Atividades do Dia Realizadas:
+					---> implementacao da instrucao expressao correta, como handler build, codigo de uma instrucao, e um processador para esta instrucao.
+								---> codificado cenario de teste para expressao correta.
+					---> IMPLEMENTAR: a instrucao ChamadaMetodo.
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 13.09:
+	Atividades Realizadas:
+
+					1- TESTES E FIXAR a funcionalidade ExpressaoCorreta.
+
+					----> (fixado) testes para expressoes corretas, falha no processamento da instrucao.
+								---> verificando, o tipo do operador está incompatível para a operação.
+								---> o processamento está ocorrendo sem erros fatais, mas está calculando como resultado=4, quando o esperado resultado=2.
+											---> na segunda compilacao, para corrigir problemas de posicao de ids no codigo, está setando o valor de "a" como "a=b".
+															---> erro desconhecido, está setando o valor de "a" para "a=b".
+															---> apesar de deletar codigo antigo, continha a calcular valor="1", e o valor esperado="2".
+															---> o escopo principal nao está sendo atualizado pelo escopo da funcao.
+																			---> o valor de "a" não está sendo setado no processamento do codigo-base do cenario.
+																			---> houve um erro na logica do teste: estava apenas compilando, nao executando, entao, o valor de "a" não estava sendo setado para "a=1", 
+																				----> com a execução do programa VM, o valor de "a" encontrado foi setado corretamente.
+
+					---> (fixado) teste para captura da expressao correta, não como uma expressao a ser avaliada no teste, mas parte do programa VM.
+											---> teste para expressao correta, está sendo compilada como a instrucao esperada, mas o programa entrou em loop infinito!!!.
+															---> parece haver um vazamento de memoria, num instante o ip_contador está correto, após a avaliação da instrução, o ip_contador volta para o inicio.
+																				----> VERIFICAR de o ip_contador é um campo estático. VERIFICAOO, O ip_contador é estático!, por isso para avaliações de chamada de função, o ip_contador é setado para o começo da instrucao de inicio do corpo da funcao....
+																									---> fixado, o ip_contador foi definido agora como uma propriedade nao estática. É um erro difícil de detectar, pois só ocorre quando se executa uma função com corpo de instrucoes orquidea.
+
+
+
+					---> testes para avaliação de expressão correta, e de compilação de instrução InstrucaoExpressaoCorreta, obteve êxito.
+					---> funcionalidade de avaliação de instrução correta implementada.
+
+
+					---> (fixado) execução de todos testes para expressoes, falha em um dos testes.
+										----> falha no cenario testes_9: erro no processamento de instrução de "ExpressaoCorreta".
+															---> a segunda passada de compilação para os objetos, está retornando valores invalidos. fixado, o construtor de expressoes está setando o valor de um objeto com o metodo ConverParaNumero(), que estava incorreto, pois retornava um "Objeto", e não um "object".
+															---> passagem de parâmetros da função não estava sendo colocados no escopo da função.
+															---> os valores de objetos, estavam sendo obtidos da expressao, quando deveria serem obtidos do escopo.
+										---> fixado, testes de expressoes obteve êxito.
+
+					2- IMPLEMENTAÇÃO DA INSTRUÇÃO ChamadaMetodo.
+
+					3- TESTES PARA expressoes ExpressaoAninhadaPropriedades, e ExpressaoChamadaMetodo.
+								----> testes para "ExpressaoAninhadasPropriedades":
+										---> (fixado) testes para extração de ExpressaoAninhadasPropriedades, fixado. ERROS DE falha na implementação da regra de negócio.
+										---> (fixado) a avaliação da expressao "ExpressaoAninhadasPropriedades", na classe EvalExpression.
+										---> testes para expressao acima, obteve êxito.
+										---> modificacao no codigo, reteste para ExpressaoPropriedadesAninhadas, obteve êxito.
+
+
+								----> testes para "ExpressaoChamadaDeMetodo":
+										----> implementada a instrucao ChamadaDeMetodo, que estava "pendente".
+										----> (A avaliar a expressao de chamada de metodo).
+										----> falha testes, o processamento de ExpressoesChamadaMetodo não está funcionando adequadamente.
+										----> refatorado o metodo de processamento de uma expressao ExpressaoChamadaDeMetodo, agora comporta várias chamadas de funcao aninhadas, e várias propriedades aninhadas.
+
+
+				 (a testar)									
+				 4- TESTE para ExpressaoPropriedadesAninhadas (o código foi modificado, para compor outras expressoes, em conjunto),
+					TESTE para ExpressaoChamadaMetodo.
+
+_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 14.09:
+	Atividades Realizadas:
+				
+					1- (fixado) RETESTE PARA ExpressaoPropriedadesAninhadas, obteve êxito no procesamento, porem nao retornou o resultado esprerado.
+										---> (fixado), havia uma flag que deveria ser modificacão, mas estava setada para definição.
+										---> (fixado) (falha) teste ante a modificacao do codigo, falha, está retornando mensagem de erro, e não está sendo processada o valor da atribuição.
+
+										---> (fixado) (falha) falha na construcao de propriedade aninhada expressao.
+
+										---> (testado) teste para atribuicao de propriedades aninhadas, obteve êxito.
+
+
+					2- (a fixar) TESTE para ExpressaoChamadaDeMetodo. (fixado) (processamento da expressao chamadaAMetodoExpressao nao está sendo processada porque seus elementos = 0). No handler do compilador, estava adicionando nao o container de Expressao, mas o elemento que é a expressao chamada de metodo.
+
+										---> falha, a expressao contendo a chamada de metodo está sendo processado pelo compilador como uma expressao.
+														----> verificar se é caso de ExpressaoCorreta. 
+														----> ante a varios metodos serem chamados, fica dificil chegar à expressao ExpressaoChamadaMetodo. é preciso simplificar.
+																			----> verificando, o metodo handler está sendo ChamadaDeMetodoComAtribuicao(), que tinha a instrucao incorretamente setada como atribuicao.
+
+														----> testes, falha, não está retornando ou modificando a variavel que deveria retornar um valor.
+
+														----> verificando, o processamento de ExpressaoChamadaMetodo está funcionando, mas a extração de parâmetros da chamada, não.
+																			----> (fixado) o metodo da processamento de expressoes chamada de metodos, simplesmente não está adicionando a lista de parâmetros à chamada de função!
+
+														----> fixado, o handler de chamada de metodo está funcionando adequadamente, falta a avaliação da expressão na classe EvalExpression.
+																			----> a expressao chamada a metodo nao está sendo avaliada adequadamente, porque os elementos da expressao sao = 0, e é processada antes pelo método EvalExpression.Eval().
+
+
+
+									   ---> por equanto nao foi implementado a chamada de metodos aninhados, para simplificar os testes de chamada de metodo.
+________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 15.09:
+	Atividades Realizadas:
+						----> testes para chamadas de metodos, falha, não está inicializando o construtor, para setar as propriedades da classe.
+									  ---> verificando a instrucao create, é utilizado o construtor compativel. Verificar se os dados inicializados no construtor está sendo repassado ao objeto criado.
+													----> a questão é: no construtor, o que é modificado qual propriedade, onde estará esta propriedade?
+													----> verificando, a instrucao chamada não a create, mas expressaoValida! A instrucao build create está gerando uma exceção, então não está sendo executada!
+
+
+													---> a fixar o handler de create, está gerando exceção. fixado o metodo Funcao.Instancia().
+													---> há má formação na instrucao de "a=1", está como "a 1". Confirmado! no metodo ProcessadorID.Atribuicao(), não há construção da expressao: "a=1", para "a 1".
+																---> a expressaoElemento, esta somando 1 no indiceTokens do construtor, então pulava o operador "=".
+																---> VERIFICAR PORQUE "a" ESTÁ COMO ExpressaoElemento, deveria ser um objeto.
+																			----> (fixado) trata-se de erro de posição: o método "funcaoA()" está antes da propriedade "public int a".
+																							----> (DOCUMENTACAO) recomendar para colocar as propriedades de uma classe antes dos metodos da classe.
+
+
+
+						---> fixado, testado, teste para chamadas de metodos obteve êxito.
+													---> (fixado, a tabela de valores estava sendo copiada por referencia, modificava uma tabela, modificava também a outra tabela) os campos de um objeto criado estão duplicados.
+
+
+
+
+			----> CODIFICAR cenarios de teste para propriedades aninhadas com três propriedades aninhadas, e chamada a metodos com três métodos aninhados.
+			----> CODIFICAR cenarios de teste para validação e execução de classes.
+
+
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________

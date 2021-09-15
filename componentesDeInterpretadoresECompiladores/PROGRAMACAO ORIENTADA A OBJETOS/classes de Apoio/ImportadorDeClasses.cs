@@ -84,10 +84,10 @@ namespace parser
 
         }
 
-        private void RegistraConstrutoresImportados(ConstructorInfo[] construtoresImportados, Classe classeImportada)
+        private void RegistraConstrutoresImportados(ConstructorInfo[] infoConstrutores, Classe classe)
         {
-            classeImportada.construtores = new List<Funcao>();
-            foreach (var umConstrutor in construtoresImportados)
+            classe.construtores = new List<Funcao>();
+            foreach (var umConstrutor in infoConstrutores)
             {
                 ParameterInfo[] parametrosDoConstrutor = umConstrutor.GetParameters();
                 List<Objeto> parametros = new List<Objeto>();
@@ -101,105 +101,105 @@ namespace parser
                 else
                     acessor = "protected";
 
-                classeImportada.construtores.Add(new Funcao(umConstrutor.DeclaringType.Name, acessor, umConstrutor.Name, umConstrutor, umConstrutor.DeclaringType.Name, null, parametros.ToArray()));
+                classe.construtores.Add(new Funcao(umConstrutor.DeclaringType.Name, acessor, umConstrutor.Name, umConstrutor, umConstrutor.DeclaringType.Name, null, parametros.ToArray()));
             }
 
         }
 
-        private void RegistraMetodosImportados(MethodInfo[] metodosImportados, List<Funcao> metodosOrquidea)
+        private void RegistraMetodosImportados(MethodInfo[] infoMetodos, List<Funcao> metodos)
         {
             List<Objeto> parametros = new List<Objeto>();
-            foreach(MethodInfo umMetodo in metodosImportados)
+            foreach(MethodInfo umMetodo in infoMetodos)
             {
                 ObtemOsParametrosDoMetodoImportado(umMetodo, parametros);
                 string acessor = GetMethodAcessor(umMetodo);
 
               
                 // a função importada é adicionada na lista de métodos para a classe importada.
-                metodosOrquidea.Add(new Funcao(umMetodo.DeclaringType.Name, acessor, umMetodo.Name, umMetodo, umMetodo.DeclaringType.Name, parametros.ToArray()));
+                metodos.Add(new Funcao(umMetodo.DeclaringType.Name, acessor, umMetodo.Name, umMetodo, umMetodo.DeclaringType.Name, parametros.ToArray()));
 
 
             } // for x
         }
         
 
-        private void RegistraPropriedadesEstaticasImportadas(FieldInfo[] camposImportados, Classe classeImportada)
+        private void RegistraPropriedadesEstaticasImportadas(FieldInfo[] infoCampos, Classe classeImportada)
         {
-            for (int x = 0; x < camposImportados.Length; x++)
+            for (int x = 0; x < infoCampos.Length; x++)
                 // os campos estáticos são importador, para a lista de variáveis orquidea estáticas na classe a ser importada.
-                if (camposImportados[x].IsStatic)
+                if (infoCampos[x].IsStatic)
                 {
-                    string acessor = GetFieldAcessor(camposImportados, x);
-                    classeImportada.propriedadesEstaticas.Add(new Objeto(acessor, camposImportados[x].Name, classeImportada.GetNome(), null));
+                    string acessor = GetFieldAcessor(infoCampos, x);
+                    classeImportada.propriedadesEstaticas.Add(new Objeto(acessor, infoCampos[x].Name, classeImportada.GetNome(), null));
                 } // if
         }
 
-        private void RegistraCamposImportados(FieldInfo[] camposImportados, List<Objeto> propriedadesOrquidea)
+        private void RegistraCamposImportados(FieldInfo[] infoCampos, List<Objeto> propriedades)
         {
             // os campos não estáticos são importados, para a lista de propriedades orquidea.
-            for (int x = 0; x < camposImportados.Length; x++)
-                if (!camposImportados[x].IsStatic)
+            for (int x = 0; x < infoCampos.Length; x++)
+                if (!infoCampos[x].IsStatic)
                 {
-                    string acessor = GetFieldAcessor(camposImportados, x);
-                    propriedadesOrquidea.Add(new Objeto(acessor, camposImportados[x].FieldType.Name,camposImportados[x].Name,  null, false));
+                    string acessor = GetFieldAcessor(infoCampos, x);
+                    propriedades.Add(new Objeto(acessor, infoCampos[x].FieldType.Name, infoCampos[x].Name, null, null, isStatic: false));
                 } // if
         }
 
 
 
-        private void RegistraPropriedadesImportadas(PropertyInfo[] propriedadesImportadas, List<Objeto> propriedadesOrquidea)
+        private void RegistraPropriedadesImportadas(PropertyInfo[] infoPropriedades, List<Objeto> propriedades)
         {
             // as propriedades são importadas, para a lista de propriedades orquidea.
-            for (int x = 0; x < propriedadesImportadas.Length; x++)
-                propriedadesOrquidea.Add(new Objeto("public", propriedadesImportadas[x].PropertyType.Name, propriedadesImportadas[x].Name, null, false));
+            for (int x = 0; x < infoPropriedades.Length; x++)
+                propriedades.Add(new Objeto("public", infoPropriedades[x].PropertyType.Name, infoPropriedades[x].Name, null, null, isStatic: false));
         }
 
 
 
-        private void ObtemOsParametrosDoMetodoImportado(MethodInfo metodoImportado, List<Objeto> parametros)
+        private void ObtemOsParametrosDoMetodoImportado(MethodInfo infoMetodos, List<Objeto> parametrosMetodo)
         {
-            ParameterInfo[] parametrosInfo = metodoImportado.GetParameters();
+            ParameterInfo[] parametrosInfo = infoMetodos.GetParameters();
             for (int k = 0; k < parametrosInfo.Length; k++)
             {
                 string tipoParametroCasting = UtilTokens.Casting(parametrosInfo[k].ParameterType.Name);
-                parametros.Add(new Objeto("private", tipoParametroCasting, parametrosInfo[k].Name, null, false));
+                parametrosMetodo.Add(new Objeto("private", tipoParametroCasting, parametrosInfo[k].Name, null, null, isStatic: false));
             }
         }
 
-        private void ObtemOsParametrosDoMetodoImportado(ConstructorInfo construtorImportado, List<Objeto> parametros)
+        private void ObtemOsParametrosDoMetodoImportado(ConstructorInfo infoConstrutor, List<Objeto> parametrosConstrutor)
         {
          
             
-            ParameterInfo[] parametrosInfo = construtorImportado.GetParameters();
+            ParameterInfo[] parametrosInfo = infoConstrutor.GetParameters();
             for (int k = 0; k < parametrosInfo.Length; k++)
             {
                 string tipoParametroCasting = UtilTokens.Casting(parametrosInfo[k].ParameterType.Name);
-                parametros.Add(new Objeto("private", tipoParametroCasting, parametrosInfo[k].Name, null, false));
+                parametrosConstrutor.Add(new Objeto("private", tipoParametroCasting, parametrosInfo[k].Name, null, null, isStatic: false));
             }
         }
 
    
-        private string GetMethodAcessor(MethodInfo metodosImportados)
+        private string GetMethodAcessor(MethodInfo infoMetodo)
         {
 
             // obtem o tipo de acessor do método.
             string acessor = "";
-            if (metodosImportados.IsPublic)
+            if (infoMetodo.IsPublic)
                 acessor = "public";
             else
-            if (metodosImportados.IsPrivate)
+            if (infoMetodo.IsPrivate)
                 acessor = "private";
             else
                 acessor = "protected";
             return acessor;
         }
 
-        private string GetFieldAcessor(FieldInfo[] camposImportados, int x)
+        private string GetFieldAcessor(FieldInfo[] infoCampos, int x)
         {
             string acessor = "";
-            if (camposImportados[x].IsPublic)
+            if (infoCampos[x].IsPublic)
                 acessor = "public";
-            if (camposImportados[x].IsPrivate)
+            if (infoCampos[x].IsPrivate)
                 acessor = "private";
             return acessor;
         }

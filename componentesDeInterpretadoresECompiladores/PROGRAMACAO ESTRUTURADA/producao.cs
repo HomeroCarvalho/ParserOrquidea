@@ -69,11 +69,7 @@ namespace parser
                 (termoschave == null))
                 return;
 
-            if (nomeProd.Contains("while"))
-            {
-                int k = 0;
-                k++;
-            }
+         
 
             string maqEstadosNumaSoLinha = Utils.UneLinhasPrograma(maqDeEstados);
             this.maquinaDeEstados = maqEstadosNumaSoLinha.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();

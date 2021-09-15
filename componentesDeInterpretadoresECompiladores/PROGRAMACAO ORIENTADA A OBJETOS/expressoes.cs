@@ -13,17 +13,311 @@ using System.IO;
 namespace parser
 {
 
+    public class ExpressaoAtribuicaoPropriedadesAninhadas: Expressao
+    { 
+        // é preciso uma atribuicao para validar a atribuicao de propriedades aninhadas.
+        public Objeto objetoInicial;
+        public Expressao expresaoAtribuicao;
+        public List<Objeto> aninhamento;
 
 
+        public static bool IsProopriedadesAninhadas(Expressao exprssCurrente, Escopo escopo, int indexTokenObjeto)
+        {
+            Objeto objInicial = escopo.tabela.GetObjeto(exprssCurrente.tokens[indexTokenObjeto], escopo);
+            if (objInicial == null)
+                return false;
+            string nomePropriedade = exprssCurrente.tokens[indexTokenObjeto + 2].ToString();
+            if (objInicial.GetField(nomePropriedade) == null)
+                return false;
+
+            if (exprssCurrente.tokens.IndexOf("=") == -1)
+                return false;
+            return true;
+        }
+
+        public static bool AtualizaExpressao(Expressao exprssMain, Escopo escopo)
+        {
+            ExpressaoAtribuicaoPropriedadesAninhadas exprssProcessada = new ExpressaoAtribuicaoPropriedadesAninhadas();
+            exprssProcessada.aninhamento = new List<Objeto>();
+
+
+            exprssProcessada.tokens = exprssMain.tokens.ToList<string>();
+            exprssProcessada.indexToken = exprssMain.indexToken;
+
+            Objeto objInicial = null;
+
+            Classe classeAninhada = RepositorioDeClassesOO.Instance().ObtemUmaClasse(exprssProcessada.tokens[exprssProcessada.indexToken]);
+            if (classeAninhada != null) // objeto inicial é um objeto estático.
+            {
+                // obtem o objeto inicial, se o objeto nao tiver registro, é um objeto estático da classe.
+                string nomePropriedadeEstatica = exprssProcessada.tokens[exprssProcessada.indexToken].ToString(); // +1 do operador ".", +1 do nome daa classe contido no inicio da expressao.
+                objInicial = classeAninhada.propriedadesEstaticas.Find(k => k.GetNome() == nomePropriedadeEstatica); // obtem o objeto inicial, como sendo a propriedade estática.
+            }
+            else
+                objInicial = escopo.tabela.GetObjeto(exprssProcessada.tokens[exprssProcessada.indexToken], escopo); // obtem o objeto inicial, que faz a chamada de funcoes e propriedades aninhados.
+
+            exprssProcessada.objetoInicial = new Objeto(objInicial); // atribui ao objeto inicial, o objeto inicial da expressao.
+            exprssProcessada.indexToken += 2; // consome os tokens do objeto inicial, e do operador ".", utilizado para a referencia das propriedades/metodos aninhados.
+            exprssProcessada.aninhamento.Add(objInicial);
+
+
+
+            while ((exprssProcessada.indexToken < exprssProcessada.tokens.Count) &&
+                ((objInicial.GetField(exprssProcessada.tokens[exprssProcessada.indexToken]) != null) || (exprssProcessada.tokens[exprssProcessada.indexToken] == "."))) // faz uma varredura, obtendo chamadas de funções, e objetos, aninhados, e de tokens "." dot.
+            {
+
+                if (objInicial.GetField(exprssProcessada.tokens[exprssProcessada.indexToken])!=null)
+                {   // o token é um campo do objeto currente de propriedade aninhada.
+                    if (objInicial == null)
+                    {
+                        if (ExpressaoObjeto.AtualizaExpressao(escopo, exprssProcessada.tokens[exprssProcessada.indexToken], exprssProcessada))
+                            objInicial = ((ExpressaoObjeto)exprssProcessada.Elementos[exprssProcessada.Elementos.Count - 1]).objeto;
+                    }
+                    if (Objeto.GetCampo(objInicial.GetTipo(), exprssProcessada.tokens[exprssProcessada.indexToken]) != null) //indices: +1 do token nome do objeto, 1 do operador ".".
+                    {
+                        string nomeObjetoPrincipal = objInicial.GetNome();
+                        objInicial = Objeto.GetCampo(objInicial.GetTipo(), exprssProcessada.tokens[exprssProcessada.indexToken]); // obtem o campo aninhado.
+         
+                        
+                        if (objInicial == null)
+                        {
+                            UtilTokens.WriteAErrorMensage(escopo, "propriedade: " + exprssProcessada.tokens[exprssProcessada.indexToken] + " nao pertence a classe: " + objInicial.GetTipo() + ", erro na expressao: " + Utils.UneLinhasPrograma(exprssProcessada.tokens) + ".", exprssProcessada.tokens);
+                            return false;
+                        }
+
+                        exprssProcessada.aninhamento.Add(objInicial);
+                        ExpressaoObjeto.AtualizaExpressao(escopo, objInicial.GetNome(), exprssProcessada);
+                        
+                        
+                        exprssProcessada.indexToken += 2; // +1 do nome do campo do objeto, +1 do token operador.
+                    }
+                }
+                else
+                if (exprssProcessada.tokens[exprssProcessada.indexToken] == ".")
+                    exprssProcessada.indexToken += 1;  // o token eh um ".", separador de propriedades/metodos aninhados.
+                else
+                    UtilTokens.WriteAErrorMensage(escopo, "propriedade/metodo aninhado: " + exprssProcessada.tokens[exprssProcessada.indexToken] + ", na expressao: " + Util.UtilString.UneLinhasLista(exprssProcessada.tokens.ToList<string>()) + " nao reconhecida.", exprssProcessada.tokens.ToList<string>());
+               
+            } // while
+
+            exprssProcessada.indexToken -= 2;
+            if (exprssProcessada.indexToken < exprssProcessada.tokens.Count)
+            {
+                int indiceAtribuicao = exprssProcessada.tokens.IndexOf("=") + 1;
+                List<string> tokensAtribuicao = exprssProcessada.tokens.GetRange(indiceAtribuicao, exprssProcessada.tokens.Count - indiceAtribuicao);
+
+                if (tokensAtribuicao.Count > 0)
+                {
+                    Expressao exprssAtribuicao = new Expressao(tokensAtribuicao.ToArray(), escopo); // compoe a expressao de atribuicao.
+                    if (exprssAtribuicao != null)
+                    {
+                        exprssProcessada.expresaoAtribuicao = exprssAtribuicao;
+                        exprssProcessada.indexToken += tokensAtribuicao.Count + 2;  // +1 do parenteses abre, +1 do parenteses fecha.
+                    } // if
+                    else
+                    {
+                        UtilTokens.WriteAErrorMensage(escopo, "expressao de atribuicao de propriedades aninhadas inexistente.", exprssMain.tokens);
+                        return false;
+                    } // else
+                } // if
+            } // if
+            exprssMain.Elementos.Add(exprssProcessada);
+            exprssMain.indexToken = exprssProcessada.indexToken;
+
+            return true;
+        }
+
+        public override string ToString()
+        {
+            if ((aninhamento == null) || (aninhamento.Count == 0))
+                return "";
+            string str = "";
+            for (int x = 0; x < aninhamento.Count - 1; x++)
+                str += aninhamento[x].ToString() + ".";
+            str += aninhamento[aninhamento.Count - 1].ToString();
+            if (expresaoAtribuicao != null)
+                str += "= " + expresaoAtribuicao.ToString();
+            return str;
+        }
+    }
+    public class ExpressaoChamadaDeMetodo : Expressao
+    {
+        public Objeto objectCaller;
+        public List<ExpressaoChamadaDeFuncao> chamadaDoMetodo;
+        public ExpressaoAtribuicaoPropriedadesAninhadas proprieades;
+        public static bool IsChamadaDeMetodo(Expressao exprssCurrente, Escopo escopo, int indexTokenObjeto)
+        {
+            
+
+            if ((indexTokenObjeto + 2) > exprssCurrente.tokens.Count)
+                return false;
+
+            Objeto objInicial = escopo.tabela.GetObjeto(exprssCurrente.tokens[indexTokenObjeto], escopo);
+            if (objInicial == null)
+                return false;
+
+            
+            string nomeMetodo = exprssCurrente.tokens[indexTokenObjeto + 2];
+            string nomeClasseDoMetodo = objInicial.GetTipo();
+            Classe classeDoMetodo = RepositorioDeClassesOO.Instance().ObtemUmaClasse(nomeClasseDoMetodo);
+         
+
+            if (classeDoMetodo == null)
+                return false;
+
+            if (classeDoMetodo.GetMetodos().Find(k => k.nome == objInicial.GetTipo()) == null) 
+                return false;
+
+            int firstParenteses = exprssCurrente.tokens.IndexOf("(");
+            if (firstParenteses == -1)
+                return false;
+
+            List<string> tokensParametros = UtilTokens.GetCodigoEntreOperadores(firstParenteses, "(", ")", exprssCurrente.tokens);
+            if (tokensParametros == null)
+                return false;
+
+            tokensParametros.RemoveAt(0);
+            tokensParametros.RemoveAt(tokensParametros.Count - 1);
+
+
+            List<Expressao> parametros= Expressao.Instance.ExtraiExpressoes(escopo, tokensParametros);
+            if (UtilTokens.ObtemFuncaoCompativelComAChamadaDeFuncao(nomeMetodo, parametros, escopo) != null)
+                return true;
+            return false;
+           
+        }
+        public static bool AtualizaExpressao(Escopo escopo, Expressao exprssMain)
+        {
+            // template: obj . metodo(x,...);
+            ExpressaoChamadaDeMetodo exprssCurrente = new ExpressaoChamadaDeMetodo();
+            
+            exprssCurrente.indexToken = exprssMain.indexToken;
+            exprssCurrente.tokens = exprssMain.tokens.ToList<string>();
+
+
+
+         
+
+            // obtem o nome do objeto que chama os metodos, e guarda na proprieddade [objCaller]
+            string nomeObjeto = exprssCurrente.tokens[exprssCurrente.indexToken];
+            Objeto objectCaller = escopo.tabela.GetObjeto(nomeObjeto, escopo);
+            if (objectCaller == null)
+                return false;
+
+
+            exprssCurrente.proprieades = new ExpressaoAtribuicaoPropriedadesAninhadas();
+            exprssCurrente.chamadaDoMetodo = new List<ExpressaoChamadaDeFuncao>();
+            exprssCurrente.objectCaller = objectCaller;
+
+
+            string nomeMetodoInicial = exprssCurrente.tokens[exprssCurrente.indexToken + 2];
+            string nomeClasseCurrente = objectCaller.GetTipo();
+
+
+
+            exprssCurrente.indexToken += 2; // consome os tokens do objeto inicial, e do operador ".", utilizado para a referencia das propriedades/metodos aninhados.
+            int indexTokenPropriedades = exprssCurrente.indexToken;
+           
+          
+            while ((exprssCurrente.indexToken<exprssCurrente.tokens.Count) &&
+                (
+                (ExpressaoChamadaDeFuncao.IsChamadaDeFuncao(exprssCurrente.tokens[exprssCurrente.indexToken], nomeClasseCurrente, escopo)) ||
+                (objectCaller.GetField(exprssCurrente.tokens[exprssCurrente.indexToken]) != null) ||
+                (exprssCurrente.tokens[exprssCurrente.indexToken] == "."))) // faz uma varredura, obtendo chamadas de funções, e objetos, aninhados, e de tokens "." dot.
+            {
+                if (ExpressaoChamadaDeFuncao.IsChamadaDeFuncao(exprssCurrente.tokens[exprssCurrente.indexToken], nomeClasseCurrente, escopo))
+                {
+                    int firstParenteses = exprssCurrente.tokens.IndexOf("(");
+            
+                    
+                    List<string> tokensParametros = UtilTokens.GetCodigoEntreOperadores(firstParenteses, "(", ")", exprssCurrente.tokens);
+                    tokensParametros.RemoveAt(0);
+                    tokensParametros.RemoveAt(tokensParametros.Count - 1);
+
+
+
+                    List<Expressao> parametros = Expressao.Instance.ExtraiExpressoes(escopo, tokensParametros);
+
+
+                    // o token é de uma chamada de função.
+                    string nomeMetodo = exprssCurrente.tokens[exprssCurrente.indexToken];
+                    Funcao metodo = UtilTokens.ObtemFuncaoCompativelComAChamadaDeFuncao(nomeMetodo, parametros, escopo);
+                    if (metodo == null)
+                    {
+                        UtilTokens.WriteAErrorMensage(escopo, "erro no processament de uma expressao que contem uma chamada de metodo. ", exprssCurrente.tokens);
+                        return false;
+                    }
+
+
+                    ExpressaoChamadaDeFuncao chamadaFuncao = new ExpressaoChamadaDeFuncao(metodo);
+                    chamadaFuncao.expressoesParametros.AddRange(parametros);
+                    exprssCurrente.chamadaDoMetodo.Add(chamadaFuncao);
+
+
+
+                    nomeClasseCurrente = metodo.tipoReturn; // seta o nome da classe para validar a próxima chamada de função.
+
+                    exprssCurrente.indexToken += tokensParametros.Count + 2; // +1 do parenteses abre da interface da chamada de funcao, +1 do parenteses fechada.
+
+                }
+                else
+                if (objectCaller.GetField(exprssCurrente.tokens[exprssCurrente.indexToken]) != null)
+                {
+                    string nomeCampo = exprssCurrente.tokens[exprssCurrente.indexToken];
+                    exprssCurrente.proprieades.aninhamento.Add(objectCaller.GetField(nomeCampo));
+                    objectCaller = objectCaller.GetField(nomeCampo);
+
+                    nomeClasseCurrente = objectCaller.GetTipo(); // seta o nome da classe para validar a próxima chamada de função.
+                    exprssCurrente.indexToken++;
+                }
+                else
+                if (exprssCurrente.tokens[exprssCurrente.indexToken] == ".") 
+                {
+                    exprssCurrente.indexToken++;
+                }
+                else
+                {
+                    UtilTokens.WriteAErrorMensage(escopo, "erro em uma expressao de chamada de metodo. ", exprssCurrente.tokens);
+                    return false;
+                }
+            }
+
+
+            exprssMain.Elementos.Add(exprssCurrente);
+            exprssMain.indexToken = exprssCurrente.indexToken;
+            return true;
+        }
+
+
+        public override string ToString()
+        {
+            string str = this.objectCaller.GetNome()+".";
+
+
+            if ((this.proprieades != null) && (this.proprieades.aninhamento != null)) 
+                for (int x = 0; x < this.proprieades.aninhamento.Count; x++)
+                    str += this.proprieades.aninhamento[x].GetNome() + ".";
+            
+            
+            if (this.chamadaDoMetodo != null)
+            {
+                for (int x = 0; x < this.chamadaDoMetodo.Count - 1; x++)
+                    str += this.chamadaDoMetodo[x].ToString() + ".";
+                str += this.chamadaDoMetodo[chamadaDoMetodo.Count - 1].ToString();
+            }
+            return str;
+        }
+    }
 
     /// <summary>
     /// Uma expressão que encapsula uma chamada de função, tendo como parâmetros as expressões as sub-expressões.
-    /// O resultado é liso! faz os cálculos como se os parâmetros não sejam objetos, mas expressões que são avaliadas,
+    /// Faz os cálculos como se os parâmetros não sejam objetos, mas expressões que são avaliadas,
     /// o que representa mais simplicidade e robustez do código.
     /// </summary>
     public class ExpressaoChamadaDeFuncao : Expressao
     {
         public Funcao funcao { get; set; }
+
         public List<Expressao> expressoesParametros { get; set; }
         public ExpressaoChamadaDeFuncao(Funcao umaFuncao) : base()
         {
@@ -31,6 +325,79 @@ namespace parser
             this.Elementos = new List<Expressao>();
             this.expressoesParametros = new List<Expressao>();
 
+        }
+
+
+        public static bool IsChamadaDeFuncao(string nomeFuncao, string nomeClasseDaFuncao, Escopo escopo)
+        {
+            if ((escopo.tabela.IsFunction(nomeFuncao, escopo) == null) && (nomeClasseDaFuncao != null)) 
+            {
+                // trata do caso de programacao orientada a objetos, onde funcões estão dentro de metodos.
+                Classe classe = RepositorioDeClassesOO.Instance().ObtemUmaClasse(nomeClasseDaFuncao);
+                if (classe != null)
+                    return classe.GetMetodos().Find(k => k.nome == nomeFuncao) != null;
+            }
+            else
+               // trata do caso de programacao estruturada, onde funcoes estao fora das classes.
+               return (escopo.tabela.IsFunction(nomeFuncao, escopo)) != null;
+
+            return false;
+        }
+
+        public static bool AtualizaExpressao(Escopo escopo, Expressao expressaoCurrente)
+        {
+            try
+            {
+                string nomeMetodo = expressaoCurrente.tokens[expressaoCurrente.indexToken];
+                List<Expressao> expressaoParametros = new List<Expressao>();
+         
+
+                // retira os tokens da chamada de função.
+                List<string> tokensParametros = UtilTokens.GetCodigoEntreOperadores(expressaoCurrente.indexToken + 1, "(", ")", expressaoCurrente.tokens.ToList<string>());
+                if (tokensParametros == null)
+                {
+
+                    UtilTokens.WriteAErrorMensage(escopo, "Erro em chamda da função: " + nomeMetodo, expressaoCurrente.tokens);
+                    expressaoCurrente.indiceProcessamentoDaProximaExpressao = -1;
+                    return false;
+                }
+                else
+                // faz o processamento da interface de expressoes-parâmetros da chamada de função. exemplo: funcaoB(x+1,y*2) --> extrai duas expressões: "x+1", e "y*2.
+                if ((tokensParametros != null) && (tokensParametros.Count > 0))
+                {
+                    tokensParametros.RemoveAt(0); // retira o primeiro parenteses.
+                    tokensParametros.RemoveAt(tokensParametros.Count - 1); // retira o ultimo parenteses.
+
+                    List<Expressao> parametros = Expressao.Instance.ExtraiExpressoes(escopo, tokensParametros); //compoe uma lista de expressoes, a partir da lista de tokens calculada acima.
+                    
+                    Funcao funcaoValidada = UtilTokens.ObtemFuncaoCompativelComAChamadaDeFuncao(nomeMetodo, parametros[0].Elementos, escopo);
+                    if (funcaoValidada == null)
+                    {
+                        UtilTokens.WriteAErrorMensage(escopo, "funcao compativel com chamada de funcao: " + Utils.UneLinhasPrograma(expressaoCurrente.tokens) + " nao encontrada.", expressaoCurrente.tokens);
+                        return false;
+                    }
+                    else
+                    {
+                        ExpressaoChamadaDeFuncao exprssChamada = new ExpressaoChamadaDeFuncao(funcaoValidada);
+                        exprssChamada.expressoesParametros = parametros[0].Elementos;
+                        
+                        
+                        expressaoCurrente.Elementos.Add(exprssChamada); // adiciona a expressão função para a lista de expressões da expressao currente.
+                        expressaoCurrente.indexToken += 1 + 1 + tokensParametros.Count;
+                        expressaoCurrente.indiceProcessamentoDaProximaExpressao = expressaoCurrente.indexToken;
+
+
+                        return true;
+                    }
+                }//if
+            } 
+            catch
+            {
+                UtilTokens.WriteAErrorMensage(escopo, "Erro no processamento de uma chamada de função.", expressaoCurrente.tokens);
+                return false;
+                
+            }
+            return false;
         }
         public override object GetElemento()
         {
@@ -105,6 +472,67 @@ namespace parser
             return operador;
         }
 
+        public static bool isOperadorBinario(string tokenOperador, Escopo escopo, Expressao expressaoCurrente)
+        {
+            if (Expressao.linguagem.VerificaSeEhOperadorBinario(tokenOperador))
+            {
+
+
+                Operador operadorBinario = Operador.GetOperador(tokenOperador, expressaoCurrente.tipo, "BINARIO", linguagem);
+                if (operadorBinario != null)
+                    return true;
+                else
+                {
+                    if (tokenOperador == "=") // o operador "=" é universal, pertence a todas classes do repositorio.
+                        return true;
+
+                    UtilTokens.WriteAErrorMensage(escopo, "operador: " + tokenOperador + " para o tipo da expressão: " + expressaoCurrente.tipo + " nao encontrado.", expressaoCurrente.tokens);
+                    return false;
+                }
+
+            }
+            return false;
+
+        }
+
+        public static bool isOperadorUnario(string tokenOperador, Escopo escopo, Expressao expressaoCurrente)
+        {
+
+            if (Expressao.linguagem.VerificaSeEhOperadorUnario(tokenOperador))
+            {
+
+                Operador operadorUnario = Operador.GetOperador(tokenOperador, expressaoCurrente.tipo, "UNARIO", linguagem);
+                if (operadorUnario != null)
+                    return true;
+                else
+                {
+                    UtilTokens.WriteAErrorMensage(escopo, "operador: " + tokenOperador + " para o tipo da expressão: " + expressaoCurrente.tipo + " nao encontrado.", expressaoCurrente.tokens);
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        public static bool AtualizaExpressao(string nomeOperador, Expressao expressaoCurrente, Escopo escopo, string tipoOperador)
+        {
+            string tipoDaExpressao = GetTipoExpressao(expressaoCurrente, escopo);
+            Operador operador = Operador.GetOperador(nomeOperador, tipoDaExpressao, tipoOperador, Expressao.linguagem);
+            if ((operador == null) && (nomeOperador == "="))
+                operador = Operador.GetOperador("=", "int", "BINARIO", linguagem);
+            else
+                if (operador == null)
+                return false;
+            expressaoCurrente.Elementos.Add(new ExpressaoOperador(operador));
+            return true;
+        }
+
+        public static bool isOperador(string nomeOperador, Escopo escopo)
+        {
+            return escopo.tabela.GetOperadores().Find(k => k.nome.Equals(nomeOperador)) != null;
+        }
+
+
+
         public override string ToString()
         {
             if (this.operador != null)
@@ -122,6 +550,40 @@ namespace parser
             this.objeto = v; // constroi com uma referencia.
             this.Elementos = new List<Expressao>();
         }
+
+        public static bool IsExpressaoObjeto(Escopo escopo, string nomeObjeto)
+        {
+            // o token é nome de uma Variavel?
+            return (escopo.tabela.GetObjeto(nomeObjeto, escopo) != null);
+        }
+
+        /// <summary>
+        /// faz o processamento de objeto já definido no escopo.
+        /// </summary>
+        public static bool AtualizaExpressao(Escopo escopo, string nomeObjetoJaDefinido, Expressao expressaoCurrente)
+        {
+            try
+            {
+                // index+0--> nome do objeto,   index+1--> possivel operador de atribuicao "=".
+                Objeto obj1 = escopo.tabela.GetObjeto(nomeObjetoJaDefinido, escopo);
+                expressaoCurrente.Elementos.Add(new ExpressaoObjeto(obj1));
+                if (((expressaoCurrente.indexToken + 3) < expressaoCurrente.tokens.Count) && (expressaoCurrente.tokens[expressaoCurrente.indexToken + 2] == "="))
+                {
+                    string numero = expressaoCurrente.tokens[expressaoCurrente.indexToken + 3];
+                    object valorNumero = Expressao.Instance.ConverteNumeroParaObjeto(numero, escopo);
+                    if (valorNumero != null)
+                        obj1.SetValor(valorNumero);
+
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
         public override object GetElemento()
         {
             return objeto;
@@ -129,7 +591,10 @@ namespace parser
 
         public override string ToString()
         {
-            return objeto.GetNome();
+            if (objeto != null)
+                return objeto.GetNome();
+            else
+                return "object null";
         }
     }
 
@@ -141,6 +606,28 @@ namespace parser
             this.numero = numero;
             this.Elementos = new List<Expressao>();
         }
+
+        public static bool isNumero(string numero)
+        {
+            return Expressao.linguagem.VerificaSeEhNumero(numero);
+        }
+
+
+        public static bool AualizaExpressao(string numero, Expressao expressaoCurrente)
+        {
+            try
+            {
+                ExpressaoNumero numeroExpressao = new ExpressaoNumero(numero);
+                expressaoCurrente.Elementos.Add(numeroExpressao);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
         public override object GetElemento()
         {
             return numero;
@@ -160,6 +647,25 @@ namespace parser
             this.elemento = token;
         }
        
+
+        public static bool AtualizaExpressao(string nomeElemento, Expressao exprssCurrente)
+        {
+            try
+            {
+                Expressao expressaoElementoID = new ExpressaoElemento(nomeElemento);
+                expressaoElementoID.tipo = "string";
+                exprssCurrente.Elementos.Add(expressaoElementoID);
+
+                exprssCurrente.indiceProcessamentoDaProximaExpressao = exprssCurrente.indexToken;
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public override object GetElemento()
         {
             return elemento;
@@ -194,6 +700,39 @@ namespace parser
             return vetor;
         }
 
+        public static bool isExpressaoVetor(Escopo escopo, string nomeVetor)
+        {
+            return escopo.tabela.GetVetor(nomeVetor, escopo) != null;
+        }
+
+        public static bool AtualizaExpressao(Escopo escopo, string nomeVetor, Expressao expressaoCurrente)
+        {
+            try
+            {
+
+
+                Vetor vvt = escopo.tabela.GetVetor(nomeVetor, escopo);
+                ExpressaoOperadorMatricial operadorMatricial = (ExpressaoOperadorMatricial)Expressao.Instance.ExtraiOperadorMatricial(expressaoCurrente.tokens.ToArray(), escopo, ref expressaoCurrente.indexToken);
+                ExpressaoVetor expressaoVetor = new ExpressaoVetor(vvt, operadorMatricial);
+
+                expressaoCurrente.Elementos.Add(expressaoVetor);
+                if (((expressaoCurrente.indexToken + 2) < expressaoCurrente.tokens.Count) && (expressaoCurrente.tokens[expressaoCurrente.indexToken + 1] == "="))
+                {
+
+                    string numero = expressaoCurrente.tokens[expressaoCurrente.indexToken + 2];
+                    object valorNumero = Expressao.Instance.ConverteNumeroParaObjeto(numero, escopo);
+                    if (valorNumero != null)
+                        vvt.SetValor(valorNumero);
+
+
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         public override string ToString()
         {
@@ -210,7 +749,8 @@ namespace parser
     {
 
         public virtual object GetElemento() { return null; }
-        private static LinguagemOrquidea linguagem;
+        protected static LinguagemOrquidea linguagem;
+        private static Expressao InstanceSingleton;
 
         public Escopo escopoDaExpressao; // contexto-escopo onde a expressão está codificada.
         private List<string> codigo; // trecho de código onde está localizado a expressão.
@@ -221,24 +761,20 @@ namespace parser
 
 
 
-        public bool isModdfy = true; // otimização de expressão.
+        public bool isModify = true; // otimização de expressão.
         public bool isInPosOrdem = false;
 
         public List<string> MsgErros; // lista de erros encontrados no processamento da expressão.
         public List<Expressao> Elementos; // lista de expressões-elementos da expressão.
+
+
         public List<string> elementosNaoProcessados { get; set; }
-
-
         public List<string> tokens { get; set; } // tokens que compoe a expressão.
 
 
-        public PosicaoECodigo posicaoDaExpressao;  // posição da expressão no código.
+        public int indiceProcessamentoDaProximaExpressao = -1;
+        internal int indexToken = -1;
 
-
-
-        private static Expressao InstanceSingleton;
-
-        private int indiceProcessamentoDaProximaExpressao = -1;
         public static Expressao Instance
         {
             get
@@ -258,7 +794,7 @@ namespace parser
             this.MsgErros = new List<string>();
             if (linguagem == null)
                 linguagem = new LinguagemOrquidea();
-            this.isModdfy = true;
+            this.isModify = true;
             this.oldValue = null;
             this.tokens = new List<string>();
             this.elementosNaoProcessados = new List<string>();
@@ -275,7 +811,12 @@ namespace parser
         /// constroi a expressão, sem colocá-la em Pos-Ordem.
         public Expressao(string[] tokens, Escopo escopo)
         {
-        
+            if ((tokens.Length>=3) && (tokens[0]=="a") && (tokens[1]=="=") && (tokens[2]=="1"))
+            {
+                int k = 0;
+                k++;
+            }
+            
             if (escopo == null)
                 return;
 
@@ -295,270 +836,167 @@ namespace parser
                 return;
             }// if
 
-            this.tipo = GetTipoExpressao(tokens, escopo, this.tipo);
-            int indiceUltimoVetorAProcessar = -1;
-            escopoDaExpressao = escopo;
-            for (int i = 0; i < tokens.Length; i++)
+            try
             {
+                escopoDaExpressao = escopo;
+                for (indexToken = 0; indexToken < tokens.Length; indexToken++)
+                {
+                    bool resultAtualizacao = true;
+                    this.tipo = GetTipoExpressao(this, escopo);
 
-
-                // ______________________________________________________________________________________________________________________________________________________
-                // token de bloco, termina de processar os elementos da expressao currente.
-                if (tokens[i] == "{")
-                {
-                    this.indiceProcessamentoDaProximaExpressao = -1;
-                    return;
-                }
-                else
-                //_________________________________________________________________________________________________________________________________________________________
-                // token de termino de linha, termina o processamento dos elementos da expressao currente.
-                if (tokens[i] == ";")
-                {
-                    this.indiceProcessamentoDaProximaExpressao = i;
-                    return;
-                }
-                else
-            //_______________________________________________________________________________________________________________________________________________________________
-            // o token é um nome de função? (regra de uma chamada de um função).
-            if (escopo.tabela.IsFunction(tokens[i], escopo) != null)
-                {
-                    Funcao funcao = escopo.tabela.GetFuncao(tokens[i], this.tipo, escopo);
-                    if (funcao == null)
+                    if (((indexToken + 1) < tokens.Length) && (tokens[indexToken + 1] == ".") && (ExpressaoChamadaDeMetodo.IsChamadaDeMetodo(this, escopo, indexToken)))
+                        resultAtualizacao = ExpressaoChamadaDeMetodo.AtualizaExpressao(escopo, this);
+                    else
+                    if (((indexToken + 1) < tokens.Length) && (tokens[indexToken + 1] == ".") && (ExpressaoAtribuicaoPropriedadesAninhadas.IsProopriedadesAninhadas(this, escopo, indexToken)))
+                        resultAtualizacao = ExpressaoAtribuicaoPropriedadesAninhadas.AtualizaExpressao(this, escopo);
+                    else
+                    // token de bloco, ou  token de termino de linha, termina de processar os elementos da expressao currente.
+                    if ((tokens[indexToken] == "{") || (tokens[indexToken] == ";"))
                     {
                         this.indiceProcessamentoDaProximaExpressao = -1;
+                        this.tipo = GetTipoExpressao(this, escopo);
                         return;
                     }
-                    ExpressaoChamadaDeFuncao exprssFuncao = new ExpressaoChamadaDeFuncao(funcao);
-
-                    // retira os tokens da chamada de função.
-                    List<string> tokensParametros = UtilTokens.GetCodigoEntreOperadores(i + 1, "(", ")", tokens.ToList<string>());
-                    if ((tokensParametros == null) || (tokensParametros.Count == 0))
-                    {
-                        PosicaoECodigo posicao = new PosicaoECodigo(tokensParametros, escopo.codigo);
-                        escopo.GetMsgErros().Add("Erro em chamada de função: " + funcao.nome + ",   linha: " + posicao.linha.ToString() + "  coluna: " + posicao.coluna.ToString());
-                        this.indiceProcessamentoDaProximaExpressao = -1;
-                        return;
-                    }
-
-                    if ((tokensParametros != null) && (tokensParametros.Count > 0))
-                    {
-                        tokensParametros.RemoveAt(0); // retira o primeiro parenteses.
-                        tokensParametros.RemoveAt(tokensParametros.Count - 1); // retira o ultimo parenteses.
-
-
-                        //compoe uma lista de expressoes, a partir da lista de tokens calculada acima.
-                        List<Expressao> expressoesParametros = ExtraiExpressoes(escopo, tokensParametros);
-
-
-                        if ((expressoesParametros != null) && (expressoesParametros.Count > 0))
-                        {
-                            for (int m = 0; m < expressoesParametros[0].Elementos.Count; m++)
-                            {
-                                string valorParametro = expressoesParametros[0].Elementos[m].ToString();
-                                if ((IsTipoInteiro(valorParametro)) || (IsTipoFloat(valorParametro)))
-                                    exprssFuncao.expressoesParametros.Add(new ExpressaoNumero(expressoesParametros[0].Elementos[m].ToString()));
-                                else
-                                    exprssFuncao.expressoesParametros.Add(new ExpressaoElemento(expressoesParametros[0].Elementos[m].ToString()));
-
-                            }
-                            // consome os tokens das expressões-parâmetros, da malha principal de tokens.
-                            i += tokensParametros.Count + 1 + 2; //+1 porque eh o token do nome da funcao da chamada, +2 porque eh a contagem inclui os parenteses abre e fecha da chamada de função.
-                        } // if
-
-
-                        this.indiceProcessamentoDaProximaExpressao = i;
-                        this.Elementos.Add(exprssFuncao); // adiciona a expressão função para a lista de expressões da expressao currente.
-
-                    }//if
-                }
-                else
-                //___________________________________________________________________________________________________________________________________________
-                // expressao formada por um token palavra-chave, ou operador, mas não é palavra-chave ou operador, e sim um nome de termo-chave ou operador, como "@+", "+" nao é um operador, mas um nome de algum texto.
-
-                if ((tokens[i] == "@") && ((i + 1) < tokens.Length))
-                {
-                    Expressao expressaoElementoID = new ExpressaoElemento(tokens[i + 1]);
-                    expressaoElementoID.tipo = "string";
-                    this.indiceProcessamentoDaProximaExpressao = i + 1;
-                    return;
-                }
-                else
-            //_______________________________________________________________________________________________________________________________________________
-            // expressao entre parenteses, e nao eh chamada de funcao.
-            if (tokens[i] == "(")
-                {
-                    // o token é de uma expressão entre parenteses. E não é uma chamada de função.
-
-                    // quebra e adiciona duas expressões na expressão principal: a expressão entre parênteses, e a expressão após a expressão entre parenteses.
-                    List<string> tokensDeUmaExpressaoEntreParenteses = UtilTokens.GetCodigoEntreOperadores(i,
-                        "(", ")", tokens.ToList<string>());
-
-                    if ((tokensDeUmaExpressaoEntreParenteses != null) && (tokensDeUmaExpressaoEntreParenteses.Count > 0))
-                    {
-
-                        string nextToken = tokens[tokensDeUmaExpressaoEntreParenteses.Count];
-                        if (linguagem.VerificaSeEhOperadorBinario(nextToken))
-                        {
-                            tokensDeUmaExpressaoEntreParenteses.RemoveAt(0);
-                            tokensDeUmaExpressaoEntreParenteses.RemoveAt(tokensDeUmaExpressaoEntreParenteses.Count - 1);
-
-                            // calculo da expressao entre parenteses.
-                            Expressao exprssEntreParenteses = new Expressao(tokensDeUmaExpressaoEntreParenteses.ToArray(), escopo);
-
-                            if ((exprssEntreParenteses != null) && (exprssEntreParenteses.Elementos.Count > 0))
-                            {
-                                exprssEntreParenteses.Elementos.Insert(0, new ExpressaoElemento("("));
-                                exprssEntreParenteses.Elementos.Add(new ExpressaoElemento(")"));
-                            }
-
-                            // calculo da expressao apos o fechamento de parenteses.
-                            List<string> tokensRestantes = tokens.ToList<string>().GetRange(tokensDeUmaExpressaoEntreParenteses.Count + 2, tokens.Length - tokensDeUmaExpressaoEntreParenteses.Count - 2);
-                            Expressao expressaoRestante = new Expressao(tokensRestantes.ToArray(), escopo);
-
-                            int contadorTokensConsumidos = tokensDeUmaExpressaoEntreParenteses.Count + 2 + tokensRestantes.Count; // +2 dos parenteses da expressao entre parenteses, e o comprimento da lista de tokens da expressão restante.
-                            this.indiceProcessamentoDaProximaExpressao = i + contadorTokensConsumidos;
-                            i += contadorTokensConsumidos;
-
-                            if ((expressaoRestante != null) && (expressaoRestante.Elementos.Count > 0) && ((exprssEntreParenteses != null) && (exprssEntreParenteses.Elementos.Count > 0)))
-                            {
-                                this.UnificaExpressoes(exprssEntreParenteses, expressaoRestante); // unifica as expressoes que formam uma expressao entre parenteses, mais expressão após os parenteses.
-                                return;
-                            }
-                        }
-
-                    }
                     else
-                    {
-                        tokensDeUmaExpressaoEntreParenteses.RemoveAt(0);
-                        tokensDeUmaExpressaoEntreParenteses.RemoveAt(tokensDeUmaExpressaoEntreParenteses.Count - 1);
-
-                        Expressao exprssEntreParenteses = new Expressao(tokensDeUmaExpressaoEntreParenteses.ToArray(), escopo);
-                        if ((exprssEntreParenteses != null) && (exprssEntreParenteses.Elementos.Count > 0))
-                        {
-                            this.indiceProcessamentoDaProximaExpressao = i + 2 + tokensDeUmaExpressaoEntreParenteses.Count;
-                            this.Elementos.AddRange(exprssEntreParenteses.Elementos.ToList<Expressao>());
-
-                        }
-                    }
-                }
-                else
-            //_________________________________________________________________________________________________________________________________________________________
-            // o token é nome de uma Variavel?
-            if (escopo.tabela.GetObjeto(tokens[i], escopo) != null)
-                {
-                    Objeto v = escopo.tabela.GetObjeto(tokens[i], escopo);
-                    ExpressaoObjeto expressaoObjeto = new ExpressaoObjeto(v);
-                    this.Elementos.Add(expressaoObjeto);
-
-                } // if
-                else
-            // o token é nome de um Vetor?
-            if (escopo.tabela.GetVetor(tokens[i], escopo) != null)
-                {
-                    Vetor vvt = escopo.tabela.GetVetor(tokens[i], escopo);
-                    ExpressaoOperadorMatricial operadorMatricial = (ExpressaoOperadorMatricial)ExtraiOperadorMatricial(tokens, escopo, ref i);
-                    ExpressaoVetor expressaoVetor = new ExpressaoVetor(vvt, operadorMatricial);
-
-                    this.Elementos.Add(expressaoVetor);
-
-                    indiceUltimoVetorAProcessar = i;
-                }
-                else
-                if (linguagem.VerificaSeEhOperadorBinario(tokens[i]))
-                {
-                    string nomeOperador = tokens[i];
-
-
-                    Operador operadorBinario = Operador.GetOperador(nomeOperador, this.tipo, "BINARIO", linguagem);
-                    if (operadorBinario != null)
-                    {
-                        ExpressaoOperador exprssOperador = new ExpressaoOperador(operadorBinario);
-                        this.Elementos.Add(exprssOperador);
-                    }
+                    // o token é um nome de função? (regra de uma chamada de um função).
+                    if (ExpressaoChamadaDeFuncao.IsChamadaDeFuncao(tokens[indexToken], null, escopo))
+                        resultAtualizacao = ExpressaoChamadaDeFuncao.AtualizaExpressao(escopo, this);
                     else
+                    // expressao formada por um token palavra-chave, ou operador, mas não é palavra-chave ou operador, e sim um nome de termo-chave ou operador, como "@+", "+" nao é um operador, mas um nome de algum texto.
+                    if ((tokens[indexToken] == "@") && ((indexToken + 1) < tokens.Length))
+                        resultAtualizacao = ExpressaoElemento.AtualizaExpressao(tokens[indexToken + 1], this);
+                    else
+                    // expressao entre parenteses, e nao eh chamada de funcao.
+                    if (tokens[indexToken] == "(")
+                        resultAtualizacao = ExtraiExpressaoEntreParenteses(escopo, this);
+                    else
+                    // o token é nome de uma Variavel?
+                    if (ExpressaoObjeto.IsExpressaoObjeto(escopo, tokens[indexToken]))
+                        resultAtualizacao = ExpressaoObjeto.AtualizaExpressao(escopo, tokens[indexToken], this);
+                    else
+                    // o token é nome de um vetor:
+                    if (ExpressaoVetor.isExpressaoVetor(escopo, tokens[indexToken]))
+                        resultAtualizacao = ExpressaoVetor.AtualizaExpressao(escopo, tokens[indexToken], this);
+                    else
+                    if (ExpressaoOperador.isOperadorBinario(tokens[indexToken], escopo, this))
+                        resultAtualizacao = ExpressaoOperador.AtualizaExpressao(tokens[indexToken], this, escopo, "BINARIO");
+                    else
+                    if (ExpressaoOperador.isOperadorUnario(tokens[indexToken], escopo, this))
+                        resultAtualizacao = ExpressaoOperador.AtualizaExpressao(tokens[indexToken], this, escopo, "UNARIO");
+                    else
+                    if (ExpressaoOperador.isOperador(tokens[indexToken], escopo))
+                        resultAtualizacao = ExpressaoOperador.AtualizaExpressao(tokens[indexToken], this, escopo, "BINARIO");
+                    else
+                    // o token é um numero?
+                    if (ExpressaoNumero.isNumero(tokens[indexToken]))
+                        resultAtualizacao = ExpressaoNumero.AualizaExpressao(tokens[indexToken], this);
+                    else
+                    // o token é um nome de uma classe? (instanciação dentro da expressão).
+                    if ((RepositorioDeClassesOO.Instance().ObtemUmaClasse(tokens[indexToken]) != null) && ((indexToken + 1) < tokens.Length) && (linguagem.VerificaSeEhID(tokens[indexToken + 1])))
                     {
-                        PosicaoECodigo posicao = new PosicaoECodigo(tokens.ToList<string>(), escopo.codigo);
-                        escopo.GetMsgErros().Add("operador: " + nomeOperador + "para o tipo da expressao: " + this.tipo + " nao encontrado, linha: " + posicao.linha + ", coluna: " + posicao.coluna + ".");
-                    }
-
-                }
-                else
-                //__________________________________________________________________________________________________________________________________________________________
-                // o token é um operador binario? operador unario?
-                if (linguagem.VerificaSeEhOperadorUnario(tokens[i]))
-                {
-
-
-                    string nomeOperador = tokens[i];
-
-                        Operador operadorUnario = Operador.GetOperador(nomeOperador, this.tipo, "UNARIO", linguagem);
-                        if (operadorUnario != null)
-                        {
-                            ExpressaoOperador exprssUnario = new ExpressaoOperador(operadorUnario);
-                            this.Elementos.Add(exprssUnario);
-                        }
+                        if (ExpressaoObjeto.IsExpressaoObjeto(escopo, tokens[indexToken + 1]))
+                            resultAtualizacao = ExpressaoObjeto.AtualizaExpressao(escopo, tokens[indexToken + 1], this);
                         else
                         {
-                            PosicaoECodigo posicao = new PosicaoECodigo(tokens.ToList<string>(), escopo.codigo);
-                            escopo.GetMsgErros().Add("operador: " + nomeOperador + "para o tipo da expressao: " + this.tipo + " nao encontrado, linha: " + posicao.linha + ", coluna: " + posicao.coluna + ".");
+                            Objeto obj1 = new Objeto("private", tokens[indexToken], tokens[indexToken + 1], null);
+                            ExpressaoObjeto expressaoObjetoInstanciado = new ExpressaoObjeto(obj1);
+                            this.Elementos.Add(new ExpressaoElemento(tokens[indexToken])); // adiciona o tipo do objeto a ser instanciado.
+                            this.Elementos.Add(expressaoObjetoInstanciado);
                         }
-                }
-                else
-            //_________________________________________________________________________________________________________________________________________________________________
-            // o token é um operador binario, unario, ternario?
-                if (linguagem.VerificaSeEhOperador(tokens[i]))
-                {
-                    Operador operador = escopo.tabela.GetOperadores().Find(k => k.nome.Equals(tokens[i]));
-                    ExpressaoOperador expressaoOP = new ExpressaoOperador(operador);
-                    this.Elementos.Add(expressaoOP);
-                }
-            else
-            //________________________________________________________________________________________________________________________________________________________________
-            // o token é um numero?
-            if (linguagem.VerificaSeEhNumero(tokens[i]))
-                {
-                    ExpressaoNumero numeroExpressao = new ExpressaoNumero(tokens[i]);
-                    this.Elementos.Add(numeroExpressao);
-
-                } //else
-                //________________________________________________________________________________________________________________________________________________________________
-                else
-            if ((RepositorioDeClassesOO.Instance().ObtemUmaClasse(tokens[i]) != null) && ((i + 1) < tokens.Length) && (linguagem.VerificaSeEhID(tokens[i + 1])))
-                {
-                    if (escopo.tabela.GetObjeto(tokens[i + 1], escopo) == null)
-                    {
-                        Objeto obj1 = new Objeto("private", tokens[i], tokens[i + 1], null);
-                        escopo.tabela.GetObjetos().Add(obj1);
-                        ExpressaoObjeto objetoExpressao = new ExpressaoObjeto(obj1);
-                        this.Elementos.Add(objetoExpressao);
-                        i = i + 1; // consome o segundo token deste caso.
+                        indexToken += 1;
+                        resultAtualizacao = true;
                     }
                     else
+                    if (linguagem.VerificaSeEhID(tokens[indexToken])) // o token eh um nome de um campo de objeto, por exemplo.
+                        resultAtualizacao = ExpressaoElemento.AtualizaExpressao(tokens[indexToken], this);
+
+                    if (!resultAtualizacao)
                     {
-                        Objeto obj1 = escopo.tabela.GetObjeto(tokens[i + 1], escopo);
-                        ExpressaoObjeto objetoExpressao = new ExpressaoObjeto(obj1);
-                        this.Elementos.Add(objetoExpressao);
-                        i = i + 1;
+                        this.Elementos = new List<Expressao>();
+                        return;
                     }
-                }
-        
-            } // for i
 
-            this.isModdfy = true;
+                } // for i
 
+                this.tipo = GetTipoExpressao(this, escopo);
+                this.isModify = true;
+            } 
+            catch (Exception ex)
+            {
+                ModuloTESTES.LoggerTests.AddMessage("Erro no processamento de expressao: " + ex.StackTrace);
+            }
         } // Expressao()
 
-        // une expressões, pois são partes de uma unica expressao.
-        private void UnificaExpressoes(params Expressao[] expressoesAUnificar)
+     
+         private static bool ExtraiExpressaoEntreParenteses(Escopo escopo, Expressao exprssCurrente)
         {
-            this.Elementos.Clear(); 
-            for (int umaExpressao = 0; umaExpressao < expressoesAUnificar.Length; umaExpressao++)
+            List<string> tokens = exprssCurrente.tokens;
+
+            int indexStart = tokens.IndexOf("(");
+            // quebra e adiciona duas expressões na expressão principal: a expressão entre parênteses, e a expressão após a expressão entre parenteses.
+            List<string> tokensEmParenteses = UtilTokens.GetCodigoEntreOperadores(tokens.ToList<string>().IndexOf("("), "(", ")", tokens.ToList<string>());
+     
+            if ((tokensEmParenteses != null) && (tokensEmParenteses.Count > 0))
             {
-                for (int umElemento = 0; umElemento < expressoesAUnificar[umaExpressao].Elementos.Count; umElemento++)
-                    this.Elementos.Add(expressoesAUnificar[umaExpressao].Elementos[umElemento]);
+
+
+                // a expressao tem uma subexpressao entre parenteses, mais uma subexpressao após os parenteeses, ligadas por um operador binario.
+                string nextToken = tokens[tokensEmParenteses.Count];
+                if (ExpressaoOperador.isOperadorBinario(nextToken, escopo, exprssCurrente))  
+                {
+
+                    // calculo da expressao entre parenteses.
+                    Expressao exprssEntreParenteses = new Expressao(tokensEmParenteses.GetRange(1, tokensEmParenteses.Count - 2).ToArray(), escopo);
+
+                    if ((exprssEntreParenteses != null) && (exprssEntreParenteses.Elementos.Count > 0))
+                    {
+                        // restaura os parenteses da subexpressao, pois entra no processamento de PosOrdem da expressão.
+                        exprssEntreParenteses.Elementos.Insert(0, new ExpressaoElemento("(")); 
+                        exprssEntreParenteses.Elementos.Add(new ExpressaoElemento(")"));
+                    }
+
+                    // calculo da expressao apos o fechamento de parenteses.
+                    List<string> tokensRestantes = tokens.ToList<string>().GetRange(tokensEmParenteses.Count, tokens.Count - tokensEmParenteses.Count);
+                    Expressao expressaoRestante = new Expressao(tokensRestantes.ToArray(), escopo);
+
+                    exprssCurrente.indiceProcessamentoDaProximaExpressao = exprssCurrente.indexToken + tokensEmParenteses.Count + tokensRestantes.Count;
+                    exprssCurrente.indexToken += tokensEmParenteses.Count + tokensRestantes.Count;
+
+
+                    if ((expressaoRestante != null) && (expressaoRestante.Elementos.Count > 0) && ((exprssEntreParenteses != null) && (exprssEntreParenteses.Elementos.Count > 0)))
+                        Expressao.UnificaExpressoes(exprssCurrente, exprssEntreParenteses, expressaoRestante); // unifica as expressoes que formam uma expressao entre parenteses, mais expressão após os parenteses.
+                    return true;
+                }
+
             }
+            else
+            {
+                
+                // a expressao soh tem uma subexpressao entre parenteses, e nada mais além.
+                tokensEmParenteses.RemoveAt(0);
+                tokensEmParenteses.RemoveAt(tokensEmParenteses.Count - 1);
+
+                Expressao exprssResutante = new Expressao(tokensEmParenteses.ToArray(), escopo);
+                if ((exprssResutante != null) && (exprssResutante.Elementos.Count > 0))
+                {
+                    exprssCurrente.indiceProcessamentoDaProximaExpressao = exprssCurrente.indexToken + 2 + tokensEmParenteses.Count;
+                    exprssCurrente.Elementos.AddRange(exprssResutante.Elementos.ToList<Expressao>());
+
+                }
+                return true;
+            }
+            return false;
         }
-        private Expressao ExtraiOperadorMatricial(string[] _tokens, Escopo escopo, ref int indexInicioOperador)
+
+
+
+        // une expressões, pois são partes de uma unica expressao.
+        private static void UnificaExpressoes(Expressao exprssCurrente,params Expressao[] expressoesAUnificar)
+        {
+            for (int umaExpressao = 0; umaExpressao < expressoesAUnificar.Length; umaExpressao++)
+                exprssCurrente.Elementos.AddRange(expressoesAUnificar[umaExpressao].Elementos);
+        }
+        internal Expressao ExtraiOperadorMatricial(string[] _tokens, Escopo escopo, ref int indexInicioOperador)
         {
 
             int indexStart = _tokens.ToList<string>().IndexOf("[");
@@ -581,8 +1019,7 @@ namespace parser
 
                     if ((expressoesIndices == null) || (expressoesIndices.Count == 0))
                     {
-                        PosicaoECodigo posicao = new PosicaoECodigo(tokensMatriciais, escopo.codigo);
-                        escopo.GetMsgErros().Add("Erro na extracao de um operador matricial: " + Utils.UneLinhasPrograma(tokensMatriciais) + ", linha: " + posicao.linha + ", coluna: " + posicao.coluna);
+                        UtilTokens.WriteAErrorMensage(escopo, "Erro na extracao de um operador matricial: " + Utils.UneLinhasPrograma(tokensMatriciais), escopo.codigo);
                         this.indiceProcessamentoDaProximaExpressao = -1;
                         return exprssOperadorMatricial;
                     }
@@ -601,6 +1038,7 @@ namespace parser
 
         public List<Expressao> ExtraiExpressoes(Escopo escopo, List<string> tokensExpressoes)
         {
+
             int indexErros = escopo.GetMsgErros().Count;
             List<Expressao> expressoesExtraidas = new List<Expressao>();
             List<string> tokensRaw = tokensExpressoes.ToList<string>();
@@ -639,158 +1077,22 @@ namespace parser
 
         }
 
-        private Operador GetOperadorCompativel(object objectCaller, string nomeOperador,  string tipoDaExpressao)
+      
+        public object ConverteNumeroParaObjeto(string str_numero, Escopo escopo)
         {
-            Operador op = linguagem.GetOperador(nomeOperador, tipoDaExpressao);
-            if ((op == null) && (tipoDaExpressao == "Vetor"))
-            {
-                Vetor vtCaller = (Vetor)objectCaller;
-                string tipoElementosVetor = vtCaller.GetTiposElemento();
-                op = RepositorioDeClassesOO.Instance().GetOperador(nomeOperador, tipoElementosVetor);
-                return op;
-            }
-            else
-            {
-                return null;
-            }
-           
-        }
-
-
-        // obtém um operador compativel: se tipoDeRetorno, e tipos dos operandos forem iguais ou casting, retorna o operador, dentro de uma lista de operadores registrado na linguagem.Operadores.
-        private Operador GetOperadorCompativel(string nomeOperador, int indexToken, List<string> tokens, string tipoDaExpressao, Escopo escopo, string tipoOperador)
-        {
-
-            Operador op = linguagem.GetOperador(nomeOperador, tipoDaExpressao);
-            if (op != null)
-            {
-                if ((tipoOperador.Contains("BINARIO")) && (op.tipo.Contains("BINARIO")))
-                {
-                    if ((indexToken == 0) && ((indexToken + 1) < tokens.Count))
-                    {
-                        // o caso é de uma expressão que começa com um operador binario. É quando há uma sub-expressão após uma expressão entre parenteses.
-                        Objeto operando = this.ObtemOperando(tokens[1], escopo, tokens, 1, tipoOperador);
-                        if (operando != null)
-                        {
-                            if ((op.nome == nomeOperador) && (op.GetTipo() == tipoOperador) &&
-                                (UtilTokens.Casting(op.tipoRetorno) == UtilTokens.Casting(tipoDaExpressao)) &&
-                                (UtilTokens.Casting(op.parametrosDaFuncao[0].GetTipo()) == UtilTokens.Casting(operando.GetTipo())))
-                                return op;
-                        }
-                    }
-                    if ((indexToken - 1 < 0) || ((indexToken + 1) > tokens.Count))
-                        return null;
-
-
-                    string nomeOperando2 = tokens[indexToken + 1];
-                    string nomeOperando1 = tokens[indexToken - 1];
-
-                    // obttem operandos, se existir objeto com nome do operando, um objeto temporario se for um numero, ou se for a instanciar um objeto.
-                    Objeto operando2 = ObtemOperando(nomeOperando2, escopo, tokens, indexToken + 1, this.tipo);
-                    Objeto operando1 = ObtemOperando(nomeOperando1, escopo, tokens, indexToken - 1, this.tipo);
-
-                    if ((operando1 == null) || (operando2 == null))
-                        return null;
-
-                    if ((op.nome == nomeOperador) && (op.GetTipo() == tipoOperador) &&
-                        (UtilTokens.Casting(op.tipoRetorno) == UtilTokens.Casting(tipoDaExpressao)) &&
-                        (UtilTokens.Casting(op.parametrosDaFuncao[0].GetTipo()) == UtilTokens.Casting(operando1.GetTipo())) &&
-                        (UtilTokens.Casting(op.parametrosDaFuncao[1].GetTipo()) == UtilTokens.Casting(operando2.GetTipo())))
-                        return op;
-                    return null;
-                }
-                else
-                if ((tipoOperador.Contains("UNARIO")) && (tipoOperador.Contains("UNARIO")))
-                {
-                    if ((indexToken - 1) >= 0)
-                    {
-                        string nomeOperando1 = tokens[indexToken - 1];
-                        Objeto operando1 = this.ObtemOperando(nomeOperando1, escopo, tokens, indexToken - 1, this.tipo);
-
-                        if (operando1 != null)
-                            if ((op.nome == nomeOperador) && (op.GetTipo() == tipoOperador) &&
-                                (UtilTokens.Casting(op.tipoRetorno) == UtilTokens.Casting(tipoDaExpressao)) &&
-                                (UtilTokens.Casting(op.parametrosDaFuncao[0].GetTipo()) == UtilTokens.Casting(operando1.GetTipo())))
-                                return op;
-                    }
-                    else
-                    if ((indexToken + 1) < tokens.Count)
-                    {
-                        string nomeOperando2 = tokens[indexToken + 1];
-                        Objeto operando2 = this.ObtemOperando(nomeOperando2, escopo, tokens, indexToken + 1, this.tipo);
-
-                        if (operando2 != null)
-                            if ((op.nome == nomeOperador) && (op.GetTipo() == tipoOperador) &&
-                                (UtilTokens.Casting(op.tipoReturn) == UtilTokens.Casting(tipoDaExpressao)) &&
-                                (UtilTokens.Casting(op.parametrosDaFuncao[0].GetTipo()) == UtilTokens.Casting(operando2.GetTipo())))
-                                return op;
-                        return null;
-
-                    }
-                }
-            }
-            return null;
-        }
-
-        private Objeto ObtemOperando(string nomeOperando1, Escopo escopo, List<string> tokens, int indexOperando, string tipoOperando1)
-        {
-            // obtem diretamente o objeto ja registrado no escopo.
-            Objeto operando1 = escopo.tabela.GetObjeto(nomeOperando1, escopo);
-            if (operando1 != null)
-                return operando1;
-
-            Vetor vetorOperando = escopo.tabela.GetVetor(nomeOperando1, escopo);
-            if (vetorOperando != null)
-                return new Objeto("private", vetorOperando.GetTiposElemento(), "b", null); // o caso em que o operando é um nome de um vetor.
-            else
-            {
-                Funcao funcaoObjeto = escopo.tabela.GetFuncao(nomeOperando1, tipoOperando1, escopo); // há o caso em que o operando é um nome de uma função.
-                if (funcaoObjeto != null)
-                    return new Objeto("private", funcaoObjeto.tipoReturn, "b", null);
-                else
-                {
-                    // converte operandos para um Objeto de classe do numero.
-                    if (IsNumero(nomeOperando1))
-                        operando1 = ConverteNumeroParaObjeto(nomeOperando1);
-                    if (operando1 != null)
-                        return operando1;
-                    else
-                    {
-                        // eh o caso da expressao: int x=0 
-                        if (((indexOperando - 1) >= 0) && (linguagem.VerificaSeEhID(tokens[indexOperando])) && (RepositorioDeClassesOO.Instance().ObtemUmaClasse(tokens[indexOperando - 1]) != null))
-                        {
-                            string classeDoOperando = tokens[indexOperando - 1];
-                            string nomeDoOperando = tokens[indexOperando];
-
-                            Objeto operandoTmp = new Objeto("private", classeDoOperando, nomeDoOperando, null);
-                            return operandoTmp;
-                        }
-
-
-                    }
-                }
-            }
-
-            return operando1;
-        }
-
-        /// <summary>
-        /// converte um numero para um objeto, para fins de validação de parâmetros.
-        /// </summary>
-        public Objeto ConverteNumeroParaObjeto(string str_numero)
-        {
-            Objeto obj_result = null;
+            object obj_result = null;
             if (IsTipoInteiro(str_numero))
-                obj_result = new Objeto("private", "int", "b", int.Parse(str_numero));
+                obj_result = int.Parse(str_numero);
             else
             if (IsTipoFloat(str_numero))
-                obj_result = new Objeto("private", "float", "b", float.Parse(str_numero));
+                obj_result = float.Parse(str_numero);
             else
             if (IsTipoDouble(str_numero))
-                obj_result = new Objeto("private", "double", "b", double.Parse(str_numero));
+                obj_result = double.Parse(str_numero);
 
             return obj_result;
         }
+
         public bool IsTipoInteiro(string str_numero)
         {
             int numeroInt = 0;
@@ -812,59 +1114,255 @@ namespace parser
         {
             return IsTipoInteiro(str_numero) || IsTipoFloat(str_numero) || (IsTipoDouble(str_numero));
         }
+
+
         /// <summary>
-        /// procura o tipo da expressão: 
-        /// 1- se for double ou float o tipo da expressão, retorna double.
-        /// 2- se for int o tipo da expressao, verifica se o  tipo calculado anteriormente não for float ou double, retorna int,
-        /// senão retorna float ou double do tipo calculado anteriormente.
-        public static string GetTipoExpressao(string[] tokensDaExpressao, Escopo escopo, string tipoDaExpressaoAnterior)
+        /// calcula o tipo da expressao, verificando tipos de expressao, ou pelos tokens da expressao.
+        /// </summary>
+        public  static string GetTipoExpressao(Expressao expressaoCurrente, Escopo escopo)
         {
 
-         
+            string tipoDaExpressao = null;
+            List<string> tipoDosElementos = new List<string>();
+            List<string> elementos = expressaoCurrente.tokens.ToList<string>();
 
-            string tipoDaExpressao = tipoDaExpressaoAnterior;
-
-            for (int x = 0; x <tokensDaExpressao.Length; x++)
+            // verifica o tipo da expressão através da análise das sub-expressoes. É útil quando a expressao currente já está formada.
+            if ((expressaoCurrente.Elementos != null) && (expressaoCurrente.Elementos.Count > 0))
             {
-                string elemento = tokensDaExpressao[x].ToString().Replace(" ", "");
+                for (int x = 0; x < expressaoCurrente.Elementos.Count; x++)
+                {
+                    if (expressaoCurrente.Elementos[x].GetType() == typeof(ExpressaoAtribuicaoPropriedadesAninhadas))
+                    {
+                        ExpressaoAtribuicaoPropriedadesAninhadas expressao = (ExpressaoAtribuicaoPropriedadesAninhadas)expressaoCurrente.Elementos[x];
+                        if (expressao.aninhamento.Count > 0)
+                        {
+                            Objeto propriedadeFinal = expressao.aninhamento[expressao.aninhamento.Count - 1];
+                            if ((tipoDaExpressao != null) && (tipoDaExpressao != propriedadeFinal.GetTipo()))
+                                return null;
+                            else
+                                if (propriedadeFinal.GetTipo() != null)
+                                tipoDaExpressao = propriedadeFinal.GetTipo();
+                        }
+                    }
 
-                
-                if (Expressao.Instance.IsTipoInteiro(elemento))
-                {
-                    if (tipoDaExpressaoAnterior == "float")
-                        return "float";
                     else
-                    if (tipoDaExpressaoAnterior == "double")
-                        return "double";
+                    if (expressaoCurrente.Elementos[x].GetType() == typeof(ExpressaoChamadaDeMetodo))
+                    {
+                        ExpressaoChamadaDeMetodo expressao = (ExpressaoChamadaDeMetodo)expressaoCurrente.Elementos[x];
+                        if ((expressao.chamadaDoMetodo != null) && (expressao.chamadaDoMetodo[expressao.chamadaDoMetodo.Count - 1].funcao != null)) 
+                        {
+                            if ((tipoDaExpressao != null) && (tipoDaExpressao != expressao.chamadaDoMetodo[expressao.chamadaDoMetodo.Count - 1].funcao.tipoReturn))
+                                return null;
+                            else
+                                if ((tipoDaExpressao == null) && (expressao.chamadaDoMetodo[expressao.chamadaDoMetodo.Count - 1].funcao != null))
+                                tipoDaExpressao = expressao.chamadaDoMetodo[expressao.chamadaDoMetodo.Count - 1].funcao.tipoReturn;
+                        }
+                    }
                     else
-                        return "int";
+                    if (expressaoCurrente.Elementos[x].GetType() == typeof(ExpressaoObjeto))
+                    {
+                        ExpressaoObjeto expressao = (ExpressaoObjeto)expressaoCurrente.Elementos[x];
+                        if ((tipoDaExpressao != null) && (tipoDaExpressao != expressao.objeto.GetTipo()))
+                            return null;
+                        else
+                            if ((expressao.objeto != null) && (tipoDaExpressao == null))
+                            tipoDaExpressao = expressao.objeto.GetTipo();
+                        else
+                            if (expressao.objeto == null)
+                            return null;
+
+                    }
+                    else
+                    if (expressaoCurrente.Elementos[x].GetType() == typeof(ExpressaoVetor))
+                    {
+                        ExpressaoVetor expressao = (ExpressaoVetor)expressaoCurrente.Elementos[x];
+                        if ((tipoDaExpressao != null) && (expressao.vetor != null) && (tipoDaExpressao != expressao.vetor.GetTipo()))
+                            return null;
+                        else
+                            if ((expressao.vetor != null) && (tipoDaExpressao == null))
+                            tipoDaExpressao = expressao.vetor.GetTipo();
+                        else
+                            if (expressao.vetor == null)
+                            return null;
+                    }
+
+
+                    if (expressaoCurrente.Elementos[x].GetType() == typeof(ExpressaoNumero))
+                    {
+                        ExpressaoNumero expressao = (ExpressaoNumero)expressaoCurrente.Elementos[x];
+                        if ((expressao.numero != null) && (expressao.numero != tipoDaExpressao))
+                            return null;
+                        else
+                            if ((expressao.numero != null) && (tipoDaExpressao == null))
+                        {
+                            string tipoNumero = Expressao.ObtemTipoDoNumero(expressao);
+                            tipoDaExpressao = tipoNumero;
+                        }
+                        else
+                            if (expressao.numero == null)
+                            return null;
+                    }
+
+                    if (expressaoCurrente.Elementos[x].GetType() == typeof(ExpressaoChamadaDeFuncao))
+                    {
+                        ExpressaoChamadaDeFuncao expressao = (ExpressaoChamadaDeFuncao)expressaoCurrente.Elementos[x];
+                        if ((tipoDaExpressao != null) && (expressao.funcao != null) && (tipoDaExpressao != expressao.funcao.tipoReturn))
+                            return null;
+                        else
+                            if ((expressao.funcao != null) && (tipoDaExpressao == null))
+                            tipoDaExpressao = expressao.funcao.tipoReturn;
+                        else
+                            if (expressao.funcao == null)
+                            return null;
+
+                    }
+
                 }
-                if (Expressao.Instance.IsTipoFloat(elemento))
-                {
-                    if (tipoDaExpressaoAnterior != "double")
-                        return "float";
-                    else
-                        return "double";
-                }
-                else
-                if (Expressao.Instance.IsTipoDouble(elemento))
-                    return "double";
-               
-                else
+                return tipoDaExpressao;
+            }
+
+            // verifica o tipo da expressao pelos seus tokens. Útil quando a expressao currente nao está formada ainda.
+            for (int x = 0; x < expressaoCurrente.tokens.Count; x++)
+            {
+
+                string elemento = expressaoCurrente.tokens[x];
+
                 if (escopo.tabela.GetObjeto(elemento, escopo) != null)
-                {
-
-                    tipoDaExpressao = escopo.tabela.GetObjeto(elemento, escopo).GetTipo();
-                    return tipoDaExpressao;
-                }
+                    tipoDosElementos.Add(escopo.tabela.GetObjeto(elemento, escopo).GetTipo());
                 else
                 if (escopo.tabela.GetVetor(elemento, escopo) != null)
+                    tipoDosElementos.Add(escopo.tabela.GetVetor(elemento, escopo).GetTiposElemento());
+                else
+                if (elemento == "float")
+                    tipoDosElementos.Add("float");
+                else
+                if (elemento == "double")
+                    tipoDosElementos.Add("double");
+                else
+                if (elemento == "int")
+                    tipoDosElementos.Add("int");
+                else
+                if (Expressao.GetTipoNumero(elemento) == "int")
+                    tipoDosElementos.Add("int");
+                else
+                if (Expressao.GetTipoNumero(elemento) == "float")
+                    tipoDosElementos.Add("float");
+                else
+                if (Expressao.GetTipoNumero(elemento) == "double")
+                    tipoDosElementos.Add("double");
+
+            }
+
+            if ((tipoDosElementos.Count > 0) && (IsSomenteNumeros(tipoDosElementos)))
+            {
+
+                if (IsTipoUnicoElementosDaExpressao(tipoDosElementos, "int"))
+                    return "int";
+                else 
+                if (IsTipoUnicoElementosDaExpressao(tipoDosElementos, "float"))
+                    return "float";
+                else
+                if (IsTipoUnicoElementosDaExpressao(tipoDosElementos, "double"))
+                    return "double";
+                else
+                if ((tipoDosElementos.Contains("float")) && (!tipoDosElementos.Contains("double")))
+                    return "float";
+                else
+                if (tipoDosElementos.Contains("double"))
+                    return "double";
+            } // if
+            else
+            if (elementos.Contains("="))
+            {
+                int indexSignalEquals = elementos.IndexOf("=");
+                if (indexSignalEquals >= 2)
                 {
-                    tipoDaExpressao = escopo.tabela.GetVetor(elemento, escopo).GetTiposElemento();
-                    return tipoDaExpressao;
+                    string nomeDoObjetoELemento = elementos[indexSignalEquals - 1];
+                    string classeDoObjetoElemento = elementos[indexSignalEquals - 2];
+                    if ((RepositorioDeClassesOO.Instance().ObtemUmaClasse(classeDoObjetoElemento) != null) &&  ((indexSignalEquals - 2) >= 0))
+                        {
+                            string classeDoNumero = elementos[indexSignalEquals - 2];
+                            Classe classe = RepositorioDeClassesOO.Instance().ObtemUmaClasse(classeDoNumero); // se for uma propriedade estática, retorna o tipo da classe (nome).
+                            if (classe != null)
+                                return classe.GetNome(); // retorna como tipo da expressão o tipo da variavel  a receber valor da atribuicao expressao.
+                            else
+                            {
+                                Objeto objetoAtribuicao = escopo.tabela.GetObjeto(elementos[indexSignalEquals - 2], escopo); // se for um objeto que faz a referencia na atribuição,
+                                                                                                                             // retorna o tipo deste objeto, pois a expressão toda deve ter este tipo do objeto da atribuição.
+
+                                if (objetoAtribuicao != null)
+                                    return objetoAtribuicao.GetTipo();
+                            }
+                        }
                 }
             }
+            else
+            {
+
+                for (int x = 0; x < tipoDosElementos.Count; x++)
+                    if (GetTipoNumero(tipoDosElementos[x]) == null)
+                    {
+                        Classe classe = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoDosElementos[x]);
+                        if (classe != null)
+                            return classe.GetNome();
+                    }
+
+            }
+            if (expressaoCurrente.Elementos.Count == 0)
+            {
+                if (escopo.tabela.GetObjeto(expressaoCurrente.ToString(), escopo) != null)
+                    return escopo.tabela.GetObjeto(expressaoCurrente.ToString(), escopo).GetTipo();
+                else
+                if (escopo.tabela.GetVetor(expressaoCurrente.ToString(), escopo) != null)
+                    return escopo.tabela.GetVetor(expressaoCurrente.ToString(), escopo).GetTiposElemento();
+            }
+
+            return null;
+        }
+
+        private static string ObtemTipoDoNumero(ExpressaoNumero expressao)
+        {
+            string tipoDaExpressao = "";
+            if (Expressao.Instance.IsTipoInteiro(expressao.numero))
+                tipoDaExpressao = "int";
+            else
+            if (Expressao.Instance.IsTipoFloat(expressao.numero))
+                tipoDaExpressao = "float";
+            else
+            if (Expressao.Instance.IsTipoDouble(expressao.numero))
+                tipoDaExpressao = "double";
             return tipoDaExpressao;
+        }
+
+        private static string GetTipoNumero(string numero)
+        {
+            if (Expressao.Instance.IsTipoInteiro(numero))
+                return "int";
+
+            if (Expressao.Instance.IsTipoFloat(numero))
+                return "float";
+            if (Expressao.Instance.IsTipoDouble(numero))
+                return "double";
+
+            return null;
+        }
+
+        private static bool IsSomenteNumeros(List<string> tipoElementos)
+        {
+            for (int x = 0; x < tipoElementos.Count; x++)
+                if ((tipoElementos[x] != "int") && (tipoElementos[x] != "float") && (tipoElementos[x] != "double"))
+                    return false;
+            return true;
+        }
+      
+        private static bool IsTipoUnicoElementosDaExpressao(List<string> elementosDaExpresao, string tipoAVerificar)
+        {
+            for (int x = 0; x < elementosDaExpresao.Count; x++)
+                if (elementosDaExpresao[x] != tipoAVerificar)
+                    return false;
+
+            return true;
+
         }
 
         public bool ValidaExpressaoCondicional(Expressao expressao, Escopo escopo)
@@ -1260,11 +1758,6 @@ namespace parser
         } // FindOperador()
 
 
-        public static Funcao EncontraFuncaoCompativel(string nomeFuncao, string tipoDaExpressao, Escopo escopo)
-        {
-            return escopo.tabela.GetFuncao(nomeFuncao, tipoDaExpressao, escopo);
-        }
-
      
         public  bool isExpressionAritmetico(Expressao exprss, Escopo escopo)
         {
@@ -1302,9 +1795,6 @@ namespace parser
             string str = "";
             for (int x = 0; x < this.Elementos.Count; x++)
             {
-                if (this.Elementos[x].GetType() == typeof(Expressao))
-                    str += this.Elementos[x].ToString();
-
                 if (this.Elementos[x].GetType() == typeof(ExpressaoNumero))
                     str += ((ExpressaoNumero)Elementos[x]).ToString() + " ";
 
@@ -1317,10 +1807,18 @@ namespace parser
                     str += ((ExpressaoOperador)Elementos[x]).ToString() + " ";
 
                 if (this.Elementos[x].GetType() == typeof(ExpressaoChamadaDeFuncao))
-                    str += ((ExpressaoChamadaDeFuncao)Elementos[x]).ToString();
+                    str += ((ExpressaoChamadaDeFuncao)Elementos[x]).ToString() + " ";
 
                 if (this.Elementos[x].GetType() == typeof(ExpressaoElemento))
                     str += ((ExpressaoElemento)Elementos[x]).ToString() + " ";
+
+                if (this.Elementos[x].GetType() == typeof(ExpressaoAtribuicaoPropriedadesAninhadas))
+                    str += ((ExpressaoAtribuicaoPropriedadesAninhadas)this.Elementos[x]).ToString();
+
+                if (this.Elementos[x].GetType() == typeof(ExpressaoChamadaDeMetodo))
+                    str += ((ExpressaoChamadaDeMetodo)this.Elementos[x]).ToString();
+
+
 
             } // for x
             str = str.Trim(' ');

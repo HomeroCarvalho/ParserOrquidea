@@ -28,6 +28,8 @@ namespace parser
         /// </summary>
         public PosicaoECodigo(List<string> tokensLocalizadores, List<string> codigo)
         {
+            if ((tokensLocalizadores == null) || (tokensLocalizadores.Count == 0))
+                return;
 
             /// inicializa a linguagem utilizada
             if (linguagem == null)

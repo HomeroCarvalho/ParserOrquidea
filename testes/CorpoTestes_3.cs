@@ -54,8 +54,8 @@ namespace parser
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo1);
             processador.escopo.tabela.RegistraFuncao(new Funcao("public", "funcaoA", funcaoVazia, null));
-            processador.escopo.tabela.AddObjeto("public", "a", "int", "1");
-            processador.escopo.tabela.AddObjeto("public", "b", "int", "5");
+            processador.escopo.tabela.AddObjeto("public", "a", "int", "1", processador.escopo);
+            processador.escopo.tabela.AddObjeto("public", "b", "int", "5", processador.escopo);
 
 
             processador.Compile();
@@ -218,7 +218,7 @@ namespace parser
             return processador;
         }
 
-   
+
         private void TesteInstrucaoCreate(Assercoes assercao)
         {
 
@@ -234,7 +234,7 @@ namespace parser
 
 
             // cria objetos parametros.
-            Objeto objetoA = new Objeto("private","int", "a", 1);
+            Objeto objetoA = new Objeto("private", "int", "a", 1);
             Objeto objetoB = new Objeto("private", "int", "b", 1);
             processador.escopo.tabela.RegistraObjeto(objetoA);
             processador.escopo.tabela.RegistraObjeto(objetoB);
@@ -242,12 +242,12 @@ namespace parser
             processador.Compile(); // constroi a classe teste.
 
             Funcao umConstrutor = new Funcao("public", "ClasseB", funcaoVazia, null, new Objeto[] {
-                new Objeto("private","int","a", null, false),
-                new Objeto("private","int", "b", null, false) });
+                new Objeto("private","int","a", null, null, isStatic: false),
+                new Objeto("private","int", "b", null, null,isStatic: false) });
             Classe classeTeste = RepositorioDeClassesOO.Instance().ObtemUmaClasse("ClasseB");
             classeTeste.construtores.Add(umConstrutor);
-           
-            
+
+
             ProcessadorDeID.codigo = codeCreate;
             processador.Compile();
 

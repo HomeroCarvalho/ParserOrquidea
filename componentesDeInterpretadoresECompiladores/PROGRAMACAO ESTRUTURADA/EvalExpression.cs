@@ -16,7 +16,7 @@ namespace parser
         public object EvalPosOrdem(Expressao expss, Escopo escopo)
         {
 
-            if (expss.isModdfy == false)
+            if (expss.isModify == false)
                 return expss.oldValue;
             else
             {
@@ -27,7 +27,7 @@ namespace parser
                     expss.isInPosOrdem = true;
                 }
 
-                expss.isModdfy = false;
+                expss.isModify = false;
                 return this.Eval(expss, escopo);
             }
         } // EvalPosOrdem()
@@ -41,10 +41,16 @@ namespace parser
                 else
                 if (Expressao.Instance.IsTipoFloat(expss.ToString()))
                     return float.Parse(expss.ToString());
+                if (Expressao.Instance.IsTipoDouble(expss.ToString()))
+                    return double.Parse(expss.ToString());
                 else
-                    return ((object)expss.ToString());
+                    if (expss.GetType() == typeof(ExpressaoObjeto))
+                        return ((ExpressaoObjeto)expss).objeto.GetValor();
+                else
+                    if (expss.GetType() == typeof(ExpressaoVetor))
+                    return ((ExpressaoVetor)expss).vetor.GetValor();
             }
-            string tipoDaExpressao = expss.tipo;
+            string tipoDaExpressao = Expressao.GetTipoExpressao(expss, escopo);
 
             object result1 = 0;
             Pilha<object> pilhaOperandos = new Pilha<object>("pilhaOperandos");
@@ -52,6 +58,67 @@ namespace parser
             for (int x = 0; x < expss.Elementos.Count; x++)
             {
 
+                if (expss.Elementos[x].GetType() == typeof(ExpressaoAtribuicaoPropriedadesAninhadas))
+                {
+                    // coleta os dados do aninhamento de propriedades com atribuicao.
+                    ExpressaoAtribuicaoPropriedadesAninhadas expressaAninhamentoAtribuicao = (ExpressaoAtribuicaoPropriedadesAninhadas)expss.Elementos[x];
+                    List<Objeto> propriedades = expressaAninhamentoAtribuicao.aninhamento;
+                    Expressao exprssAtribuicao = expressaAninhamentoAtribuicao.expresaoAtribuicao;
+
+                    // constoi a propriedade a receber a atribuicao.
+                    Objeto objetoChamada = expressaAninhamentoAtribuicao.objetoInicial;
+
+                    for (int i = 1; i < propriedades.Count; i++)
+                        objetoChamada = objetoChamada.GetField(propriedades[i].GetNome());
+
+                    // calcula a expressao de atribuicao.
+                    EvalExpression eval = new EvalExpression();
+                    object result = eval.EvalPosOrdem(exprssAtribuicao, escopo);
+
+                    // associa a expressão de atribuição, para a propriedade aninhada.
+                    objetoChamada.SetValor(result);
+      
+                }
+                else
+                if (expss.Elementos[x].GetType() == typeof(ExpressaoChamadaDeMetodo))
+                {
+                    ExpressaoChamadaDeMetodo expssMain = (ExpressaoChamadaDeMetodo)expss.Elementos[x];
+                    
+                    Objeto objetoCaller = expssMain.objectCaller;
+                    Objeto objetoChamada = null;
+
+                    List<Objeto> propriedades = expssMain.proprieades.aninhamento;
+                    if ((propriedades != null) && (propriedades.Count > 0))
+                    {
+
+
+                        foreach (Objeto objPropriedade in propriedades)
+                            objetoChamada = objetoChamada.GetField(objPropriedade.GetNome());
+
+                    }
+                    else
+                        objetoChamada = objetoCaller;
+                       
+                        // coleta os dados do metodo (funcao, parametros).
+                        List<ExpressaoChamadaDeFuncao> expssChamada = expssMain.chamadaDoMetodo;
+                        object result = null;
+                        for (int i = 0; i < expssChamada.Count; i++)
+                        {
+                            Funcao metodoDaChamada = expssChamada[i].funcao;
+                            List<Expressao> parametros = expssChamada[i].expressoesParametros;
+                            // chama a avaliação do método.
+                            result = metodoDaChamada.ExecuteAMethod(parametros, escopo, objetoChamada);
+                            if (result.GetType() == typeof(Objeto))
+                                objetoChamada = (Objeto)result;
+                        }
+
+
+                        if (result != null)
+                            pilhaOperandos.Push(result);
+                    
+                }
+
+                else
                 if (linguagem.VerificaSeEhNumero(expss.Elementos[x].ToString()))
                     pilhaOperandos.Push((object)expss.Elementos[x].ToString());
                 else
@@ -66,43 +133,34 @@ namespace parser
                 if (expss.Elementos[x].GetType() == typeof(ExpressaoNumero))
                 {
                     string strNumero = ((ExpressaoNumero)expss.Elementos[x]).numero;
-                    if (Expressao.Instance.IsTipoInteiro(strNumero))
-                    {
-                        int numero = int.Parse(strNumero);
-                        pilhaOperandos.Push(numero);
-                    }
-                    else
-                    if (Expressao.Instance.IsTipoFloat(strNumero))
-                    {
-                        float numero = float.Parse(strNumero);
-                        pilhaOperandos.Push(numero);
-                    }
-                    else
-                    if (Expressao.Instance.IsTipoDouble(strNumero))
-                    {
-                        double numero = double.Parse(strNumero);
-                        pilhaOperandos.Push(numero);
-                    }
+                    object objNumero = Expressao.Instance.ConverteNumeroParaObjeto(strNumero, escopo);
+                    pilhaOperandos.Push(objNumero);
                 }
                 else
                 if (expss.Elementos[x].GetType() == typeof(ExpressaoVetor))
                 {
                     // calculo de vetores multidimensionais!
-                    Vetor v = ((ExpressaoVetor)expss.Elementos[x]).vetor;
+                    Vetor vExp = ((ExpressaoVetor)expss.Elementos[x]).vetor;
+                    Vetor vetor = escopo.tabela.GetVetor(vExp.nome, escopo);
+                    int[] indices = new int[vetor.dimensoes.Length];
 
-                    int[] indices = new int[v.dimensoes.Length];
-
-                    for (int i = 0; i < v.dimensoes.Length; i++)
+                    for (int i = 0; i < vetor.dimensoes.Length; i++)
                         indices[i] = (int)new EvalExpression().Eval((Expressao)expss.Elementos[x].Elementos[i].GetElemento(), escopo);
-                    pilhaOperandos.Push(v.GetElemento(indices));
+
+                    pilhaOperandos.Push(vetor.GetElemento(escopo, indices));
 
                 }
                 else
                 if (expss.Elementos[x].GetType() == typeof(ExpressaoObjeto))
                 {
-                    Objeto v = ((ExpressaoObjeto)expss.Elementos[x]).objeto;
-                    object valor = v.GetValor();
-                    pilhaOperandos.Push(valor);
+                    Objeto v = escopo.tabela.GetObjeto(((ExpressaoObjeto)expss.Elementos[x]).objeto.GetNome(), escopo);
+                    if (v != null)
+                    {
+                        object valor = v.GetValor();
+                        pilhaOperandos.Push(valor);
+                    }
+                    else
+                        pilhaOperandos.Push(0);
                 }
                 else
                 if (expss.Elementos[x].GetType() == typeof(ExpressaoChamadaDeFuncao))
@@ -116,7 +174,7 @@ namespace parser
 
 
                     // executa a funcao, com parametros, e objeto que criou o metodo da funcao!
-                    object resultFunction = funcaoExpressao.ExecuteAFunction(parametrosDaChamada, funcaoExpressao.caller);
+                    object resultFunction = funcaoExpressao.ExecuteAFunction(parametrosDaChamada, funcaoExpressao.caller, escopo);
                     pilhaOperandos.Push(resultFunction);
                 }
                 else
@@ -143,7 +201,7 @@ namespace parser
                                 if (vAtribuicao != null)
                                 {
                                     object valor = pilhaOperandos.Pop();
-                                    vAtribuicao.SetValor( valor, escopo);
+                                    vAtribuicao.SetValor(valor);
                                     return valor;
                                 }
                             }
@@ -174,7 +232,7 @@ namespace parser
                         if (vAtribuicaoUnario != null)
                         {
                             object valor = result1;
-                            vAtribuicaoUnario.SetValor(valor, escopo);
+                            vAtribuicaoUnario.SetValor(valor);
                         }
                     }
                 } // if
@@ -193,6 +251,8 @@ namespace parser
                 return int.Parse(number.ToString());
             if (Expressao.Instance.IsTipoFloat(number.ToString()))
                 return float.Parse(number.ToString());
+            if (Expressao.Instance.IsTipoDouble(number.ToString()))
+                return double.Parse(number.ToString());
             return number;
         }
 

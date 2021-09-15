@@ -27,7 +27,7 @@ namespace parser.ProgramacaoOrentadaAObjetos
         private static LinguagemOrquidea linguagem = new LinguagemOrquidea(); // linguagem utilizada: orquidea.
         public int indexHandler; // indice do método handler da sequencia id.
 
-        public int indexPosicao = -1;
+     
         public UmaSequenciaID(string[] seOriginal, List<string> codigo)
         {
             

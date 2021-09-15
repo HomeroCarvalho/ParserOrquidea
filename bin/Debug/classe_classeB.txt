@@ -1,0 +1,49 @@
+classe: classeB
+
+propriedades: 
+d: int
+classeA.a: int
+classeC.a: int
+
+
+metodos: 
+int  MetodoA( x: int ,y: int )
+int  classeA.MetodoB( x: int )
+int  classeC.MetodoB( x: int )
+
+
+
+
+
+classe Herdada: 
+
+classe: classeA
+
+propriedades: 
+a: int
+
+
+metodos: 
+int  MetodoB( x: int )
+
+
+
+
+
+
+classe Herdada: 
+
+classe: classeC
+
+propriedades: 
+a: int
+
+
+metodos: 
+int  MetodoB( x: int )
+
+
+
+
+
+

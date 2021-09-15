@@ -7,7 +7,7 @@ using System.Reflection;
 using ModuloTESTES;
 namespace parser
 {
-    public class SuiteClasseTestes
+    public class SuiteClasseTestes 
     {
         private delegate void MetodoTeste(AssercaoSuiteClasse assercao);
 
@@ -16,22 +16,21 @@ namespace parser
         private MethodInfo metodoDepois { get; set; }
 
         private string infoTextoCabacalho { get; set; }
-        public List<string> resumo { get; private set; }
+    
 
   
         public SuiteClasseTestes(string infoTextoNomeClasse)
         {
             this.infoTextoCabacalho = infoTextoNomeClasse;      
-          
-            this.resumo = new List<string>();
             this.metodosTeste = new List<MethodInfo>();
+
             List<MethodInfo> metodos = this.GetType().GetMethods().ToList<MethodInfo>();
 
             foreach (MethodInfo umMetodo in metodos) 
             {
                 List<ParameterInfo> parametrosDoMetodo = umMetodo.GetParameters().ToList<ParameterInfo>();
 
-                if (parametrosDoMetodo.Find(k => k.Name.Equals("assercao")) != null)
+                if ((parametrosDoMetodo != null) && (parametrosDoMetodo.Count > 0) && (parametrosDoMetodo[0].ParameterType == typeof(AssercaoSuiteClasse))) 
                     this.metodosTeste.Add(umMetodo);
 
                 if (umMetodo.Name.Equals("Antes"))
@@ -99,7 +98,7 @@ namespace parser
             LoggerTests.WriteEmptyLines();
         }
 
-
+     
     } // class
 
     public class AssercaoSuiteClasse
@@ -130,6 +129,7 @@ namespace parser
 
             return false;
         }
+
 
     }
 } // namespace

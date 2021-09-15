@@ -80,7 +80,7 @@ SPRINT ANTERIOR:
 		----> (fixado) fixar o metodo de Expressao.ExtraiExpressoes(), no caso de chamada de funcao, nao esta retornando os parametros da chamada.
 		----> (a fazer, segue o fluxo Scrum para trilhangem do projeto) codificar chamadas da linguagem POO, para linguagens dos intepretadores LISP e PROLOG.
 _____________________________________________________________________________________________________________________________________________________________________________________________________________________________
-SPRINT CURRENTE:
+SPRINT ANTERIOR:
 		SPRINT BACKLOG:
 					1- (testado) testes unitarios para todas instruções: atribuicao, for, while, if/else, casesOfUse, continue, break, return.
 					2- (testado) testes para construção de objetos importados, e chamada a um dos método do objeto importado, como o que segue: Matriz m= CreateObject(m,null); m.SetElemento(lin, col, 5).
@@ -89,8 +89,18 @@ SPRINT CURRENTE:
 	   como apenas uma forma de armazenar variaveis/objetos, a classe Objeto. Ha tambem a classe Vetor, que armazena vetores uni/multidimensionais.
 
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
+SPRINT CURRENTE: arremate.
+		
+		SPRING BACKLOG:
+				1- (feito) TESTES PARA OBTENÇÃO DE CLASSES.
+					a classe ExtratoresOO extrai classes e interfaces, verificar se há metodos/propriedades/operadores em conflito (mesmo nome em classes herdadas).
 
+				2- (feito) adicionalmente, incluido no escopo da sprint, foi codificado/testado uma funcionalidade que grava em arquivo um resumo do que há numa classe: propriedades/metodos/operadores, escrevendo nome/tipo de propriedades/parametros.
 
+				3- (feito, testado) codificacao para propriedades/metodos aninhados.
 
+				4- (a fazer) Execução de instruções de uma classe orquidea. Se feito, encerrar a manutencao aditiva.
+							---> parado por faltar processamento de propriedades e metodos aninhados em POO.
+							---> (codificar e testes) a codificacao e testes para expressoes validas.
 
-
+_______________________________________________________________________________________________________________________________________________________________________________________________________________________________

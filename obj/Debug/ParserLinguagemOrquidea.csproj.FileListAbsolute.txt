@@ -34,6 +34,18 @@ E:\BACKUP ate 30.03.21\ProjetoLinguagensOrquideaVisualStudio2019-20210713T231718
 E:\BACKUP ate 30.03.21\ProjetoLinguagensOrquideaVisualStudio2019-20210713T231718Z-001\ProjetoLinguagensOrquideaVisualStudio2019\obj\Debug\ParserLinguagemOrquidea.exe
 E:\BACKUP ate 30.03.21\ProjetoLinguagensOrquideaVisualStudio2019-20210713T231718Z-001\ProjetoLinguagensOrquideaVisualStudio2019\obj\Debug\ParserLinguagemOrquidea.pdb
 E:\BACKUP ate 30.03.21\ProjetoLinguagensOrquideaVisualStudio2019-20210713T231718Z-001\ProjetoLinguagensOrquideaVisualStudio2019\obj\Debug\ParserLinguagemOrquidea.csproj.AssemblyReference.cache
+F:\ProjetoLinguagensOrquideaVisualStudio2019_2\obj\Debug\ParserLinguagemOrquidea.csproj.CoreCompileInputs.cache
+F:\ProjetoLinguagensOrquideaVisualStudio2019_2\obj\Debug\ParserLinguagemOrquidea.exe
+F:\ProjetoLinguagensOrquideaVisualStudio2019_2\obj\Debug\ParserLinguagemOrquidea.pdb
+F:\ProjetoLinguagensOrquideaVisualStudio2019_2\bin\Debug\ParserLinguagemOrquidea.exe.config
+F:\ProjetoLinguagensOrquideaVisualStudio2019_2\bin\Debug\ParserLinguagemOrquidea.exe
+F:\ProjetoLinguagensOrquideaVisualStudio2019_2\bin\Debug\ParserLinguagemOrquidea.pdb
+F:\ProjetoLinguagensOrquideaVisualStudio2019_2\bin\Debug\MathNet.Numerics.dll
+F:\ProjetoLinguagensOrquideaVisualStudio2019_2\bin\Debug\MathNet.Spatial.dll
+F:\ProjetoLinguagensOrquideaVisualStudio2019_2\bin\Debug\MathNet.Numerics.xml
+F:\ProjetoLinguagensOrquideaVisualStudio2019_2\bin\Debug\MathNet.Spatial.xml
+F:\ProjetoLinguagensOrquideaVisualStudio2019_2\obj\Debug\ParserLinguagemOrquidea.csproj.CopyComplete
+F:\ProjetoLinguagensOrquideaVisualStudio2019_2\obj\Debug\ParserLinguagemOrquidea.csproj.AssemblyReference.cache
 E:\ProjetoLinguagensOrquideaVisualStudio2019_2\bin\Debug\ParserLinguagemOrquidea.exe.config
 E:\ProjetoLinguagensOrquideaVisualStudio2019_2\bin\Debug\ParserLinguagemOrquidea.exe
 E:\ProjetoLinguagensOrquideaVisualStudio2019_2\bin\Debug\ParserLinguagemOrquidea.pdb

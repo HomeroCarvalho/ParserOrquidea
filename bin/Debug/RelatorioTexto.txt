@@ -1,1079 +1,630 @@
 
 
+Time: 13/09/2021 14:35:08  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/13/2021 14:35:24  Message: teste: Teste_01 executado em: -280  milisegundos.   teste passou
 
 
+Time: 13/09/2021 14:44:42  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 13/09/2021 14:45:26  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 13/09/2021 14:45:49  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 08:14:01  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 08:14:22  Message: teste: Teste_01 executado em: -491  milisegundos.   teste passou
 
 
-Time: 08/13/2021 09:50:47  Message: teste: TesteFor executado em: 250  milisegundos.   teste nao passou.
-Time: 08/13/2021 09:50:47  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
-Time: 08/13/2021 09:50:47  Message: teste: TesteChamadaDeObjetoImportado executado em: 16  milisegundos.   teste passou
-Time: 08/13/2021 09:50:47  Message: teste: TesteVariavelVetor executado em: 16  milisegundos.   teste passou
-Time: 08/13/2021 09:50:47  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
-Time: 08/13/2021 09:50:47  Message: teste: TesteCasesOfUse executado em: 31  milisegundos.   teste passou
-Time: 08/13/2021 09:50:47  Message: teste: TesteCasesOfUse_2 executado em: 16  milisegundos.   teste passou
+Time: 14/09/2021 08:16:16  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 08:19:23  Message: teste: Teste_01 executado em: -238  milisegundos.   teste passou
 
 
+Time: 14/09/2021 08:19:32  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 08:20:25  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 08:20:51  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 08:22:29  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 08:33:02  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 08:33:03  Message: teste: Teste_01 executado em: 626  milisegundos.   teste nao passou.
+Time: 09/14/2021 08:33:03  Message: teste: Teste_02 executado em: 68  milisegundos.   teste nao passou.
 
 
-Time: 08/13/2021 09:52:29  Message: teste: TesteFor executado em: -438  milisegundos.   teste nao passou.
-Time: 08/13/2021 09:52:29  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
-Time: 08/13/2021 09:52:29  Message: teste: TesteChamadaDeObjetoImportado executado em: 31  milisegundos.   teste passou
-Time: 08/13/2021 09:52:29  Message: teste: TesteVariavelVetor executado em: 0  milisegundos.   teste passou
-Time: 08/13/2021 09:52:29  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
-Time: 08/13/2021 09:52:38  Message: teste: TesteCasesOfUse executado em: -110  milisegundos.   teste passou
 
 
+Time: 14/09/2021 08:34:25  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 08:34:25  Message: teste: Teste_01 executado em: 587  milisegundos.   teste nao passou.
+Time: 09/14/2021 08:34:25  Message: teste: Teste_02 executado em: 71  milisegundos.   teste nao passou.
 
 
 
 
+Time: 14/09/2021 08:34:34  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 08:34:35  Message: teste: Teste_01 executado em: 4  milisegundos.   teste nao passou.
+Time: 09/14/2021 08:34:35  Message: teste: Teste_02 executado em: 287  milisegundos.   teste nao passou.
 
 
 
 
+Time: 14/09/2021 08:35:07  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 08:37:23  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 08:39:47  Message: teste: Teste_01 executado em: 249  milisegundos.   teste nao passou.
+Time: 09/14/2021 08:39:47  Message: teste: Teste_02 executado em: 154  milisegundos.   teste nao passou.
 
 
 
 
+Time: 14/09/2021 08:39:53  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 08:43:28  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 08:44:57  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 08:44:58  Message: teste: Teste_01 executado em: -670  milisegundos.   teste nao passou.
+Time: 09/14/2021 08:44:58  Message: teste: Teste_02 executado em: 67  milisegundos.   teste nao passou.
 
 
 
 
+Time: 14/09/2021 08:48:12  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 08:48:47  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 08:49:33  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 08:50:10  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 08:51:39  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 08:51:43  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 08:54:04  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 08:54:04  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 08:56:16  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 08:56:16  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 09:03:42  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:03:42  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 09:08:17  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:08:17  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 09:13:29  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:13:30  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 09:15:51  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:15:52  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 09/14/2021 09:16:03  Message: teste: Teste_01 executado em: -268  milisegundos.   teste passou
 
 
+Time: 14/09/2021 09:19:10  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:19:10  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 09:21:37  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:21:37  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 09:27:19  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:27:20  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 09:29:52  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:29:52  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 09:32:36  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:32:37  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 09:45:08  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:45:08  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 09:45:39  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:45:39  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 09:48:38  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:48:38  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 09:48:51  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:48:52  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 09:52:56  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:55:35  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 09:56:47  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:56:48  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-
-
-
-
-Time: 08/13/2021 10:42:05  Message: teste: TesteFor executado em: 352  milisegundos.   teste passou
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Time: 08/13/2021 10:54:19  Message: teste: TesteImporter executado em: 203  milisegundos.   teste passou
-Time: 08/13/2021 10:54:19  Message: teste: TesteChamadaDeObjetoImportado executado em: 47  milisegundos.   teste passou
-Time: 08/13/2021 10:54:19  Message: teste: TesteVariavelVetor executado em: 0  milisegundos.   teste passou
-Time: 08/13/2021 10:54:19  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
-Time: 08/13/2021 10:54:19  Message: teste: TesteCasesOfUse executado em: 31  milisegundos.   teste passou
-Time: 08/13/2021 10:54:19  Message: teste: TesteCasesOfUse_2 executado em: 31  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 10:55:43  Message: teste: TesteCasesOfUse_2 executado em: 642  milisegundos.   teste passou
-Time: 08/13/2021 10:55:53  Message: teste: TesteImporter executado em: 224  milisegundos.   teste passou
-Time: 08/13/2021 10:56:05  Message: teste: TesteChamadaDeObjetoImportado executado em: 126  milisegundos.   teste passou
-Time: 08/13/2021 10:56:18  Message: teste: TesteVariavelVetor executado em: -410  milisegundos.   teste passou
-Time: 08/13/2021 10:56:28  Message: teste: TesteCreateObjects executado em: -41  milisegundos.   teste passou
-Time: 08/13/2021 10:56:41  Message: teste: TesteCasesOfUse executado em: 181  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 10:58:53  Message: teste: TesteCasesOfUse_2 executado em: -46  milisegundos.   teste passou
-Time: 08/13/2021 10:58:53  Message: teste: TesteImporter executado em: 36  milisegundos.   teste passou
-Time: 08/13/2021 10:58:53  Message: teste: TesteChamadaDeObjetoImportado executado em: 24  milisegundos.   teste passou
-Time: 08/13/2021 10:58:53  Message: teste: TesteVariavelVetor executado em: 9  milisegundos.   teste passou
-Time: 08/13/2021 10:58:53  Message: teste: TesteCreateObjects executado em: 4  milisegundos.   teste passou
-Time: 08/13/2021 10:58:53  Message: teste: TesteCasesOfUse executado em: 18  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 11:07:43  Message: teste: TesteCasesOfUse_2 executado em: 234  milisegundos.   teste passou
-Time: 08/13/2021 11:07:43  Message: teste: TesteImporter executado em: 63  milisegundos.   teste passou
-Time: 08/13/2021 11:07:43  Message: teste: TesteChamadaDeObjetoImportado executado em: 15  milisegundos.   teste passou
-Time: 08/13/2021 11:07:43  Message: teste: TesteVariavelVetor executado em: 16  milisegundos.   teste passou
-Time: 08/13/2021 11:07:43  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
-Time: 08/13/2021 11:07:43  Message: teste: TesteCasesOfUse executado em: 31  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 11:12:55  Message: teste: TesteCasesOfUse_2 executado em: 328  milisegundos.   teste passou
-Time: 08/13/2021 11:12:55  Message: teste: TesteImporter executado em: 63  milisegundos.   teste passou
-Time: 08/13/2021 11:12:55  Message: teste: TesteChamadaDeObjetoImportado executado em: 31  milisegundos.   teste passou
-Time: 08/13/2021 11:12:55  Message: teste: TesteVariavelVetor executado em: 0  milisegundos.   teste passou
-Time: 08/13/2021 11:12:55  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
-Time: 08/13/2021 11:12:55  Message: teste: TesteCasesOfUse executado em: 31  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 11:16:03  Message: teste: TesteCasesOfUse_2 executado em: 250  milisegundos.   teste passou
-Time: 08/13/2021 11:16:03  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
-Time: 08/13/2021 11:16:03  Message: teste: TesteChamadaDeObjetoImportado executado em: 16  milisegundos.   teste passou
-Time: 08/13/2021 11:16:03  Message: teste: TesteVariavelVetor executado em: 0  milisegundos.   teste passou
-Time: 08/13/2021 11:16:03  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
-Time: 08/13/2021 11:16:03  Message: teste: TesteCasesOfUse executado em: 31  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 11:20:31  Message: teste: TesteCasesOfUse_2 executado em: 219  milisegundos.   teste passou
-Time: 08/13/2021 11:20:31  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
-Time: 08/13/2021 11:20:31  Message: teste: TesteChamadaDeObjetoImportado executado em: 32  milisegundos.   teste passou
-Time: 08/13/2021 11:20:31  Message: teste: TesteVariavelVetor executado em: 0  milisegundos.   teste passou
-Time: 08/13/2021 11:20:31  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
-Time: 08/13/2021 11:20:31  Message: teste: TesteCasesOfUse executado em: 31  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 11:23:23  Message: teste: TesteCasesOfUse_2 executado em: -781  milisegundos.   teste passou
-Time: 08/13/2021 11:23:23  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
-Time: 08/13/2021 11:23:23  Message: teste: TesteChamadaDeObjetoImportado executado em: 16  milisegundos.   teste passou
-Time: 08/13/2021 11:23:23  Message: teste: TesteVariavelVetor executado em: 16  milisegundos.   teste passou
-Time: 08/13/2021 11:23:23  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
-Time: 08/13/2021 11:23:23  Message: teste: TesteCasesOfUse executado em: 15  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 11:30:13  Message: teste: TesteCasesOfUse_2 executado em: 207  milisegundos.   teste passou
-Time: 08/13/2021 11:30:13  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
-Time: 08/13/2021 11:30:13  Message: teste: TesteChamadaDeObjetoImportado executado em: 16  milisegundos.   teste passou
-Time: 08/13/2021 11:30:13  Message: teste: TesteVariavelVetor executado em: 16  milisegundos.   teste passou
-Time: 08/13/2021 11:30:13  Message: teste: TesteCreateObjects executado em: 0  milisegundos.   teste passou
-Time: 08/13/2021 11:30:13  Message: teste: TesteCasesOfUse executado em: 15  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 11:39:39  Message: teste: TesteCasesOfUse_2 executado em: 122  milisegundos.   teste passou
-Time: 08/13/2021 11:39:39  Message: teste: TesteImporter executado em: 36  milisegundos.   teste passou
-Time: 08/13/2021 11:39:39  Message: teste: TesteChamadaDeObjetoImportado executado em: 21  milisegundos.   teste passou
-Time: 08/13/2021 11:39:39  Message: teste: TesteVariavelVetor executado em: 5  milisegundos.   teste passou
-Time: 08/13/2021 11:39:39  Message: teste: TesteCreateObjects executado em: 4  milisegundos.   teste passou
-Time: 08/13/2021 11:39:39  Message: teste: TesteCasesOfUse executado em: 18  milisegundos.   teste passou
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Time: 08/13/2021 11:48:25  Message: teste: TesteWhile executado em: 836  milisegundos.   teste passou
-Time: 08/13/2021 11:48:25  Message: teste: TesteCasesOfUse_2 executado em: 25  milisegundos.   teste passou
-Time: 08/13/2021 11:48:25  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
-Time: 08/13/2021 11:48:25  Message: teste: TesteChamadaDeObjetoImportado executado em: 22  milisegundos.   teste passou
-Time: 08/13/2021 11:48:25  Message: teste: TesteVariavelVetor executado em: 6  milisegundos.   teste passou
-Time: 08/13/2021 11:48:25  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
-Time: 08/13/2021 11:48:25  Message: teste: TesteCasesOfUse executado em: 22  milisegundos.   teste passou
-Time: 08/13/2021 11:48:25  Message: teste: Atribuicao executado em: 11  milisegundos.   teste passou
-Time: 08/13/2021 11:48:26  Message: teste: TesteIF executado em: -970  milisegundos.   teste passou
-Time: 08/13/2021 11:48:26  Message: teste: TesteIF_Else executado em: 43  milisegundos.   teste passou
-Time: 08/13/2021 11:48:26  Message: teste: TesteFor executado em: 52  milisegundos.   teste nao passou.
-
-
-
-
-
-
-
-
-Time: 08/13/2021 11:51:50  Message: teste: TesteWhile executado em: 349  milisegundos.   teste passou
-Time: 08/13/2021 11:51:50  Message: teste: TesteCasesOfUse_2 executado em: 28  milisegundos.   teste passou
-Time: 08/13/2021 11:51:50  Message: teste: TesteImporter executado em: 48  milisegundos.   teste passou
-Time: 08/13/2021 11:51:50  Message: teste: TesteChamadaDeObjetoImportado executado em: 39  milisegundos.   teste passou
-Time: 08/13/2021 11:51:50  Message: teste: TesteVariavelVetor executado em: 5  milisegundos.   teste passou
-Time: 08/13/2021 11:51:50  Message: teste: TesteCreateObjects executado em: 4  milisegundos.   teste passou
-Time: 08/13/2021 11:51:50  Message: teste: TesteCasesOfUse executado em: 33  milisegundos.   teste passou
-Time: 08/13/2021 11:51:50  Message: teste: Atribuicao executado em: 21  milisegundos.   teste passou
-Time: 08/13/2021 11:51:50  Message: teste: TesteIF executado em: 51  milisegundos.   teste passou
-Time: 08/13/2021 11:51:50  Message: teste: TesteIF_Else executado em: 51  milisegundos.   teste passou
-Time: 08/13/2021 11:53:43  Message: teste: TesteFor executado em: -375  milisegundos.   teste nao passou.
-
-
-
-
-
-
-
-
-Time: 08/13/2021 11:55:11  Message: teste: TesteWhile executado em: 242  milisegundos.   teste passou
-Time: 08/13/2021 11:55:11  Message: teste: TesteCasesOfUse_2 executado em: 23  milisegundos.   teste passou
-Time: 08/13/2021 11:55:11  Message: teste: TesteImporter executado em: 31  milisegundos.   teste passou
-Time: 08/13/2021 11:55:11  Message: teste: TesteChamadaDeObjetoImportado executado em: 20  milisegundos.   teste passou
-Time: 08/13/2021 11:55:11  Message: teste: TesteVariavelVetor executado em: 6  milisegundos.   teste passou
-Time: 08/13/2021 11:55:11  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
-Time: 08/13/2021 11:55:11  Message: teste: TesteCasesOfUse executado em: 25  milisegundos.   teste passou
-Time: 08/13/2021 11:55:11  Message: teste: Atribuicao executado em: 29  milisegundos.   teste passou
-Time: 08/13/2021 11:55:11  Message: teste: TesteIF executado em: 35  milisegundos.   teste passou
-Time: 08/13/2021 11:55:11  Message: teste: TesteIF_Else executado em: 53  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 11:58:06  Message: teste: TesteWhile executado em: 198  milisegundos.   teste passou
-Time: 08/13/2021 11:58:06  Message: teste: TesteCasesOfUse_2 executado em: 26  milisegundos.   teste passou
-Time: 08/13/2021 11:58:06  Message: teste: TesteImporter executado em: 33  milisegundos.   teste passou
-Time: 08/13/2021 11:58:06  Message: teste: TesteChamadaDeObjetoImportado executado em: 21  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 11:58:50  Message: teste: TesteWhile executado em: -771  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 12:03:20  Message: teste: TesteWhile executado em: -67  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 12:09:05  Message: teste: TesteWhile executado em: -327  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 12:12:01  Message: teste: TesteWhile executado em: 476  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 12:13:47  Message: teste: TesteWhile executado em: -202  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 12:15:07  Message: teste: TesteImporter executado em: 241  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 17:03:26  Message: teste: TesteImporter executado em: 446  milisegundos.   teste passou
-Time: 08/13/2021 17:03:26  Message: teste: TesteWhile executado em: 59  milisegundos.   teste passou
-Time: 08/13/2021 17:04:06  Message: teste: TesteIF executado em: -174  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 17:05:06  Message: teste: TesteImporter executado em: 198  milisegundos.   teste passou
-Time: 08/13/2021 17:05:06  Message: teste: TesteWhile executado em: 49  milisegundos.   teste passou
-Time: 08/13/2021 17:05:58  Message: teste: TesteIF executado em: -294  milisegundos.   teste passou
-Time: 08/13/2021 17:07:49  Message: teste: TesteCasesOfUse_2 executado em: -201  milisegundos.   teste passou
-Time: 08/13/2021 17:07:49  Message: teste: TesteChamadaDeObjetoImportado executado em: 30  milisegundos.   teste passou
-Time: 08/13/2021 17:07:52  Message: teste: TesteVariavelVetor executado em: 570  milisegundos.   teste passou
-Time: 08/13/2021 17:07:52  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
-Time: 08/13/2021 17:07:52  Message: teste: TesteCasesOfUse executado em: 26  milisegundos.   teste passou
-Time: 08/13/2021 17:07:52  Message: teste: Atribuicao executado em: 12  milisegundos.   teste passou
-Time: 08/13/2021 17:07:52  Message: teste: TesteIF_Else executado em: 45  milisegundos.   teste passou
-Time: 08/13/2021 17:07:56  Message: teste: TesteFor executado em: -501  milisegundos.   teste nao passou.
-
-
-
-
-
-
-
-
-Time: 08/13/2021 17:10:10  Message: teste: TesteImporter executado em: 311  milisegundos.   teste passou
-Time: 08/13/2021 17:10:10  Message: teste: TesteIF executado em: 61  milisegundos.   teste passou
-Time: 08/13/2021 17:10:10  Message: teste: TesteWhile executado em: 34  milisegundos.   teste passou
-Time: 08/13/2021 17:10:10  Message: teste: TesteCasesOfUse_2 executado em: 50  milisegundos.   teste passou
-Time: 08/13/2021 17:10:10  Message: teste: TesteChamadaDeObjetoImportado executado em: 45  milisegundos.   teste passou
-Time: 08/13/2021 17:10:10  Message: teste: TesteVariavelVetor executado em: 6  milisegundos.   teste passou
-Time: 08/13/2021 17:10:10  Message: teste: TesteCreateObjects executado em: 34  milisegundos.   teste passou
-Time: 08/13/2021 17:10:10  Message: teste: TesteCasesOfUse executado em: 27  milisegundos.   teste passou
-Time: 08/13/2021 17:10:10  Message: teste: Atribuicao executado em: 13  milisegundos.   teste passou
-Time: 08/13/2021 17:10:10  Message: teste: TesteIF_Else executado em: 48  milisegundos.   teste passou
-Time: 08/13/2021 17:10:10  Message: teste: TesteFor executado em: 67  milisegundos.   teste nao passou.
-
-
-
-
-
-
-
-
-Time: 08/13/2021 17:10:51  Message: teste: TesteImporter executado em: 242  milisegundos.   teste passou
-Time: 08/13/2021 17:10:51  Message: teste: TesteIF executado em: 88  milisegundos.   teste passou
-Time: 08/13/2021 17:10:51  Message: teste: TesteWhile executado em: 40  milisegundos.   teste passou
-Time: 08/13/2021 17:10:51  Message: teste: TesteCasesOfUse_2 executado em: 36  milisegundos.   teste passou
-Time: 08/13/2021 17:10:51  Message: teste: TesteChamadaDeObjetoImportado executado em: 21  milisegundos.   teste passou
-Time: 08/13/2021 17:10:51  Message: teste: TesteVariavelVetor executado em: 6  milisegundos.   teste passou
-Time: 08/13/2021 17:10:51  Message: teste: TesteCreateObjects executado em: 6  milisegundos.   teste passou
-Time: 08/13/2021 17:10:51  Message: teste: TesteCasesOfUse executado em: 27  milisegundos.   teste passou
-Time: 08/13/2021 17:10:51  Message: teste: Atribuicao executado em: 14  milisegundos.   teste passou
-Time: 08/13/2021 17:10:51  Message: teste: TesteIF_Else executado em: 64  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 17:13:00  Message: teste: TesteImporter executado em: -780  milisegundos.   teste passou
-Time: 08/13/2021 17:13:00  Message: teste: TesteIF executado em: 57  milisegundos.   teste passou
-Time: 08/13/2021 17:13:00  Message: teste: TesteWhile executado em: 43  milisegundos.   teste passou
-Time: 08/13/2021 17:13:00  Message: teste: TesteCasesOfUse_2 executado em: 28  milisegundos.   teste passou
-Time: 08/13/2021 17:13:00  Message: teste: TesteChamadaDeObjetoImportado executado em: 28  milisegundos.   teste passou
-Time: 08/13/2021 17:13:00  Message: teste: TesteVariavelVetor executado em: 8  milisegundos.   teste passou
-Time: 08/13/2021 17:13:00  Message: teste: TesteCreateObjects executado em: 7  milisegundos.   teste passou
-Time: 08/13/2021 17:13:00  Message: teste: TesteCasesOfUse executado em: 27  milisegundos.   teste passou
-Time: 08/13/2021 17:13:00  Message: teste: Atribuicao executado em: 13  milisegundos.   teste passou
-Time: 08/13/2021 17:13:00  Message: teste: TesteIF_Else executado em: 49  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 17:14:53  Message: teste: TesteImporter executado em: -801  milisegundos.   teste passou
-Time: 08/13/2021 17:14:53  Message: teste: TesteIF executado em: 46  milisegundos.   teste passou
-Time: 08/13/2021 17:14:53  Message: teste: TesteWhile executado em: 26  milisegundos.   teste passou
-Time: 08/13/2021 17:14:53  Message: teste: TesteCasesOfUse_2 executado em: 25  milisegundos.   teste passou
-Time: 08/13/2021 17:14:53  Message: teste: TesteChamadaDeObjetoImportado executado em: 20  milisegundos.   teste passou
-Time: 08/13/2021 17:14:53  Message: teste: TesteVariavelVetor executado em: 5  milisegundos.   teste passou
-Time: 08/13/2021 17:14:53  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
-Time: 08/13/2021 17:14:53  Message: teste: TesteCasesOfUse executado em: 24  milisegundos.   teste passou
-Time: 08/13/2021 17:14:53  Message: teste: Atribuicao executado em: 12  milisegundos.   teste passou
-Time: 08/13/2021 17:14:53  Message: teste: TesteIF_Else executado em: 41  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 17:17:28  Message: teste: TesteImporter executado em: 249  milisegundos.   teste passou
-Time: 08/13/2021 17:17:28  Message: teste: TesteIF executado em: 58  milisegundos.   teste passou
-Time: 08/13/2021 17:17:29  Message: teste: TesteWhile executado em: -970  milisegundos.   teste passou
-Time: 08/13/2021 17:17:29  Message: teste: TesteCasesOfUse_2 executado em: 28  milisegundos.   teste passou
-Time: 08/13/2021 17:17:29  Message: teste: TesteChamadaDeObjetoImportado executado em: 32  milisegundos.   teste passou
-Time: 08/13/2021 17:17:29  Message: teste: TesteVariavelVetor executado em: 9  milisegundos.   teste passou
-Time: 08/13/2021 17:17:29  Message: teste: TesteCreateObjects executado em: 7  milisegundos.   teste passou
-Time: 08/13/2021 17:17:29  Message: teste: TesteCasesOfUse executado em: 30  milisegundos.   teste passou
-Time: 08/13/2021 17:17:29  Message: teste: Atribuicao executado em: 16  milisegundos.   teste passou
-Time: 08/13/2021 17:17:29  Message: teste: TesteIF_Else executado em: 51  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 17:19:54  Message: teste: TesteImporter executado em: -779  milisegundos.   teste passou
-Time: 08/13/2021 17:19:54  Message: teste: TesteIF executado em: 60  milisegundos.   teste passou
-Time: 08/13/2021 17:19:54  Message: teste: TesteWhile executado em: 35  milisegundos.   teste passou
-Time: 08/13/2021 17:19:54  Message: teste: TesteCasesOfUse_2 executado em: 28  milisegundos.   teste passou
-Time: 08/13/2021 17:19:54  Message: teste: TesteChamadaDeObjetoImportado executado em: 27  milisegundos.   teste passou
-Time: 08/13/2021 17:19:54  Message: teste: TesteVariavelVetor executado em: 7  milisegundos.   teste passou
-Time: 08/13/2021 17:19:54  Message: teste: TesteCreateObjects executado em: 11  milisegundos.   teste passou
-Time: 08/13/2021 17:19:54  Message: teste: TesteCasesOfUse executado em: 28  milisegundos.   teste passou
-Time: 08/13/2021 17:19:54  Message: teste: Atribuicao executado em: 15  milisegundos.   teste passou
-Time: 08/13/2021 17:19:54  Message: teste: TesteIF_Else executado em: 51  milisegundos.   teste passou
-
-
-
-
-
-
-
-
-
-
-
-
-Time: 08/13/2021 17:22:28  Message: teste: TesteImporter executado em: 225  milisegundos.   teste passou
-Time: 08/13/2021 17:22:28  Message: teste: TesteIF executado em: 53  milisegundos.   teste passou
-Time: 08/13/2021 17:22:28  Message: teste: TesteWhile executado em: 30  milisegundos.   teste passou
-Time: 08/13/2021 17:22:28  Message: teste: TesteCasesOfUse_2 executado em: 32  milisegundos.   teste passou
-Time: 08/13/2021 17:22:28  Message: teste: TesteChamadaDeObjetoImportado executado em: 23  milisegundos.   teste passou
-Time: 08/13/2021 17:22:28  Message: teste: TesteVariavelVetor executado em: 7  milisegundos.   teste passou
-Time: 08/13/2021 17:22:28  Message: teste: TesteCreateObjects executado em: 6  milisegundos.   teste passou
-Time: 08/13/2021 17:22:28  Message: teste: TesteCasesOfUse executado em: 27  milisegundos.   teste passou
-Time: 08/13/2021 17:22:28  Message: teste: Atribuicao executado em: 14  milisegundos.   teste passou
-Time: 08/13/2021 17:22:28  Message: teste: TesteIF_Else executado em: 52  milisegundos.   teste passou
-Time: 08/13/2021 17:22:28  Message: teste: TesteFor executado em: 57  milisegundos.   teste nao passou.
-
-
-
-
-
-
-
-
-Time: 08/13/2021 17:30:01  Message: teste: TesteImporter executado em: -538  milisegundos.   teste passou
-Time: 08/13/2021 17:30:01  Message: teste: TesteIF executado em: 62  milisegundos.   teste passou
-Time: 08/13/2021 17:30:01  Message: teste: TesteWhile executado em: 30  milisegundos.   teste passou
-Time: 08/13/2021 17:30:01  Message: teste: TesteCasesOfUse_2 executado em: 27  milisegundos.   teste passou
-Time: 08/13/2021 17:30:01  Message: teste: TesteChamadaDeObjetoImportado executado em: 22  milisegundos.   teste passou
-Time: 08/13/2021 17:30:01  Message: teste: TesteVariavelVetor executado em: 12  milisegundos.   teste passou
-Time: 08/13/2021 17:30:01  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
-Time: 08/13/2021 17:30:01  Message: teste: TesteCasesOfUse executado em: 29  milisegundos.   teste passou
-Time: 08/13/2021 17:30:01  Message: teste: Atribuicao executado em: 14  milisegundos.   teste passou
-Time: 08/13/2021 17:30:01  Message: teste: TesteIF_Else executado em: 49  milisegundos.   teste passou
-Time: 08/13/2021 17:30:01  Message: teste: TesteFor executado em: 73  milisegundos.   teste nao passou.
-
-
-
-
-
-
-
-
-Time: 08/13/2021 17:30:58  Message: teste: TesteImporter executado em: 232  milisegundos.   teste passou
-Time: 08/13/2021 17:30:58  Message: teste: TesteIF executado em: 57  milisegundos.   teste passou
-Time: 08/13/2021 17:30:58  Message: teste: TesteWhile executado em: 35  milisegundos.   teste passou
-Time: 08/13/2021 17:32:14  Message: teste: TesteCasesOfUse_2 executado em: -264  milisegundos.   teste passou
-Time: 08/13/2021 17:32:14  Message: teste: TesteChamadaDeObjetoImportado executado em: 23  milisegundos.   teste passou
-Time: 08/13/2021 17:32:14  Message: teste: TesteVariavelVetor executado em: 7  milisegundos.   teste passou
-Time: 08/13/2021 17:32:14  Message: teste: TesteCreateObjects executado em: 7  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 17:33:03  Message: teste: TesteImporter executado em: -763  milisegundos.   teste passou
-Time: 08/13/2021 17:33:03  Message: teste: TesteIF executado em: 46  milisegundos.   teste passou
-Time: 08/13/2021 17:33:03  Message: teste: TesteWhile executado em: 27  milisegundos.   teste passou
-Time: 08/13/2021 17:33:03  Message: teste: TesteCasesOfUse_2 executado em: 25  milisegundos.   teste passou
-Time: 08/13/2021 17:33:03  Message: teste: TesteChamadaDeObjetoImportado executado em: 19  milisegundos.   teste passou
-Time: 08/13/2021 17:33:03  Message: teste: TesteVariavelVetor executado em: 6  milisegundos.   teste passou
-Time: 08/13/2021 17:33:03  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
-Time: 08/13/2021 17:34:05  Message: teste: TesteCasesOfUse executado em: 640  milisegundos.   teste passou
-Time: 08/13/2021 17:35:12  Message: teste: Atribuicao executado em: 2  milisegundos.   teste passou
-Time: 08/13/2021 17:36:21  Message: teste: TesteIF_Else executado em: -432  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 17:38:31  Message: teste: TesteImporter executado em: 290  milisegundos.   teste passou
-Time: 08/13/2021 17:38:31  Message: teste: TesteIF executado em: 55  milisegundos.   teste passou
-Time: 08/13/2021 17:38:31  Message: teste: TesteWhile executado em: 30  milisegundos.   teste passou
-Time: 08/13/2021 17:38:31  Message: teste: TesteCasesOfUse_2 executado em: 26  milisegundos.   teste passou
-Time: 08/13/2021 17:38:31  Message: teste: TesteChamadaDeObjetoImportado executado em: 26  milisegundos.   teste passou
-Time: 08/13/2021 17:38:31  Message: teste: TesteVariavelVetor executado em: 20  milisegundos.   teste passou
-Time: 08/13/2021 17:38:31  Message: teste: TesteCreateObjects executado em: 7  milisegundos.   teste passou
-Time: 08/13/2021 17:38:31  Message: teste: TesteCasesOfUse executado em: 41  milisegundos.   teste passou
-Time: 08/13/2021 17:38:31  Message: teste: Atribuicao executado em: 31  milisegundos.   teste passou
-Time: 08/13/2021 17:38:31  Message: teste: TesteIF_Else executado em: 63  milisegundos.   teste passou
-
-
-
-
-
-
-Time: 08/13/2021 17:39:25  Message: teste: TesteImporter executado em: 498  milisegundos.   teste passou
-Time: 08/13/2021 17:39:25  Message: teste: TesteIF executado em: 55  milisegundos.   teste passou
-Time: 08/13/2021 17:39:26  Message: teste: TesteWhile executado em: -962  milisegundos.   teste passou
-Time: 08/13/2021 17:39:26  Message: teste: TesteCasesOfUse_2 executado em: 27  milisegundos.   teste passou
-Time: 08/13/2021 17:39:26  Message: teste: TesteChamadaDeObjetoImportado executado em: 21  milisegundos.   teste passou
-Time: 08/13/2021 17:39:26  Message: teste: TesteVariavelVetor executado em: 7  milisegundos.   teste passou
-Time: 08/13/2021 17:39:26  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
-Time: 08/13/2021 17:39:26  Message: teste: TesteCasesOfUse executado em: 26  milisegundos.   teste passou
-Time: 08/13/2021 17:39:26  Message: teste: Atribuicao executado em: 13  milisegundos.   teste passou
-Time: 08/13/2021 17:39:26  Message: teste: TesteIF_Else executado em: 53  milisegundos.   teste passou
-Time: 08/13/2021 17:39:35  Message: teste: TesteFor executado em: 197  milisegundos.   teste passou
-
-
-
-
-
-
-
-
-Time: 08/13/2021 17:45:53  Message: teste: TesteImporter executado em: -713  milisegundos.   teste passou
-Time: 08/13/2021 17:45:53  Message: teste: TesteIF executado em: 49  milisegundos.   teste passou
-Time: 08/13/2021 17:45:53  Message: teste: TesteWhile executado em: 27  milisegundos.   teste passou
-Time: 08/13/2021 17:45:53  Message: teste: TesteCasesOfUse_2 executado em: 27  milisegundos.   teste passou
-Time: 08/13/2021 17:45:53  Message: teste: TesteChamadaDeObjetoImportado executado em: 23  milisegundos.   teste passou
-Time: 08/13/2021 17:45:53  Message: teste: TesteVariavelVetor executado em: 6  milisegundos.   teste passou
-Time: 08/13/2021 17:45:53  Message: teste: TesteCreateObjects executado em: 12  milisegundos.   teste passou
-Time: 08/13/2021 17:45:53  Message: teste: TesteCasesOfUse executado em: 26  milisegundos.   teste passou
-Time: 08/13/2021 17:45:53  Message: teste: Atribuicao executado em: 23  milisegundos.   teste passou
-Time: 08/13/2021 17:45:53  Message: teste: TesteIF_Else executado em: 47  milisegundos.   teste passou
-Time: 08/13/2021 17:45:53  Message: teste: TesteFor executado em: 58  milisegundos.   teste passou
-
-
-
-
-
-
-
-
-Time: 08/13/2021 17:50:56  Message: teste: TesteImporter executado em: 237  milisegundos.   teste passou
-Time: 08/13/2021 17:50:56  Message: teste: TesteIF executado em: 52  milisegundos.   teste passou
-Time: 08/13/2021 17:50:56  Message: teste: TesteWhile executado em: 29  milisegundos.   teste passou
-Time: 08/13/2021 17:50:56  Message: teste: TesteCasesOfUse_2 executado em: 30  milisegundos.   teste passou
-Time: 08/13/2021 17:50:56  Message: teste: TesteChamadaDeObjetoImportado executado em: 25  milisegundos.   teste passou
-Time: 08/13/2021 17:50:56  Message: teste: TesteVariavelVetor executado em: 9  milisegundos.   teste passou
-Time: 08/13/2021 17:50:56  Message: teste: TesteCreateObjects executado em: 5  milisegundos.   teste passou
-Time: 08/13/2021 17:50:56  Message: teste: TesteCasesOfUse executado em: 25  milisegundos.   teste passou
-Time: 08/13/2021 17:50:56  Message: teste: Atribuicao executado em: 12  milisegundos.   teste passou
-Time: 08/13/2021 17:50:56  Message: teste: TesteIF_Else executado em: 49  milisegundos.   teste passou
-Time: 08/13/2021 17:50:56  Message: teste: TesteFor executado em: 60  milisegundos.   teste passou
-
-
-
-
-Time: 13/08/2021 17:52:02  Message: 
-Time: 08/13/2021 17:52:02  Message: teste: TesteImporter executado em: 205  milisegundos.   teste passou
-Time: 08/13/2021 17:52:02  Message: teste: TesteIF executado em: 61  milisegundos.   teste passou
-Time: 08/13/2021 17:52:02  Message: teste: TesteWhile executado em: 31  milisegundos.   teste passou
-Time: 08/13/2021 17:52:02  Message: teste: TesteCasesOfUse_2 executado em: 29  milisegundos.   teste passou
-Time: 08/13/2021 17:52:02  Message: teste: TesteChamadaDeObjetoImportado executado em: 23  milisegundos.   teste passou
-Time: 08/13/2021 17:52:02  Message: teste: TesteVariavelVetor executado em: 15  milisegundos.   teste passou
-Time: 08/13/2021 17:52:02  Message: teste: TesteCreateObjects executado em: 6  milisegundos.   teste passou
-Time: 08/13/2021 17:52:02  Message: teste: TesteCasesOfUse executado em: 28  milisegundos.   teste passou
-Time: 08/13/2021 17:52:02  Message: teste: Atribuicao executado em: 14  milisegundos.   teste passou
-Time: 08/13/2021 17:52:02  Message: teste: TesteIF_Else executado em: 62  milisegundos.   teste passou
-Time: 08/13/2021 17:52:02  Message: teste: TesteFor executado em: 80  milisegundos.   teste passou
-
-
-
-
-Time: 13/08/2021 17:52:44  Message: Testes para avaliacao de instrucoes.
-Time: 08/13/2021 17:52:44  Message: teste: TesteImporter executado em: 225  milisegundos.   teste passou
-Time: 08/13/2021 17:52:44  Message: teste: TesteIF executado em: 64  milisegundos.   teste passou
-Time: 08/13/2021 17:52:44  Message: teste: TesteWhile executado em: 29  milisegundos.   teste passou
-Time: 08/13/2021 17:52:44  Message: teste: TesteCasesOfUse_2 executado em: 32  milisegundos.   teste passou
-Time: 08/13/2021 17:52:44  Message: teste: TesteChamadaDeObjetoImportado executado em: 26  milisegundos.   teste passou
-Time: 08/13/2021 17:52:44  Message: teste: TesteVariavelVetor executado em: 8  milisegundos.   teste passou
-Time: 08/13/2021 17:52:44  Message: teste: TesteCreateObjects executado em: 6  milisegundos.   teste passou
-Time: 08/13/2021 17:52:44  Message: teste: TesteCasesOfUse executado em: 44  milisegundos.   teste passou
-Time: 08/13/2021 17:52:44  Message: teste: Atribuicao executado em: 16  milisegundos.   teste passou
-Time: 08/13/2021 17:52:44  Message: teste: TesteIF_Else executado em: 53  milisegundos.   teste passou
-Time: 08/13/2021 17:52:44  Message: teste: TesteFor executado em: 98  milisegundos.   teste passou
-
-
-
-
-Time: 17/08/2021 14:11:11  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 17/08/2021 14:19:33  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 17/08/2021 14:20:07  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 17/08/2021 14:23:40  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 17/08/2021 14:25:08  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 17/08/2021 14:25:59  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:05:44  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:07:40  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:08:27  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:10:25  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 09:12:09  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: -392  milisegundos.   teste passou
-
-
-
-
-Time: 18/08/2021 09:12:16  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 09:13:38  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 222  milisegundos.   teste passou
-
-
-Time: 18/08/2021 09:15:50  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:16:28  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:16:57  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:19:58  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:23:59  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:24:49  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:25:03  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:25:21  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:26:49  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:29:09  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:38:37  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:40:12  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:44:42  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 09:44:42  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 414  milisegundos.   teste passou
-
-
-
-
-Time: 18/08/2021 09:44:47  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 09:44:47  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 222  milisegundos.   teste passou
-
-
-
-
-Time: 18/08/2021 09:45:01  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 09:45:01  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 209  milisegundos.   teste passou
-
-
-
-
-Time: 18/08/2021 09:45:07  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 09:58:05  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 09:58:11  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 694  milisegundos.   teste passou
-
-
-
-
-Time: 18/08/2021 09:58:34  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 09:58:34  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 193  milisegundos.   teste passou
-
-
-
-
-Time: 18/08/2021 09:59:03  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 09:59:25  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 434  milisegundos.   teste passou
-
-
-
-
-Time: 18/08/2021 10:00:41  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 10:00:48  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: -375  milisegundos.   teste passou
-
-
-
-
-Time: 18/08/2021 10:01:06  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 10:02:09  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 10:02:23  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 10:22:05  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 10:24:57  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 10:26:27  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 10:27:59  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 10:31:53  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 10:46:04  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 10:46:16  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 10:50:06  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 10:57:04  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 11:06:19  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 11:07:50  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 11:11:34  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 11:14:33  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 11:17:08  Message: Testes para recuperar instrucoes invalidas
-
-
-Time: 18/08/2021 11:24:04  Message: Testes para recuperar instrucoes invalidas
-Time: 18/08/2021 11:24:04  Message: teste: TesteRecuperacaoAtribuicao, na classe: TestesRecoverInstructions gerou excecao que interrompeu o seu processamento. falha porque: O objeto de tipo 'parser.AssercaoSuiteClasse' não pode ser convertido no tipo 'ModuloTESTES.Assercoes'., Stack:    em System.RuntimeType.TryChangeType(Object value, Binder binder, CultureInfo culture, Boolean needsSpecialCast)
-   em System.Reflection.MethodBase.CheckArguments(Object[] parameters, Binder binder, BindingFlags invokeAttr, CultureInfo culture, Signature sig)
-   em System.Reflection.RuntimeMethodInfo.InvokeArgumentsCheck(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+Time: 14/09/2021 09:59:07  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 09:59:08  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 09/14/2021 10:01:05  Message: teste: Teste_02, na classe: TestesCompilacaoExecucaoClasses gerou excecao que interrompeu o seu processamento. falha porque: Uma exceção foi acionada pelo destino de uma chamada., Stack:    em System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+   em System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
    em System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
    em System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)
-   em parser.SuiteClasseTestes.ExecutaTestes() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\testes\SuiteClasseTestes.cs:linha 74
+   em parser.SuiteClasseTestes.ExecutaTestes() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\testes\SuiteClasseTestes.cs:linha 73
 
 
+Time: 09/14/2021 10:01:05  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 11:24:40  Message: Testes para recuperar instrucoes invalidas
-Time: 18/08/2021 11:24:40  Message: teste: TesteRecuperacaoAtribuicao, na classe: TestesRecoverInstructions gerou excecao que interrompeu o seu processamento. falha porque: O objeto de tipo 'parser.AssercaoSuiteClasse' não pode ser convertido no tipo 'ModuloTESTES.Assercoes'., Stack:    em System.RuntimeType.TryChangeType(Object value, Binder binder, CultureInfo culture, Boolean needsSpecialCast)
-   em System.Reflection.MethodBase.CheckArguments(Object[] parameters, Binder binder, BindingFlags invokeAttr, CultureInfo culture, Signature sig)
-   em System.Reflection.RuntimeMethodInfo.InvokeArgumentsCheck(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
-   em System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
-   em System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)
-   em parser.SuiteClasseTestes.ExecutaTestes() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\testes\SuiteClasseTestes.cs:linha 74
+Time: 14/09/2021 10:03:47  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:03:47  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 10:04:55  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:04:55  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 11:26:17  Message: Testes para recuperar instrucoes invalidas
-Time: 18/08/2021 11:26:17  Message: teste: TesteRecuperacaoAtribuicao, na classe: TestesRecoverInstructions gerou excecao que interrompeu o seu processamento. falha porque: O objeto de tipo 'parser.AssercaoSuiteClasse' não pode ser convertido no tipo 'ModuloTESTES.Assercoes'., Stack:    em System.RuntimeType.TryChangeType(Object value, Binder binder, CultureInfo culture, Boolean needsSpecialCast)
-   em System.Reflection.MethodBase.CheckArguments(Object[] parameters, Binder binder, BindingFlags invokeAttr, CultureInfo culture, Signature sig)
-   em System.Reflection.RuntimeMethodInfo.InvokeArgumentsCheck(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
-   em System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
-   em System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)
-   em parser.SuiteClasseTestes.ExecutaTestes() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\testes\SuiteClasseTestes.cs:linha 74
+Time: 14/09/2021 10:06:14  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:06:14  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
+Time: 14/09/2021 10:08:43  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:10:44  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 11:26:52  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 10:13:40  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:13:40  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 11:29:00  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 10:16:31  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:16:32  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 11:31:55  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 10:27:34  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:27:34  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 11:36:08  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 10:28:52  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:28:52  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 11:40:04  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 10:36:32  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:36:37  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 11:49:07  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 10:37:23  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:37:23  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 11:52:04  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 10:38:37  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:38:38  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 11:55:53  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 10:39:29  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:39:30  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 11:56:01  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 10:40:27  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:40:27  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 11:56:20  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 10:42:32  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:42:32  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 11:57:31  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 10:46:02  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:46:02  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 11:59:40  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 10:48:17  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:48:17  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 12:02:41  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 10:49:21  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 10:49:21  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 09/14/2021 10:49:23  Message: teste: Teste_02 executado em: 365  milisegundos.   teste nao passou.
+Time: 09/14/2021 10:49:23  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
+   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 18/08/2021 12:04:14  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 10:52:59  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 12:04:58  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 10:56:15  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 12:06:02  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 12:07:00  Message: teste: TesteRecuperacaoAtribuicao executado em: 65  milisegundos.   teste passou
-Time: 08/18/2021 12:07:03  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 210  milisegundos.   teste passou
+Time: 14/09/2021 10:58:06  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 10:59:21  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 14:38:07  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 11:13:22  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 14:40:06  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 11:14:03  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 14:41:43  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 11:19:43  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 14:44:29  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 11:20:23  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 14:45:44  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 11:21:05  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 14:46:10  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 11:23:18  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 14:47:14  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 13:07:22  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 14:48:28  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 13:11:51  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 14:55:34  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 14:55:35  Message: teste: TesteRecuperacaoAtribuicao executado em: -421  milisegundos.   teste nao passou.
+Time: 14/09/2021 13:13:00  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 14:56:48  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 14:56:48  Message: teste: TesteRecuperacaoAtribuicao executado em: 274  milisegundos.   teste nao passou.
+Time: 14/09/2021 13:15:33  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 14:57:20  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 14:57:20  Message: teste: TesteRecuperacaoAtribuicao executado em: 240  milisegundos.   teste nao passou.
+Time: 14/09/2021 13:18:26  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 14:57:56  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 14:57:57  Message: teste: TesteRecuperacaoAtribuicao executado em: -747  milisegundos.   teste nao passou.
-Time: 08/18/2021 14:57:57  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 37  milisegundos.   teste passou
+Time: 14/09/2021 13:20:03  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 15:32:20  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 15:33:23  Message: Erro no processamento de expressao:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.RemoveAt(Int32 index)
+   em parser.ExpressaoChamadaDeMetodo.IsChamadaDeMetodo(Expressao exprssCurrente, Escopo escopo, Int32 indexTokenObjeto) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 173
+   em parser.Expressao..ctor(String[] tokens, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 839
 
 
-Time: 18/08/2021 15:05:01  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 15:05:01  Message: teste: TesteRecuperacaoAtribuicao executado em: 238  milisegundos.   teste nao passou.
+Time: 14/09/2021 15:36:01  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/14/2021 15:36:23  Message: Erro no processamento de expressao:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.RemoveAt(Int32 index)
+   em parser.ExpressaoChamadaDeMetodo.IsChamadaDeMetodo(Expressao exprssCurrente, Escopo escopo, Int32 indexTokenObjeto) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 173
+   em parser.Expressao..ctor(String[] tokens, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 839
 
 
-Time: 18/08/2021 15:11:09  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 15:38:14  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 15:11:44  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 15:40:34  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 15:12:04  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 15:43:18  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 15:14:34  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 18:21:16  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 15:17:10  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 18:21:40  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 15:18:58  Message: Testes para recuperar instrucoes invalidas
+Time: 14/09/2021 18:21:46  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 15:21:22  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 15:22:41  Message: teste: TesteRecuperacaoAtribuicao executado em: 613  milisegundos.   teste passou
+Time: 14/09/2021 18:22:13  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 18/08/2021 15:43:53  Message: Testes para recuperar instrucoes invalidas
-Time: 08/18/2021 15:44:19  Message: teste: TesteRecuperacaoAtribuicao executado em: 463  milisegundos.   teste passou
-Time: 08/18/2021 15:44:19  Message: teste: TesteRecuperacaoChamadaDeFuncao executado em: 25  milisegundos.   teste passou
+Time: 14/09/2021 18:26:03  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 18:28:56  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 19/08/2021 08:54:45  Message: teste para operadores de matriz
-Time: 08/19/2021 08:55:06  Message: teste: TesteOperadorMatriz executado em: 738  milisegundos.   teste passou
+Time: 14/09/2021 18:32:59  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 14/09/2021 18:34:17  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 19/08/2021 09:05:00  Message: teste para operadores de matriz
+Time: 14/09/2021 18:36:23  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 19/08/2021 09:05:27  Message: teste para operadores de matriz
-Time: 08/19/2021 09:05:27  Message: teste: TesteOperadorMatriz_1 executado em: 144  milisegundos.   teste passou
-Time: 08/19/2021 09:05:54  Message: teste: TesteOperadorMatriz_2 executado em: -305  milisegundos.   teste passou
+Time: 14/09/2021 18:43:16  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 15/09/2021 08:29:11  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 19/08/2021 09:41:43  Message: teste para operadores de matriz
+Time: 15/09/2021 08:32:54  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 19/08/2021 09:44:35  Message: teste para operadores de matriz
-Time: 08/19/2021 09:44:37  Message: teste: TesteExpressaoComOperadorMatricial executado em: 694  milisegundos.   teste passou
-Time: 08/19/2021 09:44:37  Message: teste: TesteOperadorMatriz_1 executado em: 1  milisegundos.   teste passou
-Time: 08/19/2021 09:44:37  Message: teste: TesteOperadorMatriz_2 executado em: 1  milisegundos.   teste passou
+Time: 15/09/2021 08:33:45  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 15/09/2021 08:38:10  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 19/08/2021 09:55:34  Message: teste para operadores de matriz
-Time: 08/19/2021 09:55:34  Message: teste: TesteExpressaoComOperadorMatricial executado em: 507  milisegundos.   teste passou
-Time: 08/19/2021 09:55:34  Message: teste: TesteOperadorMatriz_1 executado em: 1  milisegundos.   teste passou
-Time: 08/19/2021 09:55:34  Message: teste: TesteOperadorMatriz_2 executado em: 0  milisegundos.   teste passou
+Time: 15/09/2021 08:39:35  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 15/09/2021 08:40:49  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 19/08/2021 09:56:38  Message: teste para operadores de matriz
-Time: 08/19/2021 09:57:57  Message: teste: TesteExpressaoComOperadorMatricial executado em: -370  milisegundos.   teste passou
-Time: 08/19/2021 09:57:57  Message: teste: TesteOperadorMatriz_1 executado em: 1  milisegundos.   teste passou
-Time: 08/19/2021 09:57:57  Message: teste: TesteOperadorMatriz_2 executado em: 5  milisegundos.   teste passou
+Time: 15/09/2021 08:49:50  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 15/09/2021 08:52:48  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 19/08/2021 09:58:35  Message: teste para operadores de matriz
+Time: 15/09/2021 09:22:58  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 19/08/2021 10:01:35  Message: teste para operadores de matriz
+Time: 15/09/2021 09:23:40  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 19/08/2021 10:47:00  Message: teste para operadores de matriz
+Time: 15/09/2021 09:23:49  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 19/08/2021 10:50:49  Message: teste para operadores de matriz
+Time: 15/09/2021 09:27:02  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 19/08/2021 11:07:04  Message: teste para operadores de matriz
+Time: 15/09/2021 09:30:12  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 19/08/2021 11:22:02  Message: teste para operadores de matriz
+Time: 15/09/2021 09:30:39  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 19/08/2021 11:51:46  Message: teste para operadores de matriz
-Time: 08/19/2021 11:53:06  Message: teste: TesteExpressaoComOperadorMatricial executado em: 344  milisegundos.   teste passou
-Time: 08/19/2021 11:53:06  Message: teste: TesteOperadorMatriz_1 executado em: 1  milisegundos.   teste passou
-Time: 08/19/2021 11:53:06  Message: teste: TesteOperadorMatriz_2 executado em: 1  milisegundos.   teste passou
+Time: 15/09/2021 09:37:37  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
+Time: 15/09/2021 09:44:35  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 19/08/2021 11:56:33  Message: teste para operadores de matriz
+Time: 15/09/2021 09:46:19  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 09:47:48  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 09:49:08  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 09:51:33  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 09:54:01  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 09:54:37  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 09:55:13  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 09:56:01  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 09:58:10  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 10:00:06  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 10:22:38  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 10:25:51  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 10:27:37  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 10:31:10  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 10:43:43  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 10:47:06  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 10:53:36  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 10:55:16  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 11:16:21  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 11:20:04  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 11:22:41  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 11:23:40  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 11:27:27  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 11:30:59  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 11:31:28  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 11:32:22  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/15/2021 11:32:30  Message: teste: Teste_02 executado em: -180  milisegundos.   teste passou
+Time: 09/15/2021 11:32:30  Message: Erro no processamento de expressao:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.Expressao.GetTipoExpressao(Expressao expressaoCurrente, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 1278
+   em parser.Expressao..ctor(String[] tokens, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 845
+Time: 09/15/2021 11:32:30  Message: teste: Teste_01 executado em: 143  milisegundos.   teste passou
+
+
+
+
+Time: 15/09/2021 11:33:15  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/15/2021 11:33:16  Message: teste: Teste_02 executado em: -589  milisegundos.   teste passou
+Time: 09/15/2021 11:33:16  Message: Erro no processamento de expressao:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em System.Collections.Generic.List`1.get_Item(Int32 index)
+   em parser.Expressao.GetTipoExpressao(Expressao expressaoCurrente, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 1278
+   em parser.Expressao..ctor(String[] tokens, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 845
+Time: 09/15/2021 11:33:16  Message: teste: Teste_01 executado em: 183  milisegundos.   teste passou
+
+
+
+
+Time: 15/09/2021 11:37:31  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/15/2021 11:37:31  Message: teste: Teste_02 executado em: 364  milisegundos.   teste passou
+Time: 09/15/2021 11:37:31  Message: teste: Teste_01 executado em: 77  milisegundos.   teste passou
+
+
+
+
+Time: 15/09/2021 11:42:12  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 11:44:30  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 11:50:54  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 11:51:35  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 15/09/2021 11:53:12  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/15/2021 11:53:39  Message: teste: Teste_02 executado em: 343  milisegundos.   teste passou
+Time: 09/15/2021 11:53:39  Message: teste: Teste_01 executado em: 81  milisegundos.   teste passou
+
+

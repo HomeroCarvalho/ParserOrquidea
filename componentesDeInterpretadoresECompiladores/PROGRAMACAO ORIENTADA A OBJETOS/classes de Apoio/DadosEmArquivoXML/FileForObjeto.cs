@@ -84,7 +84,7 @@ namespace parser
                 }
 
             }
-            Objeto objetoLido = new Objeto("public",nomeClasse, nomeDoObjeto, valorDoObjeto);
+            Objeto objetoLido = new Objeto("public", nomeClasse, nomeDoObjeto, valorDoObjeto);
             objetoLido.GetFields().AddRange(lstPropriedadesLidas);
             return objetoLido;
 

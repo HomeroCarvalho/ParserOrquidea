@@ -866,7 +866,7 @@ namespace parser
             List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
             Escopo escopo = new Escopo(codigo);
             ExtratoresOO extratores = new ExtratoresOO(escopo, new LinguagemOrquidea(), tokens);
-            Classe umaClasse = extratores.ExtaiUmaClasse();
+            Classe umaClasse = extratores.ExtaiUmaClasse(Classe.tipoBluePrint.EH_CLASSE);
             assercao.MsgSucess("extração de codigo de uma classe feito sem exceções fatais.");
             if ((umaClasse != null) && (umaClasse.GetPropriedades().Count == 1) && (umaClasse.GetMetodos().Count == 1))
                 assercao.MsgSucess("extração de propriedades e metodos com exatidão.");
@@ -884,7 +884,7 @@ namespace parser
             List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
             Escopo escopo = new Escopo(codigo);
             ExtratoresOO extratores = new ExtratoresOO(escopo, new LinguagemOrquidea(), tokens);
-            Classe umaClasse = extratores.ExtaiUmaClasse();
+            Classe umaClasse = extratores.ExtaiUmaClasse(Classe.tipoBluePrint.EH_CLASSE);
            
 
             assercao.MsgSucess("extração de codigo de uma classe feito sem exceções fatais.");
@@ -906,14 +906,14 @@ namespace parser
 
             Escopo escopo = new Escopo(codigo);
             ExtratoresOO extratores = new ExtratoresOO(escopo, new LinguagemOrquidea(), tokens);
-            Classe umaClasse = extratores.ExtaiUmaClasse();
+            Classe umaClasse = extratores.ExtaiUmaClasse(Classe.tipoBluePrint.EH_CLASSE);
             if (umaClasse == null) 
             {
                 assercao.MsgSucess("Extração de Classes do código falha.");
                 return;
             } // if
             // salva a classe em um artigo.
-            umaClasse.Save();
+            umaClasse.Save(umaClasse);
             // carrega a classe a partir de um arquivo.
             Classe classeRetornoDoArquivo = Classe.Load("classeA");
 
@@ -929,7 +929,7 @@ namespace parser
 
             Escopo escopo = new Escopo(codigo);
             ExtratoresOO extratores = new ExtratoresOO(escopo, new LinguagemOrquidea(), tokens);
-            Classe umaClasse = extratores.ExtaiUmaClasse();
+            Classe umaClasse = extratores.ExtaiUmaClasse(Classe.tipoBluePrint.EH_INTERFACE);
 
             assercao.MsgSucess("construção e validação de interfaces sem erros fatais.");
 
@@ -944,7 +944,7 @@ namespace parser
 
             Escopo escopo = new Escopo(codigo);
             ExtratoresOO extratores = new ExtratoresOO(escopo, new LinguagemOrquidea(), tokens);
-            Classe umaClasse = extratores.ExtaiUmaClasse();
+            Classe umaClasse = extratores.ExtaiUmaClasse(Classe.tipoBluePrint.EH_CLASSE);
 
             assercao.MsgSucess("construção e validação de interfaces sem erros fatais.");
             if (extratores.MsgErros.Count == 0)
