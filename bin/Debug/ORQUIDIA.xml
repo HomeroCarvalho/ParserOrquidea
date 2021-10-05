@@ -33,9 +33,17 @@
     <VM></VM>
      </producao>
 
+	
+	<producao>
+		<nome>[CONSTRUTORUP]</nome>
+		<tipo>[COMANDO]</tipo>
+		<maquinaDeEstados>[ID]. construtorUP ( [ID] , [ID] )</maquinaDeEstados>
+		<palavrasChave>construtorUP ( , )</palavrasChave>
+		<VM></VM>
+	</producao>
 
 
-    <producao>
+	<producao>
     <nome>[CASESOFUSE]</nome>
     <tipo>[COMANDO]</tipo>
     <maquinaDeEstados>casesOfUse [ID] : ( case [ID] [ID] :</maquinaDeEstados>
@@ -235,8 +243,16 @@
     <VM></VM>
   </producao>
 
- 
   <producao>
+		<nome>[INTERFACE]</nome>
+		<tipo>[TYPE_ID]</tipo>
+		<maquinaDeEstados>interface [ID] : [CLASSE_HERDADA]  { [PARAMETRO_CLASSE] }</maquinaDeEstados>
+		<palavrasChave>interface   :   {   }</palavrasChave>
+		<VM></VM>
+	</producao>
+
+
+	<producao>
     <nome>[CLASSE_HERDADA]</nome>
     <tipo>[TYPE_ID]</tipo>
     <maquinaDeEstados>[ID] , [CLASSE_HERDADA]</maquinaDeEstados>

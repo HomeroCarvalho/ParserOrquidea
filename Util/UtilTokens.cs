@@ -15,8 +15,9 @@ namespace parser
         /// </summary>
         public static void WriteAErrorMensage(Escopo escopo, string mensagemDeErro, List<string> tokensDOProcessamento)
         {
-            PosicaoECodigo posicao = new PosicaoECodigo(tokensDOProcessamento, escopo.codigo);
+            PosicaoECodigo posicao = new PosicaoECodigo(tokensDOProcessamento);
             escopo.GetMsgErros().Add(mensagemDeErro + " , linha: " + posicao.linha + " , coluna: " + posicao.coluna + ".");
+            
         }
 
         public static List<string> GetCodigoEntreOperadores(int indiceInicio, string operadorAbre, string operadorFecha, List<string> tokensEntreOperadores)
@@ -123,6 +124,80 @@ namespace parser
             return tipo;
         }
 
+        /// <summary>
+        /// obtem uma funcao de uma classe especificada com parametros de funcao, compativel com o nome e parametros.
+        /// </summary>
+        public static Funcao ObtemFuncaoCompativelComAChamadaDeFuncao(string nomeMetodo, string nomeClasse, List<Expressao> expressaoParametros, Escopo escopo)
+        {
+            List<Funcao> FuncoesCandidatosDaChamada = new List<Funcao>();
+
+            Classe classeAProcurarMetodo = RepositorioDeClassesOO.Instance().GetClasse(nomeClasse);
+            if (classeAProcurarMetodo == null)
+                return null;
+
+            List<Funcao> metodosDaClasse = classeAProcurarMetodo.GetMetodos();
+            if (metodosDaClasse == null)
+                return null;
+
+            if (metodosDaClasse != null)
+            {
+                List<Funcao> metodosCompativeis = metodosDaClasse.FindAll(k => k.nome.Equals(nomeMetodo));
+                if ((metodosCompativeis != null) && (metodosCompativeis.Count > 0))
+                    FuncoesCandidatosDaChamada.AddRange(metodosCompativeis);
+            }
+
+            if (FuncoesCandidatosDaChamada.Count == 0)
+                return null;
+
+            for (int umaFuncao = 0; umaFuncao < FuncoesCandidatosDaChamada.Count; umaFuncao++)
+            {
+                if ((FuncoesCandidatosDaChamada[umaFuncao].parametrosDaFuncao == null) && (expressaoParametros.Count == 0))
+                    return FuncoesCandidatosDaChamada[umaFuncao];
+
+                if (FuncoesCandidatosDaChamada[umaFuncao].parametrosDaFuncao.Length != expressaoParametros.Count) // numero de parametros nao combinam.
+                    continue;
+
+                bool isFound = ValidaParametrosCompativeis(expressaoParametros, escopo, FuncoesCandidatosDaChamada[umaFuncao]);
+                if (isFound)
+                    return FuncoesCandidatosDaChamada[umaFuncao];
+            }
+            return null;
+        }
+
+        private static bool ValidaParametrosCompativeis(List<Expressao> expressaoParametros, Escopo escopo, Funcao funcaoCandidata)
+        {
+            bool isFound = true;
+            for (int x = 0; x < expressaoParametros.Count; x++)
+            {
+                string tipoParametroDaExpressao = UtilTokens.Casting(Expressao.GetTipoExpressao(expressaoParametros[x], escopo));
+                string tipoFuncaoCandidata = UtilTokens.Casting(funcaoCandidata.parametrosDaFuncao[x].GetTipo());
+
+                if (linguagem.VerificaSeEhNumero(expressaoParametros[x].ToString()))
+                {
+                    if (Expressao.Instance.IsTipoInteiro(expressaoParametros[x].ToString()))
+                        tipoParametroDaExpressao = "int";
+                    else
+                    if (Expressao.Instance.IsTipoFloat(expressaoParametros[x].ToString()))
+                        tipoParametroDaExpressao = "float";
+                    else
+                    if (Expressao.Instance.IsTipoDouble(expressaoParametros[x].ToString()))
+                        tipoParametroDaExpressao = "double";
+                }
+
+                if (((tipoParametroDaExpressao == "float") && (tipoFuncaoCandidata == "double")) ||
+                    (tipoParametroDaExpressao == "double") && (tipoFuncaoCandidata == "float"))
+                    continue;
+
+                if (tipoParametroDaExpressao != tipoFuncaoCandidata)
+                {
+                    isFound = false;
+                    break;
+                }
+
+            }
+
+            return isFound;
+        }
 
         /// <summary>
         /// obtem uma funcao com nome da entrada, e mesma interface de parametros (tipos de cada parâmetro).
@@ -131,9 +206,9 @@ namespace parser
         {
             List<Funcao> FuncoesCandidatosDaChamada = new List<Funcao>();
             
-            for (int x = 0; x < RepositorioDeClassesOO.Instance().classesRegistradas.Count; x++)
+            for (int x = 0; x < RepositorioDeClassesOO.Instance().GetClasses().Count; x++)
             {
-                Classe classeAProcurarMetodo = RepositorioDeClassesOO.Instance().classesRegistradas[x];
+                Classe classeAProcurarMetodo = RepositorioDeClassesOO.Instance().GetClasses()[x];
                 List<Funcao> metodosDaClasse = classeAProcurarMetodo.GetMetodos();
                 if (metodosDaClasse != null)
                 {
@@ -152,38 +227,15 @@ namespace parser
   
             for (int umaFuncao = 0; umaFuncao < FuncoesCandidatosDaChamada.Count; umaFuncao++)
             {
+                if ((FuncoesCandidatosDaChamada[umaFuncao].parametrosDaFuncao == null) && (expressaoParametros.Count == 0))
+                    return FuncoesCandidatosDaChamada[umaFuncao];
+                if (FuncoesCandidatosDaChamada[umaFuncao].parametrosDaFuncao == null)
+                    continue;
+
                 if (FuncoesCandidatosDaChamada[umaFuncao].parametrosDaFuncao.Length != expressaoParametros.Count) // numero de parametros nao combinam.
                     continue;
 
-                bool isFound = true;
-                for (int x = 0; x < expressaoParametros.Count; x++)
-                {
-                    string tipoParametroDaExpressao = UtilTokens.Casting(Expressao.GetTipoExpressao(expressaoParametros[x], escopo));
-                    string tipoFuncaoCandidata = UtilTokens.Casting(FuncoesCandidatosDaChamada[umaFuncao].parametrosDaFuncao[x].GetTipo());
-
-                    if (linguagem.VerificaSeEhNumero(expressaoParametros[x].ToString()))
-                    {
-                        if (Expressao.Instance.IsTipoInteiro(expressaoParametros[x].ToString()))
-                            tipoParametroDaExpressao = "int";
-                        else
-                        if (Expressao.Instance.IsTipoFloat(expressaoParametros[x].ToString()))
-                            tipoParametroDaExpressao = "float";
-                        else
-                        if (Expressao.Instance.IsTipoDouble(expressaoParametros[x].ToString()))
-                            tipoParametroDaExpressao = "double";
-                    }
-                    
-                    if (((tipoParametroDaExpressao == "float") && (tipoFuncaoCandidata == "double")) ||
-                        (tipoParametroDaExpressao == "double") && (tipoFuncaoCandidata == "float"))
-                        continue;
-
-                    if (tipoParametroDaExpressao != tipoFuncaoCandidata)
-                    {
-                        isFound = false;
-                        break;
-                    }
-
-                }
+                bool isFound = ValidaParametrosCompativeis(expressaoParametros, escopo, FuncoesCandidatosDaChamada[umaFuncao]);
                 if (isFound)
                     return FuncoesCandidatosDaChamada[umaFuncao];
             }

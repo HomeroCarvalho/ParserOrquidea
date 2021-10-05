@@ -38,7 +38,11 @@ namespace parser
 
                 int posicaoTermoChave = textoComTokens.IndexOf(todosTermosChave[x]);
                
-      
+                if (todosTermosChave[x]=="interface")
+                {
+                    int k = 0;
+                    k++;
+                }
                 if (posicaoTermoChave >= 0)
                 {
                     // verifica se o token termo-chave é um token polêmico, exemplo: termo-chave "if", e token "Verifica", o token "Verifica" contém o token "if", eñtão o token "if" não deve ser retirado.

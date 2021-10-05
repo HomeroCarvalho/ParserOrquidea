@@ -15,7 +15,7 @@ namespace parser
             LinguagemOrquidea linguagem = new LinguagemOrquidea();
          
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             ProgramaEmVM programa = new ProgramaEmVM(processador.GetInstrucoes());
             programa.Run(escopo);
@@ -58,7 +58,7 @@ namespace parser
             processador.escopo.tabela.AddObjeto("public", "b", "int", "5", processador.escopo);
 
 
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("construcao de codigo de defnicoes de variaveis feito sem erros fatais.");
 
@@ -76,13 +76,13 @@ namespace parser
 
             assercao.MsgSucess("Importação de classe feita sem erros fatais.");
 
-            if ((RepositorioDeClassesOO.Instance().classesRegistradas.Count == 1) && (RepositorioDeClassesOO.Instance().classesRegistradas[0].GetNome() == "MyMATRIX"))
+            if (RepositorioDeClassesOO.Instance().GetClasse("MyMATRIX") != null)
                 assercao.MsgSucess("importacao da classe MyMATRIX feita exatamente.");
 
 
             importador.ImportAClassFromApplication(typeof(Expressao));
             assercao.MsgSucess("Importação de classe Expressao feita sem erros fatais.");
-            if ((RepositorioDeClassesOO.Instance().classesRegistradas.Count == 2) && (RepositorioDeClassesOO.Instance().classesRegistradas[1].GetNome() == typeof(Expressao).Name))
+            if (RepositorioDeClassesOO.Instance().GetClasse(typeof(Expressao).Name) != null)  
                 assercao.MsgSucess("importacao da classe Expressao feita exatamente.");
         }
 
@@ -121,8 +121,8 @@ namespace parser
 
             assercao.MsgSucess("programa rodado sem erros fatais.");
 
-            if ((RepositorioDeClassesOO.Instance().ObtemUmaClasse("A") != null) &&
-                (RepositorioDeClassesOO.Instance().ObtemUmaClasse("B") != null))
+            if ((RepositorioDeClassesOO.Instance().GetClasse("A") != null) &&
+                (RepositorioDeClassesOO.Instance().GetClasse("B") != null))
                 assercao.MsgSucess("processamento de classes feito exatamente.");
 
 
@@ -134,7 +134,7 @@ namespace parser
             LinguagemOrquidea linguagem = new LinguagemOrquidea();
           
             this.processador = new ProcessadorDeID(code);
-            this.processador.Compile();
+            this.processador.CompileEmDoisEstagios();
 
             return "processamento de propriedades aninhadas feito sem erros fatais.";
         }
@@ -147,7 +147,7 @@ namespace parser
             ProcessadorDeID processador = new ProcessadorDeID(codigoClasseTeste);
 
             // compila os tokens da classe A,
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("construcao da classe teste feita com sucesso.");
 
@@ -166,7 +166,7 @@ namespace parser
             processador.escopo.tabela.RegistraObjeto(objeto); // registra via codigo o objeto do cenario do teste.
 
 
-            processadorObjetos.Compile();
+            processadorObjetos.CompileEmDoisEstagios();
 
             assercao.MsgSucess("compilacao de um objeto feita com sucesso.");
             if ((processadorObjetos.GetInstrucoes().Count == 1) &&
@@ -186,7 +186,7 @@ namespace parser
        
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
 
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("Definicao de um metodo compilado sem erros fatais.");
 
@@ -199,11 +199,11 @@ namespace parser
  
             ProcessadorDeID processador1 = new ProcessadorDeID(codigo1);
 
-            processador1.Compile();
+            processador1.CompileEmDoisEstagios();
 
             assercao.MsgSucess("compilacao de uma classe com metodos feito sem erros fatais.");
-            if ((RepositorioDeClassesOO.Instance().ObtemUmaClasse("classeA") != null) &&
-                (RepositorioDeClassesOO.Instance().ObtemUmaClasse("classeA").GetMetodos().Count == 1))
+            if ((RepositorioDeClassesOO.Instance().GetClasse("classeA") != null) &&
+                (RepositorioDeClassesOO.Instance().GetClasse("classeA").GetMetodos().Count == 1))
                 assercao.MsgSucess("compilacao de uma classe com metodos feito exatamente.");
 
         } // TesteDefinicaoDeMetodos()
@@ -213,7 +213,7 @@ namespace parser
             LinguagemOrquidea linguagem = new LinguagemOrquidea();
             ProcessadorDeID processador = new ProcessadorDeID(code);
 
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
             escopo = processador.escopo;
             return processador;
         }
@@ -239,17 +239,13 @@ namespace parser
             processador.escopo.tabela.RegistraObjeto(objetoA);
             processador.escopo.tabela.RegistraObjeto(objetoB);
 
-            processador.Compile(); // constroi a classe teste.
+            processador.CompileEmDoisEstagios(); // constroi a classe teste.
 
             Funcao umConstrutor = new Funcao("public", "ClasseB", funcaoVazia, null, new Objeto[] {
                 new Objeto("private","int","a", null, null, isStatic: false),
                 new Objeto("private","int", "b", null, null,isStatic: false) });
-            Classe classeTeste = RepositorioDeClassesOO.Instance().ObtemUmaClasse("ClasseB");
+            Classe classeTeste = RepositorioDeClassesOO.Instance().GetClasse("ClasseB");
             classeTeste.construtores.Add(umConstrutor);
-
-
-            ProcessadorDeID.codigo = codeCreate;
-            processador.Compile();
 
             if (processador.GetInstrucoes().Count == 1)
                 assercao.MsgSucess();
@@ -291,10 +287,10 @@ namespace parser
             List<string> codigo = parser.GetCode();
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
             assercao.MsgSucess("processamento de arquivo com classe feito sem erros fatais.");
 
-            Classe classeTeste = RepositorioDeClassesOO.Instance().ObtemUmaClasse("umaClasse");
+            Classe classeTeste = RepositorioDeClassesOO.Instance().GetClasse("umaClasse");
             if ((classeTeste != null) && (classeTeste.GetMetodos().Count == 2) && (classeTeste.GetPropriedades().Count == 2))
                 assercao.MsgSucess("processamento de arquivo com classe feito com exatidão.");
         }
@@ -308,7 +304,7 @@ namespace parser
 
 
             ProcessadorDeID processador = new ProcessadorDeID(tokens);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
             assercao.MsgSucess("processamento de arquivo com classe feito sem erros fatais.");
 
         }
@@ -333,7 +329,7 @@ namespace parser
             ParserAFile parserTesteAceite = new ParserAFile("cenario1TesteAceite.txt");
             List<string> code = parserTesteAceite.GetCode();
             ProcessadorDeID processador = new ProcessadorDeID(code);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("processamento de arquivo de funcao feito sem erros fatais.");
 

@@ -96,6 +96,7 @@ namespace parser
 
             this.nomeClasse = nomeDaClasse;
 
+
             tokensTotais = tokensDoCabecalhoDaClasse.ToList<string>();
             tokensTotais.AddRange(tokensDoCorpoDaClasse.ToList<string>());
             
@@ -113,35 +114,11 @@ namespace parser
             tokensDoCorpoDaClasse.RemoveAt(0);
             tokensDoCorpoDaClasse.RemoveAt(tokensDoCorpoDaClasse.Count - 1);
 
+
             ProcessadorDeID processador = new ProcessadorDeID(tokensDoCorpoDaClasse);
-            // constroi o corpo da classe, com os tokens formadores do conteúdo da classe.
-            processador.Compile();
+            processador.CompileEmDoisEstagios(); // compila o corpo da classe, obtendo propriedades, metodos e operadores da classe.
 
-
-            if (escopo.tabela.GetClasse(this.nomeClasse, escopo) != null)
-            {
-                // sistema de correcao de codigo com erro por posicao de expressoes antes da instanciacao.
-                List<Objeto> objetos = processador.escopo.tabela.GetObjetos();
-                for (int x = 0; x < objetos.Count; x++)
-                {
-                    string token = objetos[x].GetTipo() + " " + objetos[x].GetNome();
-                    if (objetos[x].GetValor() != null)
-                        token += "= " + objetos[x].GetValor().ToString();
-                    token += ";";
-
-                    List<string> tokensDoObjeto = ParserUniversal.GetTokens(token);
-
-
-                    for (int i = 0; i < tokensDoObjeto.Count; i++)
-                        tokensDoCorpoDaClasse.Insert(i, tokensDoObjeto[i]); // garante que a propriedade seja instanciada antes de expressoes com essa propriedade.
-                }
-
-                this.escopoDaClasse = new Escopo(escopo);
-                processador.CompileEscopos(this.escopoDaClasse, tokensDoCorpoDaClasse);
-                
-            }
-            else
-                this.escopoDaClasse = new Escopo(processador.escopo);
+             this.escopoDaClasse = new Escopo(processador.escopo);
 
 
             List<Classe> interfacesHerdadas = new List<Classe>();
@@ -243,7 +220,7 @@ namespace parser
                 if (EhClasse(tokens[posicaoTokenHeranca]))
                 {
                     string nomeClasseHerdada = tokens[posicaoTokenHeranca];
-                    Classe classeHerdada = RepositorioDeClassesOO.Instance().classesRegistradas.Find(k => k.nome == nomeClasseHerdada);
+                    Classe classeHerdada = RepositorioDeClassesOO.Instance().GetClasse(nomeClasseHerdada);
                     if (classeHerdada != null)
                         classeHerdeira.classesHerdadas.Add(classeHerdada);
                     else
@@ -252,7 +229,7 @@ namespace parser
 
                 if (EhInterface(tokens[posicaoTokenHeranca]))
                 {
-                    Classe classeInterface = RepositorioDeClassesOO.Instance().interfacesRegistradas.Find(k => k.nome == tokens[posicaoTokenHeranca]);
+                    Classe classeInterface = RepositorioDeClassesOO.Instance().GetInterface(tokens[posicaoTokenHeranca]);
                     if (classeInterface != null)
                         classeHerdeira.interfacesHerdadas.Add(classeInterface);
                     else
@@ -393,7 +370,7 @@ namespace parser
             // retira os metodos e propriedades deserherdados.
             for (int indexClass = 0; indexClass < txt_nomesDeseranca.Count; indexClass++)
             {
-                Classe umaClasseDeserdada = RepositorioDeClassesOO.Instance().ObtemUmaClasse(txt_nomesDeseranca[indexClass]);
+                Classe umaClasseDeserdada = RepositorioDeClassesOO.Instance().GetClasse(txt_nomesDeseranca[indexClass]);
                 if (umaClasseDeserdada != null)
                 {
 
@@ -440,14 +417,14 @@ namespace parser
         private bool EhClasse(string nomeClasse)
         {
 
-            return (RepositorioDeClassesOO.Instance().classesRegistradas.FindIndex(k => k.nome == nomeClasse) != -1);
+            return (RepositorioDeClassesOO.Instance().GetClasse(nomeClasse) != null);
         } // EhClasseHerdada()
 
         /// valida o nome de interface, se existe no repositório de interfaces.
         private bool EhInterface(string nomeInterface)
         {
             // trata do caso em que há classes no repositório.
-            return (RepositorioDeClassesOO.Instance().interfacesRegistradas.FindIndex(k=>k.nome==nomeInterface)!=-1);
+            return (RepositorioDeClassesOO.Instance().GetInterface(nomeInterface) != null);
 
         } // EhClasseHerdada()
 
@@ -595,7 +572,7 @@ namespace parser
             int indexCorpo = tokens.IndexOf("{");
             if (indexCorpo == -1)
             {
-                escopo.GetMsgErros().Add("classe com erro de sintaxe, linha: " + new PosicaoECodigo(tokens, escopo.codigo).linha.ToString());
+                escopo.GetMsgErros().Add("classe com erro de sintaxe, linha: " + new PosicaoECodigo(tokens).linha.ToString());
                 tokensCabecalhoDaClasse = new List<string>();
                 this.tokensDaClasse = new List<string>();
 

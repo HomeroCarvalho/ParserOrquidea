@@ -17,165 +17,104 @@ namespace parser
 
         public int indexParaOrdenacao { get; set; }  // indice utilizado para ordenação de listas de posicaoEcodigo.
 
+     
+        public static int lineCurrentProcessing = 0;
+        private static List<tokenEPosicao> tokensPosicionados = new List<tokenEPosicao>();
 
 
-        private static string str_codigoCurrente = "";
-        private static List<string> tokensMaiorQtdTokens = new List<string>();
-        private static LinguagemOrquidea linguagem = null;
+        private static LinguagemOrquidea linguagem = new LinguagemOrquidea();
 
         /// <summary>
-        /// construtor.obtem a posição de um grupo de tokens, ante um trecho de codigo do programa.
+        /// construtor.obtem a posição de um grupo de tokens, ante um trecho de codigo.
+        /// tokensLocalizadores: lista dos tokens que se quer localizar.
+        /// começa na linha=1, coluna=1, não é baseado na contagem a partir do 0, mas a partir de 1.
         /// </summary>
-        public PosicaoECodigo(List<string> tokensLocalizadores, List<string> codigo)
+        public PosicaoECodigo(List<string> tokensLocalizadores)
         {
-            if ((tokensLocalizadores == null) || (tokensLocalizadores.Count == 0))
-                return;
 
-            /// inicializa a linguagem utilizada
-            if (linguagem == null)
-                linguagem = new LinguagemOrquidea();
-
-            /// 1- atualizar o codigo. Se o codigo da entrada for maior que o codigo guardado, guardar o codigo de entrada.
-            /// 2- procurar (linhas,colunas) para o primeiro token a localizar.
-            /// 3- malha para cada token encontrado, validar se os tokens a localizar estão na sequencia correta da entrada.
-            /// 4- se nao encontrar o token currente, passar para o proximo tokens [0].
-
-
-
-            /// atualizando o codigo guardado.
-            string str_codigo_params = Util.UtilString.UneLinhasLista(codigo);
-            if (str_codigo_params.Length > str_codigoCurrente.Length) // inicializa o codigo com maior cumprimento.
-            {
-                tokensMaiorQtdTokens = new Tokens(PosicaoECodigo.linguagem, new List<string>() { str_codigo_params }).GetTokens();
-                str_codigoCurrente = (string)str_codigo_params.Clone();
-
-            }
-
-            string str_codigo_copy = (string)str_codigoCurrente.Clone();
-
-            /// procurando token primeiro, dentro do codigo.
-            List<tokenEPosicao> tokenPrimeiros = new List<tokenEPosicao>();
-
-            int linhaLineCode = 0;
-            int colunaLinhaCode = 0;
-            while (linhaLineCode < codigo.Count)
-            {
-                colunaLinhaCode = 0;
-                while (linhaLineCode < codigo.Count) 
-                {
-                    colunaLinhaCode = codigo[linhaLineCode].IndexOf(tokensLocalizadores[0], colunaLinhaCode);
-                    if (colunaLinhaCode != -1)
-                    {
-                        tokenPrimeiros.Add(new tokenEPosicao(linhaLineCode, colunaLinhaCode, tokensLocalizadores[0]));
-
-                        str_codigoCurrente = Util.PreencherVazios.PreencheVazio(str_codigoCurrente, tokensLocalizadores[0]); // remove daqui o token localizado.
-
-                        colunaLinhaCode += tokensLocalizadores[0].Length;
-                        if (colunaLinhaCode > codigo[linha].Length)
-                        {
-                            colunaLinhaCode = 0;
-                            linhaLineCode++;
-                            break;
-                        }
-
-                    }
-                    else
-                    {
-                        linhaLineCode++; // passa para a proxima linha, nao localizou o primeiro token da sequencia para localizar.
-                        break;
-                    }
-
-                }
-                if ((linhaLineCode < codigo.Count) && (colunaLinhaCode >= codigo[linhaLineCode].Length))
-                    linhaLineCode++;
-            }
-
-            if (tokenPrimeiros.Count == 0)
-            {
-                this.linha = -1;
-                this.coluna = -1;
-                return;
-            }
-           
-
-            str_codigoCurrente = (string)str_codigo_copy;
-            /// malha para os tokens seguintes.
-            int tokenPrimeiroCurrente = 0;
-            for ( tokenPrimeiroCurrente = 0; tokenPrimeiroCurrente < tokenPrimeiros.Count; tokenPrimeiroCurrente++)
-            {
-                int linha = tokenPrimeiros[tokenPrimeiroCurrente].linha;
-                int coluna = tokenPrimeiros[tokenPrimeiroCurrente].coluna;
-                bool isFound = true;
-                for (int tokensNext = 0; tokensNext < tokensLocalizadores.Count; tokensNext++)
-                {
-
-                    int indexTokenCurrente = str_codigoCurrente.IndexOf(tokensLocalizadores[tokensNext]);
-                    if (indexTokenCurrente == -1)
-                    {
-                        isFound = false;
-                        break;
-                    }
-                    else
-                      str_codigoCurrente = Util.PreencherVazios.PreencheVazio(str_codigoCurrente, tokensLocalizadores[tokensNext]);               
-                }
-                if (isFound)
-                {
-                    this.linha = tokenPrimeiros[tokenPrimeiroCurrente].linha;
-                    this.coluna = tokenPrimeiros[tokenPrimeiroCurrente].coluna;
-                    this.trechoCodigo = (string)codigo[this.linha].Clone();
-
-                    str_codigoCurrente = (string)str_codigo_copy.Clone();
-                    return;
-                }
-            }
-
-            this.linha = -1;
-            this.coluna = -1;
-            this.trechoCodigo = "";
-            str_codigoCurrente = (string)str_codigo_copy.Clone();
+            tokenEPosicao posicaoNoCodigo = this.LocalizaToken(tokensLocalizadores);
+            this.linha = posicaoNoCodigo.linha + 1;
+            this.coluna = posicaoNoCodigo.coluna + 1;
         }
 
-        
-        /// localiza se o token está na posicao da entrada. localiza mesmo se ha caracteres vazios entre os tokens.
-        private bool Match(string token, int posicao, string str_codigo)
+        public static void InitCalculoPosicoes()
         {
-            int indiceCaracterVazio = 0;
-            while (indiceCaracterVazio < token.Length)
+            PosicaoECodigo.lineCurrentProcessing = 0;
+            PosicaoECodigo.tokensPosicionados = new List<tokenEPosicao>();
+
+        }
+
+        /// <summary>
+        /// processa uma linha de codigo, calculando a posição (linha, coluna) de cada token.
+        /// </summary>
+        /// <param name="line">uma linha de um arquivo texto, contendo tokens da linguagem orquidea.</param>
+        public static void AddLineOfCode(string line)
+        {
+            
+
+            List<string> tokens = ParserUniversal.GetTokens(line);
+            
+
+            int indexLin = PosicaoECodigo.lineCurrentProcessing; // obtem a linha currente de processamento de posição de tokens no código.
+            int indexCol = 0;
+
+            int x = 0;
+            while (x < tokens.Count)
             {
-                if (token[indiceCaracterVazio] != ' ')
-                    break;
+            
+
+                indexCol = line.IndexOf(tokens[x]);
+                if (indexCol != -1) // enquanto houver tokens de mesmo nome deste token currente, extrai linha, coluna, e apaga o primeiro token de nome igual ao currente token.
+                {
+
+                    PosicaoECodigo.tokensPosicionados.Add(new tokenEPosicao(indexLin, indexCol, tokens[x])); // adiciona o tokens currente, com sua linha e coluna ante ao código.
+                    line = Util.PreencherVazios.PreencheVazio(line, tokens[x]); // apaga o token, para que outro token de mesmo nome acesse esta linha,coluna de posicao.
+
+                    x++;
+                }
                 else
-                    indiceCaracterVazio++;
+                    x++;
             }
 
-            for (int caracterToken = 0; caracterToken < token.Length; caracterToken++)
-            {
-                char caracterProcura = str_codigo[posicao + caracterToken + indiceCaracterVazio];
-                if (caracterProcura != token[caracterToken])
-                    return false;
-            }
-            return true;
+            PosicaoECodigo.lineCurrentProcessing++;
         }
 
-        private List<string> EliminaVazios(List<string> tokensTotal)
+
+        private tokenEPosicao LocalizaToken(List<string> tokens)
         {
-            List<string> tokens = tokensTotal.ToList<string>();
+            if ((PosicaoECodigo.tokensPosicionados == null) || (PosicaoECodigo.tokensPosicionados.Count == 0))
+                return new tokenEPosicao(-1, -1, "");
 
-            for (int x = 0; x < tokens.Count; x++)
-                for (int c = 0; c < tokens[x].Length; c++)
+            List<tokenEPosicao> linhaLocalizada = new List<tokenEPosicao>();
+            int indexTokenLocalizar = 0;
+            foreach (tokenEPosicao codigoPosicionado in PosicaoECodigo.tokensPosicionados)
+            {
+                if (codigoPosicionado.token == "classeB")
                 {
-                    if (tokens[x][c] == ' ')
-                    {
-                        tokens[x] = tokens[x].Remove(c, 1);
-                        c--;
-                    }
-                } // for c
+                    int k = 0;
+                    k++;
+                }
+                if (codigoPosicionado.token == tokens[indexTokenLocalizar])
+                {
+                    linhaLocalizada.Add(codigoPosicionado);
+                    indexTokenLocalizar++;
+                    if (indexTokenLocalizar >= tokens.Count)
+                        break;
+                }
+                else
+                    linhaLocalizada.Clear();
 
-            return tokens;
-        } // EliminaVazios()
+            }
+            if (linhaLocalizada.Count > 0)
+            {
+                int linha = linhaLocalizada[0].linha;
+                int coluna = linhaLocalizada[0].coluna;
+                return new tokenEPosicao(linha, coluna, linhaLocalizada[0].token);
+            }
+            else
+                return new tokenEPosicao(-1, -1, "");
 
-
-
+        }
 
         public override string ToString()
         {
@@ -196,6 +135,11 @@ namespace parser
                 this.linha = lin;
                 this.coluna = col;
                 this.token = _token;
+            }
+
+            public override string ToString()
+            {
+                return "(" + linha + ",  " + coluna + ") : " + token;
             }
         }
     } // class PosicaoECodigo

@@ -159,7 +159,7 @@ namespace parser
             if (umaFuncaoDasTabelas != null)
                 return escopo.tabela.Funcoes.Find(k => k.nome == nomeFuncao);
 
-            Funcao umaFuncaoDoRepositorio = RepositorioDeClassesOO.Instance().ObtemUmaClasse(classeDaFuncao).GetMetodos().Find(k => k.nome.Equals(nomeFuncao));
+            Funcao umaFuncaoDoRepositorio = RepositorioDeClassesOO.Instance().GetClasse(classeDaFuncao).GetMetodos().Find(k => k.nome.Equals(nomeFuncao));
             if (umaFuncaoDoRepositorio != null)
                 return umaFuncaoDoRepositorio;
             return null;
@@ -177,7 +177,7 @@ namespace parser
                 return funcoesDaTabelaComMesmoNome;
 
             List<Funcao> funcoesDoRepositorioDeClassesComMesmoNome = new List<Funcao>();
-            List<Classe> lstClasses = RepositorioDeClassesOO.Instance().classesRegistradas;
+            List<Classe> lstClasses = RepositorioDeClassesOO.Instance().GetClasses();
             foreach (Classe umaClasse in lstClasses)
             {
                 List<Funcao> lstFuncoes = umaClasse.GetMetodos().FindAll(k => k.nome.Equals(nomeFuncao));
@@ -262,12 +262,26 @@ namespace parser
             return null;
         } // GetObjeto().
 
-     
+
+        public Objeto GetObjeto(string nomeObjeto, string tipoDoObjeto, Escopo escopo)
+        {
+            if (escopo == null)
+                return null;
+            Objeto objetoRetorno = escopo.tabela.objetos.Find(k => k.GetNome() == nomeObjeto && k.GetTipo()==tipoDoObjeto);
+            if (objetoRetorno != null)
+                return objetoRetorno;
+
+            if (escopo.ID != Escopo.tipoEscopo.escopoGlobal)
+                return GetObjeto(nomeObjeto,tipoDoObjeto, escopo.escopoPai);
+
+            return null;
+        } // GetObjeto().
+
 
         public Objeto GetPropriedade(string nomeClasse, string nomePropriedade)
         {
             // tenta localizar a classe da propriedade.
-            Classe umaClasse = RepositorioDeClassesOO.Instance().ObtemUmaClasse(nomeClasse);
+            Classe umaClasse = RepositorioDeClassesOO.Instance().GetClasse(nomeClasse);
 
             // se não localizar, retorna null.
             if (umaClasse == null)
@@ -322,7 +336,7 @@ namespace parser
         public bool ValidaOperador(string nomeOperador, string tipoDoOPerador, Escopo escopo)
         {
 
-            Classe classeDoOperador = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoDoOPerador);
+            Classe classeDoOperador = RepositorioDeClassesOO.Instance().GetClasse(tipoDoOPerador);
             if (classeDoOperador != null)
             {
                 if (classeDoOperador.GetOperadores().Find(k => k.nome.Equals(nomeOperador)) != null)
@@ -342,7 +356,7 @@ namespace parser
         /// </summary>
         internal Objeto ValidaPropriedadesAninhadas(string classeDaPropriedade, string nomeDaPropriedade)
         {
-            Classe clsObjeto = RepositorioDeClassesOO.Instance().ObtemUmaClasse(classeDaPropriedade);
+            Classe clsObjeto = RepositorioDeClassesOO.Instance().GetClasse(classeDaPropriedade);
             if (clsObjeto == null)
                 return null;
 
@@ -361,7 +375,7 @@ namespace parser
                     return null;
                 props.Add(proprSendoVerificada);
 
-                clsObjeto = RepositorioDeClassesOO.Instance().ObtemUmaClasse(props[props.Count - 1].GetTipo());
+                clsObjeto = RepositorioDeClassesOO.Instance().GetClasse(props[props.Count - 1].GetTipo());
             } // for x
             if (props.Count < 0)
                 return null;
@@ -453,7 +467,7 @@ namespace parser
             if (funcao != null)
                 return funcao.tipoReturn;
 
-            Funcao umaFuncaoDoRepositorioDeClasses = RepositorioDeClassesOO.Instance().ObtemUmaClasse(nomeClasseDaFuncao).GetMetodos().Find(k => k.nome.Equals(nomeFuncao));
+            Funcao umaFuncaoDoRepositorioDeClasses = RepositorioDeClassesOO.Instance().GetClasse(nomeClasseDaFuncao).GetMetodos().Find(k => k.nome.Equals(nomeFuncao));
             if (umaFuncaoDoRepositorioDeClasses != null)
                 return umaFuncaoDoRepositorioDeClasses.tipoReturn;
 

@@ -88,7 +88,7 @@ namespace parser.Manutencao
             string codigo = "public class classeB { int x=0; int funcaoA(int x) { x=0;}; };";
 
             ProcessadorDeID processador = new ProcessadorDeID(new List<string>() { codigo });
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
             assercao.IsTrue((processador.escopo.tabela.GetClasse("classeB", processador.escopo) != null) && (processador.escopo.tabela.GetClasse("classeB", processador.escopo).GetMetodos().Count > 0));
         }
 
@@ -97,7 +97,7 @@ namespace parser.Manutencao
         {
             string codigo = "int funcaoA(int x) { x=0;};";
             ProcessadorDeID processador = new ProcessadorDeID(new List<string>() { codigo });
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
             assercao.IsTrue((processador.escopo.tabela.GetFuncoes().Count > 0) && (processador.escopo.tabela.GetFuncao("funcaoA") != null));
 
 
@@ -107,7 +107,7 @@ namespace parser.Manutencao
         {
             string codigo = "public class classeB { int x=0;};  classeB variavelDaClasse; variavelDaClasse.x=1;";
             ProcessadorDeID processador = new ProcessadorDeID(new List<string>() { codigo });
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.IsTrue(processador.escopo.tabela.GetObjeto("variavelDaClasse", processador.escopo) != null);
         }
@@ -117,7 +117,7 @@ namespace parser.Manutencao
             string codigoPrincipal = "public class classeB {};  public class classeA { classeB propriedade1; }; public classeA objetoA ; objetoA.propriedade1; objetoA.propriedade3; ";
 
             ProcessadorDeID processador = new ProcessadorDeID(new List<string>() { codigoPrincipal });
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("avaliação de propriedades encadeadas feitas sem erros fatais.");
         }
@@ -155,14 +155,14 @@ namespace parser.Manutencao
 
             List<string> codigo = new List<string>() { str_codigo };
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
 
             if (!isStatic)
                 return processador.escopo.tabela.GetObjeto(nomeDaVariavel, processador.escopo) != null;
             if (isStatic)
             {
-                Classe classeDaPropriedadeEstatica = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoDaVariavel);
+                Classe classeDaPropriedadeEstatica = RepositorioDeClassesOO.Instance().GetClasse(tipoDaVariavel);
                 return (classeDaPropriedadeEstatica.propriedadesEstaticas.Find(k => k.GetNome().Equals(nomeDaVariavel)) != null);
             }
             return false;
@@ -174,20 +174,20 @@ namespace parser.Manutencao
 
             List<string> codigoComMuitasInstrucoes = new List<string>() { "int y=1;  for (int x=0; x< 5; x++) {x=x*15;} while (y>0){ y=y+1;} if (y<0) {y=y-1;}" };
             ProcessadorDeID processaodoMultiplasInstrucoes = new ProcessadorDeID(codigoComMuitasInstrucoes);
-            processaodoMultiplasInstrucoes.Compile();
+            processaodoMultiplasInstrucoes.CompileEmDoisEstagios();
 
             assercao.IsTrue(processaodoMultiplasInstrucoes.GetInstrucoes().Count == 4);
 
 
             List<string> codigoAtribuicao = new List<string>() { "int x=0;" };
             ProcessadorDeID processadorAtribuicacao = new ProcessadorDeID(codigoAtribuicao);
-            processadorAtribuicacao.Compile();
+            processadorAtribuicacao.CompileEmDoisEstagios();
 
             assercao.IsTrue(processadorAtribuicacao.GetInstrucoes().Count == 1);
 
             List<string> codigoAtribuicaoEIfs = new List<string>() { "int x=0; if (x<0) {x=x+1;}" };
             ProcessadorDeID processadorIf = new ProcessadorDeID(codigoAtribuicaoEIfs);
-            processadorIf.Compile();
+            processadorIf.CompileEmDoisEstagios();
 
             assercao.IsTrue(processadorIf.GetInstrucoes().Count == 2);
 
@@ -202,7 +202,7 @@ namespace parser.Manutencao
 
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
 
             assercao.IsTrue(processador.escopo.tabela.GetClasses().Find(k => k.nome == "classeA") != null);
@@ -246,7 +246,7 @@ namespace parser.Manutencao
 
             List<string> codigo = new List<string>() { "int a= 1;" };
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
 
             Expressao exprssWrite = processador.GetInstrucoes()[0].expressoes[0];
@@ -269,7 +269,7 @@ namespace parser.Manutencao
         {
             List<string> codigo = new List<string>() { "for (int x=0; x< 5;x++){ x=x-1;}" };
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             Instrucao umaInstrucaoDoCodigo = processador.GetInstrucoes()[0];
 
@@ -295,7 +295,7 @@ namespace parser.Manutencao
         {
             List<string> codigo = new List<string>() { "int funcaoA(int x) {x=0; return x;}" };
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             List<Funcao> funcao = processador.escopo.tabela.GetFuncao("funcaoA");
             if ((funcao == null) || (funcao.Count == 0))
@@ -334,7 +334,7 @@ namespace parser.Manutencao
         {
             string codigo = "int x=x+1;";
             ProcessadorDeID processador = new ProcessadorDeID(new List<string>() { codigo });
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
             assercao.IsTrue(processador.escopo.tabela.GetObjetos().Count == 1);
         }
 
@@ -353,7 +353,7 @@ namespace parser.Manutencao
             tokens.AddRange(tokensDefinicaoOperador);
 
             ProcessadorDeID processador = new ProcessadorDeID(tokens);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.IsTrue(processador.escopo.tabela.GetFuncao("funcaoA") != null);
             assercao.IsTrue(processador.escopo.tabela.GetClasse("int", processador.escopo).GetOperadores().Find(k => k.nome.Equals("Maior")) != null);
@@ -375,7 +375,7 @@ namespace parser.Manutencao
             tokens.AddRange(tokensDefinicaoOperador);
 
             ProcessadorDeID processador = new ProcessadorDeID(tokens);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             Operador operadorDoTeste = processador.escopo.tabela.GetClasse("int", processador.escopo).GetOperador("Maior");
 
@@ -440,10 +440,10 @@ namespace parser.Manutencao
             LinguagemOrquidea lng = new LinguagemOrquidea();
             List<string> tokensDoCodigo = new Tokens(lng, new List<string>() { codigo }).GetTokens();
             ProcessadorDeID processador = new ProcessadorDeID(new List<string>() { codigo });
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
 
-            assercao.IsTrue((RepositorioDeClassesOO.Instance().classesRegistradas.Count == 7) && (RepositorioDeClassesOO.Instance().ObtemUmaClasse("classeA") != null));
+            assercao.IsTrue((RepositorioDeClassesOO.Instance().GetClasses().Count == 7) && (RepositorioDeClassesOO.Instance().GetClasse("classeA") != null));
 
         }
 
@@ -457,7 +457,7 @@ namespace parser.Manutencao
             List<string> codigoTotal = new List<string>() { codigoDefinicaoDeClasse, codigoDefinicaoDeObjeto };
 
             ProcessadorDeID processador = new ProcessadorDeID(codigoTotal);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             Objeto objetoEscrito = new Objeto("private", "classeA", "umObjeto", "5");
 
@@ -473,7 +473,7 @@ namespace parser.Manutencao
             Objeto objeto1Lido = arquivoObjetoLer.Read(null);
 
             assercao.IsTrue(objeto1Lido != null);
-            assercao.IsTrue(RepositorioDeClassesOO.Instance().ObtemUmaClasse("classeA") != null);
+            assercao.IsTrue(RepositorioDeClassesOO.Instance().GetClasse("classeA") != null);
             assercao.IsTrue((objeto1Lido.GetNome().Equals(objetoEscrito.GetNome())) && ((objeto1Lido.GetField("a") != null)) && (objetoEscrito.GetField("a") != null));
 
 
@@ -496,7 +496,7 @@ namespace parser.Manutencao
             string instrucaoImporter = "importer ( " + nomeAssembly + ")";
 
             ProcessadorDeID processador = new ProcessadorDeID(new List<string>() { instrucaoImporter });
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("instrucao importer processada sem erros fatais.");
 
@@ -504,7 +504,7 @@ namespace parser.Manutencao
             ImportadorDeClasses importador = new ImportadorDeClasses(nomeAssembly);
             importador.ImportAllClassesFromAssembly();
 
-            assercao.IsTrue(RepositorioDeClassesOO.Instance().classesRegistradas.Count > 6);
+            assercao.IsTrue(RepositorioDeClassesOO.Instance().GetClasses().Count > 6);
         }
 
         private void testeExtracaoDeExpressoes(Assercoes assercao)
@@ -516,7 +516,7 @@ namespace parser.Manutencao
 
             List<string> tokensDaExpressao = new Tokens(new LinguagemOrquidea(), new List<string>() { codigoExpressao }).GetTokens();
             ProcessadorDeID processador = new ProcessadorDeID(new List<string>() { codigo });
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
 
             List<Expressao> exprss = Expressao.Instance.ExtraiExpressoes(processador.escopo, tokensDaExpressao);
@@ -527,7 +527,7 @@ namespace parser.Manutencao
         {
             string codigo = "public int a= 1";
             ProcessadorDeID procesador = new ProcessadorDeID(new List<string>() { codigo });
-            procesador.Compile();
+            procesador.CompileEmDoisEstagios();
             assercao.MsgSucess("cenario de testes terminado sem erros fatais.");
             assercao.IsTrue(procesador.escopo.tabela.GetObjetos().Count == 1);
         }
@@ -550,7 +550,7 @@ namespace parser.Manutencao
 
 
             ProcessadorDeID processador = new ProcessadorDeID(tokensDoCenario);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("processamento de chamada de metodo executado sem erros fatais.");
             assercao.IsTrue((processador.GetInstrucoes() != null) && (processador.GetInstrucoes().Count == 2));
@@ -570,7 +570,7 @@ namespace parser.Manutencao
             List<string> codigoTotal = new List<string>() { codigoAtribuicao, codigoWhileCondicional, codigoWhileCorpo1, codigoWhileCorpo2, codigowhileCorpo3 };
             List<string> tokensALocalizar = new List<string>() { "while (x<1)" };
 
-            PosicaoECodigo posicaoDeTokens = new PosicaoECodigo(tokensALocalizar, codigoTotal);
+            PosicaoECodigo posicaoDeTokens = new PosicaoECodigo(tokensALocalizar);
 
             assercao.MsgSucess("objeto posicao de tokens cenario simples instanciado sem erros fatais.");
             assercao.IsTrue((posicaoDeTokens.linha == 1) && (posicaoDeTokens.coluna == 0));
@@ -578,7 +578,7 @@ namespace parser.Manutencao
 
             // cenario mais complexo:
             List<string> tokensParaLocalizar = new Tokens(new LinguagemOrquidea(), tokensALocalizar).GetTokens();
-            PosicaoECodigo posicaoDeTokensComplexo = new PosicaoECodigo(tokensParaLocalizar, codigoTotal);
+            PosicaoECodigo posicaoDeTokensComplexo = new PosicaoECodigo(tokensParaLocalizar);
 
 
             assercao.MsgSucess("objeto posicao de tokens cenario complexo instanciado sem erros fatais.");
@@ -598,7 +598,7 @@ namespace parser.Manutencao
             string instrucaoImporter = "importer ( " + nomeAssembly + ")";
 
             ProcessadorDeID processador = new ProcessadorDeID(new List<string>() { instrucaoImporter });
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             ImportadorDeClasses importador = new ImportadorDeClasses(nomeAssembly);
             importador.ImportAllClassesFromAssembly();
@@ -617,7 +617,7 @@ namespace parser.Manutencao
             codigoCenarioTeste.AddRange(codigoChamadaDeMetodoImportado);
 
             ProcessadorDeID processadorChamadaDeMetodo = new ProcessadorDeID(codigoCenarioTeste);
-            processadorChamadaDeMetodo.Compile();
+            processadorChamadaDeMetodo.CompileEmDoisEstagios();
 
 
 
@@ -634,7 +634,7 @@ namespace parser.Manutencao
             List<string> tokensExpressao = new Tokens(new LinguagemOrquidea(), codigoExpressao).GetTokens();
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
             List<Expressao> expressaoCalc = Expressao.Instance.ExtraiExpressoes(processador.escopo, tokensExpressao);
 
             expressaoCalc[0] = expressaoCalc[0].PosOrdemExpressao();
@@ -652,7 +652,7 @@ namespace parser.Manutencao
             string expressaoTeste = "a+funcaoA(2)";
 
             ProcessadorDeID processador = new ProcessadorDeID(new List<string>() { codigoFuncao });
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             List<string> tokensExpressao = new Tokens(new LinguagemOrquidea(), new List<string>() { expressaoTeste }).GetTokens();
 

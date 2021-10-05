@@ -1,0 +1,4 @@
+public class classeC { public int objB ; public classeC(){ objB= 1; };  public int funcaoD ( int x ){ objB=objB+1; }}
+
+classeC obj_C = create(); 
+obj_C.funcaoD(1)

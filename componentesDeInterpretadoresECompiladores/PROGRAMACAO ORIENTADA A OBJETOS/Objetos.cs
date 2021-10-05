@@ -12,7 +12,7 @@ namespace parser
         private string acessor;
         private string tipo;
         private string nome;
-        private object valor;
+        public object valor;
 
         public bool isStatic { get; set; }
         private List<Objeto> campos = new List<Objeto>();
@@ -80,7 +80,7 @@ namespace parser
             this.nome = nomeObjeto;
             this.tipo = nomeClasse;
             this.valor = valor;
-            Classe classe = RepositorioDeClassesOO.Instance().ObtemUmaClasse(nomeClasse);
+            Classe classe = RepositorioDeClassesOO.Instance().GetClasse(nomeClasse);
             
             if (classe != null)
             {
@@ -98,7 +98,7 @@ namespace parser
 
         public Funcao GetMetodo(string nome)
         {
-            return  RepositorioDeClassesOO.Instance().ObtemUmaClasse(this.tipo).GetMetodos().Find(k => k.nome == nome);
+            return  RepositorioDeClassesOO.Instance().GetClasse(this.tipo).GetMetodos().Find(k => k.nome == nome);
         }
 
         public Objeto GetField(string nome)
@@ -124,6 +124,18 @@ namespace parser
         {
             this.valor = newValue;
         }
+
+        public void SetField(Objeto novoField)
+        {
+            int index=this.campos.FindIndex(k => k.GetNome() == novoField.GetNome());
+            if (index != -1)
+            {
+                this.campos[index] = novoField;
+                for (int x = 0; x < this.campos[index].expressoesComObjetoPresentes.Count; x++)
+                    this.campos[index].expressoesComObjetoPresentes[x].isModify = true;
+            }
+        }
+
         /// <summary>
         /// implementa a otimizacao de expressoes. Se uma expressao conter a variavel
         /// que está sendo modificada, a expressao é setada para modificacao=true.
@@ -163,7 +175,7 @@ namespace parser
 
         public static Objeto GetCampo(string classeObjeto, string nomeCampo)
         {
-            Classe classe = RepositorioDeClassesOO.Instance().classesRegistradas.Find(k => k.GetNome() == classeObjeto);
+            Classe classe = RepositorioDeClassesOO.Instance().GetClasse(classeObjeto);
             if (classe == null)
                 return null;
             else

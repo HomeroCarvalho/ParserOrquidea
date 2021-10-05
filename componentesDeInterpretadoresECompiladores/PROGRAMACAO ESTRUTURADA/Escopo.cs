@@ -65,7 +65,7 @@ namespace parser
             return MsgErros;
         }
 
-        
+    
         /// <summary>
         /// constroi a rede de escopos para um programa.
         /// </summary>
@@ -88,39 +88,24 @@ namespace parser
             this._escopoPai = EscopoRaiz;
             this.sequencias = new List<UmaSequenciaID>();
 
+            if (PosicaoECodigo.lineCurrentProcessing == 0)
+                PosicaoECodigo.AddLineOfCode(Utils.UneLinhasPrograma(codigo));
         } // ContextoEscopo()
 
         public Escopo(Escopo escopo)
         {
 
             this.ID = escopo.ID;
-
+            this.tabela = new TablelaDeValores(codigo);
             this.MsgErros = new List<string>();
+            
+            
+            
             this.codigo = escopo.codigo.ToList<string>();
 
-            this.tabela = new TablelaDeValores(codigo);
-
-
-            if ((escopo.tabela.GetClasses() != null) && (escopo.tabela.GetClasses().Count > 0))
-                this.tabela.GetClasses().AddRange(escopo.tabela.GetClasses().ToList<Classe>());
-
-            if ((escopo.tabela.GetObjetos() != null)&& (escopo.tabela.GetObjetos().Count>0))
-                this.tabela.GetObjetos().AddRange(escopo.tabela.GetObjetos().ToList<Objeto>());
-
-            if ((escopo.tabela.GetFuncoes() != null) && (escopo.tabela.GetFuncoes().Count > 0))
-                this.tabela.GetFuncoes().AddRange(escopo.tabela.GetFuncoes().ToList<Funcao>());
-
-            if ((escopo.tabela.GetVetores() != null) && (escopo.tabela.GetVetores().Count > 0))
-                this.tabela.GetVetores().AddRange(escopo.tabela.GetVetores().ToList<Vetor>());
-
-
-            if ((escopo.tabela.GetOperadores() != null) && (escopo.tabela.GetOperadores().Count > 0))
-                this.tabela.GetOperadores().AddRange(escopo.tabela.GetOperadores().ToList<Operador>());
-
-
-            if ((escopo.tabela.GetExpressoes() != null) && (escopo.tabela.GetExpressoes().Count > 0))
-                this.tabela.GetExpressoes().AddRange(escopo.tabela.GetExpressoes().ToList<Expressao>());
-
+            
+            this.tabela = escopo.tabela.Clone();
+           
             this.escopoFolhas = escopo.escopoFolhas.ToList<Escopo>();
             this.sequencias = escopo.sequencias.ToList<UmaSequenciaID>();
 
@@ -133,6 +118,7 @@ namespace parser
 
         private Escopo()
         {
+           
         }
 
         public void ConstroiEscopoRaiz()
@@ -160,37 +146,7 @@ namespace parser
             } //if
         } //ConstroiEscopoRaiz()
 
-        /// <summary>
-        /// Empilha e Desempilha os operadores duplos
-        /// até que a pilha zere. e retorna um token "ID". O objetivo é fazer o parser percorrer
-        /// o código até encontrar a saída do método.
-        /// </summary>
-        public static List<string> GetCodigoEntreOperadores(TokenParser parser, string[] operadores)
-        {
-            int pilhaOperadoresBloco = 0;
-            List<string> tokensEntreOperadores = new List<string>();
-            do
-            {
-                if (parser.Current() == operadores[0])
-                {
-                    pilhaOperadoresBloco++;
-                } // if
-                if (parser.Current() == operadores[1])
-                {
-                    pilhaOperadoresBloco--;
-                } //if
-                tokensEntreOperadores.Add(parser.Current());
-                parser.Next();
-            } // while
-            while ((pilhaOperadoresBloco > 0) && (parser.Current() != null));
-            
-            if (pilhaOperadoresBloco > 0)
-                return null;
-            return tokensEntreOperadores;
-        } // GetCodigoEntreOperadores()
-
-       
-        
+   
         public Escopo Clone()
         {
             Escopo escopo = new Escopo(this.codigo);
@@ -198,6 +154,15 @@ namespace parser
             return escopo;
         } // Clone()
 
+        public void Dispose()
+        {
+            this.codigo = null;
+            this.tabela = null;
+            this.sequencias = null;
+            this.MsgErros = null;
+            this.escopoFolhas = null;
+
+        }
         public string WriteCallAtMethod(List<List<string>> chamadaAMetodo, int indexChamada)
         {
             string str = "";

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
-
+using parser.ProgramacaoOrentadaAObjetos;
 namespace parser
 {
 
@@ -9,10 +9,7 @@ namespace parser
     public class EvalExpression
     {
 
-        public static LinguagemOrquidea linguagem = new LinguagemOrquidea();
-        public static List<string> nomesTiposNativos = new List<string>() { "int", "float","double", "bool", "char", "string" };
-
-      
+  
         public object EvalPosOrdem(Expressao expss, Escopo escopo)
         {
 
@@ -34,6 +31,10 @@ namespace parser
 
         protected object Eval(Expressao expss, Escopo escopo)
         {
+
+            if (Expressao.Instance.IsNumero(expss.ToString()))
+                return Expressao.Instance.ConverteParaNumero(expss.ToString(), escopo);
+            
             if (expss.Elementos.Count == 0)
             {
                 if (Expressao.Instance.IsTipoInteiro(expss.ToString()))
@@ -45,45 +46,32 @@ namespace parser
                     return double.Parse(expss.ToString());
                 else
                     if (expss.GetType() == typeof(ExpressaoObjeto))
-                        return ((ExpressaoObjeto)expss).objeto.GetValor();
+                    return ((ExpressaoObjeto)expss).objeto.GetValor();
                 else
                     if (expss.GetType() == typeof(ExpressaoVetor))
                     return ((ExpressaoVetor)expss).vetor.GetValor();
+
+                else
+                    return null;
             }
             string tipoDaExpressao = Expressao.GetTipoExpressao(expss, escopo);
 
             object result1 = 0;
             Pilha<object> pilhaOperandos = new Pilha<object>("pilhaOperandos");
-
+           
             for (int x = 0; x < expss.Elementos.Count; x++)
             {
 
-                if (expss.Elementos[x].GetType() == typeof(ExpressaoAtribuicaoPropriedadesAninhadas))
+                if (expss.Elementos[x].GetType() == typeof(ExpressaoPropriedadesAninhadas))
                 {
-                    // coleta os dados do aninhamento de propriedades com atribuicao.
-                    ExpressaoAtribuicaoPropriedadesAninhadas expressaAninhamentoAtribuicao = (ExpressaoAtribuicaoPropriedadesAninhadas)expss.Elementos[x];
-                    List<Objeto> propriedades = expressaAninhamentoAtribuicao.aninhamento;
-                    Expressao exprssAtribuicao = expressaAninhamentoAtribuicao.expresaoAtribuicao;
-
-                    // constoi a propriedade a receber a atribuicao.
-                    Objeto objetoChamada = expressaAninhamentoAtribuicao.objetoInicial;
-
-                    for (int i = 1; i < propriedades.Count; i++)
-                        objetoChamada = objetoChamada.GetField(propriedades[i].GetNome());
-
-                    // calcula a expressao de atribuicao.
-                    EvalExpression eval = new EvalExpression();
-                    object result = eval.EvalPosOrdem(exprssAtribuicao, escopo);
-
-                    // associa a expressão de atribuição, para a propriedade aninhada.
-                    objetoChamada.SetValor(result);
-      
+                    object valorPropriedadeAninhada = GetValorPropriedadeAninhada(expss.Elementos[0]);
+                    pilhaOperandos.Push(valorPropriedadeAninhada);
                 }
                 else
                 if (expss.Elementos[x].GetType() == typeof(ExpressaoChamadaDeMetodo))
                 {
                     ExpressaoChamadaDeMetodo expssMain = (ExpressaoChamadaDeMetodo)expss.Elementos[x];
-                    
+
                     Objeto objetoCaller = expssMain.objectCaller;
                     Objeto objetoChamada = null;
 
@@ -91,36 +79,47 @@ namespace parser
                     if ((propriedades != null) && (propriedades.Count > 0))
                     {
 
+                        Objeto objAninhado = objetoCaller;
+                        for (int k=1; k> propriedades.Count;x++)
 
                         foreach (Objeto objPropriedade in propriedades)
-                            objetoChamada = objetoChamada.GetField(objPropriedade.GetNome());
+                            objAninhado = objAninhado.GetField(objPropriedade.GetNome());
 
+                        objetoChamada = objAninhado;
                     }
                     else
                         objetoChamada = objetoCaller;
-                       
-                        // coleta os dados do metodo (funcao, parametros).
-                        List<ExpressaoChamadaDeFuncao> expssChamada = expssMain.chamadaDoMetodo;
-                        object result = null;
-                        for (int i = 0; i < expssChamada.Count; i++)
-                        {
-                            Funcao metodoDaChamada = expssChamada[i].funcao;
-                            List<Expressao> parametros = expssChamada[i].expressoesParametros;
-                            // chama a avaliação do método.
-                            result = metodoDaChamada.ExecuteAMethod(parametros, escopo, objetoChamada);
-                            if (result.GetType() == typeof(Objeto))
-                                objetoChamada = (Objeto)result;
-                        }
 
-
+                    // coleta os dados do metodo (funcao, parametros).
+                    List<ExpressaoChamadaDeFuncao> expssChamada = expssMain.chamadaDoMetodo;
+                    object result = null;
+                    for (int i = 0; i < expssChamada.Count; i++)
+                    {
+                        Funcao metodoDaChamada = expssChamada[i].funcao;
+                        result= metodoDaChamada.ExecuteAMethod(expssChamada[i].expressoesParametros, escopo,  objetoChamada); // chama o metodo, com o objetoChamada que contém o método.
+                        // o objeto "objetoChamada é modificado com o processamento do método. FIXAR PARA METODOS ANINHADOS.
                         if (result != null)
-                            pilhaOperandos.Push(result);
-                    
-                }
+                        {
 
-                else
-                if (linguagem.VerificaSeEhNumero(expss.Elementos[x].ToString()))
-                    pilhaOperandos.Push((object)expss.Elementos[x].ToString());
+                            if ((result.GetType() == typeof(Objeto)) || (result.GetType() == typeof(ExpressaoPropriedadesAninhadas))) 
+                            {
+                                objetoChamada = (Objeto)result;
+                                result = objetoChamada;
+                            }
+                            else
+                            if (result.GetType() == typeof(Vetor))
+                            {
+                                objetoChamada = (Vetor)result;
+                                result = objetoChamada;
+                            }
+                            else
+                                objetoChamada.SetValor(result); // para objetos importados da linguagem base.
+
+                            pilhaOperandos.Push(result);
+                        }
+                        
+                    }
+               }
                 else
                 if (expss.Elementos[x].GetType() == typeof(Expressao))
                 {
@@ -133,7 +132,7 @@ namespace parser
                 if (expss.Elementos[x].GetType() == typeof(ExpressaoNumero))
                 {
                     string strNumero = ((ExpressaoNumero)expss.Elementos[x]).numero;
-                    object objNumero = Expressao.Instance.ConverteNumeroParaObjeto(strNumero, escopo);
+                    object objNumero = Expressao.Instance.ConverteParaNumero(strNumero, escopo);
                     pilhaOperandos.Push(objNumero);
                 }
                 else
@@ -156,8 +155,14 @@ namespace parser
                     Objeto v = escopo.tabela.GetObjeto(((ExpressaoObjeto)expss.Elementos[x]).objeto.GetNome(), escopo);
                     if (v != null)
                     {
-                        object valor = v.GetValor();
-                        pilhaOperandos.Push(valor);
+                        if (v.GetValor() != null)
+                        {
+                            if (Expressao.Instance.IsNumero(v.GetValor().ToString())) // o objeto tem valor como numero.
+                                pilhaOperandos.Push(v.GetValor().ToString());
+                        }
+                        else
+                            pilhaOperandos.Push(v); // o objeto não é um numero, nem como valor- numero
+
                     }
                     else
                         pilhaOperandos.Push(0);
@@ -197,13 +202,27 @@ namespace parser
                         {
                             if (operador.nome == "=")
                             {
-                                Objeto vAtribuicao = escopo.tabela.GetObjeto(expss.Elementos[0].ToString(), escopo);
-                                if (vAtribuicao != null)
+                                object novoValor = pilhaOperandos.Pop();
+
+                                if (expss.Elementos[0].GetType() == typeof(ExpressaoObjeto))
+                                    escopo.tabela.GetObjeto(((ExpressaoObjeto)expss.Elementos[0]).objeto.GetNome(), escopo).SetValor(novoValor);
+                                else
+                                if (expss.Elementos[0].GetType() == typeof(ExpressaoPropriedadesAninhadas))
                                 {
-                                    object valor = pilhaOperandos.Pop();
-                                    vAtribuicao.SetValor(valor);
-                                    return valor;
+                                    Objeto objResult = ((ExpressaoPropriedadesAninhadas)expss.Elementos[0]).objetoInicial;
+                                    SetValorPropriedadeAninhada(((ExpressaoPropriedadesAninhadas)expss.Elementos[0]), objResult, novoValor, escopo); 
+
                                 }
+                                else
+                                 if (expss.Elementos[0].GetType() == typeof(ExpressaoVetor))
+                                {
+                                    ExpressaoVetor expssVetor = ((ExpressaoVetor)expss.Elementos[0]);
+                                    ExpressaoOperadorMatricial enderacamentoIndice = expssVetor.indicesVetor;
+                                    Vetor vetorAtribuicao = escopo.tabela.GetVetor(expssVetor.vetor.GetNome(), escopo);
+                                    vetorAtribuicao.SetElementoAninhado(novoValor, escopo, enderacamentoIndice.indices.ToArray());
+                                }
+                                return novoValor;
+
                             }
                             else
                             {
@@ -212,7 +231,7 @@ namespace parser
 
                                 oprnd1 = this.Parser_Number(oprnd1);
                                 oprnd2 = this.Parser_Number(oprnd2);
-                     
+
                                 // execução de operador nativo.
                                 result1 = operador.ExecuteOperador(operador.nome, escopo, oprnd1, oprnd2);
                                 pilhaOperandos.Push(result1);
@@ -224,16 +243,15 @@ namespace parser
                     {
                         object oprnd2 = pilhaOperandos.Pop();
                         oprnd2 = this.Parser_Number(oprnd2);
-            
-                        result1 = operador.ExecuteOperador(operador.nome, escopo, oprnd2);
-                        pilhaOperandos.Push(result1);
 
-                        Objeto vAtribuicaoUnario = escopo.tabela.GetObjeto(expss.Elementos[0].ToString(), escopo);
-                        if (vAtribuicaoUnario != null)
-                        {
-                            object valor = result1;
-                            vAtribuicaoUnario.SetValor(valor);
-                        }
+                        object valor = operador.ExecuteOperador(operador.nome, escopo, oprnd2);
+                        pilhaOperandos.Push(result1);
+                        if (expss.Elementos[0].GetType() == typeof(ExpressaoObjeto))
+                            ((ExpressaoObjeto)expss.Elementos[0]).objeto.SetValor(valor);
+                        else
+                        if (expss.Elementos[0].GetType() == typeof(ExpressaoPropriedadesAninhadas))
+                            ((ExpressaoPropriedadesAninhadas)expss.Elementos[0]).SetValor(escopo, valor);
+
                     }
                 } // if
 
@@ -243,6 +261,44 @@ namespace parser
 
             return result1;
         } // Eval()
+
+        private static object GetValorPropriedadeAninhada(Expressao expss)
+        {
+            ExpressaoPropriedadesAninhadas expressaoPropriedades = (ExpressaoPropriedadesAninhadas)expss;
+            Objeto objAninhamento = expressaoPropriedades.aninhamento[0];
+
+
+            for (int p = 1; p < expressaoPropriedades.aninhamento.Count; p++)
+                objAninhamento = objAninhamento.GetField(expressaoPropriedades.aninhamento[p].GetNome());
+
+
+            object valorPropriedadeAninhada = objAninhamento.GetValor();
+            return valorPropriedadeAninhada;
+        }
+
+        private static object SetValorPropriedadeAninhada(ExpressaoPropriedadesAninhadas expressaoPropriedades, Objeto objAninhamento, object novoValor, Escopo escopo)
+        {
+          
+            objAninhamento = expressaoPropriedades.aninhamento[0];
+
+
+            for (int p = 1; p < expressaoPropriedades.aninhamento.Count; p++)
+                objAninhamento = objAninhamento.GetField(expressaoPropriedades.aninhamento[p].GetNome());
+
+            if (objAninhamento != null)
+                objAninhamento.SetValor(novoValor);
+
+            return novoValor;
+        }
+
+
+
+
+        /// <summary>
+        ///  se for um numero, transforma para object. se não for um número, retorta o objeto de entrada (pois não é um número).
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
         private object Parser_Number(object number)
         {
             if (number == null)

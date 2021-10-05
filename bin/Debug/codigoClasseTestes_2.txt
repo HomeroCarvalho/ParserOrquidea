@@ -6,3 +6,6 @@ public interface interfaceD { public int MetodoA(int x,int y);  public int Metod
 public class classeA { public classeA(){};  public int a=5 ; public int MetodoE ( int x ){ while (x>0) {x=x-1;}}}
 public class classeC { public classeC(){};  public int a=1 ; public int MetodoF(int x){return x;}}
 public class classeB: +interfaceD +classeA +classeC {public classeB(){}; public int d=1; public int  MetodoA(int x, int y){ return 2*x;};  public int MetodoB(int x){retun 1};}
+
+
+

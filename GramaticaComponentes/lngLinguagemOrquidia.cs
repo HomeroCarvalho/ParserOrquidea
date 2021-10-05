@@ -15,15 +15,16 @@ namespace parser
         /// </summary>
         public LinguagemOrquidea() : base()
         {
-              this.inicializaOperadores();// inicializa todos operadores das classes nativas.
+            this.inicializaOperadores(false);// inicializa todos operadores das classes nativas.
         } // LinguagemOrquidea()
 
         public static List<Operador> operadoresCondicionais { get; set; }
         public static List<Operador> operadoresBinarios { get; set; }
         public static List<Operador> operadoresUnarios { get; set; }
 
-        public void inicializaOperadores()
+        public void inicializaOperadores(bool inicializaClassesImportadas)
         {
+            
             
             if (LinguagemOrquidea.Classes != null)
                 return;
@@ -56,7 +57,8 @@ namespace parser
             CriaOperadores(op_bool, operadores_boolean);
             CriaOperadores(op_matriz, operadores_matriz);
 
-
+            if ((RepositorioDeClassesOO.Instance().GetClasses() != null) && (RepositorioDeClassesOO.Instance().GetClasses().Count > 0))
+                RepositorioDeClassesOO.Instance().InitRepositorio();
 
             LinguagemOrquidea.Classes = new List<Classe>();
 
@@ -80,14 +82,18 @@ namespace parser
             operadoresCondicionais = this.GetOperadoresCondicionais();
             operadoresBinarios = this.GetOperadoresBinarios();
             operadoresUnarios = this.GetOperadoresUnarios();
-            try
+
+            if (inicializaClassesImportadas)
             {
-                ImportadorDeClasses importador = new ImportadorDeClasses("ParserLinguagemOrquidea.exe");
-                importador.ImportAllClassesFromAssembly();
-            }
-            catch
-            {
-                Log.addMessage("Erro no carregamento das classes do programa. Verifique se não mudou o nome do arquivo final compilado, tem que ser [ParserLinguagemOrquidea.exe].");
+                try
+                {
+                    ImportadorDeClasses importador = new ImportadorDeClasses("ParserLinguagemOrquidea.exe");
+                    importador.ImportAllClassesFromAssembly();
+                }
+                catch
+                {
+                    Log.addMessage("Erro no carregamento das classes do programa. Verifique se não mudou o nome do arquivo final compilado, tem que ser [ParserLinguagemOrquidea.exe].");
+                }
             }
         } // inicializaOperadores()
 
@@ -142,12 +148,13 @@ namespace parser
                 xmlreader.LE_ARQUIVO_LINGUAGEM(producoes, "ORQUIDIA");
             } // if
 
+            
         } // inicializaProducoesParaLinguagem()
 
 
         public  Operador GetOperador(string nome, string nomeClasse)
         {
-            Classe classe = RepositorioDeClassesOO.Instance().ObtemUmaClasse(nomeClasse);
+            Classe classe = RepositorioDeClassesOO.Instance().GetClasse(nomeClasse);
             if (classe != null)
             {
                 List<Operador> operadores = classe.GetOperadores().FindAll(k => k.nome == nome);
@@ -165,7 +172,7 @@ namespace parser
 
             List<string> nomeOperadores = base.GetTodosOperadores();
 
-            List<Classe> classesNativas = RepositorioDeClassesOO.Instance().classesRegistradas;
+            List<Classe> classesNativas = RepositorioDeClassesOO.Instance().GetClasses();
             if (classesNativas != null)
                 for (int x = 0; x < classesNativas.Count; x++)
                 {
@@ -193,7 +200,7 @@ namespace parser
         {
             List<Operador> operadores = base.GetOperadores().ToList<Operador>();
 
-            List<Classe> classes = RepositorioDeClassesOO.Instance().classesRegistradas;
+            List<Classe> classes = RepositorioDeClassesOO.Instance().GetClasses();
             if ((classes != null) && (classes.Count > 0))
                 for (int x = 0; x < classes.Count; x++)
                 {

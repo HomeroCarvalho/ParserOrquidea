@@ -16,7 +16,7 @@ ENTREGAS DO PROJETO COMPILADORES LINGUAGEM ORQUIDEA:
 		
 	- funcionalidades Interpretador Prolog:
 		- um pequeno interpretador prolog, com assercoes e listas prolog, consultas de asserções, salva/carrega bases de conhecimento.
-		- produz numa consulta, todas combinacoes possiveis resultantes.
+		- produz numa consulta, a primeira combinacao válida.
 
 	- funcionalidade ProgramacaoEstruturada: 
 		- TabelaDeValores: registra, valida, e armazena informações de variáveis, funções, objetos, expressões.

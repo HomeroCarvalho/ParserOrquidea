@@ -1,0 +1,8 @@
+public class classeA { public int a ; public classeA(){ a=1; };  public int funcaoB ( int x ){ a=a+x; }}
+public class classeB { public classeA objA ; public classeB(){ objA= create(); };  public int funcaoC ( int x ){ objA.a=objA.a+x; }}
+public class classeC { public classeB objB ; public classeC(){ objB= create(); };  public classeB funcaoD (){ return objB; }}
+
+classeC obj_C = create(); 
+obj_C.funcaoD().funcaoC(1);
+
+

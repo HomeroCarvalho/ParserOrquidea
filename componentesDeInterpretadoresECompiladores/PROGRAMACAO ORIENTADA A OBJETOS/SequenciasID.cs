@@ -13,7 +13,7 @@ namespace parser.ProgramacaoOrentadaAObjetos
     public class UmaSequenciaID
     {
 
-        public List<string> original { get; set; } //  sequencia ID com os tokens sem modificações.
+        public List<string> tokens { get; set; } //  sequencia ID com os tokens sem modificações.
   
         public List<Expressao> expressoes { get; set; } // lista de expressões relacionadas a uma sequencia id. Essa lista é cruscial para processamento de sequencias id que envolvem instruções da linguagem.
 
@@ -38,7 +38,7 @@ namespace parser.ProgramacaoOrentadaAObjetos
             LinguagemOrquidea linguagem = new LinguagemOrquidea();
             Random aleatorizador = new Random(50000); // compoe um nome aleatório para a sequenciaID.
         
-            this.original = seOriginal.ToList<string>(); // inicializa os  a sequencia com os tokens originais;
+            this.tokens = seOriginal.ToList<string>(); // inicializa os  a sequencia com os tokens originais;
             this.expressoes = new List<Expressao>();//inicializa a lista de expressões associadas a sequencia id.
 
 
@@ -54,8 +54,8 @@ namespace parser.ProgramacaoOrentadaAObjetos
                 for (int x = 0; x < this.expressoes.Count; x++)
                     str += this.expressoes[x].ToString();
             } // if
-            for (int x = 0; x < original.Count; x++)
-                str += original[x] + " ";
+            for (int x = 0; x < tokens.Count; x++)
+                str += tokens[x] + " ";
             return str.TrimEnd(' ').TrimStart(' ');
 
         } // ToString()
@@ -63,8 +63,8 @@ namespace parser.ProgramacaoOrentadaAObjetos
         public override int GetHashCode()
         {
             int hash = 0;
-            for (int c = 0; c < this.original[0].Length; c++)
-                hash += (int)this.original[0][c];
+            for (int c = 0; c < this.tokens[0].Length; c++)
+                hash += (int)this.tokens[0][c];
             return hash;
         } // GetHashCode()
 

@@ -65,6 +65,10 @@ namespace parser
             return operadores.Find(k => k.nome.Equals(nomeOperador));
         }
 
+
+        public Objeto actual { get; set; }
+
+
         private List<Funcao> metodos = new List<Funcao>();
         private List<Objeto> propriedades = new List<Objeto>();
         private List<Operador> operadores = new List<Operador>();
@@ -123,6 +127,8 @@ namespace parser
                     this.operadores.Add(operadores[i]);
                 }
             this.GetInfoReflexao();
+            RepositorioDeClassesOO.Instance().RegistraUmaClasse(this);
+
        } // constructor
 
 
@@ -142,56 +148,7 @@ namespace parser
             }
         }
 
-        /// <summary>
-        ///  encontra o tipo de um elemento.
-        ///  ---> se o elemento for um operador, retorna o termo "operador", o que é suficiente para validar com null para elementos não encontrados.
-        ///  ---> se o elemento for um nome de função, retorna o termo "funcao", o que é suficiente para validar com null para elementos não encontrados.
-        ///  ---> se o elemento for um numero, retorna o termo "numero", o que é suficiente para validar com null para elementos não encontrados.
-        ///  ---> se o elemento for um termoChave, retorna o termo "termoChave", o que é suficiente para validar com null para elementos não encontrados.
-        ///  ---> o elemento for uma varivel, variavel vetor, objeto, ou nome de classe, retorna o tipo do elemento.
-        /// </summary>
-        public static string EncontraClasseDoElemento(string nomeElemento, Escopo escopo)
-        {
-
-            if (linguagem.IsOperadorBinario(nomeElemento))
-                return "operador";
-            if (linguagem.IsOperadorUnario(nomeElemento))
-                return "operador";
-            if (linguagem.IsOperadorAritmetico(nomeElemento))
-                return "operador";
-            if (linguagem.IsOperadorCondicional(nomeElemento))
-                return "operador";
-
-            if (escopo.tabela.IsFunction(escopo, nomeElemento))
-                return "funcao";
-            if (linguagem.isTermoChave(nomeElemento))
-                return "termoChave";
-
-            if (Expressao.Instance.IsTipoInteiro(nomeElemento))
-                return "Int32";
-            if (Expressao.Instance.IsTipoFloat(nomeElemento))
-                return "float";
-            if (Expressao.Instance.IsTipoDouble(nomeElemento))
-                return "double";
-
-            Objeto v = escopo.tabela.GetObjeto(nomeElemento, escopo);
-            if (v != null)
-                return v.GetTipo();
-            Vetor vetor = escopo.tabela.GetVetor(nomeElemento, escopo);
-            if (vetor != null)
-                return v.GetTipo();
-            Objeto objeto = escopo.tabela.GetObjeto(nomeElemento, escopo);
-            if (objeto != null)
-                return objeto.GetTipo();
-
-            Classe classeElemento = RepositorioDeClassesOO.Instance().ObtemUmaClasse(nomeElemento);
-            if (classeElemento != null)
-                return classeElemento.nome;
-
-            return null;
-        }
-
-
+     
         /// <summary>
         /// faz uma chamada do método constructor de objeto importados, que tem os parâmetros especificados na entrada.
         /// </summary>
@@ -229,7 +186,7 @@ namespace parser
         private void SaveClassePropriedadesMetodosOperadores(Classe classeAGuardar, StreamWriter writer)
         {
             string name = "";
-            if (RepositorioDeClassesOO.Instance().ObtemUmaClasse(classeAGuardar.nome) != null)
+            if (RepositorioDeClassesOO.Instance().GetClasse(classeAGuardar.nome) != null)
                 name = "classe";
             else
             if (RepositorioDeClassesOO.Instance().ObtemUmaInterface(classeAGuardar.nome) != null)

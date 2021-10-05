@@ -41,7 +41,8 @@ namespace parser
         internal static int codeCreateObject = 20;
         internal static int codeImporter = 22;
         internal static int codeCallerMethod = 25;
-        internal static int codeExpressionCorrect = 26;
+        internal static int codeExpressionValid = 26;
+        internal static int codeConstructorUp = 27;
 
         public delegate object HandlerInstrucao(Instrucao umaInstrucao, Escopo escopo);
 
@@ -96,7 +97,8 @@ namespace parser
                 dicHandlers[codeCreateObject] = InstrucaoCreateObject;
                 dicHandlers[codeImporter] = InstrucaoImporter;
                 dicHandlers[codeReturn] = InstrucaoReturn;
-                dicHandlers[codeExpressionCorrect] = InstrucaoExpressaoValida;
+                dicHandlers[codeExpressionValid] = InstrucaoExpressaoValida;
+                dicHandlers[codeConstructorUp] = InstrucaoConstrutorUP;
             }
         } // InstrucoesVM()
 
@@ -143,35 +145,115 @@ namespace parser
 
         } // InstrucaoCreateObject()
 
+        public object InstrucaoConstrutorUP(Instrucao instrucao, Escopo escopo)
+        {
+            ///   Cabecalho de listas de expressoes:
+            ///   0- nomeDaClasseHerdeira
+            ///   1- nomeDaClasseHerdada.
+            ///   2- indice do construtor da classe herdada.
+            ///   3- expressao cujos elementos são os parametros do construtor.
+
+
+            /// template: nomeDaClasseHerdeira.construtorUP(nomeClasseHerdada, List<Expressao> parametrosDoConstrutor).
+            ///           pode ser o objeto "actual";
+            ///           
+
+            
+
+            string nomeDaClasseHerdeira = instrucao.expressoes[0].ToString();
+            string nomeClasseHerdada = instrucao.expressoes[1].ToString();
+
+
+            Objeto ObjetoAtual = escopo.tabela.GetObjeto("atual", nomeClasseHerdada, escopo); // obtem o objeto referenciado pelo construtor principal.
+            if (ObjetoAtual == null)
+                return null;
+
+
+
+            Classe classeHerdada = RepositorioDeClassesOO.Instance().GetClasse(nomeClasseHerdada);  // obtem a classe do objeto a ser instanciado.
+
+            int indexConstrutorClasseHerdada = int.Parse(instrucao.expressoes[2].ToString());
+            Funcao construtor = classeHerdada.construtores[indexConstrutorClasseHerdada]; // obtem o construtor para instanciar o objeto a ser instanciado.
+
+
+
+            List<Expressao> parametrosParaOConstrutor = instrucao.expressoes[3].Elementos; //obtm os parâmetros a serem passados para o construtor da classe herdada.
+
+
+
+            Escopo escopoConstrutorUP = escopo.Clone();
+
+
+     
+            // executa o construtor, com o escopo que detém os valores dos objetos herdados.
+            construtor.ExecuteAConstructor(parametrosParaOConstrutor, nomeClasseHerdada, escopoConstrutorUP, indexConstrutorClasseHerdada);
+
+            escopo = escopoConstrutorUP.Clone();
+
+            return new object();
+
+        }
+
+        private static void AdicionaObjetosAtuais(Escopo escopoConstrutorUP, List<Classe> classesHerdadas)
+        {
+            if ((classesHerdadas != null) && (classesHerdadas.Count > 0)) // constroi objetos atual, util para construtores de classes herdadas.
+            {
+
+
+                for (int c = 0; c < classesHerdadas.Count; c++)
+                {
+
+                    // constroi objetos "atual", para cada classe herdada. é útil para invocar construtores de classes herdadas, que é preciso ser chamado quando se instancia objetos da classe herdeira.
+                    Objeto umObjetoAtual = new Objeto("private", classesHerdadas[c].GetNome(), "atual", null);
+
+                    // registra os objetos atual no escopo de invocação de construtores herdaddos.
+                    escopoConstrutorUP.tabela.GetObjetos().Add(umObjetoAtual);
+                } // for c
+
+
+
+            }
+        }
+
+        private static void RemoveObjetosAtuais(Escopo escopo, List<Classe> classesHerdadas)
+        {
+            if (classesHerdadas != null)
+                for (int c = 0; c < classesHerdadas.Count; c++)    // remove o objeto utilizado para chamada de construtores herdados. 
+                                                                   // Este objeto é util para chamadas de construtores de classes herdadas.
+                {
+
+                    Objeto umDosObjetosAtual = escopo.tabela.GetObjeto("atual", classesHerdadas[c].GetNome(), escopo);
+                    if (umDosObjetosAtual != null)
+                        escopo.tabela.GetObjetos().Remove(umDosObjetosAtual);
+                }
+        }
 
         public object InstrucaoCreateObject(Instrucao instrucao, Escopo escopo)
         {
 
-            /// EXPRESSOES:
+            /// EXPRESSOES: a lista de expressões da instrução foi feita na seguinte sequência:
             /// 0- NOME "create"
             /// 1- tipo do objeto
             /// 2- nome do objeto
             /// 3- tipo template do objeto: Objeto/Vetor.
             /// 4- expressoes indices vetor.
             /// 5- expressoes parametros.
-            /// 
+            /// 6- indice do construtor.
+            
 
 
-            Expressao exprssDesempacotamento = instrucao.expressoes[0];
-            if (exprssDesempacotamento.Elementos[0].ToString() != "create")
+            if (instrucao.expressoes[0].Elementos[0].ToString() != "create")
                 return null;
-            
-            
-            
-            string tipoDoObjetoAReceberAInstanciacao = exprssDesempacotamento.Elementos[1].ToString();
-            string nomeDoObjetoAReceberAInstanciacao = exprssDesempacotamento.Elementos[2].ToString();
-            string tipoTemplateObjeto = exprssDesempacotamento.Elementos[3].ToString();
-      
+
+            string tipoDoObjetoAReceberAInstanciacao = instrucao.expressoes[0].Elementos[1].ToString();
+            string nomeDoObjetoAReceberAInstanciacao = instrucao.expressoes[0].Elementos[2].ToString();
+            string tipoTemplateObjeto = instrucao.expressoes[0].Elementos[3].ToString();
+            int indexConstructor = int.Parse(instrucao.expressoes[0].Elementos[6].ToString());
 
 
             Expressao expressoesParametros;
-            if ((exprssDesempacotamento.Elementos.Count >= 5) && (exprssDesempacotamento.Elementos[5].Elementos.Count > 0))
-                expressoesParametros = exprssDesempacotamento.Elementos[5];
+            if (instrucao.expressoes[0].Elementos[5].Elementos.Count >= 5)
+                expressoesParametros = instrucao.expressoes[0].Elementos[5];
             else
                 expressoesParametros = new Expressao();
 
@@ -181,65 +263,144 @@ namespace parser
             if (tipoTemplateObjeto == "Objeto")
             {
 
+                /// passos do algoritmo
+                /// 1- criar o escopo no qual as modificações do construtor serão feitas.
+                /// 2- criar objetos "atual", para acesso a construtores de classes herdadas.
+                /// 3- adicionar no escopo as propriedades da classe do objeto, pois o construtor atua sobre as propriedades do objeto a ser construido.
+                /// 4- executar o construtor.
+                /// 5- passar os valores das propriedades do objeto construido, vindos do escopo do construtor.
+                /// 6- remover os objetos "atual" do escopo do construtor.
+                /// 7- remover as propriedades do objeto construido, do escopo do construtor.
+                /// 8- clonar o escopo do construtor, para o escopo principal.
+
+                /// passo a mais: verificar se as listas de propriedades não são nulas, e se a lista de classes herdadas não são nulas.
+
+
                 Objeto objJaInstanciado = escopo.tabela.GetObjeto(nomeDoObjetoAReceberAInstanciacao, escopo);
-                if (objJaInstanciado != null)
-                    escopo.tabela.GetObjetos().Remove(objJaInstanciado); // garante que apenas um objeto desse nome seja instanciado.
 
-
-
-                int indexConstructor = ProcessadorDeID.FoundACompatibleConstructor(tipoDoObjetoAReceberAInstanciacao, expressoesParametros.Elementos);
-                Funcao construtor = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoDoObjetoAReceberAInstanciacao).construtores[indexConstructor];
-
-                Classe classeDoObjetoInstanciado = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoDoObjetoAReceberAInstanciacao);
+                Funcao construtor = RepositorioDeClassesOO.Instance().GetClasse(tipoDoObjetoAReceberAInstanciacao).construtores[indexConstructor];
+                Classe classeDoObjetoInstanciado = RepositorioDeClassesOO.Instance().GetClasse(tipoDoObjetoAReceberAInstanciacao);
 
 
                 Escopo escopoCreate = escopo.Clone();
-                if (classeDoObjetoInstanciado.GetPropriedades() != null)
-                    foreach (Objeto propriedadeDaClasse in classeDoObjetoInstanciado.GetPropriedades())
-                        escopoCreate.tabela.GetObjetos().Add(propriedadeDaClasse);
 
-                // cria uma nova instancia do objeto.
-                object novoObjeto = construtor.ExecuteAConstructor(expressoesParametros.Elementos, tipoDoObjetoAReceberAInstanciacao, escopoCreate);
-                Objeto objCriado = (Objeto)novoObjeto;
+                List<Classe> classesHerdadas = classeDoObjetoInstanciado.classesHerdadas;
 
-                for (int x = 0; x < objCriado.GetFields().Count; x++)
+                if (classesHerdadas != null)
                 {
-                    Objeto objetoCampo = escopoCreate.tabela.GetObjetos().Find(k => k.GetNome() == objCriado.GetFields()[x].GetNome());
-                    if (objetoCampo != null)
-                        objCriado.GetFields()[x].SetValor(objetoCampo.GetValor());
+                    AdicionaObjetosAtuais(escopoCreate, classesHerdadas); // constroi objetos de nome: "atual", para cada classe herdada.
+                    AdicionaPropriedadesHerdadasAoEscopo(objJaInstanciado, classesHerdadas, escopoCreate); // seta as propriedades modificadas no construtor, e que podem ter sido modificados por construtores herdados.
                 }
 
-                if (construtor.InfoMethod == null)
+                AdicionaPropriedadesNaoHerdadas(objJaInstanciado, classeDoObjetoInstanciado, escopoCreate); // adiciona ao escopo create os campos do objeto instanciado.
+
+                // CONSTROI UMA NOVA INSTANCIA DO OBJETO, o objeto construido está no [escopoCreate].
+                construtor.ExecuteAConstructor(expressoesParametros.Elementos, tipoDoObjetoAReceberAInstanciacao, escopoCreate, indexConstructor);
+
+                SetaValoresModificadosDePropriedades(objJaInstanciado, escopoCreate); // repassa os valores modificados na construção, ao objeto instanciado.
+                SetVetoresModificadosNaInstanciacao(escopo, escopoCreate); // seta vetores alterados na instanciação das propriedades do objeto instanciados.
+
+                if (classesHerdadas != null)
                 {
-                    // o objeto criado é um objeto orquidea!
-                    Objeto objetoInstanciado = (Objeto)novoObjeto; 
-                    objetoInstanciado.SetNome(nomeDoObjetoAReceberAInstanciacao);
-
-
-                    escopo.tabela.GetObjetos().Add(objetoInstanciado);
+                    RemoveObjetosAtuais(escopoCreate, classesHerdadas); // remove todos objetos atuais construidos, desde da classe do objeto construido, até os de classes herdadas.
+                    RemovePropriedadesPropriedadesHerdadaAoEscopo(objJaInstanciado, classesHerdadas, escopoCreate);
                 }
-                else
-                {
-                    // o objeto criado é um objeto importado!
-                    Objeto objetoInstanciado = (Objeto)novoObjeto;
-                    objetoInstanciado.SetNome(nomeDoObjetoAReceberAInstanciacao);
-                    objetoInstanciado.SetValor(novoObjeto);
+                RemovePropriedadesNaoHerdadosDoEscopo(objJaInstanciado, classeDoObjetoInstanciado, escopoCreate); // remove os campos do objeto instanciado, presentes no escopo create.
 
-                    escopo.tabela.GetObjetos().Add(objetoInstanciado);
 
-                }
+
+
+
+
+                
+
+
+
+
+                escopo = escopoCreate.Clone(); // o escopoCreate é o escopo + propriedades do objeto instanciado, fazer o escopo ser um clone do objeto traz os objetos modificados pelo construtor.
+
+                return objJaInstanciado;
             }
             else
             if (tipoTemplateObjeto == "Vetor")
             {
-                // cria objetos vetor! Um vetor é um objeto passado por referência!
-                Vetor vetor = escopo.tabela.GetVetor(nomeDoObjetoAReceberAInstanciacao, escopo);
-                return vetor; // os indices de criação do vetor são imutáveis, então a instância da variável e constante e calculada no build de compilação. 
+                
+                Vetor vetor = escopo.tabela.GetVetor(nomeDoObjetoAReceberAInstanciacao, escopo); // cria objetos vetor! o objeto vetor foi construido pelo 
+                                                                                                 // build de compilação "create", Um vetor é um objeto passado por referência!
+                if (vetor != null)
+                {
+
+                    
+                    List<Expressao> indicesDoVetor = instrucao.expressoes[0].Elementos[4].Elementos; // calcula as dimensões do vetor.
+                    vetor.SetElementoAninhado(new object(), escopo, indicesDoVetor.ToArray());
+                    return vetor; // os indices de criação do vetor são imutáveis, então a instância da variável e constante e calculada no build de compilação. 
+                }
             }
+            
             return null;
+
+            
         } // InstrucaoCreateObject()
 
-   
+        private static void SetaValoresModificadosDePropriedades(Objeto objJaInstanciado, Escopo escopoCreate)
+        {
+            foreach (Objeto propriedadeModificada in escopoCreate.tabela.GetObjetos())
+                if (objJaInstanciado.GetFields().Find(k => k.GetNome() == propriedadeModificada.GetNome()) != null)
+                    objJaInstanciado.GetField(propriedadeModificada.GetNome()).SetValor(propriedadeModificada.GetValor());
+        }
+
+        private static void SetVetoresModificadosNaInstanciacao(Escopo escopo, Escopo escopoCreate)
+        {
+            if ((escopoCreate.tabela.GetVetores() != null) && (escopo.tabela.GetVetores() != null))
+            {
+                for (int x = 0; x < escopoCreate.tabela.GetVetores().Count; x++)  // repassa para o escopo principal eventuais mudanças de vetores dentro do processamento da criação do objeto.
+                {
+                    Vetor vetorEscopoCreate = escopoCreate.tabela.GetVetores().Find(k => k.GetNome() == escopo.tabela.GetVetores()[x].GetNome());
+                    Vetor vetorEscopoPrincipal = escopo.tabela.GetVetor(vetorEscopoCreate.GetNome(), escopo);
+                    vetorEscopoPrincipal = vetorEscopoCreate;
+                }
+
+            }
+        }
+
+
+        private static void AdicionaPropriedadesHerdadasAoEscopo(Objeto objJaInstanciado, List<Classe> classesHerdadas, Escopo escopo)
+        {
+            foreach (Classe classesHeranca in classesHerdadas)
+            {
+
+                foreach (Objeto propriedadeHerdada in classesHeranca.GetPropriedades())
+                    if ((propriedadeHerdada.GetAcessor() == "public") || (propriedadeHerdada.GetAcessor() == "protected"))
+                        escopo.tabela.GetObjetos().Add(propriedadeHerdada);
+            }
+        }
+
+        private static void AdicionaPropriedadesNaoHerdadas(Objeto objJaInstanciado, Classe classeDoObjetoInstanciado, Escopo escopoCreate)
+        {
+            if (classeDoObjetoInstanciado.GetPropriedades() != null)
+                foreach (Objeto propriedadeDoObjeto in classeDoObjetoInstanciado.GetPropriedades())
+                    if (propriedadeDoObjeto.GetNome() != objJaInstanciado.GetNome())
+                        escopoCreate.tabela.GetObjetos().Add(propriedadeDoObjeto); // faz um registro das propriedades do objeto, que poderão ser modificadas pelo construtor!
+        }
+
+
+        private static void RemovePropriedadesPropriedadesHerdadaAoEscopo(Objeto objJaInstanciado, List<Classe> classesHerdadas, Escopo escopoCreate)
+        {
+
+            foreach (Classe umaClasseHerdada in classesHerdadas)
+                foreach (Objeto umaPropriedadeHerdada in umaClasseHerdada.GetPropriedades())
+                    if ((umaPropriedadeHerdada.GetAcessor() == "public") || (umaPropriedadeHerdada.GetAcessor() == "private"))
+                        escopoCreate.tabela.GetObjetos().Remove(umaPropriedadeHerdada);
+        }
+
+
+        private static void RemovePropriedadesNaoHerdadosDoEscopo(Objeto objJaInstanciado, Classe classeDoObjetoInstanciado, Escopo escopoCreate)
+        {
+            if (classeDoObjetoInstanciado.GetPropriedades() != null)
+                foreach (Objeto propriedadeDoObjeto in classeDoObjetoInstanciado.GetPropriedades())
+                    if (propriedadeDoObjeto.GetNome() != objJaInstanciado.GetNome())
+                        escopoCreate.tabela.GetObjetos().Remove(propriedadeDoObjeto); // faz um registro das propriedades do objeto, que poderão ser modificadas pelo construtor!
+        }
 
 
         //  instrução de construção do casesOfUses. como não é uma instrução feita massivamente, a construção de um objeto ProcessadorDeID não afeta o desempenho.
@@ -296,9 +457,9 @@ namespace parser
             classeDoOperador.GetOperadores().Add(novoOperadorBinario);
 
             // atualiza a classe no repositório.
-            Classe classeRepositorio = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoRetornoDoOperador);
+            Classe classeRepositorio = RepositorioDeClassesOO.Instance().GetClasse(tipoRetornoDoOperador);
             if (classeRepositorio != null)
-                RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoRetornoDoOperador).GetOperadores().Add(novoOperadorBinario);
+                RepositorioDeClassesOO.Instance().GetClasse(tipoRetornoDoOperador).GetOperadores().Add(novoOperadorBinario);
             return null;
         }
 
@@ -330,9 +491,9 @@ namespace parser
 
 
             // atualiza a classe no repositorio.
-            Classe classeRepositorioOperador = RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoRetornoDoOperador);
+            Classe classeRepositorioOperador = RepositorioDeClassesOO.Instance().GetClasse(tipoRetornoDoOperador);
             if (classeRepositorioOperador != null)
-                RepositorioDeClassesOO.Instance().ObtemUmaClasse(tipoRetornoDoOperador).GetOperadores().Add(novoOperadorUnario);
+                RepositorioDeClassesOO.Instance().GetClasse(tipoRetornoDoOperador).GetOperadores().Add(novoOperadorUnario);
             return null;
         }
 
@@ -365,6 +526,8 @@ namespace parser
 
         private object InstrucaoWhile(Instrucao instrucao, Escopo escopo)
         {
+            if (this.IP_contador >= this.instrucoes.Count)
+                return null;
 
             Expressao exprssControle = instrucao.expressoes[0];
             EvalExpression eval = new EvalExpression();
@@ -464,8 +627,8 @@ namespace parser
             string nomeAtribuicao = null;
             string nomeCampo = null;
             Expressao atribuicao = null;
-            ExpressaoAtribuicaoPropriedadesAninhadas propriedadesAninhadas = null;
-            if (instrucao.expressoes[0].ToString() == "AtribuicaoChamadaDeMetodo") 
+            ExpressaoPropriedadesAninhadas propriedadesAninhadas = null;
+            if (instrucao.expressoes[0].GetType()==typeof(ExpressaoChamadaDeMetodo)) 
             {
 
                 EvalExpression eval = new EvalExpression();
@@ -478,9 +641,9 @@ namespace parser
                 return result;
             }
             else
-            if (instrucao.expressoes[0].GetType() != typeof(ExpressaoAtribuicaoPropriedadesAninhadas))
+            if (instrucao.expressoes[0].GetType() != typeof(ExpressaoPropriedadesAninhadas))
             {
-                if (RepositorioDeClassesOO.Instance().classesRegistradas.Find(k => k.nome == instrucao.expressoes[0].Elementos[0].ToString()) != null)
+                if (RepositorioDeClassesOO.Instance().GetClasse(instrucao.expressoes[0].Elementos[0].ToString()) != null) 
                 {
                     nomeAtribuicao = instrucao.expressoes[0].Elementos[1].ToString();
                     tipoAtribuicao = instrucao.expressoes[0].Elementos[0].ToString();
@@ -488,16 +651,22 @@ namespace parser
                 else
                 {
                     nomeAtribuicao = instrucao.expressoes[0].Elementos[0].ToString();
-                    tipoAtribuicao = escopo.tabela.GetObjeto(nomeAtribuicao, escopo).GetTipo();
-                   
+                    for (int x = 0; x < escopo.tabela.GetObjetos().Count; x++)
+                    {
+                        tipoAtribuicao = ObtemTipoRecursivamente(escopo, nomeAtribuicao, escopo.tabela.GetObjetos()[x]);
+                        if (tipoAtribuicao != null)
+                            break;
+                    }
+
                 }
                 nomeCampo = "";
                 atribuicao = instrucao.expressoes[0];
                 
             }
             else
+            if (instrucao.expressoes[0].GetType() == typeof(ExpressaoPropriedadesAninhadas))
             {
-                ExpressaoAtribuicaoPropriedadesAninhadas aninhadas = ((ExpressaoAtribuicaoPropriedadesAninhadas)instrucao.expressoes[0]);
+                ExpressaoPropriedadesAninhadas aninhadas = ((ExpressaoPropriedadesAninhadas)instrucao.expressoes[0]);
                 nomeAtribuicao = aninhadas.objetoInicial.GetNome();
                 tipoAtribuicao = aninhadas.objetoInicial.GetTipo();
                 propriedadesAninhadas = aninhadas;
@@ -598,21 +767,15 @@ namespace parser
                 object novoValor = new EvalExpression().EvalPosOrdem(atribuicao, escopo);
                 if (propriedadesAninhadas == null)
                 {
-                    if (RepositorioDeClassesOO.Instance().ObtemUmaClasse(instrucao.expressoes[0].Elementos[0].ToString()) == null)
+                    if (RepositorioDeClassesOO.Instance().GetClasse(instrucao.expressoes[0].Elementos[0].ToString()) == null)
                     {
                         nomeDoObjeto = instrucao.expressoes[0].Elementos[0].ToString();
-                        Objeto objetoReferenciadoAnteriormente= escopo.tabela.GetObjeto(nomeDoObjeto, escopo);
-                        if (objetoReferenciadoAnteriormente != null)
-                            tipoDoObjeto = objetoReferenciadoAnteriormente.GetTipo();
-                        else
-                            return null;
-                       
+                        tipoDoObjeto = escopo.tabela.GetObjeto(nomeDoObjeto, escopo).GetTipo();
                     }
                     else
                     {
                         tipoDoObjeto = instrucao.expressoes[0].Elementos[0].ToString();
                         nomeDoObjeto = instrucao.expressoes[0].Elementos[1].ToString();
-
                     }
                 }
                 else
@@ -621,8 +784,6 @@ namespace parser
                     nomeDoObjeto = propriedadesAninhadas.objetoInicial.GetNome();
 
                 }
-
-
 
                 int tipoDeDados = instrucao.flags[1];
                 switch (tipoDeDados)
@@ -674,7 +835,27 @@ namespace parser
             return null;
         } // InstrucaoAtribuicao()
 
-     
+        private static string ObtemTipoRecursivamente(Escopo escopo, string nomePropriedadeProcurada, Objeto objetoAtribuicaoCampo)
+        {
+            if (objetoAtribuicaoCampo == null)
+                return null;
+
+            if (objetoAtribuicaoCampo.GetNome() == nomePropriedadeProcurada)
+                return objetoAtribuicaoCampo.GetTipo();
+            else
+            {
+                string tipoPropriedadeProcurada = null;
+                for (int i = 0; i < objetoAtribuicaoCampo.GetFields().Count; i++)
+                {
+
+                    tipoPropriedadeProcurada = ObtemTipoRecursivamente(escopo, nomePropriedadeProcurada, objetoAtribuicaoCampo.GetFields()[i]);
+                    if (tipoPropriedadeProcurada != null)
+                        return tipoPropriedadeProcurada;
+                }
+            }
+            return null;
+        }
+
         private static Objeto ObtemPropriedadeAAtribuir_2(ExpressaoChamadaDeMetodo expressaoChamada, Escopo escopo)
         {
             Objeto objetoCurrente = escopo.tabela.GetObjeto(expressaoChamada.proprieades.objetoInicial.GetNome(), escopo); // é preciso acessar o objeto pelo escopo, pois através da expressão pode estar atualizado.
@@ -719,7 +900,7 @@ namespace parser
     public class Instrucao
     {
         public int code; // tipo da instrução.
-        public int IP_Instrucao = 0; // ponteiro de obter instruções a serem avaliadas.
+        //public int IP_Instrucao = 0; // ponteiro de obter instruções a serem avaliadas.
 
         public List<Expressao> expressoes { get; set; } // expressões da instrução.
         public List<List<Instrucao>> blocos { get; set; } // blocos de instrução associada à instrução.
@@ -758,6 +939,10 @@ namespace parser
             dicNamesOfInstructions[ProgramaEmVM.codeOperadorUnario] = "operador unario";
             dicNamesOfInstructions[ProgramaEmVM.codeCasesOfUse] = "casesOfUse";
             dicNamesOfInstructions[ProgramaEmVM.codeCreateObject] = "Create a Object";
+            dicNamesOfInstructions[ProgramaEmVM.codeCallerMethod] = "Call a method";
+            dicNamesOfInstructions[ProgramaEmVM.codeExpressionValid] = "Valid Express";
+            dicNamesOfInstructions[ProgramaEmVM.codeConstructorUp] = "Constructor base";
+
     
         }
 
@@ -783,7 +968,7 @@ namespace parser
             this.flags = new List<int>();
             if (dicNamesOfInstructions == null)
                 this.InitNames();
-            this.IP_Instrucao++; // registra a instrução com um endereço para a VM.
+         
             this.code = code;
             if ((expressoesDaInstrucao != null) && (blocos != null))
             {
@@ -805,7 +990,6 @@ namespace parser
             this.flags = new List<int>();
             if (dicNamesOfInstructions == null)
                 this.InitNames();
-            this.IP_Instrucao++; // registra a instrução com um endereço para a VM.
             this.code = code;
             if ((expressoesDaInstrucao != null) && (blocos != null))
             {
@@ -828,15 +1012,5 @@ namespace parser
     } // class Instrucao
 
 
-    public class ComparerInstruction : IComparer<Instrucao>
-    {
-        public int Compare(Instrucao x, Instrucao y)
-        {
-            if (x.IP_Instrucao < y.IP_Instrucao)
-                return -1;
-            if (x.IP_Instrucao > y.IP_Instrucao)
-                return +1;
-            return 0;
-        }
-    }
+ 
 } //  namespace paser

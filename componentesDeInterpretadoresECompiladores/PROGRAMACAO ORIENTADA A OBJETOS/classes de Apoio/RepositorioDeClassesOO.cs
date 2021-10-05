@@ -17,9 +17,9 @@ namespace parser.ProgramacaoOrentadaAObjetos
         /// <summary>
         /// constem as classes publicas do projeto.
         /// </summary>
-        public List<Classe> classesRegistradas { get; set; }
+        private List<Classe> classesRegistradas { get; set; }
 
-        public List<Classe> interfacesRegistradas { get; set; }
+        private List<Classe> interfacesRegistradas { get; set; }
 
         /// <summary>
         /// padrão de projeto Singleton para o Repositorio, que deve ser um para o projeto. 
@@ -33,12 +33,15 @@ namespace parser.ProgramacaoOrentadaAObjetos
         /// </summary>
         private RepositorioDeClassesOO()
         {
-            this.classesRegistradas = new List<Classe>();
-            this.interfacesRegistradas = new List<Classe>();
-            
+            InitRepositorio();
 
         } // RepositorioDeClassesOO()
 
+        public void InitRepositorio()
+        {
+            this.classesRegistradas = new List<Classe>();
+            this.interfacesRegistradas = new List<Classe>();
+        }
         /// <summary>
         /// método de instanciação do Repositório, melhhor, ponto de acesso ao Repositório.
         /// </summary>
@@ -50,10 +53,18 @@ namespace parser.ProgramacaoOrentadaAObjetos
             return instanciaRepositorio;
         } // Instance().
 
+        public List<Classe> GetClasses()
+        {
+            return this.classesRegistradas;
+        }
 
+        public List<Classe> GetInterfaces()
+        {
+            return this.interfacesRegistradas;
+        }
         public bool isOperator(string nameClass, string nameOperator, string tipo)
         {
-            Classe classe = RepositorioDeClassesOO.Instance().ObtemUmaClasse(nameClass);
+            Classe classe = RepositorioDeClassesOO.Instance().GetClasse(nameClass);
 
             // tenta obter um indice do operador dentro da lista de operadores da claase de entrada.
             List<Operador> operadores = classe.GetOperadores().FindAll(k => k.nome == nameOperator);
@@ -66,7 +77,8 @@ namespace parser.ProgramacaoOrentadaAObjetos
         } // isOperator()
 
         /// <summary>
-        /// adiciona a classe de entrada ao repositório, se o nome da classe não estiver em qualquer classe no reposiório.
+        /// se o nome da classe não estiver em qualquer classe no reposiório, adiciona a classe de entrada ao repositório, .
+        /// Se o nome da classe já estiver no repositorio, remove a classe que estava no repositorio, e adiciona a classe da entrada.
         /// </summary>
         /// <param name="classe">classe a ser registrada.</param>
         /// <returns>retorna [true] se a inserção foi sucedida, [false] se houver outra classe com mesmo nome da classe de entrada.</returns>
@@ -78,7 +90,8 @@ namespace parser.ProgramacaoOrentadaAObjetos
             int indexClasse = classesRegistradas.FindIndex(k => k.nome == classe.nome);
             if (indexClasse != -1)
             {
-                //this.classesRegistradas[indexClasse] = classe;
+                this.classesRegistradas.Remove(classesRegistradas[indexClasse]);
+                this.classesRegistradas.Add(classe);
                 return true;
             } // if
             // registra a classe no repositório de classes.
@@ -100,11 +113,15 @@ namespace parser.ProgramacaoOrentadaAObjetos
         /// <summary>
         /// obtém uma classe no Repositório, com  o nome [nomeClasse].
         /// </summary>
-        public Classe ObtemUmaClasse(string nomeClasse)
+        public Classe GetClasse(string nomeClasse)
         {
             return classesRegistradas.Find(k => k.nome == nomeClasse);
         } // ObtemUmaClasse()
 
+        public Classe GetInterface(string nomeInterface)
+        {
+            return interfacesRegistradas.Find(k => k.nome == nomeInterface);
+        }
 
         /// <summary>
         /// obtém uma classe no Repositório, com  o nome [nomeClasse].

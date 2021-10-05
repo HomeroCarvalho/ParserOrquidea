@@ -1,0 +1,6 @@
+public class classeA { public int a; public int classeA(){ a= 1; } }
+public class classeB: +classeA{ public int classeB(){ classeB.construtorUP(classeA); }}
+
+
+classeB objetoB= create();
+classeA objetoA= create();

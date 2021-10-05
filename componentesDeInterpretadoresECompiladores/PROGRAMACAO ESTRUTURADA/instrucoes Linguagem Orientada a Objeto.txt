@@ -1,0 +1,57 @@
+CONJUNTO DE INSTRUÇÕES (COMANDOS) DA LINGUAGEM ORIENTADA A OBJETO:
+
+	OBJETO_INSTANCIAR= create( List<Expressao> parametros);
+
+	classe_herdeira.construtorUP(classe_herdada, List<Expressao> parametros);
+
+	importer (nomeArquivoAssembly);
+
+	while (expressaoCondicional) {bloco_de_instrucoes}
+
+	for (instanciacao_variavel_controle; expressao_condicional_de_parada; incremento_variavel_controle) { bloco_de_instrucoes}
+
+	for (variavel_controle; expressao_condicional_de_entrada; incremento_variavel_controle) { bloco_de_instrucoes}
+
+	if (expressao_condicional) { bloco_de_instrucoes}
+	
+	if (expressao_condicional) { bloco_de_instrucoes} else { bloco_de_instrucoes}
+
+	operador classe_do_operador nome_do_operador ( classe_do_primeiro_operando nome_do_primeiro_operando, classe_do_segundo_operando nome_segundo_operando) prioridade X metodo MetodoDeChamadaDoOperando;
+
+	operador classe_do_operador nome_do_operador ( classe_do_primeiro_operando nome_do_primeiro_operando) prioridade X metodo MetodoDeChamadaDoOperando;
+
+	break;
+
+	continue;
+	
+	return expressao;
+
+	SetVar (nome_variavel, novo_valor_variavel);
+
+	objeto GetObjeto(nome_objeto);
+
+	casesOfUse variavel_teste: {case operador variavel_ou_constante_do_case1:{bloco de instrucoes} , case operador variavel_ou_constante_do_case2: {bloco de instrucoes}... }
+
+	acessors POO: public, private, protected.
+
+	definição de métodos:
+		acessor objeto_retorno NomeMetodo(tipo_parametro1 nome_parametro1,... tipo_parametroN nome_parametroN) {bloco de instrucoes}
+
+	definição de funções: (programação estruturada)
+		variavel_retorno NomeMetodo(tipo_parametro1 nome_parametro1,... tipo_parametroN nome_parametroN) {bloco de instrucoes}	
+
+	definicao de propriedades:
+		acessor classeDaPropriedade nomeDaPropriedade;
+		acessor classeDaPropriedade nomeDaPropriedade= valorDaPropriedade;
+
+	atribuicao:
+		nomeDaPropriedade= expressaoAtribuicao;
+		classeDaPropriedade nomeDaPropriedade= expressaoAtribuicao;
+
+	classe:
+		classe : + classeHerdada, ..., + interfaceHerdada... { propriedades; métodos}
+
+	interface:
+		como classes, mas metodos nao tem corpo, mas pode haver instanciacao de propriedades.
+
+	

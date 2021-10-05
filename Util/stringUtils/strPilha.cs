@@ -73,7 +73,7 @@ namespace parser
             } // try
             catch
             {
-                throw new Exception("Erro de pilha");
+                return default(T);
             } // catch
 
         } // pop()

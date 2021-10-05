@@ -595,7 +595,7 @@ namespace parser
 
             List<string> codigoProcurar = new List<string>() { "funcaoA", "(", "int" };
 
-            PosicaoECodigo posicao = new PosicaoECodigo(codigoProcurar, codigo);
+            PosicaoECodigo posicao = new PosicaoECodigo(codigoProcurar);
 
             assercao.MsgSucess("Teste de Posicionamento feito sem erros fatais.");
             if (posicao.coluna == 4)
@@ -608,7 +608,7 @@ namespace parser
             List<string> codigo = new List<string>() { "int b= a; " };
             List<string> tokens = new Tokens(this.lng, codigo).GetTokens();
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("Processamento de obtencao de indices de metodos realizado sem erros fatais.");
 
@@ -624,7 +624,7 @@ namespace parser
             List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("Processamento de obtencao de indices variantes de metodos tratadores realizado sem erros fatais.");
             if  (processador.escopo.sequencias[0].indexHandler == 12)
@@ -641,7 +641,7 @@ namespace parser
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
             
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
             assercao.MsgSucess("Processamento de sequencias ID realizado sem erros fatais.");
         } // TesteSequenciaID_1()
 
@@ -651,7 +651,7 @@ namespace parser
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
 
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
             assercao.MsgSucess("Processamento de chamada de função com expressão como parâmetro realizado sem erros fatais.");
         } // TesteSequenciaID_1()
 
@@ -662,7 +662,7 @@ namespace parser
             List<string> codigo2 = new List<string>() { "int funcaoA(int A,int B );" };
             ProcessadorDeID processador = new ProcessadorDeID(codigo2);
             
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("construção de escopos feito sem erros fatais.");
 
@@ -676,7 +676,7 @@ namespace parser
             List<string> codigo = new List<string>() { "int C; int D; int funcaoA(int A,int B ); funcaoA(C,D);" };
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
    
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("construção de escopos feito sem erros fatais.");
 
@@ -689,7 +689,7 @@ namespace parser
             List<string> codigo = new List<string>() { "int funcaoA(int B , int C);" };
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
 
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("construção de escopos feito sem erros fatais.");
             if (processador.escopo.tabela.GetFuncoes().Count == 1) 
@@ -703,7 +703,7 @@ namespace parser
 
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("construção de escopos feito sem erros fatais.");
             if (processador.escopo.escopoFolhas[0].tabela.GetFuncoes().Count == 1)
@@ -723,7 +723,7 @@ namespace parser
 
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo1);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("construção de escopos feito sem erros fatais.");
             if (processador.escopo.tabela.GetFuncoes().Count == 4)
@@ -805,7 +805,7 @@ namespace parser
             List<string> codigo1 = new List<string>() { "public int funcaoComParamsSemCorpo(int A);" };
    
             ProcessadorDeID processador = new ProcessadorDeID(codigoEmArquivo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("construção de combinação de sequencia id feito sem erros fatais.");
 
@@ -820,7 +820,7 @@ namespace parser
     
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
 
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("construção de código para expressão feito sem erros fatais.");
 
@@ -834,7 +834,7 @@ namespace parser
   
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
 
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("construção de código para expressão com chamada de função feito sem erros fatais.");
 
@@ -849,7 +849,7 @@ namespace parser
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
 
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("construção de código para expressão com chamada de função feito sem erros fatais.");
             if ((processador.escopo.tabela.GetFuncoes().Count == 1) && (processador.escopo.tabela.GetObjetos().Count == 1))
@@ -956,7 +956,7 @@ namespace parser
             List<string> codigoOperador = new List<string>() { "operador int DOT ( int a, int b ) prioridade 1;" };
           
             ProcessadorDeID processador = new ProcessadorDeID(codigoOperador);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("processamento de sequencia de definição de um operador binário feita sem erros fatais.");
             if (processador.escopo.tabela.GetClasses().Count == 1)
@@ -968,7 +968,7 @@ namespace parser
             List<string> codigoOperador = new List<string>() { "operador int DOT ( int a ) prioridade 1;" };
    
             ProcessadorDeID processador = new ProcessadorDeID(codigoOperador);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("processamento de sequencia de definição de um operador unário feita sem erros fatais.");
             if (processador.escopo.tabela.GetClasses().Count == 1)
@@ -981,7 +981,7 @@ namespace parser
             LinguagemOrquidea linguagem = new LinguagemOrquidea();
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
             
            
             assercao.MsgSucess("processamento de atribuição de propriedades feita sem erros fatais.");
@@ -997,7 +997,7 @@ namespace parser
       
             LinguagemOrquidea linguagem = new LinguagemOrquidea();
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
 
             assercao.MsgSucess("processamento de expressao de propriedades feita sem erros fatais.");
@@ -1013,7 +1013,7 @@ namespace parser
   
             LinguagemOrquidea linguagem = new LinguagemOrquidea();
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
 
             assercao.MsgSucess("processamento de expressao de propriedades feita sem erros fatais.");
@@ -1029,7 +1029,7 @@ namespace parser
 
             LinguagemOrquidea linguagem = new LinguagemOrquidea();
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
 
             assercao.MsgSucess("processamento de expressao de propriedades feita sem erros fatais.");

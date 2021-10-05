@@ -11,6 +11,62 @@ using parser.ProgramacaoOrentadaAObjetos;
 
 namespace ParserLinguagemOrquidea.testes
 {
+
+    /// codigoTesteConstructor_UP
+  
+    class ClasseTestesConstructor: SuiteClasseTestes
+    {
+        public ClasseTestesConstructor() : base("teste para o construtor de classes herdadas.")
+        {
+
+        }
+
+        public void Teste_01(AssercaoSuiteClasse assercao)
+        {
+            ParserAFile parser = new ParserAFile("codigoTesteConstructor_UP.txt");
+
+            ProcessadorDeID processador = new ProcessadorDeID(parser.GetTokens());
+            processador.Compile();
+
+
+
+            ProgramaEmVM programa = new ProgramaEmVM(processador.GetInstrucoes());
+            programa.Run(processador.escopo);
+
+            assercao.IsTrue(int.Parse(processador.escopo.tabela.GetObjeto("objetoA", processador.escopo).GetField("a").GetValor().ToString()) == 1);
+        }
+    }
+
+    class ClasseTestesPosicaoECodigo : SuiteClasseTestes
+    {
+        public ClasseTestesPosicaoECodigo() : base("testes para posicionar tokens entre o codigo")
+        {
+
+        }
+ 
+
+
+        public void Teste_01(AssercaoSuiteClasse assercao)
+        {
+            string arquivoPrograma = @"codigoClasseTestes_2.txt";
+            ParserAFile parser = new ParserAFile(arquivoPrograma);
+            // classeB : + interfaceD
+            List<string> tokensALocalizar = new List<string>() { "classeB", ":", "+", "interfaceD" };
+            PosicaoECodigo posicao = new PosicaoECodigo(tokensALocalizar);
+
+            assercao.IsTrue(posicao.linha == 8 && (posicao.coluna == 14));
+       
+        }
+
+
+        public void Teste_ParserTokens(AssercaoSuiteClasse assercao)
+        {
+            string codigoPolemico = "interfaceB";
+            List<string> tokens = ParserUniversal.GetTokens(codigoPolemico);
+
+            assercao.IsTrue(tokens.Count == 1);
+        }
+    }
     class ClassesTestesManutencao
     {
         private class TestesCompilacaoExecucaoClasses : SuiteClasseTestes
@@ -24,37 +80,156 @@ namespace ParserLinguagemOrquidea.testes
            
 
 
-            private void FazProcessamento(string codigoDefinicao)
+            private void FazProcessamentoDeCodigoEmArquivo(string fileNameCode)
             {
-                List<string> codigo = ParserUniversal.GetTokens(codigoDefinicao);
-                this.processador = new ProcessadorDeID(codigo);
+
+
+                this.medicaoDesempenho.AddTemporizador(8, "medicao de tempo de leitura em arquivo o codigo.");
+                
+                
+                this.medicaoDesempenho.Begin(8);
+                ParserAFile parser = null;
+                if (fileNameCode != null)
+                    parser = new ParserAFile(fileNameCode);
+                this.medicaoDesempenho.End(8);
+
+
+                this.medicaoDesempenho.AddTemporizador(1, "medicao de tempo de compilacao");
+                
+                
+                this.medicaoDesempenho.Begin(1);
+
+                this.processador = new ProcessadorDeID(parser.GetTokens());
+                this.processador.Compile();
+
+                this.medicaoDesempenho.End(1);
+
+
+
+
+                this.medicaoDesempenho.AddTemporizador(2, "medicao da execucao do programa");
+                this.medicaoDesempenho.Begin(2);
+
+                ProgramaEmVM program = new ProgramaEmVM(this.processador.GetInstrucoes());
+                program.Run(this.processador.escopo);
+
+                this.medicaoDesempenho.End(2);
+              
+
+            }
+
+            private void FazProcessamentoDeCodigoNaClasse(List<string> tokens)
+            {
+
+
+
+                this.processador = new ProcessadorDeID(tokens);
                 this.processador.Compile();
 
                 ProgramaEmVM program = new ProgramaEmVM(this.processador.GetInstrucoes());
                 program.Run(this.processador.escopo);
-                
+
+
+
             }
 
 
-           
-            public void Teste_02(AssercaoSuiteClasse assercao)
+
+            public void Teste_03(AssercaoSuiteClasse assercao)
             {
-                string codigo = "public class classeA { public int a ; public classeA(){ a=1; };  public int funcaoB ( int x ){ a=a+x; };}; classeA objetoA = create(); objetoA.funcaoB(1);";
 
-                this.FazProcessamento(codigo);
+                /*
+                 * 
+                 * public class classeA { public int a ; public classeA(){ a=1; };  public int funcaoB ( int x ){ a=a+x; }}
+                   public class classeB { public classeA objA ; public classeB(){ objA= create(); };  public int funcaoC ( int x ){ objA.a=objA.a+x; }}
+                   public class classeC { public classeB objB ; public classeC(){ objB= create(); };  public classeB funcaoD (){ return objB; }}
 
-                assercao.IsTrue(int.Parse(processador.escopo.tabela.GetObjeto("objetoA",processador.escopo).GetField("a").GetValor().ToString()) == 2);
+                   classeC obj_C = create(); 
+                   obj_C.funcaoD().funcaoC(1);
+                 * 
+                 */
+                this.FazProcessamentoDeCodigoEmArquivo("teste_complexo3.txt");
+
+
+                assercao.IsTrue((this.processador.escopo.tabela.GetObjeto("obj_C", processador.escopo).GetField("objB").GetField("objA").GetField("a").GetValor() != null) && int.Parse(this.processador.escopo.tabela.GetObjeto("obj_C", processador.escopo).GetField("objB").GetField("objA").GetField("a").GetValor().ToString()) == 2);
+
             }
+
+
+            public void Teste_06(AssercaoSuiteClasse assercao)
+            {
+
+                /*
+                 * 
+                 * public class classeC { public int objD ; public classeC(){ objD= 1; };  public int funcaoE( int x ){ objD=objD+x; };}
+                 * 
+                 * classeC obj_C = create(); 
+                   obj_C.funcaoE(1);
+                   obj_C.objD=obj_C.objD+1;
+                 * 
+                 * 
+                 */
+
+
+                // testes_aceite1
+                this.FazProcessamentoDeCodigoEmArquivo("teste_complexo5.txt");
+
+
+
+                assercao.IsTrue((processador.escopo.tabela.GetObjeto("obj_C", processador.escopo).GetField("objD").GetValor() != null) && int.Parse(processador.escopo.tabela.GetObjeto("obj_C", processador.escopo).GetField("objD").GetValor().ToString()) == 3);
+
+            }
+
+
+
+            public void Teste_05(AssercaoSuiteClasse assercao)
+            {
+                string codigo = "public class classeA { public int a ;  public classeA(){ a=1; }; public int funcaoB ( int x ){ while (x>0) {x= x-1;}}; }; classeA objetoA= create();  objetoA.a=2;";
+                List<string> tokens = ParserUniversal.GetTokens(codigo);
+
+                this.FazProcessamentoDeCodigoNaClasse(tokens);
+
+                assercao.IsTrue((this.processador.escopo.tabela.GetObjeto("objetoA", processador.escopo) != null) &&
+                    (processador.escopo.tabela.GetObjeto("objetoA", processador.escopo).GetField("a").GetValor() != null) &&
+                    (int.Parse(processador.escopo.tabela.GetObjeto("objetoA", processador.escopo).GetField("a").GetValor().ToString()) == 2));
+            }
+
 
             public void Teste_01(AssercaoSuiteClasse assercao)
             {
-                string codigo = "public class classeA { public int a ;  public classeA(){ a=1; }; public int funcaoB ( int x ){ while (x>0) {x= x-1;}} }; classeA objetoA= Create();  objetoA.a=2;";
+               
+                this.FazProcessamentoDeCodigoEmArquivo("teste_complexo1.txt");
+                // objetoB.objA.a=1
+                assercao.IsTrue((this.processador.escopo.tabela.GetObjeto("objetoB", processador.escopo).GetField("objA").GetField("a").GetValor() != null) && int.Parse(this.processador.escopo.tabela.GetObjeto("objetoB", processador.escopo).GetField("objA").GetField("a").GetValor().ToString()) == 2);
 
-                this.FazProcessamento(codigo);
-
-                assercao.IsTrue((this.processador.escopo.tabela.GetObjeto("objetoA", processador.escopo) != null) &&
-                    (int.Parse(processador.escopo.tabela.GetObjeto("objetoA", processador.escopo).GetField("a").GetValor().ToString()) == 2));
             }
+
+       
+
+            public void Teste_04(AssercaoSuiteClasse assercao)
+            {
+                // classeC obj_C = create(); obj_C.funcaoD(1)
+                // testes_aceite1
+                this.FazProcessamentoDeCodigoEmArquivo("teste_complexo4.txt");
+
+
+                assercao.IsTrue((processador.escopo.tabela.GetObjeto("obj_C", processador.escopo).GetField("objB").GetValor() != null) && (int.Parse(processador.escopo.tabela.GetObjeto("obj_C", processador.escopo).GetField("objB").GetValor().ToString()) == 2));
+
+            }
+
+            public void Teste_02(AssercaoSuiteClasse assercao)
+            {
+                string codigo = "public class classeA { public int a ; public classeA(){ a=1; };  public int funcaoB ( int x ){ a=a+x; }}; classeA objetoA = create(); objetoA.funcaoB(1);";
+                List<string> tokens = ParserUniversal.GetTokens(codigo);
+
+                this.FazProcessamentoDeCodigoNaClasse(tokens);
+
+                assercao.IsTrue((processador.escopo.tabela.GetObjeto("objetoA", processador.escopo).GetField("a").GetValor() != null) && int.Parse(processador.escopo.tabela.GetObjeto("objetoA", processador.escopo).GetField("a").GetValor().ToString()) == 2);
+            }
+          
+            
+
+
 
         }
 
@@ -385,7 +560,7 @@ namespace ParserLinguagemOrquidea.testes
             {
                 string codigo = "importer (ParserLinguagemOrquidea.exe);";
                 ProcessaTestes(codigo);
-                assercao.IsTrue(RepositorioDeClassesOO.Instance().classesRegistradas.Count > 15);
+                assercao.IsTrue(RepositorioDeClassesOO.Instance().GetClasses().Count > 15);
 
             }
             public void TesteIF(AssercaoSuiteClasse assercao)
@@ -508,7 +683,7 @@ namespace ParserLinguagemOrquidea.testes
                 string fileNameCode = @"codigoClasseTestes_2.txt";
                 this.FazACompilacao(fileNameCode);
 
-                assercao.IsTrue(processador.escopo.tabela.GetClasses().Count == 3 && (RepositorioDeClassesOO.Instance().interfacesRegistradas.Count == 1));
+                assercao.IsTrue(processador.escopo.tabela.GetClasses().Count == 3 && (RepositorioDeClassesOO.Instance().GetInterfaces().Count== 1));
 
             }
 
@@ -529,7 +704,7 @@ namespace ParserLinguagemOrquidea.testes
                 string fileNameCode = @"codigoClasseTestes_3.txt";
                 this.FazACompilacao(fileNameCode);
 
-                assercao.IsTrue(processador.escopo.tabela.GetClasses().Count == 1 && (RepositorioDeClassesOO.Instance().interfacesRegistradas.Count == 1));
+                assercao.IsTrue(processador.escopo.tabela.GetClasses().Count == 1 && (RepositorioDeClassesOO.Instance().GetInterfaces().Count == 1));
             }
 
             public void TesteCompilacaoDeClasse_2(AssercaoSuiteClasse assercao)
@@ -628,8 +803,15 @@ namespace ParserLinguagemOrquidea.testes
         public ClassesTestesManutencao()
         {
 
-            TestesCompilacaoExecucaoClasses testesBuildAndExecutationExpressoesOrientadoAObjeto = new TestesCompilacaoExecucaoClasses();
-            testesBuildAndExecutationExpressoesOrientadoAObjeto.ExecutaTestes();
+            // testesConstructors = new ClasseTestesConstructor();
+            //testesConstructors.ExecutaTestes();
+
+
+            //TestesCompilacaoExecucaoClasses testesBuildAndExecutationExpressoesOrientadoAObjeto = new TestesCompilacaoExecucaoClasses();
+            //testesBuildAndExecutationExpressoesOrientadoAObjeto.ExecutaTestes();
+
+            //ClasseTestesPosicaoECodigo testesPosicionamentoTokens = new ClasseTestesPosicaoECodigo();
+            //testesPosicionamentoTokens.ExecutaTestes();
 
             //TestesCompilacaoDeExpressoesAninhadas testeCompilacaoAninhados = new TestesCompilacaoDeExpressoesAninhadas();
             //testeCompilacaoAninhados.ExecutaTestes();
@@ -642,8 +824,8 @@ namespace ParserLinguagemOrquidea.testes
             //testesDeExpressoes.ExecutaTestes();
 
 
-            // TestesAvaliacaoDeInstrucoes  testesInstrucoes = new TestesAvaliacaoDeInstrucoes();
-            // testesInstrucoes.ExecutaTestes();
+            TestesAvaliacaoDeInstrucoes  testesInstrucoes = new TestesAvaliacaoDeInstrucoes();
+            testesInstrucoes.ExecutaTestes();
 
             // TestesRecoverInstructions testesRecuperarInstrucoes = new TestesRecoverInstructions();
             // testesRecuperarInstrucoes.ExecutaTestes();
@@ -657,7 +839,7 @@ namespace ParserLinguagemOrquidea.testes
             //TesteGuardarRecuperarClasses testesParaOperacoesArquivoClasse = new TesteGuardarRecuperarClasses();
             //testesParaOperacoesArquivoClasse.ExecutaTestes();
 
-           
+
         }
     }
 }

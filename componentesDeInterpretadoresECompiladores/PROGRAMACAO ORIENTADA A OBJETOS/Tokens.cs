@@ -51,7 +51,7 @@ namespace parser
             while ((x >= 0) && (x < tokens.Count))
             {
                 UmaSequenciaID sequenciaAProcurar = UmaSequenciaID.ObtemUmaSequenciaID(x, tokens, escopo.codigo); // extrai uma sequencia válida da lista de tokens.
-                List<string> tokensAProcurar = this.ResumeTokens(sequenciaAProcurar.original); // obtém os tokens da sequencia a procurar.
+                List<string> tokensAProcurar = this.ResumeTokens(sequenciaAProcurar.tokens); // obtém os tokens da sequencia a procurar.
 
 
                 if (tokensAProcurar[0] == "ID")
@@ -61,7 +61,7 @@ namespace parser
                     prod.sequencia = sequenciaAProcurar;
                     prod.nomeProducao= "umaSequenciaID";
                     prod.tipo = "expressao";
-                    prod.maquinaDeEstados = sequenciaAProcurar.original;
+                    prod.maquinaDeEstados = sequenciaAProcurar.tokens;
                     producoesEncontradas.Add(prod);
 
 
@@ -69,7 +69,7 @@ namespace parser
                     this.ProcessaBlocos(escopo, producoesEncontradas, sequenciaAProcurar);
 
                     
-                    x += sequenciaAProcurar.original.Count; // atualiza o contador da malha principal, consumindo os tokens da sequencia encontrada.
+                    x += sequenciaAProcurar.tokens.Count; // atualiza o contador da malha principal, consumindo os tokens da sequencia encontrada.
                 } // if
                 else
                     for (int p = 0; p < producoesDaLinguagemOriginais.Count; p++)
@@ -96,7 +96,7 @@ namespace parser
                             // processa producoes entre tokens entre blocos.
                             ProcessaBlocos(escopo, producoesEncontradas, seq);
 
-                            tokens.RemoveRange(0, sequenciaAProcurar.original.Count); // remove da malha, os tokens encontrados.
+                            tokens.RemoveRange(0, sequenciaAProcurar.tokens.Count); // remove da malha, os tokens encontrados.
 
                             break; // para a malha de procura de producao.
                         } // if
@@ -110,7 +110,7 @@ namespace parser
         {
 
             // faz o processamento de semi-producoes, se houver.uma semi-producao é sempre uma expressao, na linguagem orquidea.
-            List<List<string>> semiProducoes = this.ObtemSemiProducoes(seq.original, umaProducao); // retira semi-producoes da sequencia id currente.
+            List<List<string>> semiProducoes = this.ObtemSemiProducoes(seq.tokens, umaProducao); // retira semi-producoes da sequencia id currente.
             if ((semiProducoes != null) && (semiProducoes.Count > 0))
             {
                 for (int k = 0; k < semiProducoes.Count; k++)
@@ -125,9 +125,9 @@ namespace parser
         private void ProcessaBlocos(Escopo escopo, List<producao> producoesEncontradas, UmaSequenciaID seq)
         {
             // faz o processamento de tokens num bloco.
-            if (seq.original.IndexOf("{") != -1)
+            if (seq.tokens.IndexOf("{") != -1)
             {
-                List<string> bloco = UtilTokens.GetCodigoEntreOperadores(seq.original.IndexOf("{"), "{", "}", seq.original);
+                List<string> bloco = UtilTokens.GetCodigoEntreOperadores(seq.tokens.IndexOf("{"), "{", "}", seq.tokens);
                 bloco.RemoveAt(0);
                 bloco.RemoveAt(bloco.Count - 1);
                 List<producao> producaoBloco = this.GetProducoes(bloco, escopo);
@@ -208,7 +208,7 @@ namespace parser
 
         private static bool ObtemOperadorValido(string token)
         {
-            List<Classe> classes = RepositorioDeClassesOO.Instance().classesRegistradas;
+            List<Classe> classes = RepositorioDeClassesOO.Instance().GetClasses();
             for (int x = 0; x < classes.Count; x++)
                 if (classes[x].GetOperadores().Find(k => k.nome == token) != null)
                     return true;

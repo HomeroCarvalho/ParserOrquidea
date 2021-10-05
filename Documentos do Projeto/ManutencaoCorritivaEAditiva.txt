@@ -99,8 +99,23 @@ SPRINT CURRENTE: arremate.
 
 				3- (feito, testado) codificacao para propriedades/metodos aninhados.
 
-				4- (a fazer) Execução de instruções de uma classe orquidea. Se feito, encerrar a manutencao aditiva.
+				4- (a fazer) testes Execução de instruções de uma classe orquidea. Se feito, encerrar a manutencao aditiva.
 							---> parado por faltar processamento de propriedades e metodos aninhados em POO.
 							---> (codificar e testes) a codificacao e testes para expressoes validas.
 
-_______________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+LIÇÕES ADQUIRIDAS:
+		1- A verificação se objetos retornados de um método, é nulo, diminuiu os erros fatais do código, melhorando a qualidade.
+		2- Algo percebido são erros de lógica de programação: o código não cumpre ou se confundi ao realizar o que se espera. Isto porque o processo de pensar no algoritmo se tornou tão automático,
+		que para qualquer algoritmo mais complexo, resulta em erro de lógica.
+					2.1- uma das práticas que melhoraram a qualidade do código, é reservar um tempo fora do projeto, para esquematizar o algoritmo: feito pelo processamento na mente, em como o algortimo tem que fazer, em suas etapas.
+					2.2- outra prática não muito feita, é para cada algoritmo que se sentir mais complexo, ESCREVER o passo a passo do algoritmo, FAZER POR ESCRITo A RECEITA do que se deve fazer.
+
+		3- medidas feitas para diminuir a ansiedade e desistimulo à programação são bem vindas: 
+					3.1- escrever cada situação dos testes, para escrevendo tomar ciência do que está errado, e ao mesmo tempo possibilitando possibilidade de resolver o problema resultatne do erro.
+					3.2- debugar passo a passo, verificando se erros acontecem, e em que trecho do código está falhando.
+
+________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+

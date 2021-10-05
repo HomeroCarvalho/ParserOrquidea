@@ -34,7 +34,7 @@ namespace parser
                 if (sequencia != null)
                 {
                     sequenciasEncontradas.Add(sequencia);
-                    tokens.RemoveRange(0, sequencia.original.Count);
+                    tokens.RemoveRange(0, sequencia.tokens.Count);
                     if (tokens.Count == 0)
                         break;
                 } // if
@@ -188,7 +188,7 @@ namespace parser
             ProcessadorDeID processador = new ProcessadorDeID(codigoTotal);
            
 
-            processador.Compile(); // criação de escopo (validação de variáveis, funções, classes, blocos, etc..).
+            processador.CompileEmDoisEstagios(); // criação de escopo (validação de variáveis, funções, classes, blocos, etc..).
 
             assercao.MsgSucess("Construção de escopos das expressões feito sem erros fatais.");
 
@@ -468,7 +468,7 @@ namespace parser
             LinguagemOrquidea linguagem = new LinguagemOrquidea();
         
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
             escopo = processador.escopo;
 
             assercao.MsgSucess("construção de escopos com instruções feito sem erros fatais.");
@@ -512,7 +512,7 @@ namespace parser
         {
             ParserAFile parser = new ParserAFile(nomeArquivo);
             processador = new ProcessadorDeID(parser.GetCode());
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
         }
         private void TesteConstrucaoDeProgramasOrquideaAtravesDeArquivos(Assercoes assercao)
@@ -568,7 +568,7 @@ namespace parser
 
             ProcessadorDeID processador = new ProcessadorDeID(tokens);
             
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("instrucao de chamada de funcao feito sem erros fatais.");
 
@@ -603,7 +603,7 @@ namespace parser
          
             
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("obtenção de variáveis estáticas feito sem erros fatais.");
 
@@ -643,7 +643,7 @@ namespace parser
             List<string> tokens = new Tokens(linguagem, codigo).GetTokens();
             Escopo escopo = new Escopo(codigo);
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
             assercao.MsgSucess("compilacao de instrucao casesOfUse feita sem erros fatais.");
             if (processador.GetInstrucoes().Count == contadorValidacao)  // para futuros testes automatizados, a fim de verificar se o código não quebrou, por causa de modificações no código.

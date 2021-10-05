@@ -53,7 +53,11 @@ namespace parser
                 for (producao = 0; producao < producoes.Count; producao++)
                 {
                     producoes[producao].nomeProducao = producoes[producao].nomeProducao.Trim(' ');
-                    todosTermosChave.AddRange(producoes[producao].termos_Chave);
+                    if (producoes[producao].termos_Chave != null)
+                    {
+                        foreach (string umTermoChave in producoes[producao].termos_Chave)
+                            this.RegistraTermoChave(umTermoChave);
+                    }
                 } // for producao
 
                 // adiciona os operadores previsto no arquivo .XML da linguagem.
@@ -64,7 +68,8 @@ namespace parser
                                 strOperadores.Add(nomesOperador);
 
             } // if producoes.Count==0.
-
+           
+            
         } // UmaGramaticaComputacional()
 
 
@@ -73,7 +78,12 @@ namespace parser
             operadores.Add(operador);
         }
    
-
+        private void RegistraTermoChave(string tokenTermoChave)
+        {
+            string tokenRepetido = todosTermosChave.Find(k => k.Equals(tokenTermoChave));
+            if (tokenRepetido == null)
+                todosTermosChave.Add(tokenTermoChave);
+        }
         /// <summary>
         /// obtém uma produção ou produções pelo seu tipo.
         /// </summary>

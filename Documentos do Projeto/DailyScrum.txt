@@ -4857,7 +4857,432 @@ Daily Scrum 15.09:
 
 
 			----> CODIFICAR cenarios de teste para propriedades aninhadas com três propriedades aninhadas, e chamada a metodos com três métodos aninhados.
+
+
+						---> testes para metodos aninhados, falha, o construtor da classeB nao está sendo chamado.
+						     Verificando o construtor está sendo chamado, a fixar o método Funcao.ExecuteAMethod().
+													---> novamente, é erro na formação da expressão do construtor da classeB, parece sabotagem... pois o mesmo erro foi corrigido ainda este dia....
+																		---> nao houve erro... o objeto b é tipo="classeA", e para comportar uma adição (operador "+"), teria que ser criado este operador na classeB.
+
+			
+			
+			
 			----> CODIFICAR cenarios de teste para validação e execução de classes.
 
 
 ____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 16.09:
+	Atividades Realizadas:
+					---> teste de aceite 1 passou (o codigo estava num arquivo texto.).
+					---> teste de aceite 4 passou. (o codigo estava num arquivo texto. o legal é que as mensagens de erro, contém a posição dentro do arquivo, só não estava retornando valores razoáveis porque o codigo ficava em uma linha de texto só).
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 17.09:
+	Atividades Realizadas:
+					---> novo tipo de expressao: expressao literal text, para armazenar literais string.
+					---> mais testes de aceite.
+								----> teste de aceite 2 nao passou: está convertendo as propriedades aninhadas.
+											---> verificando, há uma não validação do operador "+", para as propriedades aninhadas.
+											---> mas isso não é o pior: não está compilando as classes! (regredindo para codigo nao alterado). ----> fixado.
+														----> mas não está retornando o operador para propriedades aninhadas.
+														----> o método GetTipoExpressao() nao está funcionando direito, se estivesse, estava retornando um operador "+" para a expressão da classe sob teste.
+											---> fixado o método GetTipoExpressao(), mas pode ser inutil se o primeiro token for um operador, o que falha pois o operador não tem tipo definido antes da analise do primeiro token. 
+
+
+											---> testes falha, a expressão de atribuição não está retornando o operador + , pois após a segunda propriedade aninhada, o primeiro token é o operador "+", que não tem tipo definido, justamente por ser o token inicial!!
+
+								---> a fixar o caso de operadores como primeiro token.
+											---> e se não calcular a expressão de atribuição na expressaoPropriedadeAninhada? o método GetTipoExpressao() retorna um valor, pois a expressão currente tem o primeiro elemento, que é justamente a expressaoPropriedadeAninhada!
+
+								----> (aguardando testes) codificado o erro de ExpressaoPropriedadesAninhadas.
+								----> codificado o tipo de Expressao, para cada sub-expressao que forma uma expressao.
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 21.09:
+	Atividades Realizadas:
+								----> testar a propriedadeAninhadasExpressao. (A expressao propriedadesAninhadas é um ID que contém nao o nome de um objeto, mas uma sequencia de objetos que formam propriedades de classes)
+												---> fixado a obtenção das propriedades aninhadas, classificando como uma expressaoValida, mas o processamento não está correto.
+														----> o metodo EvalExpression estava calculando a expressao atribuicao para propriedades validas, porém a expressao atribuicao foi retirada.
+									
+									
+									
+									
+												----> (VERIFICAR URGENTEMENTE) se o indice de tokens para expressaoProprieadadesAninhadas está correto. 
+												----> (VERIFICAR) se os objetos e vetores estão sendo chamados pelo escopo, não pela expressão. pela expressão pode estar desatualizado.
+
+
+												----> (CODIFICADO) os metodos GetValorExpressaoPropriedadeAninhadas, e SetValorExpressaoPropriedadesAninhadas), o que tornará possível fazer a avaliação de expressão pelo método EvalExpression.Eval().
+												----> CODIFICADO MODIFICOES NO METODO EvalExpression.Eval(), para suporte de expressaoPropriedadesAninhadas, e expressaoVetor.
+						
+
+								---> expressaoPropriedadesAninhadas e expressaoChamadaMetodo estão sendo construidas corretamente.
+														----> ante a modificacao do codigo, verificar se o indice de tokens para expressaoPropriedadesAninhadas está correto. 
+														----> expressaochamadaDeMetodo nao pode ser testada ainda, no cenario de teste inclui expressoes propriedadesAninhadas.
+
+												
+								----> testar a expressaoChamadaDeMetodo.
+
+
+								---> testes, construcao de objetos com propriedades aninhadas feito, mas não há expressão ExpressaoPropriedadeAninhada.
+
+
+													----> (fixado) os CONSTRUTORES E METODOS da segunda e terceira classes estão sem lista de instruções!
+																	---> é preciso de uma instrução que receba uma lista de parêmtros, uma classe, para invocar construtores de classes herdadas.
+																	---> (codificado, testado) um novo tipo de sequenciaID: "objetoB=create()". (codificado, aguardando testes).
+																	---> com essa nova sequencia, os construtores e metodos com corpo de função com instrucoes create estão sendo construídos.
+																	---> testes com três tipos de classes, os construtores e metodos estão sendo construídos corretamente.
+
+
+													----> os construtores de classes herdadas nao estão sendo chamados!.
+																	---> CODIFICAR uma nova instrucao: construtorUP, que chama construtores de classes herdadas:
+																				construtorUP(nomeClasse, List<Expressao> parametrosDoConstrutor).
+
+
+
+								----> seguir o plano inicial: escopos de classes são escopos filhos do escopo geral, escopo de metodos são escopos filhos de escopos de classe, escopos de blocos são escopos filhos de escopo de funcão.													
+													---> (VERIFICAR) feito, verificar se cópias de escopos precisam de copias do escopo principal.
+
+
+								---> FIXAR DEFINITIVAMENTE a classe PosicaoECodigo, está retornando valores incorretos para as posições linha, coluna.
+
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 22.09:
+	Atividades Realizadas:
+			----> os construtores de classes herdadas nao estão sendo chamados!.
+							---> CODIFICAR uma nova instrucao: construtorUP, que chama construtores de classes herdadas:
+											construtorUP(nomeClasse, List<Expressao> parametrosDoConstrutor).
+
+			---> (testes no decorrer das outras funcionalidade) FIXAR DEFINITIVAMENTE a classe PosicaoECodigo, está retornando valores incorretos para as posições linha, coluna.
+							---> unificado todo processamento de erros, que envolve PosicaoECodigo, em um único método.
+							---> codificar na classe Escopo, uma Lista estatica contendo as linhas de código de um arquivo.
+							---> as linhas de codigo são inseridas quando a classe ParserFile é chamada, justamente porque é o único ponto de entrada para acessar linhas de codigo, em arquivo texto.
+							---> codificado a obtencao de linhas de codigo, via classe ParserFile, se não tiver invocado desta classe, obtem as linhas de codigo com os tokens da primeira chamada de escopo.
+										---> a classe PosicaoECodigo está sendo invocada em um unico metodo de emissor de mensagens de erro, na biblioteca de UtilTokens.
+
+							---> aparentemente, está fixado, retornando numero de linhas e colunas de forma consistente, é preciso VALIDAR.
+
+			---> testes para propriedades aninhadas, e chamadas de métodos. 
+
+							---> testes para expressaoPropriedadesAninhadas:
+										---> não está reconhecendo as propriedades aninhadas, nos métodos da classe classeB.
+										---> depurando, os metodos da classe ExpressaoPropriedadesAninhadas não estão funcionando adequadamente.
+													--->(fixado, estava com indices do algoritmo anterior) testes, o método isExpressaoPropriedadesAninhadas está quebrado!
+													---> o metodo handler para propriedades aninhadas está tb com expressao atribuicao, mas essa expressao era da versão anterior do metodo handler!
+													---> modificado o tipo de instrucao, de Atribuicao para ExpressaoValida.
+													---> para prosseguir, é preciso fixar a expressao ExpressaoChamadaMetodo.
+
+
+
+							---> testes para expressaoChamadaMetodo;
+										---> compilação chega ao metodo handler correto, porém a expressao de chamada de metodo nao está sendo construida.
+												----> há um problema no processamento de chamadas de método, com vários métodos aninhados: é um caso diferente do objeto+chamadaDeMetodo.
+															----> é preciso pensar um pouco, para codificar o processamento de chamadas de metodo com métodos aninhados. Pode ser um método exclusivo que trata este caso.
+																				----> a codificacao para este caso está no loop da processamento da expressaoChamadaMetodo, mas há erro de contagem de indices.
+																								----> houve um erro NA ESPECIFICACAO DO TESTE! O retorno da função deveria ser (ObjB.classe) mas o tipo do retorno da funcao estava como "int".
+																								---> não é preciso mais planejamento, o codigo atual cobre o caso de metodos aninhados.
+																								
+												----> o metodo ExpressaoChamadaDeMetodo.AtualizaExpressao está quase certo, não está encontrando método compatível para o ultimo metodo aninhado...
+														  ----> fixado, o indice do parenteses estava apontando para o primeiro metodo, o segundo metodo recebia o indice de parenteses do primeiro metodo. Fixado.
+
+										---> testes, falha na execução da chamada de método.
+														  ----> mais um erro de falta de atenção: na instrucao Create, nao estava setando o valor calculado para o objeto.	
+														  ----> continua retornando valor null, para a chamada do primeiro metodo: deveria retornar  classeB.objB.
+																					---> o valor do objeto não está sendo processado pela instrução "create".
+
+														  ---> o teste está complexo demais para calcular uma chamada de métodos.
+
+
+										---> aparentemente, a construção dos objetos, para o cenario "teste_aceite3.txt" está sendo chamados corretamente,
+										mas para um cenário mais simples: "teste_aceite3.txt", a execução do operador + para ints, está falhando, um dos parâmetro é um Objeto, nao um int.
+															---> codificado parametros Objeto, para Objeto.GetValor(), e conversão dos parametros valor-texto, para valor-numero, se o parâmetro for número.
+
+							---> teste para "teste_aceite4.txt" obteve êxito, no entanto, foi uma série muito longa para executar uma chamada de função, embutida na chamadaMetodo...
+							---> teste para "teste_aceite3.txt"	registra estouro de pilha, aparentemente a construção de objetos aninhados está sendo feita, mas o processamento das chamadas de função embutidas numa ExpressaoChamadaMetodo está muito longa...
+
+
+							---> (verificado, certo) verificar ExpressaoPropriedadesAninhadas, está setando objetos-nulos.
+	
+	
+	---> (fixado) o método Expressao.PosOrdem quebrou!! deve não haver previsão para propriedades aninhadas...
+							---> verificado, não havia previsão para expressao de propriedades aninhadas, e de expressao chamada a metodo.
+							---> está quase lá, a operação dos objetos inteiro está acontecendo, uma hora parece que havia o resultado correto: 3, mas então retornou 2.
+												---> houve um erro na atribuição do novo valor da propriedade aninhada. fixado, resolvendo tb problemas de referência (se instanciar em algum parte do código, tornando o objeto da expressao aninhada desatualizado...).
+
+
+							---> teste para "teste_aceite5.txt", com uma chamada de função numa chamada de métodos aninhados, e com atribuição de propriedades aninhadas, obteve êxito.
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 23.09:
+	Atividades por serem Realizadas:
+							---> testes de aceite mais complexos, com várias classes, chamadas de métodos aninhados (mais de um método aninhado), e propriedades aninhadas dentro de métodos...
+											---> (testado) teste para cenario de testes: "teste_aceite3.txt", obteve êxito, após fixar o método Expressao.PosOrdem(), e métodos Funcao.ExecuteAFunction().
+											---> (fixado, testado) testes para "teste_aceite1.txt" falha, há chamada incorreta de função, com instrução.count==0.
+															---> a falha estava no cenario de teste, o construtor da classeB continha uma variável não definida, ocorrendo uma não construção do construtor da classeB...
+
+											---> teste para cenario de testes: "teste_aceite2.txt", obteve êxito.
+											---> teste para cenario de testes: "teste_aceite8.txt" obteve êxito, após um erro de sintaxe no codigo ("Create" em vez de "create").
+
+
+											---> (A RESOLVER) fazendo todos os testes da classe PropriedadesAninhadasEChamadaMetodos, a partir do segundo metodo-teste, independentemente de mudanças na ordem dos testes...
+															---> fixar o porque o segundo teste, apresenta erros, idependentemente de qualquer teste ser o segundo teste.
+															---> no segundo teste, as propriedades aninhadas estão com valor null!!! (fixado): no método PropriedadesAninhadas.GetValor(), havia uma inicialização de um objeto com mesmo nome do objeto inicial da ExpressaoPropriedadeAninhadas...
+						
+															---> mais testes, está retornando valores null para um objeto.valor não é nulo. não há erro no teste...
+
+															---> protegido contra valores=null, "testes teste_aceite4.txt" e "teste_aceite5.txt", não passou.
+																			----> mudando a posição do teste_aceite4.txt, o teste passa!!!
+																			----> é um erro na composição da chamada: o objeto resultante na chamadaMetodo1 é o objeto que chama a chamadaMetodo2.
+																						-----> ainda assim, apesar de não retornar "2", valor esperado, está retornando "1", no campo do objeto a validar.
+
+
+
+
+															----> mudando a posição dos testes, apenas o cenario "teste_aceite3.txt" não passou. 
+
+
+
+							---> ante modificação do código, retestar classe de Testes para testes de instruções orquidea...
+_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 24.09:
+	Atividades por serem Realizadas:
+							----> testes, o cenario "teste_aceite4.txt" falha, a execução do programa está modificando a estrutura do objeto construido.
+												----> é um problema de referência...
+												----> fixado a duplicação de objetos na tabela do escopo.
+												----> é legal de ver a pilha de chamadas de eventos, construindo objetos de várias classes, em sequencia.
+							
+							
+							---> modificado a instrucao create, que deixa para o build de compilação calcular o indice do construtor.
+
+							---> o codigo do programa orquidea quebrou!!!.
+														---> investigando, o construtor está retornando o objeto criado dentro do construtor, nao o objeto.
+														---> um construtor deveria não retornar nenhum valor!
+									---> um melhor planejamento estaria faltando, ante a complexidade da tarefa:
+														----> o escopo create é uma cópia do escopo principal, MAIS as propriedades do objeto instanciado.
+														----> o construtor é executado sem retornar um valor, mas modifica as propriedades do escopo create.
+																	----> as propriedades no escopo create são copiados para as propriedades do objeto instanciado.
+																	----> objetos que não são propriedades do objeto são repassados os novos valores, se houver.
+
+							----> fixado, o teste do cenário "teste_aceite4.txt" passou.
+
+				----> para fixar no cenário de "teste_aceite3.txt", o cálculo da sequencia de expressao chamada de função não está funcionando apropriadamente.
+
+
+				----> cenário Teste02 não passou, está retornando 1, o esperado era 2.
+							----> (fixado) construtor do cenario NÃO está trabalhando corretamente (não estava retornando o valor modificado no metodo, porque estava no escopo clonado do escopo principal).
+							----> chamada a metodo nao esta retornando valor esperado.
+										---> método ExecuteAFunction nao está modificando o escopo.	
+													----> a instrucao Atribuition está quebrado! (deve incluir os parametros da função no escopo).
+													----> no metodo EvalExpression.Eval(), chamada de funcao, deve incluir os valores parametros da função.	
+																----> os valores dos parametros estão sendo construídos, mas na ExecucaoDeFuncao os valores são perdidos.
+																		----> fixado.
+						  ----> parametros do metodo estão sendo construidos, pelo nome do parametro (parametroFuncao), e valor (parametrosExpressao).
+						  ----> valores dos parâmetros estão sendo passados para a execução da função.
+
+						  ----> fixado teste Teste02 obteve êxito.
+									---> testes "teste_aceite4.txt" e Teste02, obteve êxito.
+
+
+														
+
+				---> (codficado) incluir na instrucao create, suporte à classe vetor, na repassagem para o escopoCreate.
+						
+				---> (fixado) teste para "text_aceite3.txt" obteve êxito.
+				
+
+			 	---> CODIFICAR uma nova instrucao: construtorUP, que chama construtores de classes herdadas:
+											construtorUP(nomeClasse, List<Expressao> parametrosDoConstrutor).
+
+
+		Resumo deste dia:
+				----> otimização da instrução create, com passagem do indice do construtor, feito na compilação da instrução.
+				----> fixado vários erros, na execução de metodos, funcoes, os parametros da função/método não estavam sendo passados, com nome do parametro, e valor do parametro.
+				----> fixado a passagem de objetos para os escopos de função.
+				----> invocação de construtores sem retorno, justamente porque um construtor não retorna valores! A modificação é feita no escopo, e depois repassada para as propriedades do objeto.
+				----> fixado a construção de escopos para objetos criados, com passagem de objetos do escopo principal para o escopo de criação de objeto. No escopo de criação de objeto, são somados as propriedades da classe do objeto.
+				----> testes para Teste02, "teste_aceite4.txt"", obteve êxito.
+				----> teste para "teste_aceite3.txt" obteve êxito!
+				----> teste para "teste_aceite1.txt"" obteve êxito!
+				----> teste para Teste_05 obteve êxito!
+				----> teste para Teste_06 obteve êxito!
+						
+				----> codificação pensada, para chamada de metodo com dois ou mais métodos aninhados, como: valor=funcaoB().funcaoD(1). O objeto de chamada é modificado para conter o retorno do resultado da função anterior.
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 27.09:			
+
+				---> erro em alguma propriedade estática: no primeiro processamento, certo, mas no segundo processamento, falha.
+				---> demais testes para propriedades e métodos aninhados.
+				
+				---> a extração de métodos proprieddes e operadores, pela classe ExtratoresOO.cs quebrou!.
+											---> não está retirando por completo um objeto e suas propriedades.
+											---> função create está inicializando o objeto com varios objetos como propriedades, corretamente.
+
+
+				----> encontrado o erro por referência, não tão reperencia, mas numa lista estatica, no RepositorioDeClasseOO. (fixado)
+											---> quase lá, o construtor da classe A, e metodos da classeA, não estão com suas lista de instrucoes, no corpo do método!
+											---> investigando, a instrucao Atribuicao do construtor da classe classeA não está reconhecendo a expressão: a=1;
+
+											---> quase lá, a instrucao aninhada: obj_C.objD=obj_C.objD+1 (uma expressão válida), no Test06.
+														---> a classe "classeC" no "teste_aceite3.txt" está como o Teste6, a propriedade objB:int, deveria ser: objB:classeB.
+
+														---> a expressão válida "obj_C.objD=obj_C.objD+1" não está sendo construida, durante a compilação!
+														---> continua havendo erros com propriedades estáticas.
+
+ 											---> (fixado) fixar o problema de estatica de classes, em "RepositorioClassesOO". 
+														---> mas continua o problema de objetos null, isso não está certo, algo está interferindo, talvez... querer dizer não esquecer de proteger listas e objetos de instancias nulas?
+
+
+				---> o build da instrucao create está quebrado!
+											---> a instrucao create, não está funcionando corretamente: o metodo ExecuteAConstrutor não está funcionando: será um problema de não ter uma lista de instruções?
+														---> verificando, o construtor está sem o corpo de instruções! O builder de definicao de funcao não tinha o caso da funcao ser um construtor, que não tem tipo de retorno (o tipo de retorno é setado entao para "void",e o nome da função para o nome da classe a qual a funcao pertence ).
+
+
+
+				---> todos testes de expressões de propriedadesAninhadas, e chamadaDeMetodo passaram...
+
+
+				---> CODIFICAR uma nova instrucao: construtorUP, que chama construtores de classes herdadas:
+											construtorUP(nomeClasse, List<Expressao> parametrosDoConstrutor).
+											----> o construtorUP não é obrigatório, mas erros podem ocorrer se não invocados.
+											----> esta instrução será feita no corpo dos construtores.
+														objeto especial: "actual", que representa o objeto currente do processamento da classe.
+
+
+
+											----> modificar o initMapeamento, dando a expressão resumida da instrucao. (FEITO)
+											----> codificar o tratador da instrucao no compilador. (feito)
+											----> codificar um metodo para execucao da instrucao. (feito parcialmente, faltando a passagem eventual de propriedades da classe herdeira, para o construtor da classe herdada).
+															----> deve-se copiar as propriedades da classe herdada para dentro do escopo criado para tratar a instrucao.
+															----> deve-se passar os valores das propriedades no escopo criado, para as propriedades do objeto que invocou o construtor.
+
+
+
+											----> incluir um codigo para a instrucao, e setar o dicionario de instrucoes, o codigo e o metodo da excecução da instrução.(feito).
+
+
+
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________ 
+Daily Scrum 28.09:
+				---> modificado o codigo para introduzir um objeto currente, o "actual" objeto, no processamento de métodos. Isto permitirá a execução de construtoresUP.
+								----> mas o codigo para "teste_aceite3.txt" quebrou!.
+												---> além, os objetos estão sendo dupplicados!	É um problema de passagem de referência. A passagem de parametros por referência é útill quando não precisamos duplicar o objeto, que pode ter grande quantidade de dados, ou seja, por referencia torna o processamento mais ráoido...
+																----> todos objetos fora das classes, estão registrados dentro das classes!!!
+																			--> o erro está no metodo CompileEmDoisEstagios(), as classes estão sendo instanciadas duas vezes, pelo duplo compilação.
+																				E também havia um codigo no processamento de classes que tentava eliminar o mesmo problema de uso antes de definição.
+																							--->o que parece, a compilacao de 2 estágios, MAIS o código dentro da extração de classe, tratando o mesmo problema, gerou esse erro.
+
+							---> fixado o problema de duplicação de objetos, o resultado não foi o esperado. É preciso rever as instruções executadas na VM.
+																----> investigando, as expressões parâmetros estão erradas, o problema está na definição de expressoes parametros no build da instrucao create.
+																			---> fixado o build de create, mas os valores dos campos não estão sendo passados para todos objetos-campo. É preciso pensar...
+
+																----> tem que fazer uma copia para objetos com campo como inteiros, por exemplo, que não podem ser passados por refrerência.
+																----> a solução foi clonar o escopo create para o escopo principal, pois o escopo create = escopo principal + propriedades da classe do objeto instanciado.
+																	  então, setar o valor do campo do objeto instanciado com o valor da propriedade do objeto instanciado, dentro do escopo create.
+																	  
+
+																
+							----> falha em 3 dos 6 testes de expressoes aninhadas e chamadas de metodo.
+											---> para o primeiro método que falhou, construtor certo, chamada a metodo a investigar, expressao valida certo.
+											---> fixado, mas houve outro porém: as propriedades do objeto que chama o metodo precisam estar no escopo do metodo. Fixado.
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 29.09:
+
+			----> codificado novamente a classe PosicaoECodigo, pois estava gerando valores de posição incorretos, mesmo com leitura de arquivo do código.
+							---> modificado o código para otimizar o processamento, mas está gerando valores incorretos no cálculo de linhas de codigo dentro da classe. método de localizarTokens está funcionando...
+							---> fixado, testado, os tokens estão sendo processados corretamente, mas há um problema: o ParserUniversal não está reconhecendo tokens polêmicos, como "classeA", sendo processado como "classe" e "A".
+											---> VERIFICAR SE O PARSERUNIVERSAL PROCESSA CORRETAMENTE UM TEXTO: interfaceA.
+																---> verificado, está funcionando corretamente, sinalizando tokens polêmicos.
+																---> verificando a propria classe PosicaoECodigo, os tokens estão sendo retirados corretamente, mas há erro na extração no texto.
+																---> fixado, era um erro de lógica de programação, na classe PosicaoECodigo.
+
+
+
+		----> continuando os testes para propriedades aninhadas, e chamadas de método.	
+						  ---> fixado, "testes_aceite5.txt" passou.
+						  ---> "testes_aceite3.txt", calculou corretamente o valor esperado, mas na atribuição de objetos falhou.
+																---> veja só! a atribuição, para propriedades aninhadas, deveria ser na última propriedade aninhada, "a.b=1", a ultima associação vai para "b"! Fixado.
+																				---> mais testes, falha.. o resultado é calculado e retornado corretamente, mas na associação de objetos falha.
+																				---> o erro está na classe PropriedadesAninhadas, não há atribuição correta para o valor da última propriedade, nem passagem para o escopo.
+																---> do ponto de vista da execução da função, o valor encontrado é o valor esperado, mas propriedades modificadas na função, não estão sendo repassados para o objeto da chamada do método.
+
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 30.09:
+
+		TAREFAS DO DIA:
+		----> verificar por que o metodo ExecuteAFunction() não está retornando objetos, a partir da execução de lista de instrucoes orquidea.
+							---> é um bug no método EvaExpression.Eval(): quando numeros, deve-se empilhar o valor, se não for número, deve-se empilhar o objeto inteiro.
+											---> com este fixamento, o objeto "ObjB", no cenario de teste, retornou não nulo.
+
+
+
+		----> (verificado) verificar por que pode-se obter valores de uma PropriedadeAninhada corretamente, mas não se pode setar valores para uma PropriedadeAninhada.
+						---> o valor está sendo passada para a propriedade aninhada corretamente, verificar então como passar para o objeto principal...
+						---> setado corretamente a propriedade aninhada, e repassada para o objeto que chamou o método. teste Teste2.txt", passou.
+						---> o erro foi fixado por passagens de valores por referencias.
+
+		----> todos testes para propriedadesAninhadas e chamdasDeMetodo obtiveram êxito.
+
+
+		----> é preocupante o tempo que se está em compilar+executar o programa na VM. Codificar um temporizador para estimar tempo de processamento, com métodos BeginTime() e EndTime(), para estimar
+		o desempenho do compilador ou da execução do programa VM.
+						---> codificado o temporizador, mas parece não estar funcionando: gera valores negativos, e o tempo de execução de todos testes demora mais que o tempo mensurado da execução dos cenários de testes.
+________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 01.10:
+
+		TAREFAS DO DIA:
+					----> implementado temporizadores mais precisos, e uma classe que permite adicionar vários temporizadores, em vários trechos-de programa.
+					----> testado, verificaou, como esperado, que a compilação demora muito mais tempo, e o tempo de execução do programa orquidea foi de dezenas de milissegundos.
+
+
+					---> VERIFICAR URGENTEMENTE OS GARGALOS QUE ESTÃO AUMENTANDO EM MUITO O TEMPO DE DESEMPENHO DA COMPILAÇÃO.
+								---> o parser de files de codigo estao a ~700 mls.
+								---> o compilador a ~2000 mls.
+								---> a execução do programa, a ~30-35 mls.
+
+
+
+					---> CODIFICANDO uma nova instrucao: construtorUP, que chama construtores de classes herdadas:
+								construtorUP(nomeClasse, List<Expressao> parametrosDoConstrutor).
+											----> o construtorUP não é obrigatório, mas erros podem ocorrer se não invocados.
+											----> esta instrução será feita no corpo dos construtores.
+								    			  objeto especial: "actual", que representa o objeto currente do processamento da classe.
+
+											---> VERIFICAR o build de compilação e a execução da instrucao.
+
+
+		
+
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 04.10:
+
+		TAREFAS DO DIA:
+					--->  modificação na instrucao constructorUP, para ter um objeto que é construído pelo construtor.
+											---> construcao de objetos "atual", que podem ser referenciados para construtores da classe herdada. Modificao essa feita na instrução create, pois é dentro de "create" é que serão chamados classes herdadas para compor o objeto construido.
+											---> para cada instrução construtorUP, há um objeto de uma classe herdada.
+
+					---> codificado a instrução "construtorUP", e feito modificações na instrução "create", para compor a construção de classes herdadas.
+
+					---> testes para a instrução "construtorUP", após erros de sintaxe do código do cenário de teste, 
+					     falha em construir a instrução "construtorUP".
+					     					---> (fixado) o token-chave: "contrutorUP" não estava incluido na lista de termos-chave!!
+													---> (feito) ESCREVER NO ARQUIVO XML DE ESPECIFICAÇÃO DA LINGUAGEM ORQUIDEA, AS PRODUÇÕES PARA "interface", e "construtorUP".
+																--->(fixado) foi verificado que os termos-chave da linguagem estava com repetições de um mesmo token, e foi fixado com um método que só adiciona o token termo-chave se não estiver na lista de termos-chave, evitando repetições.
+
+											---> (fixado) o termo-chave "construtorUP" estava escrito no arquivo-codigo como "constructorUP"...
+											---> A sequencia da instrução "construtorUP" está sendo interpretada com o método tratador correto...
+									---> testes, foi legal ver a compilação de 2 estágios obter a sequencia correta para a instrução "construtorUP", pois a classe herdeira da instrução não estava construida antes da instrução "construtorUP"!.
+									---> (fixado com a remoção da lista de parâmetros, o token do nome da classe herdada) continuando o cenario de teste, falha na obtenção de um construtor compatível para a instrução "construtorUP", justamente porque como parâmetro, está incluindo o token da própria classe- herdada!
+									---> método da compilação da instrução "construtorUP"  construindo a instrução corretamente.
+
+_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 05.10:
+
+		TAREFAS DO DIA:
+				---> continuando os testes da instrucao construtorUP, falha: as propriedades não estão registradas no escopo do construtor: é preciso repassar as propriedades no escopo principal, a partir do escopo create, na instrucao "create".	
+									----> houve confusao, em vez de passar as propriedades das classes herdadas ao escopo create, estava passando as propriedades da classe ao objeto instanciado.
+									----> (fixado) testes, falha: há objetos nulo no processamento do construtorUP. Os valores dos campos não estavam sendo repassados ao objeto instanciado.
+													---> fixado, testes para instrucao "construtorUP" finalizado com resultado esperado.
+
+
+				---> Retestar as instrucoes orquidea, ante às várias modificações no código.
+
+
+________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+

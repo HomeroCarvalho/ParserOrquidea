@@ -1,630 +1,423 @@
 
 
-Time: 13/09/2021 14:35:08  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/13/2021 14:35:24  Message: teste: Teste_01 executado em: -280  milisegundos.   teste passou
+Time: 30/09/2021 09:53:19  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 13/09/2021 14:44:42  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 30/09/2021 11:30:02  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 13/09/2021 14:45:26  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 30/09/2021 12:36:02  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/30/2021 12:36:06  Message: teste: Teste_03 executado em: 573  milisegundos.   teste passou
 
 
-Time: 13/09/2021 14:45:49  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 30/09/2021 12:37:22  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/30/2021 12:37:24  Message: teste: Teste_03 executado em: 98  milisegundos.   teste passou
+Time: 09/30/2021 12:37:40  Message: teste: Teste_06 executado em: 176  milisegundos.   teste passou
 
 
-Time: 14/09/2021 08:14:01  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 08:14:22  Message: teste: Teste_01 executado em: -491  milisegundos.   teste passou
+Time: 30/09/2021 13:58:23  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/30/2021 13:58:24  Message: teste: Teste_03 executado em: 701  milisegundos.   teste passou
+Time: 09/30/2021 13:58:26  Message: teste: Teste_06 executado em: -197  milisegundos.   teste passou
 
 
-Time: 14/09/2021 08:16:16  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 08:19:23  Message: teste: Teste_01 executado em: -238  milisegundos.   teste passou
-
-
-Time: 14/09/2021 08:19:32  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 08:20:25  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 08:20:51  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 08:22:29  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 08:33:02  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 08:33:03  Message: teste: Teste_01 executado em: 626  milisegundos.   teste nao passou.
-Time: 09/14/2021 08:33:03  Message: teste: Teste_02 executado em: 68  milisegundos.   teste nao passou.
+Time: 30/09/2021 14:03:07  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/30/2021 14:03:09  Message: teste: Teste_03 executado em: -103  milisegundos.   teste passou
+Time: 09/30/2021 14:03:11  Message: teste: Teste_06 executado em: -256  milisegundos.   teste passou
+Time: 09/30/2021 14:03:14  Message: teste: Teste_05 executado em: -129  milisegundos.   teste passou
+Time: 09/30/2021 14:03:35  Message: teste: Teste_01 executado em: 64  milisegundos.   teste passou
+Time: 09/30/2021 14:03:54  Message: teste: Teste_04 executado em: 638  milisegundos.   teste passou
+Time: 09/30/2021 14:04:13  Message: teste: Teste_02 executado em: -256  milisegundos.   teste passou
 
 
 
 
-Time: 14/09/2021 08:34:25  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 08:34:25  Message: teste: Teste_01 executado em: 587  milisegundos.   teste nao passou.
-Time: 09/14/2021 08:34:25  Message: teste: Teste_02 executado em: 71  milisegundos.   teste nao passou.
+Time: 30/09/2021 14:04:42  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/30/2021 14:04:44  Message: teste: Teste_03 executado em: -303  milisegundos.   teste passou
+Time: 09/30/2021 14:04:45  Message: teste: Teste_06 executado em: 462  milisegundos.   teste passou
+Time: 09/30/2021 14:04:48  Message: teste: Teste_05 executado em: -136  milisegundos.   teste passou
+Time: 09/30/2021 14:04:55  Message: teste: Teste_01 executado em: -700  milisegundos.   teste passou
+Time: 09/30/2021 14:05:00  Message: teste: Teste_04 executado em: 112  milisegundos.   teste passou
+Time: 09/30/2021 14:05:06  Message: teste: Teste_02 executado em: 10  milisegundos.   teste passou
 
 
 
 
-Time: 14/09/2021 08:34:34  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 08:34:35  Message: teste: Teste_01 executado em: 4  milisegundos.   teste nao passou.
-Time: 09/14/2021 08:34:35  Message: teste: Teste_02 executado em: 287  milisegundos.   teste nao passou.
+Time: 30/09/2021 14:14:59  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/30/2021 14:15:01  Message: desempenho na execução do programaNaVM   -950  milessegundos.
+Time: 09/30/2021 14:15:01  Message: teste: Teste_03 executado em: -6  milisegundos.   teste passou
+Time: 09/30/2021 14:15:02  Message: desempenho na execução do programaNaVM   0  milessegundos.
+Time: 09/30/2021 14:15:02  Message: teste: Teste_06 executado em: 638  milisegundos.   teste passou
+Time: 09/30/2021 14:15:05  Message: desempenho na execução do programaNaVM   0  milessegundos.
+Time: 09/30/2021 14:15:05  Message: teste: Teste_05 executado em: -116  milisegundos.   teste passou
+Time: 09/30/2021 14:15:11  Message: desempenho na execução do programaNaVM   0  milessegundos.
+Time: 09/30/2021 14:15:11  Message: teste: Teste_01 executado em: 334  milisegundos.   teste passou
+Time: 09/30/2021 14:15:17  Message: desempenho na execução do programaNaVM   0  milessegundos.
+Time: 09/30/2021 14:15:17  Message: teste: Teste_04 executado em: -846  milisegundos.   teste passou
+Time: 09/30/2021 14:15:23  Message: desempenho na execução do programaNaVM   0  milessegundos.
+Time: 09/30/2021 14:15:23  Message: teste: Teste_02 executado em: 34  milisegundos.   teste passou
 
 
 
 
-Time: 14/09/2021 08:35:07  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 08:37:23  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 08:39:47  Message: teste: Teste_01 executado em: 249  milisegundos.   teste nao passou.
-Time: 09/14/2021 08:39:47  Message: teste: Teste_02 executado em: 154  milisegundos.   teste nao passou.
-
-
-
-
-Time: 14/09/2021 08:39:53  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 08:43:28  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 08:44:57  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 08:44:58  Message: teste: Teste_01 executado em: -670  milisegundos.   teste nao passou.
-Time: 09/14/2021 08:44:58  Message: teste: Teste_02 executado em: 67  milisegundos.   teste nao passou.
+Time: 30/09/2021 14:25:05  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 09/30/2021 14:25:07  Message: teste: Teste_03 executado em: -29  milisegundos.   teste passou
+Time: 09/30/2021 14:25:09  Message: teste: Teste_06 executado em: -346  milisegundos.   teste passou
+Time: 09/30/2021 14:25:12  Message: teste: Teste_05 executado em: -135  milisegundos.   teste passou
+Time: 09/30/2021 14:25:18  Message: teste: Teste_01 executado em: 306  milisegundos.   teste passou
+Time: 09/30/2021 14:25:23  Message: teste: Teste_04 executado em: 134  milisegundos.   teste passou
+Time: 09/30/2021 14:25:29  Message: teste: Teste_02 executado em: 30  milisegundos.   teste passou
 
 
 
 
-Time: 14/09/2021 08:48:12  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 01/10/2021 08:32:18  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 10/01/2021 08:32:19  Message: mensuracao da compilacao:    1480  milessegundos.
+Time: 10/01/2021 08:32:19  Message: mensuracao do programa rodando:    24  milessegundos.
+Time: 10/01/2021 08:32:19  Message: teste: Teste_03 executado em: 608  milisegundos.   teste passou
+Time: 10/01/2021 08:32:21  Message: mensuracao da compilacao:    1686  milessegundos.
+Time: 10/01/2021 08:32:21  Message: mensuracao do programa rodando:    0  milessegundos.
+Time: 10/01/2021 08:32:21  Message: teste: Teste_06 executado em: -79  milisegundos.   teste passou
+Time: 10/01/2021 08:32:24  Message: teste: Teste_05 executado em: 63  milisegundos.   teste passou
+Time: 10/01/2021 08:32:31  Message: mensuracao da compilacao:    5646  milessegundos.
+Time: 10/01/2021 08:32:31  Message: mensuracao do programa rodando:    0  milessegundos.
+Time: 10/01/2021 08:32:31  Message: teste: Teste_01 executado em: -635  milisegundos.   teste passou
+Time: 10/01/2021 08:32:36  Message: mensuracao da compilacao:    4410  milessegundos.
+Time: 10/01/2021 08:32:36  Message: mensuracao do programa rodando:    0  milessegundos.
+Time: 10/01/2021 08:32:36  Message: teste: Teste_04 executado em: 157  milisegundos.   teste passou
+Time: 10/01/2021 08:32:42  Message: teste: Teste_02 executado em: 137  milisegundos.   teste passou
 
 
-Time: 14/09/2021 08:48:47  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 14/09/2021 08:49:33  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 01/10/2021 08:48:33  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 10/01/2021 08:48:35  Message: mensuracao da compilacao:    1524  milliseconds.
+Time: 10/01/2021 08:48:35  Message: teste: Teste_03 executado em: -289  milisegundos.   teste passou
+Time: 10/01/2021 08:48:36  Message: mensuracao da compilacao:    1270  milliseconds.
+Time: 10/01/2021 08:48:36  Message: teste: Teste_06 executado em: 471  milisegundos.   teste passou
+Time: 10/01/2021 08:48:39  Message: teste: Teste_05 executado em: -139  milisegundos.   teste passou
+Time: 10/01/2021 08:48:46  Message: mensuracao da compilacao:    5712  milliseconds.
+Time: 10/01/2021 08:48:46  Message: teste: Teste_01 executado em: -583  milisegundos.   teste passou
+Time: 10/01/2021 08:48:51  Message: mensuracao da compilacao:    4448  milliseconds.
+Time: 10/01/2021 08:48:51  Message: teste: Teste_04 executado em: 188  milisegundos.   teste passou
+Time: 10/01/2021 08:48:57  Message: teste: Teste_02 executado em: 159  milisegundos.   teste passou
 
 
-Time: 14/09/2021 08:50:10  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 14/09/2021 08:51:39  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 08:51:43  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+Time: 01/10/2021 09:41:45  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 10/01/2021 09:41:47  Message: medicao de tempo de compilacao  tempo: 1512
+Time: 10/01/2021 09:41:47  Message: medicao da execucao do programa  tempo: 26
+Time: 10/01/2021 09:41:47  Message: Desempenho do cenario de teste:   tempo: 1641
+Time: 10/01/2021 09:41:47  Message: teste: Teste_03 executado em: 1641   teste passou
+Time: 10/01/2021 09:41:48  Message: medicao de tempo de compilacao  tempo: 1276
+Time: 10/01/2021 09:41:48  Message: medicao da execucao do programa  tempo: 0
+Time: 10/01/2021 09:41:48  Message: Desempenho do cenario de teste:   tempo: 1480
+Time: 10/01/2021 09:41:48  Message: teste: Teste_06 executado em: 1480   teste passou
+Time: 10/01/2021 09:41:51  Message: Desempenho do cenario de teste:   tempo: 2879
+Time: 10/01/2021 09:41:51  Message: teste: Teste_05 executado em: 2879   teste passou
+Time: 10/01/2021 09:41:57  Message: medicao de tempo de compilacao  tempo: 5631
+Time: 10/01/2021 09:41:57  Message: medicao da execucao do programa  tempo: 0
+Time: 10/01/2021 09:41:57  Message: Desempenho do cenario de teste:   tempo: 6343
+Time: 10/01/2021 09:41:57  Message: teste: Teste_01 executado em: 6343   teste passou
+Time: 10/01/2021 09:42:03  Message: medicao de tempo de compilacao  tempo: 4426
+Time: 10/01/2021 09:42:03  Message: medicao da execucao do programa  tempo: 0
+Time: 10/01/2021 09:42:03  Message: Desempenho do cenario de teste:   tempo: 5165
+Time: 10/01/2021 09:42:03  Message: teste: Teste_04 executado em: 5165   teste passou
+Time: 10/01/2021 09:42:09  Message: Desempenho do cenario de teste:   tempo: 6146
+Time: 10/01/2021 09:42:09  Message: teste: Teste_02 executado em: 6146   teste passou
+
+
+
+
+Time: 01/10/2021 10:00:56  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 01/10/2021 10:01:35  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 10/01/2021 10:03:07  Message: medicao de tempo de compilacao  tempo: 86318
+Time: 10/01/2021 10:03:07  Message: medicao da execucao do programa  tempo: 28
+Time: 10/01/2021 10:03:07  Message: Desempenho do cenario de teste:   tempo: 91545
+Time: 10/01/2021 10:03:07  Message: teste: Teste_03 executado em: 91545   teste passou
+Time: 10/01/2021 10:03:35  Message: medicao de tempo de compilacao  tempo: 24037
+Time: 10/01/2021 10:03:35  Message: medicao da execucao do programa  tempo: 0
+Time: 10/01/2021 10:03:35  Message: Desempenho do cenario de teste:   tempo: 28315
+Time: 10/01/2021 10:03:35  Message: teste: Teste_06 executado em: 28315   teste passou
+Time: 10/01/2021 10:03:38  Message: Desempenho do cenario de teste:   tempo: 2909
+Time: 10/01/2021 10:03:38  Message: teste: Teste_05 executado em: 2909   teste passou
+
+
+Time: 01/10/2021 10:06:27  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+
+
+Time: 01/10/2021 10:06:48  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 10/01/2021 10:06:48  Message: medicao de tempo de leitura em arquivo o codigo.  tempo: 255
+Time: 10/01/2021 10:06:50  Message: medicao de tempo de compilacao  tempo: 1858
+Time: 10/01/2021 10:06:50  Message: medicao da execucao do programa  tempo: 35
+Time: 10/01/2021 10:06:50  Message: Desempenho do cenario de teste:   tempo: 2154
+Time: 10/01/2021 10:06:50  Message: teste: Teste_03 executado em: 2154   teste passou
+Time: 10/01/2021 10:06:50  Message: medicao de tempo de leitura em arquivo o codigo.  tempo: 221
+Time: 10/01/2021 10:06:52  Message: medicao de tempo de compilacao  tempo: 1534
+Time: 10/01/2021 10:06:52  Message: medicao da execucao do programa  tempo: 0
+Time: 10/01/2021 10:06:52  Message: Desempenho do cenario de teste:   tempo: 1757
+Time: 10/01/2021 10:06:52  Message: teste: Teste_06 executado em: 1757   teste passou
+Time: 10/01/2021 10:06:55  Message: Desempenho do cenario de teste:   tempo: 2998
+Time: 10/01/2021 10:06:55  Message: teste: Teste_05 executado em: 2998   teste passou
+Time: 10/01/2021 10:06:56  Message: medicao de tempo de leitura em arquivo o codigo.  tempo: 711
+Time: 10/01/2021 10:07:01  Message: medicao de tempo de compilacao  tempo: 5630
+Time: 10/01/2021 10:07:01  Message: medicao da execucao do programa  tempo: 0
+Time: 10/01/2021 10:07:01  Message: Desempenho do cenario de teste:   tempo: 6343
+Time: 10/01/2021 10:07:01  Message: teste: Teste_01 executado em: 6343   teste passou
+Time: 10/01/2021 10:07:02  Message: medicao de tempo de leitura em arquivo o codigo.  tempo: 724
+Time: 10/01/2021 10:07:06  Message: medicao de tempo de compilacao  tempo: 4408
+Time: 10/01/2021 10:07:06  Message: medicao da execucao do programa  tempo: 0
+Time: 10/01/2021 10:07:06  Message: Desempenho do cenario de teste:   tempo: 5134
+Time: 10/01/2021 10:07:06  Message: teste: Teste_04 executado em: 5134   teste passou
+Time: 10/01/2021 10:07:12  Message: Desempenho do cenario de teste:   tempo: 6002
+Time: 10/01/2021 10:07:12  Message: teste: Teste_02 executado em: 6002   teste passou
+
+
+
+
+Time: 04/10/2021 09:07:45  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 10/04/2021 09:07:45  Message: medicao de tempo de leitura em arquivo o codigo.  tempo: 255
+Time: 10/04/2021 09:07:47  Message: medicao de tempo de compilacao  tempo: 1441
+Time: 10/04/2021 09:07:47  Message: medicao da execucao do programa  tempo: 29
+Time: 10/04/2021 09:07:47  Message: Desempenho do cenario de teste:   tempo: 1730
+Time: 10/04/2021 09:07:47  Message: teste: Teste_03 executado em: 1730   teste passou
+
+
+Time: 10/04/2021 09:07:47  Message: medicao de tempo de leitura em arquivo o codigo.  tempo: 248
+Time: 10/04/2021 09:07:48  Message: medicao de tempo de compilacao  tempo: 1471
+Time: 10/04/2021 09:07:48  Message: medicao da execucao do programa  tempo: 0
+Time: 10/04/2021 09:07:48  Message: Desempenho do cenario de teste:   tempo: 1720
+Time: 10/04/2021 09:07:48  Message: teste: Teste_06 executado em: 1720   teste passou
+
+
+Time: 10/04/2021 09:07:52  Message: Desempenho do cenario de teste:   tempo: 3363
+Time: 10/04/2021 09:07:52  Message: teste: Teste_05 executado em: 3363   teste passou
+
+
+Time: 10/04/2021 09:07:53  Message: medicao de tempo de leitura em arquivo o codigo.  tempo: 763
+Time: 10/04/2021 09:07:59  Message: medicao de tempo de compilacao  tempo: 5981
+Time: 10/04/2021 09:07:59  Message: medicao da execucao do programa  tempo: 0
+Time: 10/04/2021 09:07:59  Message: Desempenho do cenario de teste:   tempo: 6748
+Time: 10/04/2021 09:07:59  Message: teste: Teste_01 executado em: 6748   teste passou
+
+
+Time: 10/04/2021 09:07:59  Message: medicao de tempo de leitura em arquivo o codigo.  tempo: 791
+Time: 10/04/2021 09:08:04  Message: medicao de tempo de compilacao  tempo: 4655
+Time: 10/04/2021 09:08:04  Message: medicao da execucao do programa  tempo: 0
+Time: 10/04/2021 09:08:04  Message: Desempenho do cenario de teste:   tempo: 5449
+Time: 10/04/2021 09:08:04  Message: teste: Teste_04 executado em: 5449   teste passou
+
+
+Time: 10/04/2021 09:08:10  Message: Desempenho do cenario de teste:   tempo: 6165
+Time: 10/04/2021 09:08:10  Message: teste: Teste_02 executado em: 6165   teste passou
+
+
+
+
+
+
+Time: 04/10/2021 15:33:24  Message: teste para o construtor de classes herdadas.
+
+
+Time: 04/10/2021 15:39:15  Message: teste para o construtor de classes herdadas.
+
+
+Time: 04/10/2021 15:40:15  Message: teste para o construtor de classes herdadas.
+
+
+Time: 04/10/2021 15:42:30  Message: teste para o construtor de classes herdadas.
+
+
+Time: 04/10/2021 15:43:44  Message: teste para o construtor de classes herdadas.
+
+
+Time: 04/10/2021 15:46:28  Message: teste para o construtor de classes herdadas.
+
+
+Time: 04/10/2021 15:50:47  Message: teste para o construtor de classes herdadas.
+Time: 10/04/2021 15:50:48  Message: Erro no processamento de expressao:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
    em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
-
-
-Time: 14/09/2021 08:54:04  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 08:54:04  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em parser.Expressao.ExtraiExpressaoEntreParenteses(Escopo escopo, Expressao exprssCurrente) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 1023
+   em parser.Expressao..ctor(String[] tokens, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 950
+Time: 10/04/2021 15:50:48  Message: Erro no processamento de expressao:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
    em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
-
-
-Time: 14/09/2021 08:56:16  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 08:56:16  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em parser.Expressao.ExtraiExpressaoEntreParenteses(Escopo escopo, Expressao exprssCurrente) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 1023
+   em parser.Expressao..ctor(String[] tokens, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 950
+Time: 10/04/2021 15:50:49  Message: Erro no processamento de expressao:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
    em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
-
-
-Time: 14/09/2021 09:03:42  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:03:42  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   em parser.Expressao.ExtraiExpressaoEntreParenteses(Escopo escopo, Expressao exprssCurrente) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 1023
+   em parser.Expressao..ctor(String[] tokens, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 950
+Time: 10/04/2021 15:50:49  Message: Erro no processamento de expressao:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
    em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+   em parser.Expressao.ExtraiExpressaoEntreParenteses(Escopo escopo, Expressao exprssCurrente) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 1023
+   em parser.Expressao..ctor(String[] tokens, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 950
+Time: 10/04/2021 15:50:49  Message: Desempenho do cenario de teste:   tempo: 1482
+Time: 10/04/2021 15:50:49  Message: teste: Teste_01 executado em: 1482   teste passou
 
 
-Time: 14/09/2021 09:08:17  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:08:17  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 14/09/2021 09:13:29  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:13:30  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 14/09/2021 09:15:51  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:15:52  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
-Time: 09/14/2021 09:16:03  Message: teste: Teste_01 executado em: -268  milisegundos.   teste passou
+Time: 04/10/2021 15:53:23  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 09:19:10  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:19:10  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 04/10/2021 16:04:37  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 09:21:37  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:21:37  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 04/10/2021 16:07:37  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 09:27:19  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:27:20  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 04/10/2021 16:11:23  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 09:29:52  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:29:52  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 04/10/2021 16:12:21  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 09:32:36  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:32:37  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 04/10/2021 16:19:52  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 09:45:08  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:45:08  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 04/10/2021 16:23:24  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 09:45:39  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:45:39  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 04/10/2021 16:28:08  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 09:48:38  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:48:38  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 04/10/2021 16:30:15  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 09:48:51  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:48:52  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 04/10/2021 16:31:19  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 09:52:56  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:55:35  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 04/10/2021 16:35:45  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 09:56:47  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:56:48  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 04/10/2021 17:02:39  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 09:59:07  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 09:59:08  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
-Time: 09/14/2021 10:01:05  Message: teste: Teste_02, na classe: TestesCompilacaoExecucaoClasses gerou excecao que interrompeu o seu processamento. falha porque: Uma exceção foi acionada pelo destino de uma chamada., Stack:    em System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+Time: 05/10/2021 08:52:55  Message: teste para o construtor de classes herdadas.
+
+
+Time: 05/10/2021 08:55:12  Message: teste para o construtor de classes herdadas.
+
+
+Time: 05/10/2021 08:58:25  Message: teste para o construtor de classes herdadas.
+
+
+Time: 05/10/2021 08:59:22  Message: teste para o construtor de classes herdadas.
+Time: 10/05/2021 08:59:53  Message: teste: Teste_01, na classe: ClasseTestesConstructor gerou excecao que interrompeu o seu processamento. falha porque: Uma exceção foi acionada pelo destino de uma chamada., Stack:    em System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
    em System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
    em System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
    em System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)
-   em parser.SuiteClasseTestes.ExecutaTestes() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\testes\SuiteClasseTestes.cs:linha 73
+   em parser.SuiteClasseTestes.ExecutaTestes() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\testes\SuiteClasseTestes.cs:linha 80
 
 
-Time: 09/14/2021 10:01:05  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 14/09/2021 10:03:47  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:03:47  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
 
 
-Time: 14/09/2021 10:04:55  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:04:55  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:01:14  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:06:14  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:06:14  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:01:57  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:08:43  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:10:44  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:04:42  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:13:40  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:13:40  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:13:08  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:16:31  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:16:32  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:17:21  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:27:34  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:27:34  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:19:04  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:28:52  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:28:52  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:21:57  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:36:32  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:36:37  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:27:19  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:37:23  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:37:23  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:35:19  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:38:37  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:38:38  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:37:41  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:39:29  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:39:30  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:42:00  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:40:27  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:40:27  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:43:35  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:42:32  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:42:32  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:44:18  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:46:02  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:46:02  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:45:26  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:48:17  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:48:17  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:54:38  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:49:21  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 10:49:21  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
-Time: 09/14/2021 10:49:23  Message: teste: Teste_02 executado em: 365  milisegundos.   teste nao passou.
-Time: 09/14/2021 10:49:23  Message: Erro no processamento de tokens. Stack:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.ProcessadorDeID.AtualizaOtimizacaoDeExpressoes(List`1 instrucoes) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 501
-   em parser.ProcessadorDeID.Compile() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ESTRUTURADA\ProcessadorDeID.cs:linha 307
+Time: 05/10/2021 09:55:15  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:52:59  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 05/10/2021 09:55:41  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:56:15  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 05/10/2021 09:56:31  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:58:06  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 05/10/2021 09:57:01  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 10:59:21  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 05/10/2021 10:13:54  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 11:13:22  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 05/10/2021 10:16:46  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 11:14:03  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 05/10/2021 10:21:43  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 11:19:43  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 05/10/2021 10:27:18  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 11:20:23  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 05/10/2021 10:38:29  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 11:21:05  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 05/10/2021 10:39:28  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 11:23:18  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 05/10/2021 10:41:47  Message: teste para o construtor de classes herdadas.
+Time: 10/05/2021 10:43:51  Message: Desempenho do cenario de teste:   tempo: 123585
+Time: 10/05/2021 10:43:51  Message: teste: Teste_01 executado em: 123585   teste passou
 
 
-Time: 14/09/2021 13:07:22  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 14/09/2021 13:11:51  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 14/09/2021 13:13:00  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 05/10/2021 10:44:22  Message: teste para o construtor de classes herdadas.
 
 
-Time: 14/09/2021 13:15:33  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 05/10/2021 10:49:48  Message: teste para o construtor de classes herdadas.
+Time: 10/05/2021 10:49:54  Message: Desempenho do cenario de teste:   tempo: 6069
+Time: 10/05/2021 10:49:54  Message: teste: Teste_01 executado em: 6069   teste passou
 
 
-Time: 14/09/2021 13:18:26  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 14/09/2021 13:20:03  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
 
 
-Time: 14/09/2021 15:32:20  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 15:33:23  Message: Erro no processamento de expressao:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.RemoveAt(Int32 index)
-   em parser.ExpressaoChamadaDeMetodo.IsChamadaDeMetodo(Expressao exprssCurrente, Escopo escopo, Int32 indexTokenObjeto) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 173
-   em parser.Expressao..ctor(String[] tokens, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 839
+Time: 05/10/2021 10:50:31  Message: teste para o construtor de classes herdadas.
+Time: 10/05/2021 10:50:31  Message: Desempenho do cenario de teste:   tempo: 392
+Time: 10/05/2021 10:50:31  Message: teste: Teste_01 executado em: 392   teste passou
 
 
-Time: 14/09/2021 15:36:01  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/14/2021 15:36:23  Message: Erro no processamento de expressao:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.RemoveAt(Int32 index)
-   em parser.ExpressaoChamadaDeMetodo.IsChamadaDeMetodo(Expressao exprssCurrente, Escopo escopo, Int32 indexTokenObjeto) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 173
-   em parser.Expressao..ctor(String[] tokens, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 839
-
-
-Time: 14/09/2021 15:38:14  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 15:40:34  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 15:43:18  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 18:21:16  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 18:21:40  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 18:21:46  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 18:22:13  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 18:26:03  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 18:28:56  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 18:32:59  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 18:34:17  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 18:36:23  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 14/09/2021 18:43:16  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 08:29:11  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 08:32:54  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 08:33:45  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 08:38:10  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 08:39:35  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 08:40:49  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 08:49:50  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 08:52:48  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:22:58  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:23:40  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:23:49  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:27:02  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:30:12  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:30:39  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:37:37  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:44:35  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:46:19  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:47:48  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:49:08  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:51:33  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:54:01  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:54:37  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:55:13  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:56:01  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 09:58:10  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 10:00:06  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 10:22:38  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 10:25:51  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 10:27:37  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 10:31:10  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 10:43:43  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 10:47:06  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 10:53:36  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 10:55:16  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 11:16:21  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 11:20:04  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 11:22:41  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 11:23:40  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 11:27:27  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 11:30:59  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 11:31:28  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 11:32:22  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/15/2021 11:32:30  Message: teste: Teste_02 executado em: -180  milisegundos.   teste passou
-Time: 09/15/2021 11:32:30  Message: Erro no processamento de expressao:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.Expressao.GetTipoExpressao(Expressao expressaoCurrente, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 1278
-   em parser.Expressao..ctor(String[] tokens, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 845
-Time: 09/15/2021 11:32:30  Message: teste: Teste_01 executado em: 143  milisegundos.   teste passou
-
-
-
-
-Time: 15/09/2021 11:33:15  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/15/2021 11:33:16  Message: teste: Teste_02 executado em: -589  milisegundos.   teste passou
-Time: 09/15/2021 11:33:16  Message: Erro no processamento de expressao:    em System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   em System.Collections.Generic.List`1.get_Item(Int32 index)
-   em parser.Expressao.GetTipoExpressao(Expressao expressaoCurrente, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 1278
-   em parser.Expressao..ctor(String[] tokens, Escopo escopo) na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\expressoes.cs:linha 845
-Time: 09/15/2021 11:33:16  Message: teste: Teste_01 executado em: 183  milisegundos.   teste passou
-
-
-
-
-Time: 15/09/2021 11:37:31  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/15/2021 11:37:31  Message: teste: Teste_02 executado em: 364  milisegundos.   teste passou
-Time: 09/15/2021 11:37:31  Message: teste: Teste_01 executado em: 77  milisegundos.   teste passou
-
-
-
-
-Time: 15/09/2021 11:42:12  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 11:44:30  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 11:50:54  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 11:51:35  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-
-
-Time: 15/09/2021 11:53:12  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 09/15/2021 11:53:39  Message: teste: Teste_02 executado em: 343  milisegundos.   teste passou
-Time: 09/15/2021 11:53:39  Message: teste: Teste_01 executado em: 81  milisegundos.   teste passou
 
 

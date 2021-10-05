@@ -36,6 +36,8 @@ namespace parser
         /// Le o arquivo na entrada, e converte em tokens e codigos na saída.
         private void Parser(string fileName)
         {
+            PosicaoECodigo.InitCalculoPosicoes();   // essencial para se contar a posicao de tokens, é preciso inicializar algumas propriedades estáticas.
+
             this.code = new List<string>();
             this.tokens = new List<string>();
 
@@ -45,27 +47,9 @@ namespace parser
             while (!reader.EndOfStream) // lê o arquivo currente e constroi a lista de código e tokens.
             {
                 string lineOfCode = reader.ReadLine();
-                if (lineOfCode.Trim(' ') == "")
-                    continue;
-                int lenght = lineOfCode.Length;
-
-                // remove tokens de marcação de texto, como newline, tab, etc...  
-                int c = 0;
-                while ((c < lenght) && (c >= 0)) 
-                {
-                        if ((lineOfCode[c] == '\t') || (lineOfCode[c] == '\n')) 
-                        {
-                            lineOfCode = lineOfCode.Remove(c, 1);
-                            lenght--;
-                            c--;
-                        }
-                    c++;
-                } // while
-
+                PosicaoECodigo.AddLineOfCode(lineOfCode);
                 if ((lineOfCode != null) && (lineOfCode.Length > 0)) // lê uma linha de código, sem tokens, apenas código.
-                {
                     code.Add(lineOfCode.Trim(' '));
-                }
                 
             } // while
             if ((code != null) && (code.Count > 0))
