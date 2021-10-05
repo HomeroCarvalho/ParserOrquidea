@@ -803,8 +803,8 @@ namespace ParserLinguagemOrquidea.testes
         public ClassesTestesManutencao()
         {
 
-            // testesConstructors = new ClasseTestesConstructor();
-            //testesConstructors.ExecutaTestes();
+             ClasseTestesConstructor testesConstructors = new ClasseTestesConstructor();
+             testesConstructors.ExecutaTestes();
 
 
             //TestesCompilacaoExecucaoClasses testesBuildAndExecutationExpressoesOrientadoAObjeto = new TestesCompilacaoExecucaoClasses();
@@ -824,8 +824,8 @@ namespace ParserLinguagemOrquidea.testes
             //testesDeExpressoes.ExecutaTestes();
 
 
-            TestesAvaliacaoDeInstrucoes  testesInstrucoes = new TestesAvaliacaoDeInstrucoes();
-            testesInstrucoes.ExecutaTestes();
+            //TestesAvaliacaoDeInstrucoes  testesInstrucoes = new TestesAvaliacaoDeInstrucoes();
+            //testesInstrucoes.ExecutaTestes();
 
             // TestesRecoverInstructions testesRecuperarInstrucoes = new TestesRecoverInstructions();
             // testesRecuperarInstrucoes.ExecutaTestes();
