@@ -83,7 +83,7 @@ namespace parser
         public Classe()
         {
             if (linguagem == null)
-                linguagem = new LinguagemOrquidea();
+                linguagem = LinguagemOrquidea.Instance();
             this.metodos = new List<Funcao>();
             this.operadores = new List<Operador>();
             this.propriedades = new List<Objeto>();
@@ -97,7 +97,7 @@ namespace parser
         public Classe(string acessor, string name, List<Funcao> methods, List<Operador> operadores, List<Objeto> propriedades):base()
         {
             if (linguagem == null)
-                linguagem = new LinguagemOrquidea();
+                linguagem = LinguagemOrquidea.Instance();
 
             this.acessor = acessor;
             this.nome = name;
@@ -218,7 +218,7 @@ namespace parser
         /// <returns></returns>
         public static Classe Load(string nomeClasse)
         {
-            LinguagemOrquidea linguage = new LinguagemOrquidea();
+            LinguagemOrquidea linguage = LinguagemOrquidea.Instance();
             Stream stream = new FileStream("classe_" + nomeClasse + ".txt", FileMode.Open, FileAccess.Read);
             StreamReader reader = new StreamReader(stream);
 

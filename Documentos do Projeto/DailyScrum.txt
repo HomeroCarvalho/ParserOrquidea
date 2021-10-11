@@ -5285,4 +5285,73 @@ Daily Scrum 05.10:
 
 
 ________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 07.10:
 
+		TAREFAS DO DIA:
+					---> no testes para instrucoes, falha nao compila a instrucao "for", processando apenas as atribuicoes, que foram compiladas apos fixar erros.
+									---> verificando, o método Expressao.ExtraiExpressoes() não está funcionando muito bem..
+																	---> compilação da instrucao for sendo processada corretamente.
+																	---> fixado, a execução da instrucao for esta sendo processada corretamente no que diz à o percorrimento da malha, mas falha na atribuicao do bloco da instrução.
+																					---> o metodo Instrucao.ProcessaBloco() não está sendo avaliado corretamente.
+																											----> processamento fixado, mas outro erro precisa ser fixado: a atribuicao não está sendo feita.
+
+																							---> teste para instrucao "while", "if/else", "createAObject",atribuicao estão sendo avaliadas corretamente, 
+																							mas há falha na instrução "for", variavelVetor nao esta sendo executado com efetvidade, isntrução: "cases of use" está sendo processada corretamente.
+																							---> fixado, o valor limite do contador estava incorreto.
+
+					---> o teste para chamada de metodo importado, falha, nao está reconhecendo ae instrucao de chamadas de metodo.
+																	---> uma caso de exceção é quando os parâmetros são todos números, então, tem que obter os parametros, a partir da expressaoParametros.Elementos.
+																	---> falha no processamento da ultima instrucao, M.SetElemento(), o indice do handler de compilação está correto, mas falha no reconhecimento da sequencia id.
+																	---> falha na instrucao "create", quando o construtor é de uma classe importada, há falha no processamento.
+
+					----> testes, no ultimo cenario, falha: objeto da classe vetor nao está funcionando muito bem. fixado: no cenario de teste, a sintaxe da instrução estava errada...
+
+					---> faltando para fixar três testes da classe TestesInstrucoes.
+
+________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 11.10:
+
+		TAREFAS DO DIA:
+
+			---->(implementado) implementar um algoritmo em Expressao.ExtraiExpressoes, que verifica se há uma sub-expressao numero apos uma sub-expressao tambem numero, são expressões em separado.
+			Se o algoritmo detecctar esta sequencia, separá em duas expressões, uma contendo a primeira sub-expressao numero, e outra contendo as demais sub-expressao.
+					--->(feito) nao se esquecer tb. de retirar o codigo que verifica esta condição, pois é falha facilmente...
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Daily Scrum 11.10:
+
+		TAREFAS DO DIA:
+
+			---> (verficado) verificar se uma classe com metodos nao entram em conflito com metodos de classes herdadas. Se houver metodos de nomes iguais, nas classes herdadas, os nomes de metodos
+		             são setados para nomes longos, mas e metodos da classe herdeira, modifica os nomes quando há nomes de metodos iguais, na classe herdeira, em relação às classes herdadas.
+			     Isto é cruscial para composição em padrões de projeto como Estrategy. 
+							---> verificado, os nomes de metodos/propriedades/operadores não herdados, nao alteram o nome para nomeLongo,
+							porem o algortimo de verificacao de conflitos continha vários erros, e foi recodificado...
+
+
+			     
+			---> teste para o método Expressao.ExtraiExpressoes(), com expressão formada por números.
+							---> teste: TesteVariavelVetor(), na classe TestesIntrucoes, contem teste para verificar o metodo Expressao.ExtraiExpressoes().
+											---> há um problema: na expressão create, o tipo "Vetor" nao e conhecida como classe do repositorio de classes!
+														--->a solução: utilizar Reflexao para importar a classe Objeto, e Vetor, para dentro do repositorio de classes..
+																	---> tentativa de incluir as classes Objeto e Vetor, resultou em estouro de pilha...
+																	---> planejamento para como incluir as classes Objeto e Vetor...
+																			---> nao da para colocar o codigo importadors das classes Objeto e Vetor na classe LinguagemOrquidea.
+																						---> colocado o codigo de importar as classes Objetos e Vetor no construtor da classe ProcesadorIDs.
+
+
+
+
+			---> atualizar os testes para compor com método Expressao.ExtraiExpresoes(), na classe CorpoTestes.
+										---> o processador id estava com um erro de logica, na malha de vetores repetido, estava como lista a lista de objetos e nao a lista de vetores....
+										---> falha na obtencao de expressoes numeros seguida de expressóes numeros. (fixado) houve erro na logica de programação, a sub-expressao deveria ser de Elementos, e nao da lista de Expressoes Extraidas.
+
+
+			---> continuar os testes para classe TesteInstrucoes, a partir do teste: TesteVariavelVetor.
+										---> falha no build da instrucao "create": está criando um vetor de 1 indice, esperado era de 2 indices.
+										---> fixado, testes com êxito.
+
+
+			---> testar conflito de nomes em propriedades/metodos/operadores herdados.
+_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________

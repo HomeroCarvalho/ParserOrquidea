@@ -25,7 +25,10 @@ namespace parser
 
         }
 
-
+        public ImportadorDeClasses()
+        {
+            // do nothing, for calls methods importer one type.
+        }
         /// <summary>
         /// importa métodos e propriedades de uma classe, vinda de um objeto Assembly
         /// </summary>
@@ -70,10 +73,10 @@ namespace parser
             List<Funcao> construtoresParaOrquidea = new List<Funcao>();
             List<Objeto> propriedadesParaOrquidea = new List<Objeto>();
 
-            RegistraMetodosImportados(metodosImportados, metodosParaOrquidea);
+            
             RegistraPropriedadesImportadas(propriedadesImportadas, propriedadesParaOrquidea);
             RegistraCamposImportados(camposImportados, propriedadesParaOrquidea);
-          
+            RegistraMetodosImportados(metodosImportados, metodosParaOrquidea);
 
             Classe classeImportada = new Classe("public", myType.Name, metodosParaOrquidea, new List<Operador>(), propriedadesParaOrquidea);
             RegistraConstrutoresImportados(construtoresImportados, classeImportada);
@@ -119,7 +122,7 @@ namespace parser
                 metodos.Add(new Funcao(umMetodo.DeclaringType.Name, acessor, umMetodo.Name, umMetodo, umMetodo.DeclaringType.Name, parametros.ToArray()));
 
 
-            } // for x
+            } 
         }
         
 

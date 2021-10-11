@@ -70,7 +70,7 @@ namespace parser
         public ProgramaEmVM(List<Instrucao> instrucoesPrograma)
         {
             if (ProgramaEmVM.linguagem == null)
-                ProgramaEmVM.linguagem = new LinguagemOrquidea();
+                ProgramaEmVM.linguagem = LinguagemOrquidea.Instance();
 
             if (ProgramaEmVM.codesInstructions == null)
                 ProgramaEmVM.codesInstructions = new List<int>();
@@ -252,13 +252,13 @@ namespace parser
 
 
             Expressao expressoesParametros;
-            if (instrucao.expressoes[0].Elementos[5].Elementos.Count >= 5)
+            if (instrucao.expressoes[0].Elementos[5].Elementos.Count >0)
                 expressoesParametros = instrucao.expressoes[0].Elementos[5];
             else
                 expressoesParametros = new Expressao();
 
-
-
+           
+        
 
             if (tipoTemplateObjeto == "Objeto")
             {
@@ -331,9 +331,9 @@ namespace parser
                 {
 
                     
-                    List<Expressao> indicesDoVetor = instrucao.expressoes[0].Elementos[4].Elementos; // calcula as dimensões do vetor.
-                    vetor.SetElementoAninhado(new object(), escopo, indicesDoVetor.ToArray());
-                    return vetor; // os indices de criação do vetor são imutáveis, então a instância da variável e constante e calculada no build de compilação. 
+                    List<Expressao> indicesDoVetor = instrucao.expressoes[0].Elementos[5].Elementos; // calcula as dimensões do vetor.
+                    vetor.SetElementoPorOffset(indicesDoVetor,new object(), escopo); // cria um novo valor para o vetor criado.
+                    return vetor; // os indices de criação do vetor são imutáveis, então a instância da variável é constante e calculada no build de compilação. 
                 }
             }
             
@@ -377,6 +377,8 @@ namespace parser
 
         private static void AdicionaPropriedadesNaoHerdadas(Objeto objJaInstanciado, Classe classeDoObjetoInstanciado, Escopo escopoCreate)
         {
+            if (objJaInstanciado == null)
+                return;
             if (classeDoObjetoInstanciado.GetPropriedades() != null)
                 foreach (Objeto propriedadeDoObjeto in classeDoObjetoInstanciado.GetPropriedades())
                     if (propriedadeDoObjeto.GetNome() != objJaInstanciado.GetNome())
@@ -386,7 +388,8 @@ namespace parser
 
         private static void RemovePropriedadesPropriedadesHerdadaAoEscopo(Objeto objJaInstanciado, List<Classe> classesHerdadas, Escopo escopoCreate)
         {
-
+            if (objJaInstanciado == null)
+                return;
             foreach (Classe umaClasseHerdada in classesHerdadas)
                 foreach (Objeto umaPropriedadeHerdada in umaClasseHerdada.GetPropriedades())
                     if ((umaPropriedadeHerdada.GetAcessor() == "public") || (umaPropriedadeHerdada.GetAcessor() == "private"))
@@ -396,6 +399,8 @@ namespace parser
 
         private static void RemovePropriedadesNaoHerdadosDoEscopo(Objeto objJaInstanciado, Classe classeDoObjetoInstanciado, Escopo escopoCreate)
         {
+            if (objJaInstanciado == null)
+                return;
             if (classeDoObjetoInstanciado.GetPropriedades() != null)
                 foreach (Objeto propriedadeDoObjeto in classeDoObjetoInstanciado.GetPropriedades())
                     if (propriedadeDoObjeto.GetNome() != objJaInstanciado.GetNome())
@@ -526,8 +531,7 @@ namespace parser
 
         private object InstrucaoWhile(Instrucao instrucao, Escopo escopo)
         {
-            if (this.IP_contador >= this.instrucoes.Count)
-                return null;
+            
 
             Expressao exprssControle = instrucao.expressoes[0];
             EvalExpression eval = new EvalExpression();
@@ -568,8 +572,8 @@ namespace parser
                     continue;
                 if (instrucao.blocos[bloco][umaInstrucao].code == codeReturn)
                     return new EvalExpression().EvalPosOrdem(instrucao.blocos[bloco][umaInstrucao].expressoes[1], escopo);
-                ExecutaUmaInstrucao(instrucao.blocos[bloco][umaInstrucao], escopo);
-                result = new object();
+                result= ExecutaUmaInstrucao(instrucao.blocos[bloco][umaInstrucao], escopo);
+              
             } // for bloco
             return result;
         }
@@ -602,10 +606,15 @@ namespace parser
                 if ((instrucao.blocos[0] != null) && (instrucao.blocos[0].Count > 0))
                 {
                     Executa_bloco(instrucao, escopo, 0);
+                   
+                    escopo.tabela.GetObjeto(exprsIncremento.Elementos[0].ToString(), escopo).SetValor(varAtribuicao);
+
+
                     exprsIncremento.isModify = true;
                     varAtribuicao += (int)eval.EvalPosOrdem(exprsIncremento, escopo); // atualiza a expressão de incremento.
-                    if ((int)varAtribuicao > (int)limiteMalha)
+                    if (varAtribuicao > limiteMalha) 
                         break;
+
                 }
                 else
                     break;

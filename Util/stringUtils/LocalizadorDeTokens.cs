@@ -15,7 +15,7 @@ namespace stringUtilities
             if (localizador == null)
             {
                 localizador = new CaracteresID();
-                linguagem = new LinguagemOrquidea();
+                linguagem = LinguagemOrquidea.Instance();
             }
             return localizador;
         }

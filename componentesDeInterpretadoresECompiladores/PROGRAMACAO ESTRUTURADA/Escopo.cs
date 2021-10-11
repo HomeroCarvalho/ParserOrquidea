@@ -58,7 +58,7 @@ namespace parser
       
         public List<string> codigo { get; set; }
 
-        private static  UmaGramaticaComputacional linguagem = new LinguagemOrquidea();
+        private static  UmaGramaticaComputacional linguagem = LinguagemOrquidea.Instance();
    
         public List<string> GetMsgErros()
         {

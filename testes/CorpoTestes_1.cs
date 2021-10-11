@@ -497,7 +497,7 @@ namespace parser
         private void TesteGetTokensDeUmTrechoDeCodigo(Assercoes assercao)
         {
             List<string> trechoDeCodigo = GetProgramaExemplo1();
-            List<string> todosTokens = new Tokens(new LinguagemOrquidea(), trechoDeCodigo).GetTokens();
+            List<string> todosTokens = new Tokens(LinguagemOrquidea.Instance(), trechoDeCodigo).GetTokens();
 
             assercao.MsgSucess("Obtenção de tokens pela classe Tokens sem erros fatais.");
             if (todosTokens.Count == 20)
@@ -509,7 +509,7 @@ namespace parser
         private void TesteObterProducoesPelaClasseTokens(Assercoes assercao)
         {
             List<string> programa = GetProgramaExemplo1();
-            UmaGramaticaComputacional linguagem = new LinguagemOrquidea();
+            UmaGramaticaComputacional linguagem = LinguagemOrquidea.Instance();
             Tokens tokensProducao = new Tokens(linguagem, programa);
 
             List<producao> producoes = new List<producao>();
@@ -580,7 +580,7 @@ namespace parser
                 assercao.MsgFail("Obtenção de tokens de um Predicado com falhas");
         } // TesteObtencaoTokensDeUmPredicado()
 
-        LinguagemOrquidea lng = new LinguagemOrquidea();
+        LinguagemOrquidea lng = LinguagemOrquidea.Instance();
        
         
         private void TesteComponentePosicaoDeCodigo(Assercoes assercao)
@@ -621,7 +621,7 @@ namespace parser
         private void TestePontuacaoSequenciasIDComVariantes(Assercoes assercao)
         {
             List<string> codigo = new List<string>() { "int b= a+1; " };
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), codigo).GetTokens();
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
             processador.CompileEmDoisEstagios();
@@ -637,7 +637,7 @@ namespace parser
         private void TesteSequenciaID_1(Assercoes assercao)
         {
             List<string> codigo = new List<string>() {" int a; int b= a; "};
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), codigo).GetTokens();
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
             
@@ -740,9 +740,9 @@ namespace parser
                                                       "public int funcaoSemParamsSemCorpo();",
                                                       "public int funcaoComParamsComCorpo(int A,int B ){int a=1;}"};
 
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo1).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), codigo1).GetTokens();
 
-            UmaGramaticaComputacional linguagem = new LinguagemOrquidea();
+            UmaGramaticaComputacional linguagem = LinguagemOrquidea.Instance();
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo1);
 
@@ -767,7 +767,7 @@ namespace parser
 
             List<producao> producoes = new List<producao>();
 
-            new Tokens(new LinguagemOrquidea(), codigo).GetProducoes(tokens, new Escopo(codigo));
+            new Tokens(LinguagemOrquidea.Instance(), codigo).GetProducoes(tokens, new Escopo(codigo));
 
             assercao.MsgSucess("Produçõs de tokens e producoes sem erros fatais.");
             if ((producoes.Count == 5) && (producoes[4].GetType() == typeof(UmaSequenciaID)))
@@ -791,7 +791,7 @@ namespace parser
             List<producao> producoes = new List<producao>();
 
 
-            new Tokens(new LinguagemOrquidea(), codigo).GetProducoes(tokens, processador.escopo);
+            new Tokens(LinguagemOrquidea.Instance(), codigo).GetProducoes(tokens, processador.escopo);
 
             assercao.MsgSucess("Produçõs de tokens e producoes sem erros fatais.");
             if (producoes.Count == 5)
@@ -863,9 +863,9 @@ namespace parser
             // DA AVERIGUAÇÃO OU PREVISÃO DO QUE SE ESPERAR APÓS OS TESTES.
 
             List<string> codigo = new List<string>() { "class classeA { public int a; public int funcaoB(int x); }" };
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), codigo).GetTokens();
             Escopo escopo = new Escopo(codigo);
-            ExtratoresOO extratores = new ExtratoresOO(escopo, new LinguagemOrquidea(), tokens);
+            ExtratoresOO extratores = new ExtratoresOO(escopo, LinguagemOrquidea.Instance(), tokens);
             Classe umaClasse = extratores.ExtaiUmaClasse(Classe.tipoBluePrint.EH_CLASSE);
             assercao.MsgSucess("extração de codigo de uma classe feito sem exceções fatais.");
             if ((umaClasse != null) && (umaClasse.GetPropriedades().Count == 1) && (umaClasse.GetMetodos().Count == 1))
@@ -881,9 +881,9 @@ namespace parser
 
             List<string> codigo =
                 new List<string>() { "class classeA { public int a; public int funcaoA(int x); }", "class B: +classeA {public int c;}" };
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), codigo).GetTokens();
             Escopo escopo = new Escopo(codigo);
-            ExtratoresOO extratores = new ExtratoresOO(escopo, new LinguagemOrquidea(), tokens);
+            ExtratoresOO extratores = new ExtratoresOO(escopo, LinguagemOrquidea.Instance(), tokens);
             Classe umaClasse = extratores.ExtaiUmaClasse(Classe.tipoBluePrint.EH_CLASSE);
            
 
@@ -902,10 +902,10 @@ namespace parser
         {
 
             List<string> codigo = new List<string>() { "class classeA { public int a; public int funcaoB(int x); }" };
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), codigo).GetTokens();
 
             Escopo escopo = new Escopo(codigo);
-            ExtratoresOO extratores = new ExtratoresOO(escopo, new LinguagemOrquidea(), tokens);
+            ExtratoresOO extratores = new ExtratoresOO(escopo, LinguagemOrquidea.Instance(), tokens);
             Classe umaClasse = extratores.ExtaiUmaClasse(Classe.tipoBluePrint.EH_CLASSE);
             if (umaClasse == null) 
             {
@@ -925,10 +925,10 @@ namespace parser
         private void TesteValidacaoInterfaceNaoImplementado(Assercoes assercao)
         {
             List<string> codigo = new List<string>() { "interface IComparer {int funaoE();} class classeA: + IComparer { public int a; public int funcaoB(int x); }" };
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), codigo).GetTokens();
 
             Escopo escopo = new Escopo(codigo);
-            ExtratoresOO extratores = new ExtratoresOO(escopo, new LinguagemOrquidea(), tokens);
+            ExtratoresOO extratores = new ExtratoresOO(escopo, LinguagemOrquidea.Instance(), tokens);
             Classe umaClasse = extratores.ExtaiUmaClasse(Classe.tipoBluePrint.EH_INTERFACE);
 
             assercao.MsgSucess("construção e validação de interfaces sem erros fatais.");
@@ -940,10 +940,10 @@ namespace parser
         private void TesteValidacaoInterfaceImplementado(Assercoes assercao)
         {
             List<string> codigo = new List<string>() { "interface IComparer {int funcaoE();} class classeA: + IComparer { public int a; public int funcaoB(int x); int funcaoE(); }" };
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), codigo).GetTokens();
 
             Escopo escopo = new Escopo(codigo);
-            ExtratoresOO extratores = new ExtratoresOO(escopo, new LinguagemOrquidea(), tokens);
+            ExtratoresOO extratores = new ExtratoresOO(escopo, LinguagemOrquidea.Instance(), tokens);
             Classe umaClasse = extratores.ExtaiUmaClasse(Classe.tipoBluePrint.EH_CLASSE);
 
             assercao.MsgSucess("construção e validação de interfaces sem erros fatais.");
@@ -978,7 +978,7 @@ namespace parser
         private void TesteAtribuicaoPropriedade(Assercoes assercao)
         {
             List<string> codigo = new List<string>() { "class C{int propriedadeC;} class B {C propriedadeB;} class A {B propriedadeA; } class D { int D= A.propriedadeA.propriedadeB;} " };
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
             processador.CompileEmDoisEstagios();
@@ -995,7 +995,7 @@ namespace parser
         {
             List<string> codigo = new List<string>() { "class C {int propriedadeC;} class B {C propriedadeB;} class A {B propriedadeA; } class D { int a= A.propriedadeA.propriedadeB;} " };
       
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
             processador.CompileEmDoisEstagios();
 
@@ -1011,7 +1011,7 @@ namespace parser
         {
             List<string> codigo = new List<string>() { "class C {int propriedadeC;} class B {C propriedadeB();} class A {B propriedadeA; } class D { int a= A.propriedadeA.propriedadeB();} " };
   
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
             processador.CompileEmDoisEstagios();
 
@@ -1024,10 +1024,10 @@ namespace parser
         private void TesteAtribuicaoDePropriedadesComMetodos(Assercoes assercao)
         {
             List<string> codigo = new List<string>() { "class C {int propriedadeC; int funcaoC(); int propriedadeD= propriedadeC+ funcaoC();}" };
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), codigo).GetTokens();
 
 
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
             processador.CompileEmDoisEstagios();
 
@@ -1045,7 +1045,7 @@ namespace parser
 
         private void TesteClassificacaoDeOperadores(Assercoes assercao)
         {
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             if (linguagem.IsOperadorBinario("+"))
                 assercao.MsgSucess("operador: + é binário.");
             if (linguagem.IsOperadorUnario("++"))
@@ -1061,14 +1061,14 @@ namespace parser
 
 
             List<string> codigo5 = new List<string>() { "for ( x=0;x< 0;x++)" };
-            List<string> tokens5 = new Tokens(new LinguagemOrquidea(), codigo5).GetTokens();
+            List<string> tokens5 = new Tokens(LinguagemOrquidea.Instance(), codigo5).GetTokens();
 
             if (tokens5.Count == 13)
                 assercao.MsgSucess("obtencao de tokens extaidos, com exatidao.");
 
 
             List<string> trechoDeCodigo3 = new List<string>() { "int mfor=0;" }; // o ParserUniversal pode confundir [mfor] com [m for]..
-            List<string> todosTokens3 = new Tokens(new LinguagemOrquidea(), trechoDeCodigo3).GetTokens();
+            List<string> todosTokens3 = new Tokens(LinguagemOrquidea.Instance(), trechoDeCodigo3).GetTokens();
 
             assercao.MsgSucess("Obtenção de tokens pela classe Tokens sem erros fatais.");
 
@@ -1079,7 +1079,7 @@ namespace parser
 
 
             List<string> trechoDeCodigo = new List<string>() { "int form=0;" }; // o ParserUniversal pode confundir [form] com [form m].
-            List<string> todosTokens = new Tokens(new LinguagemOrquidea(), trechoDeCodigo).GetTokens();
+            List<string> todosTokens = new Tokens(LinguagemOrquidea.Instance(), trechoDeCodigo).GetTokens();
 
             assercao.MsgSucess("Obtenção de tokens pela classe Tokens sem erros fatais.");
             if (todosTokens.Count == 5)
@@ -1088,7 +1088,7 @@ namespace parser
 
 
             List<string> trechoDeCodigo2 = new List<string>() { "k++;" }; // o ParserUniversal pode confundir  [++] com [+ +].
-            List<string> todosTokens2 = new Tokens(new LinguagemOrquidea(), trechoDeCodigo2).GetTokens();
+            List<string> todosTokens2 = new Tokens(LinguagemOrquidea.Instance(), trechoDeCodigo2).GetTokens();
 
             assercao.MsgSucess("Obtenção de tokens pela classe Tokens sem erros fatais.");
 

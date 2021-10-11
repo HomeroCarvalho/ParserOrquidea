@@ -35,7 +35,7 @@ namespace parser
         public List<producao> GetProducoes(List<string> tokens, Escopo escopo)
         {
 
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
 
             ProcessadorDeID processador = new ProcessadorDeID(escopo.codigo);
            
@@ -150,7 +150,7 @@ namespace parser
         /// </summary>
         private List<producao> ResumeProducoes(List<producao> producao)
         {
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             List<producao> producoesResumidas = producao.ToList<producao>();
             for (int x = 0; x < producao.Count; x++)
             {
@@ -317,7 +317,7 @@ namespace parser
         }
         public TokenParser(List<string> programa)
         {
-            this.tokens = new Tokens(new LinguagemOrquidea(), programa.ToList<string>()).GetTokens();
+            this.tokens = new Tokens(LinguagemOrquidea.Instance(), programa.ToList<string>()).GetTokens();
             this.index = 0;
         } // TokenParser()
 

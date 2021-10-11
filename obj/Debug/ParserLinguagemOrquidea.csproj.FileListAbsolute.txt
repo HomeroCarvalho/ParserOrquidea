@@ -57,3 +57,4 @@ E:\ProjetoLinguagensOrquideaVisualStudio2019_2\obj\Debug\ParserLinguagemOrquidea
 E:\ProjetoLinguagensOrquideaVisualStudio2019_2\obj\Debug\ParserLinguagemOrquidea.csproj.CopyComplete
 E:\ProjetoLinguagensOrquideaVisualStudio2019_2\obj\Debug\ParserLinguagemOrquidea.exe
 E:\ProjetoLinguagensOrquideaVisualStudio2019_2\obj\Debug\ParserLinguagemOrquidea.pdb
+E:\ProjetoLinguagensOrquideaVisualStudio2019_2\obj\Debug\ParserLinguagemOrquidea.csproj.AssemblyReference.cache

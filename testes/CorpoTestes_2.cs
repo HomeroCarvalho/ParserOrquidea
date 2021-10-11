@@ -16,7 +16,7 @@ namespace parser
         {
 
             // teste para obter várias sequencias id, mas está codificado inicialmente para obter a primeira sequencia id.
-            UmaGramaticaComputacional linguagem = new LinguagemOrquidea();
+            UmaGramaticaComputacional linguagem = LinguagemOrquidea.Instance();
 
             List<string> codigo1 = new List<string> { "public int funcaoSemParamsComCorpo(){int a=1;}",
                                                       "public int C=1+3;",
@@ -91,7 +91,7 @@ namespace parser
 
         private void TesteObterProducoes(Assercoes assercao)
         {
-            LinguagemOrquidea linguageem = new LinguagemOrquidea();
+            LinguagemOrquidea linguageem = LinguagemOrquidea.Instance();
             List<string> codigo = new List<string>
             {
                 "for (a=1;a<10;a++)",
@@ -129,7 +129,7 @@ namespace parser
             string expressaoCondicional_b = "((a+b)<(c+d))";
 
 
-            List<string> tokensExpressaoCondicional = new Tokens(new LinguagemOrquidea(), new List<string>() { expressaoCondicional_b }).GetTokens();
+            List<string> tokensExpressaoCondicional = new Tokens(LinguagemOrquidea.Instance(), new List<string>() { expressaoCondicional_b }).GetTokens();
             Escopo escopo = new Escopo(new List<string>() { expressaoCondicional_b });
 
 
@@ -146,7 +146,7 @@ namespace parser
             string expressaoCondicional_b = "((a+b)<(c+d))";
 
 
-            List<string> tokensExpressaoCondicional = new Tokens(new LinguagemOrquidea(), new List<string>() { expressaoCondicional_b }).GetTokens();
+            List<string> tokensExpressaoCondicional = new Tokens(LinguagemOrquidea.Instance(), new List<string>() { expressaoCondicional_b }).GetTokens();
             Escopo escopo = new Escopo(new List<string>() { expressaoCondicional_b });
 
             Expressao exprss = new Expressao(tokensExpressaoCondicional.ToArray(), escopo);
@@ -160,7 +160,7 @@ namespace parser
 
         private void TesteCapturaErrosPosOrdem(Assercoes assercao)
         {
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             List<string> codigoComErro = new List<string> { "a=b+c;" };
             List<string> tokensComErro = new Tokens(linguagem, codigoComErro).GetTokens();
             Escopo escopoErro = new Escopo(codigoComErro);
@@ -174,7 +174,7 @@ namespace parser
 
         private void TesteObtemValidarExpressaoGeralResumida(Assercoes assercao)
         {
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
 
             List<string> codigoTotal = new List<string>() { "int a; int b; int c; int d; c=a+b+1+b*2; d=++a+b+1+ --b*2; "};
 
@@ -225,7 +225,7 @@ namespace parser
             // a primeira passada do teste  serve para validar corretamente o teste, para futuros testes com este teste, para detectar quebra de código, seja feito.
             string codigo = "a[b]";
             Escopo escopo = new Escopo(new List<string>() { codigo });
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), new List<string>() { codigo }).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), new List<string>() { codigo }).GetTokens();
 
             Expressao expressao = new Expressao(tokens.ToArray(), escopo);
 
@@ -255,7 +255,7 @@ namespace parser
         private void TesteEvalExpression(Assercoes assercao)
         {
             List<string> codigo = codigo = new List<string>() { "a*b+1+c" };
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), codigo).GetTokens();
             Escopo escopo = new Escopo(codigo);
 
             escopo.tabela.AddObjeto("public", "a", "int", 1, escopo);
@@ -274,7 +274,7 @@ namespace parser
 
 
             codigo = new List<string>() { "a + b * c" };
-            tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
+            tokens = new Tokens(LinguagemOrquidea.Instance(), codigo).GetTokens();
             escopo = new Escopo(codigo);
 
             escopo.tabela.AddObjeto("public", "a", "int", 1, escopo);
@@ -292,7 +292,7 @@ namespace parser
 
 
             codigo = new List<string>() { "a+b" };
-            tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
+            tokens = new Tokens(LinguagemOrquidea.Instance(), codigo).GetTokens();
         
             escopo = new Escopo(codigo);
             escopo.tabela.AddObjeto("public", "a", "int", 1, escopo);
@@ -307,7 +307,7 @@ namespace parser
                 assercao.MsgSucess("Avaliação de expressão pela classe Eval feita com exatidão.");
 
             codigo = new List<string>() { "a- b" };
-            tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
+            tokens = new Tokens(LinguagemOrquidea.Instance(), codigo).GetTokens();
             expressao = new Expressao(tokens.ToArray(), escopo);
             escopo = new Escopo(codigo);
 
@@ -324,7 +324,7 @@ namespace parser
 
 
             codigo = new List<string>() { "a * b" };
-            tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
+            tokens = new Tokens(LinguagemOrquidea.Instance(), codigo).GetTokens();
             escopo = new Escopo(codigo);
 
             escopo.tabela.AddObjeto("public", "a", "int", 1, escopo);
@@ -344,7 +344,7 @@ namespace parser
         private void TesteExtracaoDeExpressoes(Assercoes assercoes)
         {
             string codigo = "a+b+(c);d+c;";
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), new List<string>() { codigo }).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), new List<string>() { codigo }).GetTokens();
             Escopo escopo = new Escopo(new List<string>() { codigo });
 
 
@@ -366,7 +366,7 @@ namespace parser
                 assercoes.MsgSucess("Extracao de expressoes feita com exatidão");
 
             string codigo2 = "c+b;";
-            List<string> tokens2 = new Tokens(new LinguagemOrquidea(), new List<string>() { codigo2 }).GetTokens();
+            List<string> tokens2 = new Tokens(LinguagemOrquidea.Instance(), new List<string>() { codigo2 }).GetTokens();
             Escopo escopo2 = new Escopo(new List<string>() { codigo2 });
 
             escopo2.tabela.GetObjetos().Add(v1);
@@ -465,7 +465,7 @@ namespace parser
         ///  método auxiliar para testes de compilação de instruções.
         private static void TesteDeInstrucoes(Assercoes assercao, List<string> codigo, ref Escopo escopo)
         {
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
         
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
             processador.CompileEmDoisEstagios();
@@ -482,10 +482,10 @@ namespace parser
 
             List<string> codigo = ReadClassFile(fileClasse);
 
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), codigo).GetTokens();
 
             Escopo escopo = new Escopo(codigo);
-            ExtratoresOO extrator = new ExtratoresOO(escopo, new LinguagemOrquidea(), tokens);
+            ExtratoresOO extrator = new ExtratoresOO(escopo, LinguagemOrquidea.Instance(), tokens);
 
             Classe umaClasse = extrator.ExtaiUmaClasse(Classe.tipoBluePrint.EH_CLASSE);
 
@@ -558,7 +558,7 @@ namespace parser
  
         private void TesteChamadaDeFuncao(Assercoes assercao)
         {
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             string codigoFuncao = "int funcaoB(int x, int y){x=1;}";
             string chamadaDeFuncao = "funcaoB(x, x)";
 
@@ -580,7 +580,7 @@ namespace parser
         private void TesteNovoMetodoExtraiExpressoes(Assercoes assercao)
         {
 
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             string codigo = "int A; int B; int C= A+B";
 
             List<string> code = new List<string>() { codigo };
@@ -597,7 +597,7 @@ namespace parser
 
         private void TesteManipulacaoDeVariaveisEstaticas(Assercoes assercao)
         {
-            LinguagemOrquidea lng = new LinguagemOrquidea();
+            LinguagemOrquidea lng = LinguagemOrquidea.Instance();
             string str_codigo = "static int A;";
             List<string> codigo = new List<string>() { str_codigo };
          
@@ -614,7 +614,7 @@ namespace parser
 
         public void testeInstrucaoCasesOfUse(Assercoes assercao)
         {
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
 
 
             // cenario de teste: var case é uma string.

@@ -7,12 +7,12 @@ namespace parser
 {
     class CorpoTestes_3
     {
-        LinguagemOrquidea linguagem = new LinguagemOrquidea();
+        LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
    
         private static void CenarioTestesProgramaOrquidea(List<string> codigo, out Escopo escopo)
         {
             escopo = null;
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
          
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
             processador.CompileEmDoisEstagios();
@@ -30,7 +30,7 @@ namespace parser
         private static void CenarioTesteExtraiExpressoes(out Escopo escopo, List<string> codigo3, out List<Expressao> expressoes)
         {
             expressoes = null;
-            List<string> tokens3 = new Tokens(new LinguagemOrquidea(), codigo3).GetTokens();
+            List<string> tokens3 = new Tokens(LinguagemOrquidea.Instance(), codigo3).GetTokens();
             escopo = new Escopo(codigo3);
 
             Objeto v_a = new Objeto("public", "a", "int", 1);
@@ -48,7 +48,7 @@ namespace parser
 
         private void TesteParaDefinicaoDeObjetoComExpressoesEmAtribuicao(Assercoes assercao)
         {
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             List<string> codigo1 = new List<string>() { "int c=funcaoA()+a+b;" };
 
 
@@ -92,7 +92,7 @@ namespace parser
         private void TestePropriedadesAninhadas(Assercoes assercao)
         {
 
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
 
             List<string> code = new List<string>() { "public class A { int varA=1;} protected class B {A varB;}" };
             Escopo escopo = new Escopo(code);
@@ -131,7 +131,7 @@ namespace parser
 
         private string CenarioTesteProcessamentoParaPropriedadesAninhadas(List<string> code, Escopo escopo)
         {
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
           
             this.processador = new ProcessadorDeID(code);
             this.processador.CompileEmDoisEstagios();
@@ -141,7 +141,7 @@ namespace parser
 
         private void TesteManipulacaoDeObjetos(Assercoes assercao)
         {
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             List<string> codigoClasseTeste = new List<string>() { "public class A {int VarA=1; int funcaoA(){ int k=2;}}" };
 
             ProcessadorDeID processador = new ProcessadorDeID(codigoClasseTeste);
@@ -181,7 +181,7 @@ namespace parser
     
         private void TesteDefinicaoDeMetodos(Assercoes assercao)
         {
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             List<string> codigo = new List<string>() { "public int funcaoB(int a, int b){int x=1;}" };
        
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
@@ -210,7 +210,7 @@ namespace parser
 
         private ProcessadorDeID CenarioTesteConstrucaoDaClasseParaOTeste(List<string> code, out Escopo escopo)
         {
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             ProcessadorDeID processador = new ProcessadorDeID(code);
 
             processador.CompileEmDoisEstagios();
@@ -300,7 +300,7 @@ namespace parser
 
             string codigo = "public class AncestralA{ public int propAncestralA; public string propNomeAncestralA; public bool GetName(){ return propNomeAncestralA;} private bool VerificaID( int id) { if (id==propAncestralA) return 	true; return false;}} public class AncestralB { public int propAncestralB; public string propNomeAncestralB; private int propPrivateAncestralB; public bool GetNomeAncestral(){ int k=0; return (k==1);	}}  public class ClasseQueHerda: + AncestralA, + AncestralB {}";
             ParserAFile parser = new ParserAFile("cenario3TesteAceite.txt");
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), new List<string>() { codigo }).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), new List<string>() { codigo }).GetTokens();
 
 
             ProcessadorDeID processador = new ProcessadorDeID(tokens);

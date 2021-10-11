@@ -421,3 +421,1041 @@ Time: 10/05/2021 10:50:31  Message: teste: Teste_01 executado em: 392   teste pa
 
 
 
+
+
+Time: 09/10/2021 06:50:48  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 06:52:03  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 06:52:46  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 06:53:31  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 06:54:25  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 06:54:55  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 06:56:21  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 06:58:02  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 07:00:23  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 07:01:58  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 07:03:20  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 07:04:28  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 07:20:29  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 07:24:08  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 07:27:33  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 07:30:16  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 07:31:26  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 07:34:56  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 07:35:41  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 07:38:00  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 07:42:05  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 07:47:03  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 07:52:00  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 08:00:23  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 08:03:17  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 08:11:54  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 08:14:57  Message: Desempenho do cenario de teste:   tempo: 182888
+Time: 10/09/2021 08:14:57  Message: teste: TesteFor executado em: 182888   teste nao passou.
+
+
+Time: 10/09/2021 08:14:58  Message: Desempenho do cenario de teste:   tempo: 437
+Time: 10/09/2021 08:14:58  Message: teste: TesteImporter executado em: 437   teste passou
+
+
+Time: 10/09/2021 08:14:58  Message: Desempenho do cenario de teste:   tempo: 37
+Time: 10/09/2021 08:14:58  Message: teste: TesteIF executado em: 37   teste passou
+
+
+Time: 10/09/2021 08:14:58  Message: Desempenho do cenario de teste:   tempo: 39
+Time: 10/09/2021 08:14:58  Message: teste: TesteWhile executado em: 39   teste nao passou.
+
+
+Time: 10/09/2021 08:14:58  Message: Desempenho do cenario de teste:   tempo: 37
+Time: 10/09/2021 08:14:58  Message: teste: TesteCasesOfUse_2 executado em: 37   teste passou
+
+
+Time: 10/09/2021 08:14:58  Message: Desempenho do cenario de teste:   tempo: 96
+Time: 10/09/2021 08:14:58  Message: teste: TesteChamadaDeObjetoImportado executado em: 96   teste nao passou.
+
+
+Time: 10/09/2021 08:15:42  Message: teste: TesteVariavelVetor, na classe: TestesAvaliacaoDeInstrucoes gerou excecao que interrompeu o seu processamento. falha porque: Uma exceção foi acionada pelo destino de uma chamada., Stack:    em System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+   em System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
+   em System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   em System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)
+   em parser.SuiteClasseTestes.ExecutaTestes() na E:\ProjetoLinguagensOrquideaVisualStudio2019_2\testes\SuiteClasseTestes.cs:linha 80
+
+
+Time: 10/09/2021 08:15:42  Message: Desempenho do cenario de teste:   tempo: 82
+Time: 10/09/2021 08:15:42  Message: teste: TesteCreateObjects executado em: 82   teste nao passou.
+
+
+Time: 10/09/2021 08:15:43  Message: Desempenho do cenario de teste:   tempo: 50
+Time: 10/09/2021 08:15:43  Message: teste: TesteCasesOfUse executado em: 50   teste passou
+
+
+Time: 10/09/2021 08:15:43  Message: Desempenho do cenario de teste:   tempo: 23
+Time: 10/09/2021 08:15:43  Message: teste: Atribuicao executado em: 23   teste passou
+
+
+Time: 10/09/2021 08:18:14  Message: Desempenho do cenario de teste:   tempo: 151316
+Time: 10/09/2021 08:18:17  Message: teste: TesteIF_Else executado em: 151316   teste passou
+
+
+
+
+
+
+Time: 09/10/2021 08:27:50  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 08:32:22  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 08:35:07  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 08:36:33  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 08:36:42  Message: Desempenho do cenario de teste:   tempo: 8471
+Time: 10/09/2021 08:36:42  Message: teste: TesteFor executado em: 8471   teste nao passou.
+
+
+Time: 10/09/2021 08:36:42  Message: Desempenho do cenario de teste:   tempo: 109
+Time: 10/09/2021 08:36:42  Message: teste: TesteImporter executado em: 109   teste passou
+
+
+Time: 10/09/2021 08:36:42  Message: Desempenho do cenario de teste:   tempo: 42
+Time: 10/09/2021 08:36:42  Message: teste: TesteIF executado em: 42   teste passou
+
+
+Time: 10/09/2021 08:36:42  Message: Desempenho do cenario de teste:   tempo: 41
+Time: 10/09/2021 08:36:42  Message: teste: TesteWhile executado em: 41   teste nao passou.
+
+
+Time: 10/09/2021 08:36:42  Message: Desempenho do cenario de teste:   tempo: 41
+Time: 10/09/2021 08:36:42  Message: teste: TesteCasesOfUse_2 executado em: 41   teste passou
+
+
+Time: 10/09/2021 08:36:42  Message: Desempenho do cenario de teste:   tempo: 95
+Time: 10/09/2021 08:36:42  Message: teste: TesteChamadaDeObjetoImportado executado em: 95   teste nao passou.
+
+
+
+
+Time: 09/10/2021 08:38:02  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 08:38:36  Message: Desempenho do cenario de teste:   tempo: 34386
+Time: 10/09/2021 08:38:36  Message: teste: TesteFor executado em: 34386   teste nao passou.
+
+
+Time: 10/09/2021 08:38:37  Message: Desempenho do cenario de teste:   tempo: 131
+Time: 10/09/2021 08:38:37  Message: teste: TesteImporter executado em: 131   teste passou
+
+
+
+
+Time: 09/10/2021 08:39:55  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 08:44:06  Message: Desempenho do cenario de teste:   tempo: 250861
+Time: 10/09/2021 08:44:06  Message: teste: TesteFor executado em: 250861   teste nao passou.
+
+
+Time: 10/09/2021 08:44:06  Message: Desempenho do cenario de teste:   tempo: 120
+Time: 10/09/2021 08:44:06  Message: teste: TesteImporter executado em: 120   teste passou
+
+
+Time: 10/09/2021 08:45:39  Message: Desempenho do cenario de teste:   tempo: 92416
+Time: 10/09/2021 08:45:39  Message: teste: TesteIF executado em: 92416   teste passou
+
+
+Time: 10/09/2021 08:45:39  Message: Desempenho do cenario de teste:   tempo: 48
+Time: 10/09/2021 08:45:39  Message: teste: TesteWhile executado em: 48   teste nao passou.
+
+
+Time: 10/09/2021 08:45:39  Message: Desempenho do cenario de teste:   tempo: 40
+Time: 10/09/2021 08:45:39  Message: teste: TesteCasesOfUse_2 executado em: 40   teste passou
+
+
+Time: 10/09/2021 08:45:39  Message: Desempenho do cenario de teste:   tempo: 100
+Time: 10/09/2021 08:45:39  Message: teste: TesteChamadaDeObjetoImportado executado em: 100   teste nao passou.
+
+
+
+
+Time: 09/10/2021 08:45:48  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 09:03:28  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 09:06:04  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 09:08:56  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 09:14:47  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 09:15:12  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 09:18:08  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 09:25:17  Message: Desempenho do cenario de teste:   tempo: 429017
+Time: 10/09/2021 09:25:17  Message: teste: TesteFor executado em: 429017   teste nao passou.
+
+
+Time: 10/09/2021 09:25:17  Message: Desempenho do cenario de teste:   tempo: 137
+Time: 10/09/2021 09:25:17  Message: teste: TesteImporter executado em: 137   teste passou
+
+
+Time: 10/09/2021 09:25:50  Message: Desempenho do cenario de teste:   tempo: 33366
+Time: 10/09/2021 09:25:50  Message: teste: TesteIF executado em: 33366   teste passou
+
+
+
+
+Time: 09/10/2021 09:28:04  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 09:31:19  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 09:33:51  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 09:33:51  Message: Desempenho do cenario de teste:   tempo: 462
+Time: 10/09/2021 09:33:51  Message: teste: TesteFor executado em: 462   teste passou
+
+
+Time: 10/09/2021 09:33:52  Message: Desempenho do cenario de teste:   tempo: 826
+Time: 10/09/2021 09:33:52  Message: teste: TesteImporter executado em: 826   teste passou
+
+
+Time: 10/09/2021 09:33:52  Message: Desempenho do cenario de teste:   tempo: 45
+Time: 10/09/2021 09:33:52  Message: teste: TesteIF executado em: 45   teste passou
+
+
+Time: 10/09/2021 09:33:52  Message: Desempenho do cenario de teste:   tempo: 74
+Time: 10/09/2021 09:33:52  Message: teste: TesteWhile executado em: 74   teste nao passou.
+
+
+Time: 10/09/2021 09:33:52  Message: Desempenho do cenario de teste:   tempo: 54
+Time: 10/09/2021 09:33:52  Message: teste: TesteCasesOfUse_2 executado em: 54   teste passou
+
+
+Time: 10/09/2021 09:33:53  Message: Desempenho do cenario de teste:   tempo: 138
+Time: 10/09/2021 09:33:53  Message: teste: TesteChamadaDeObjetoImportado executado em: 138   teste nao passou.
+
+
+
+
+Time: 09/10/2021 09:36:25  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 09:36:25  Message: Desempenho do cenario de teste:   tempo: 318
+Time: 10/09/2021 09:36:25  Message: teste: TesteFor executado em: 318   teste passou
+
+
+Time: 10/09/2021 09:38:23  Message: Desempenho do cenario de teste:   tempo: 118155
+Time: 10/09/2021 09:38:26  Message: teste: TesteImporter executado em: 118155   teste passou
+
+
+Time: 10/09/2021 09:38:33  Message: Desempenho do cenario de teste:   tempo: 2541
+Time: 10/09/2021 09:38:36  Message: teste: TesteIF executado em: 2541   teste passou
+
+
+Time: 10/09/2021 09:38:43  Message: Desempenho do cenario de teste:   tempo: 44
+Time: 10/09/2021 09:38:44  Message: teste: TesteWhile executado em: 44   teste nao passou.
+
+
+Time: 10/09/2021 09:38:44  Message: Desempenho do cenario de teste:   tempo: 41
+Time: 10/09/2021 09:38:44  Message: teste: TesteCasesOfUse_2 executado em: 41   teste passou
+
+
+Time: 10/09/2021 09:40:28  Message: Desempenho do cenario de teste:   tempo: 104619
+Time: 10/09/2021 09:40:28  Message: teste: TesteChamadaDeObjetoImportado executado em: 104619   teste nao passou.
+
+
+
+
+Time: 09/10/2021 09:41:02  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 09:41:02  Message: Desempenho do cenario de teste:   tempo: 222
+Time: 10/09/2021 09:41:02  Message: teste: TesteFor executado em: 222   teste passou
+
+
+Time: 10/09/2021 09:41:03  Message: Desempenho do cenario de teste:   tempo: 432
+Time: 10/09/2021 09:41:03  Message: teste: TesteImporter executado em: 432   teste passou
+
+
+Time: 10/09/2021 09:41:03  Message: Desempenho do cenario de teste:   tempo: 35
+Time: 10/09/2021 09:41:03  Message: teste: TesteIF executado em: 35   teste passou
+
+
+
+
+Time: 09/10/2021 09:41:48  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 09:41:48  Message: Desempenho do cenario de teste:   tempo: 224
+Time: 10/09/2021 09:41:48  Message: teste: TesteFor executado em: 224   teste passou
+
+
+Time: 10/09/2021 09:41:48  Message: Desempenho do cenario de teste:   tempo: 132
+Time: 10/09/2021 09:41:48  Message: teste: TesteImporter executado em: 132   teste passou
+
+
+Time: 10/09/2021 09:41:48  Message: Desempenho do cenario de teste:   tempo: 36
+Time: 10/09/2021 09:41:48  Message: teste: TesteIF executado em: 36   teste passou
+
+
+
+
+Time: 09/10/2021 09:42:18  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 09:42:19  Message: Desempenho do cenario de teste:   tempo: 218
+Time: 10/09/2021 09:42:19  Message: teste: TesteFor executado em: 218   teste passou
+
+
+Time: 10/09/2021 09:42:19  Message: Desempenho do cenario de teste:   tempo: 181
+Time: 10/09/2021 09:42:19  Message: teste: TesteImporter executado em: 181   teste passou
+
+
+Time: 10/09/2021 09:42:19  Message: Desempenho do cenario de teste:   tempo: 44
+Time: 10/09/2021 09:42:19  Message: teste: TesteIF executado em: 44   teste passou
+
+
+
+
+Time: 09/10/2021 09:43:07  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 09:43:07  Message: Desempenho do cenario de teste:   tempo: 214
+Time: 10/09/2021 09:43:07  Message: teste: TesteFor executado em: 214   teste passou
+
+
+Time: 10/09/2021 09:43:08  Message: Desempenho do cenario de teste:   tempo: 421
+Time: 10/09/2021 09:43:08  Message: teste: TesteImporter executado em: 421   teste passou
+
+
+Time: 10/09/2021 09:43:08  Message: Desempenho do cenario de teste:   tempo: 44
+Time: 10/09/2021 09:43:08  Message: teste: TesteIF executado em: 44   teste passou
+
+
+
+
+Time: 09/10/2021 09:44:40  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 09:44:41  Message: Desempenho do cenario de teste:   tempo: 728
+Time: 10/09/2021 09:44:41  Message: teste: TesteFor executado em: 728   teste passou
+
+
+Time: 10/09/2021 09:44:41  Message: Desempenho do cenario de teste:   tempo: 176
+Time: 10/09/2021 09:44:41  Message: teste: TesteImporter executado em: 176   teste passou
+
+
+Time: 10/09/2021 09:44:41  Message: Desempenho do cenario de teste:   tempo: 37
+Time: 10/09/2021 09:44:41  Message: teste: TesteIF executado em: 37   teste passou
+
+
+Time: 10/09/2021 09:46:29  Message: Desempenho do cenario de teste:   tempo: 107270
+Time: 10/09/2021 09:46:29  Message: teste: TesteWhile executado em: 107270   teste passou
+
+
+Time: 10/09/2021 09:46:29  Message: Desempenho do cenario de teste:   tempo: 43
+Time: 10/09/2021 09:46:29  Message: teste: TesteCasesOfUse_2 executado em: 43   teste passou
+
+
+Time: 10/09/2021 09:46:29  Message: Desempenho do cenario de teste:   tempo: 102
+Time: 10/09/2021 09:46:29  Message: teste: TesteChamadaDeObjetoImportado executado em: 102   teste nao passou.
+
+
+
+
+Time: 09/10/2021 09:46:36  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 09:46:36  Message: Desempenho do cenario de teste:   tempo: 202
+Time: 10/09/2021 09:46:36  Message: teste: TesteFor executado em: 202   teste passou
+
+
+Time: 10/09/2021 09:46:36  Message: Desempenho do cenario de teste:   tempo: 112
+Time: 10/09/2021 09:46:36  Message: teste: TesteImporter executado em: 112   teste passou
+
+
+Time: 10/09/2021 09:46:36  Message: Desempenho do cenario de teste:   tempo: 31
+Time: 10/09/2021 09:46:36  Message: teste: TesteIF executado em: 31   teste passou
+
+
+Time: 10/09/2021 09:46:36  Message: Desempenho do cenario de teste:   tempo: 44
+Time: 10/09/2021 09:46:36  Message: teste: TesteWhile executado em: 44   teste passou
+
+
+Time: 10/09/2021 09:46:36  Message: Desempenho do cenario de teste:   tempo: 70
+Time: 10/09/2021 09:46:36  Message: teste: TesteCasesOfUse_2 executado em: 70   teste passou
+
+
+Time: 10/09/2021 09:46:36  Message: Desempenho do cenario de teste:   tempo: 123
+Time: 10/09/2021 09:46:36  Message: teste: TesteChamadaDeObjetoImportado executado em: 123   teste nao passou.
+
+
+
+
+Time: 09/10/2021 09:46:53  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 09:46:53  Message: Desempenho do cenario de teste:   tempo: 212
+Time: 10/09/2021 09:46:53  Message: teste: TesteFor executado em: 212   teste passou
+
+
+Time: 10/09/2021 09:46:54  Message: Desempenho do cenario de teste:   tempo: 168
+Time: 10/09/2021 09:46:54  Message: teste: TesteImporter executado em: 168   teste passou
+
+
+Time: 10/09/2021 09:46:54  Message: Desempenho do cenario de teste:   tempo: 31
+Time: 10/09/2021 09:46:54  Message: teste: TesteIF executado em: 31   teste passou
+
+
+Time: 10/09/2021 09:47:29  Message: Desempenho do cenario de teste:   tempo: 35205
+Time: 10/09/2021 09:47:29  Message: teste: TesteWhile executado em: 35205   teste passou
+
+
+Time: 10/09/2021 09:47:29  Message: Desempenho do cenario de teste:   tempo: 45
+Time: 10/09/2021 09:47:29  Message: teste: TesteCasesOfUse_2 executado em: 45   teste passou
+
+
+Time: 10/09/2021 09:47:29  Message: Desempenho do cenario de teste:   tempo: 126
+Time: 10/09/2021 09:47:29  Message: teste: TesteChamadaDeObjetoImportado executado em: 126   teste nao passou.
+
+
+
+
+Time: 09/10/2021 09:48:46  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 09:48:47  Message: Desempenho do cenario de teste:   tempo: 373
+Time: 10/09/2021 09:48:47  Message: teste: TesteFor executado em: 373   teste passou
+
+
+Time: 10/09/2021 09:48:47  Message: Desempenho do cenario de teste:   tempo: 195
+Time: 10/09/2021 09:48:47  Message: teste: TesteImporter executado em: 195   teste passou
+
+
+Time: 10/09/2021 09:48:47  Message: Desempenho do cenario de teste:   tempo: 42
+Time: 10/09/2021 09:48:47  Message: teste: TesteIF executado em: 42   teste passou
+
+
+Time: 10/09/2021 09:48:47  Message: Desempenho do cenario de teste:   tempo: 61
+Time: 10/09/2021 09:48:47  Message: teste: TesteWhile executado em: 61   teste passou
+
+
+Time: 10/09/2021 09:48:47  Message: Desempenho do cenario de teste:   tempo: 57
+Time: 10/09/2021 09:48:47  Message: teste: TesteCasesOfUse_2 executado em: 57   teste passou
+
+
+
+
+Time: 09/10/2021 09:51:52  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 09:53:47  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 09:55:54  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 09:57:59  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:05:50  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:09:23  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:12:04  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:12:55  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:18:42  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:19:29  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:20:26  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:22:43  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:25:51  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:27:29  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:29:56  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:34:39  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:37:57  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:39:26  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:41:49  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:44:26  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:45:42  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 10:45:42  Message: Desempenho do cenario de teste:   tempo: 634
+Time: 10/09/2021 10:45:42  Message: teste: TesteChamadaDeObjetoImportado executado em: 634   teste nao passou.
+
+
+Time: 10/09/2021 10:45:42  Message: Desempenho do cenario de teste:   tempo: 76
+Time: 10/09/2021 10:45:43  Message: teste: TesteFor executado em: 76   teste passou
+
+
+Time: 10/09/2021 10:45:43  Message: Desempenho do cenario de teste:   tempo: 104
+Time: 10/09/2021 10:45:43  Message: teste: TesteImporter executado em: 104   teste passou
+
+
+Time: 10/09/2021 10:45:43  Message: Desempenho do cenario de teste:   tempo: 47
+Time: 10/09/2021 10:45:43  Message: teste: TesteIF executado em: 47   teste passou
+
+
+Time: 10/09/2021 10:45:43  Message: Desempenho do cenario de teste:   tempo: 64
+Time: 10/09/2021 10:45:43  Message: teste: TesteWhile executado em: 64   teste passou
+
+
+Time: 10/09/2021 10:45:43  Message: Desempenho do cenario de teste:   tempo: 70
+Time: 10/09/2021 10:45:43  Message: teste: TesteCasesOfUse_2 executado em: 70   teste passou
+
+
+Time: 10/09/2021 10:45:43  Message: Desempenho do cenario de teste:   tempo: 307
+Time: 10/09/2021 10:45:43  Message: teste: TesteVariavelVetor executado em: 307   teste nao passou.
+
+
+Time: 10/09/2021 10:45:43  Message: Desempenho do cenario de teste:   tempo: 98
+Time: 10/09/2021 10:45:43  Message: teste: TesteCreateObjects executado em: 98   teste nao passou.
+
+
+Time: 10/09/2021 10:45:43  Message: Desempenho do cenario de teste:   tempo: 63
+Time: 10/09/2021 10:45:43  Message: teste: TesteCasesOfUse executado em: 63   teste passou
+
+
+Time: 10/09/2021 10:45:43  Message: Desempenho do cenario de teste:   tempo: 34
+Time: 10/09/2021 10:45:43  Message: teste: Atribuicao executado em: 34   teste passou
+
+
+Time: 10/09/2021 10:45:43  Message: Desempenho do cenario de teste:   tempo: 95
+Time: 10/09/2021 10:45:43  Message: teste: TesteIF_Else executado em: 95   teste passou
+
+
+
+
+
+
+Time: 09/10/2021 10:45:51  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 10:45:51  Message: Desempenho do cenario de teste:   tempo: 276
+Time: 10/09/2021 10:45:51  Message: teste: TesteChamadaDeObjetoImportado executado em: 276   teste nao passou.
+
+
+Time: 10/09/2021 10:45:52  Message: Desempenho do cenario de teste:   tempo: 56
+Time: 10/09/2021 10:45:52  Message: teste: TesteFor executado em: 56   teste passou
+
+
+Time: 10/09/2021 10:45:52  Message: Desempenho do cenario de teste:   tempo: 83
+Time: 10/09/2021 10:45:52  Message: teste: TesteImporter executado em: 83   teste passou
+
+
+Time: 10/09/2021 10:45:52  Message: Desempenho do cenario de teste:   tempo: 33
+Time: 10/09/2021 10:45:52  Message: teste: TesteIF executado em: 33   teste passou
+
+
+Time: 10/09/2021 10:45:52  Message: Desempenho do cenario de teste:   tempo: 46
+Time: 10/09/2021 10:45:52  Message: teste: TesteWhile executado em: 46   teste passou
+
+
+Time: 10/09/2021 10:45:52  Message: Desempenho do cenario de teste:   tempo: 42
+Time: 10/09/2021 10:45:52  Message: teste: TesteCasesOfUse_2 executado em: 42   teste passou
+
+
+Time: 10/09/2021 10:45:52  Message: Desempenho do cenario de teste:   tempo: 66
+Time: 10/09/2021 10:45:52  Message: teste: TesteVariavelVetor executado em: 66   teste nao passou.
+
+
+Time: 10/09/2021 10:45:52  Message: Desempenho do cenario de teste:   tempo: 75
+Time: 10/09/2021 10:45:52  Message: teste: TesteCreateObjects executado em: 75   teste nao passou.
+
+
+Time: 10/09/2021 10:45:52  Message: Desempenho do cenario de teste:   tempo: 52
+Time: 10/09/2021 10:45:52  Message: teste: TesteCasesOfUse executado em: 52   teste passou
+
+
+Time: 10/09/2021 10:45:52  Message: Desempenho do cenario de teste:   tempo: 22
+Time: 10/09/2021 10:45:52  Message: teste: Atribuicao executado em: 22   teste passou
+
+
+Time: 10/09/2021 10:45:52  Message: Desempenho do cenario de teste:   tempo: 82
+Time: 10/09/2021 10:45:52  Message: teste: TesteIF_Else executado em: 82   teste passou
+
+
+
+
+
+
+Time: 09/10/2021 10:47:03  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:50:04  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:51:05  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 10:52:34  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 11:01:48  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 11:05:01  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 11:06:00  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 11:06:30  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 11:08:31  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 11:11:18  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 11:13:33  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 11:22:47  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 09/10/2021 11:23:20  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 11:25:06  Message: Desempenho do cenario de teste:   tempo: 105903
+Time: 10/09/2021 11:25:06  Message: teste: TesteChamadaDeObjetoImportado executado em: 105903   teste passou
+
+
+Time: 10/09/2021 11:25:06  Message: Desempenho do cenario de teste:   tempo: 66
+Time: 10/09/2021 11:25:06  Message: teste: TesteFor executado em: 66   teste passou
+
+
+Time: 10/09/2021 11:25:06  Message: Desempenho do cenario de teste:   tempo: 77
+Time: 10/09/2021 11:25:06  Message: teste: TesteImporter executado em: 77   teste passou
+
+
+Time: 10/09/2021 11:25:06  Message: Desempenho do cenario de teste:   tempo: 32
+Time: 10/09/2021 11:25:06  Message: teste: TesteIF executado em: 32   teste passou
+
+
+Time: 10/09/2021 11:25:06  Message: Desempenho do cenario de teste:   tempo: 44
+Time: 10/09/2021 11:25:06  Message: teste: TesteWhile executado em: 44   teste passou
+
+
+Time: 10/09/2021 11:25:06  Message: Desempenho do cenario de teste:   tempo: 41
+Time: 10/09/2021 11:25:06  Message: teste: TesteCasesOfUse_2 executado em: 41   teste passou
+
+
+
+
+Time: 09/10/2021 11:29:42  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 11:29:45  Message: Desempenho do cenario de teste:   tempo: 2613
+Time: 10/09/2021 11:29:45  Message: teste: TesteChamadaDeObjetoImportado executado em: 2613   teste passou
+
+
+Time: 10/09/2021 11:29:45  Message: Desempenho do cenario de teste:   tempo: 133
+Time: 10/09/2021 11:29:45  Message: teste: TesteFor executado em: 133   teste passou
+
+
+Time: 10/09/2021 11:29:45  Message: Desempenho do cenario de teste:   tempo: 268
+Time: 10/09/2021 11:29:45  Message: teste: TesteImporter executado em: 268   teste passou
+
+
+Time: 10/09/2021 11:29:45  Message: Desempenho do cenario de teste:   tempo: 71
+Time: 10/09/2021 11:29:45  Message: teste: TesteIF executado em: 71   teste passou
+
+
+Time: 10/09/2021 11:29:45  Message: Desempenho do cenario de teste:   tempo: 137
+Time: 10/09/2021 11:29:45  Message: teste: TesteWhile executado em: 137   teste passou
+
+
+Time: 10/09/2021 11:29:45  Message: Desempenho do cenario de teste:   tempo: 72
+Time: 10/09/2021 11:29:45  Message: teste: TesteCasesOfUse_2 executado em: 72   teste passou
+
+
+
+
+Time: 09/10/2021 11:39:08  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 11:39:09  Message: Desempenho do cenario de teste:   tempo: 1354
+Time: 10/09/2021 11:39:09  Message: teste: TesteChamadaDeObjetoImportado executado em: 1354   teste passou
+
+
+Time: 10/09/2021 11:39:09  Message: Desempenho do cenario de teste:   tempo: 91
+Time: 10/09/2021 11:39:09  Message: teste: TesteFor executado em: 91   teste passou
+
+
+Time: 10/09/2021 11:39:09  Message: Desempenho do cenario de teste:   tempo: 102
+Time: 10/09/2021 11:39:09  Message: teste: TesteImporter executado em: 102   teste passou
+
+
+Time: 10/09/2021 11:39:09  Message: Desempenho do cenario de teste:   tempo: 40
+Time: 10/09/2021 11:39:09  Message: teste: TesteIF executado em: 40   teste passou
+
+
+Time: 10/09/2021 11:39:09  Message: Desempenho do cenario de teste:   tempo: 52
+Time: 10/09/2021 11:39:09  Message: teste: TesteWhile executado em: 52   teste passou
+
+
+Time: 10/09/2021 11:39:09  Message: Desempenho do cenario de teste:   tempo: 61
+Time: 10/09/2021 11:39:09  Message: teste: TesteCasesOfUse_2 executado em: 61   teste passou
+
+
+
+
+Time: 09/10/2021 11:42:15  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 11:42:23  Message: Desempenho do cenario de teste:   tempo: 7532
+Time: 10/09/2021 11:42:23  Message: teste: TesteChamadaDeObjetoImportado executado em: 7532   teste passou
+
+
+Time: 10/09/2021 11:42:23  Message: Desempenho do cenario de teste:   tempo: 65
+Time: 10/09/2021 11:42:23  Message: teste: TesteFor executado em: 65   teste passou
+
+
+Time: 10/09/2021 11:42:23  Message: Desempenho do cenario de teste:   tempo: 104
+Time: 10/09/2021 11:42:23  Message: teste: TesteImporter executado em: 104   teste passou
+
+
+Time: 10/09/2021 11:42:23  Message: Desempenho do cenario de teste:   tempo: 45
+Time: 10/09/2021 11:42:23  Message: teste: TesteIF executado em: 45   teste passou
+
+
+Time: 10/09/2021 11:42:23  Message: Desempenho do cenario de teste:   tempo: 57
+Time: 10/09/2021 11:42:23  Message: teste: TesteWhile executado em: 57   teste passou
+
+
+Time: 10/09/2021 11:42:23  Message: Desempenho do cenario de teste:   tempo: 54
+Time: 10/09/2021 11:42:23  Message: teste: TesteCasesOfUse_2 executado em: 54   teste passou
+
+
+
+
+Time: 09/10/2021 11:47:47  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 11:47:47  Message: Desempenho do cenario de teste:   tempo: 178
+Time: 10/09/2021 11:47:47  Message: teste: TesteVariavelVetor executado em: 178   teste nao passou.
+
+
+
+
+Time: 09/10/2021 11:49:56  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 11:49:56  Message: Desempenho do cenario de teste:   tempo: 341
+Time: 10/09/2021 11:49:56  Message: teste: TesteVariavelVetor executado em: 341   teste nao passou.
+
+
+
+
+Time: 09/10/2021 11:50:47  Message: Testes para avaliacao de instrucoes.
+Time: 10/09/2021 11:50:47  Message: Desempenho do cenario de teste:   tempo: 196
+Time: 10/09/2021 11:50:47  Message: teste: TesteVariavelVetor executado em: 196   teste nao passou.
+
+
+
+
+Time: 11/10/2021 09:35:59  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 09:36:33  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 09:38:54  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 10:34:04  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 10:39:44  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 10:43:36  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 10:49:21  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 10:51:18  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 10:55:34  Message: Testes para avaliacao de instrucoes.
+Time: 10/11/2021 10:55:37  Message: Desempenho do cenario de teste:   tempo: 3016
+Time: 10/11/2021 10:55:37  Message: teste: TesteVariavelVetor executado em: 3016   teste nao passou.
+
+
+
+
+Time: 11/10/2021 10:59:59  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 11:00:17  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 11:00:56  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 11:01:33  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 11:04:22  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 11:15:56  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 11:18:35  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 11:19:25  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 11:24:41  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 11:25:10  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 11:30:47  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 11:34:19  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 11:34:41  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 11:35:17  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 11:36:30  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 16:19:02  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 16:22:38  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 16:25:55  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 16:28:33  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 16:30:13  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 16:33:28  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 16:54:55  Message: Testes para avaliacao de instrucoes.
+
+
+Time: 11/10/2021 16:56:05  Message: Testes para avaliacao de instrucoes.
+Time: 10/11/2021 16:56:36  Message: Desempenho do cenario de teste:   tempo: 31286
+Time: 10/11/2021 16:56:38  Message: teste: TesteVariavelVetor executado em: 31286   teste passou
+
+
+Time: 10/11/2021 16:56:45  Message: Desempenho do cenario de teste:   tempo: 2765
+Time: 10/11/2021 16:56:49  Message: teste: TesteChamadaDeObjetoImportado executado em: 2765   teste passou
+
+
+Time: 10/11/2021 16:56:59  Message: Desempenho do cenario de teste:   tempo: 2559
+Time: 10/11/2021 16:57:02  Message: teste: TesteFor executado em: 2559   teste passou
+
+
+Time: 11/10/2021 16:59:17  Message: Testes para avaliacao de instrucoes.
+Time: 10/11/2021 17:00:04  Message: Desempenho do cenario de teste:   tempo: 46632
+Time: 10/11/2021 17:00:05  Message: teste: TesteCasesOfUse executado em: 46632   teste passou
+
+
+Time: 10/11/2021 17:00:42  Message: Desempenho do cenario de teste:   tempo: 21517
+Time: 10/11/2021 17:00:56  Message: teste: Atribuicao executado em: 21517   teste passou
+
+
+Time: 10/11/2021 17:01:37  Message: Desempenho do cenario de teste:   tempo: 40914
+Time: 10/11/2021 17:01:37  Message: teste: TesteIF_Else executado em: 40914   teste passou
+
+
+Time: 10/11/2021 17:03:48  Message: Desempenho do cenario de teste:   tempo: 131525
+Time: 10/11/2021 17:03:48  Message: teste: TesteVariavelVetor executado em: 131525   teste passou
+
+
+Time: 10/11/2021 17:04:13  Message: Desempenho do cenario de teste:   tempo: 24376
+Time: 10/11/2021 17:04:13  Message: teste: TesteChamadaDeObjetoImportado executado em: 24376   teste passou
+
+
+Time: 10/11/2021 17:04:16  Message: Desempenho do cenario de teste:   tempo: 3360
+Time: 10/11/2021 17:04:16  Message: teste: TesteFor executado em: 3360   teste passou
+
+
+Time: 10/11/2021 17:04:16  Message: Desempenho do cenario de teste:   tempo: 78
+Time: 10/11/2021 17:04:16  Message: teste: TesteImporter executado em: 78   teste passou
+
+
+Time: 10/11/2021 17:04:36  Message: Desempenho do cenario de teste:   tempo: 19970
+Time: 10/11/2021 17:05:00  Message: teste: TesteIF executado em: 19970   teste passou
+
+
+Time: 10/11/2021 17:05:00  Message: Desempenho do cenario de teste:   tempo: 67
+Time: 10/11/2021 17:05:00  Message: teste: TesteWhile executado em: 67   teste passou
+
+
+Time: 10/11/2021 17:05:00  Message: Desempenho do cenario de teste:   tempo: 53
+Time: 10/11/2021 17:05:00  Message: teste: TesteCasesOfUse_2 executado em: 53   teste passou
+
+
+Time: 10/11/2021 17:05:00  Message: Desempenho do cenario de teste:   tempo: 83
+Time: 10/11/2021 17:05:00  Message: teste: TesteCreateObjects executado em: 83   teste passou
+
+
+
+
+
+
+Time: 11/10/2021 17:07:43  Message: Testes para avaliacao de instrucoes.
+Time: 10/11/2021 17:07:44  Message: Desempenho do cenario de teste:   tempo: 270
+Time: 10/11/2021 17:07:44  Message: teste: TesteCasesOfUse executado em: 270   teste passou
+
+
+Time: 10/11/2021 17:07:44  Message: Desempenho do cenario de teste:   tempo: 13
+Time: 10/11/2021 17:07:44  Message: teste: Atribuicao executado em: 13   teste passou
+
+
+Time: 10/11/2021 17:07:44  Message: Desempenho do cenario de teste:   tempo: 69
+Time: 10/11/2021 17:07:44  Message: teste: TesteIF_Else executado em: 69   teste passou
+
+
+Time: 10/11/2021 17:07:44  Message: Desempenho do cenario de teste:   tempo: 15
+Time: 10/11/2021 17:07:44  Message: teste: TesteVariavelVetor executado em: 15   teste passou
+
+
+Time: 10/11/2021 17:07:45  Message: Desempenho do cenario de teste:   tempo: 857
+Time: 10/11/2021 17:07:45  Message: teste: TesteChamadaDeObjetoImportado executado em: 857   teste passou
+
+
+Time: 10/11/2021 17:07:45  Message: Desempenho do cenario de teste:   tempo: 104
+Time: 10/11/2021 17:07:45  Message: teste: TesteFor executado em: 104   teste passou
+
+
+Time: 10/11/2021 17:07:45  Message: Desempenho do cenario de teste:   tempo: 112
+Time: 10/11/2021 17:07:45  Message: teste: TesteImporter executado em: 112   teste passou
+
+
+Time: 10/11/2021 17:07:45  Message: Desempenho do cenario de teste:   tempo: 50
+Time: 10/11/2021 17:07:45  Message: teste: TesteIF executado em: 50   teste passou
+
+
+Time: 10/11/2021 17:07:45  Message: Desempenho do cenario de teste:   tempo: 144
+Time: 10/11/2021 17:07:45  Message: teste: TesteWhile executado em: 144   teste passou
+
+
+Time: 10/11/2021 17:07:45  Message: Desempenho do cenario de teste:   tempo: 61
+Time: 10/11/2021 17:07:45  Message: teste: TesteCasesOfUse_2 executado em: 61   teste passou
+
+
+Time: 10/11/2021 17:07:45  Message: Desempenho do cenario de teste:   tempo: 131
+Time: 10/11/2021 17:07:45  Message: teste: TesteCreateObjects executado em: 131   teste passou
+
+
+
+
+
+
+Time: 11/10/2021 17:10:02  Message: Testes para avaliacao de instrucoes.
+Time: 10/11/2021 17:10:02  Message: Desempenho do cenario de teste:   tempo: 293
+Time: 10/11/2021 17:10:02  Message: teste: TesteCasesOfUse executado em: 293   teste passou
+
+
+Time: 10/11/2021 17:10:02  Message: Desempenho do cenario de teste:   tempo: 20
+Time: 10/11/2021 17:10:02  Message: teste: Atribuicao executado em: 20   teste passou
+
+
+Time: 10/11/2021 17:10:03  Message: Desempenho do cenario de teste:   tempo: 55
+Time: 10/11/2021 17:10:03  Message: teste: TesteIF_Else executado em: 55   teste passou
+
+
+Time: 10/11/2021 17:10:03  Message: Desempenho do cenario de teste:   tempo: 13
+Time: 10/11/2021 17:10:03  Message: teste: TesteVariavelVetor executado em: 13   teste passou
+
+
+Time: 10/11/2021 17:10:03  Message: Desempenho do cenario de teste:   tempo: 583
+Time: 10/11/2021 17:10:03  Message: teste: TesteChamadaDeObjetoImportado executado em: 583   teste passou
+
+
+Time: 10/11/2021 17:10:03  Message: Desempenho do cenario de teste:   tempo: 59
+Time: 10/11/2021 17:10:03  Message: teste: TesteFor executado em: 59   teste passou
+
+
+Time: 10/11/2021 17:10:03  Message: Desempenho do cenario de teste:   tempo: 164
+Time: 10/11/2021 17:10:03  Message: teste: TesteImporter executado em: 164   teste passou
+
+
+Time: 10/11/2021 17:10:03  Message: Desempenho do cenario de teste:   tempo: 57
+Time: 10/11/2021 17:10:03  Message: teste: TesteIF executado em: 57   teste passou
+
+
+Time: 10/11/2021 17:10:04  Message: Desempenho do cenario de teste:   tempo: 68
+Time: 10/11/2021 17:10:04  Message: teste: TesteWhile executado em: 68   teste passou
+
+
+Time: 10/11/2021 17:10:04  Message: Desempenho do cenario de teste:   tempo: 57
+Time: 10/11/2021 17:10:04  Message: teste: TesteCasesOfUse_2 executado em: 57   teste passou
+
+
+Time: 10/11/2021 17:10:04  Message: Desempenho do cenario de teste:   tempo: 121
+Time: 10/11/2021 17:10:04  Message: teste: TesteCreateObjects executado em: 121   teste passou
+
+
+
+

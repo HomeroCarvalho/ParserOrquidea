@@ -14,7 +14,7 @@ namespace parser
     {
         private List<string> tokens;
         private List<string> code;
-        private static LinguagemOrquidea linguagem = new LinguagemOrquidea();
+        private static LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
 
         private List<char> caracteresRemover = new List<char>() { '\t', '\n' };
 

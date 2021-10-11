@@ -22,7 +22,7 @@ namespace parser
         private static List<tokenEPosicao> tokensPosicionados = new List<tokenEPosicao>();
 
 
-        private static LinguagemOrquidea linguagem = new LinguagemOrquidea();
+        private static LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
 
         /// <summary>
         /// construtor.obtem a posição de um grupo de tokens, ante um trecho de codigo.

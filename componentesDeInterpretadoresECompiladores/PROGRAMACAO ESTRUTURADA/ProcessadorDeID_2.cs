@@ -17,7 +17,7 @@ namespace parser
         public BuildInstrucoes(List<string> codigo)
         {
             if (linguagem == null)
-                linguagem = new LinguagemOrquidea();
+                linguagem = LinguagemOrquidea.Instance();
             this.codigo = codigo.ToList<string>();
             this.escopo = new Escopo(codigo);
         }
@@ -181,12 +181,22 @@ namespace parser
 
 
             int indexFirstParenteses = sequencia.tokens.IndexOf("(");
-            
+            List<string> tokensParametros = UtilTokens.GetCodigoEntreOperadores(indexFirstParenteses, "(", ")", sequencia.tokens);
+            tokensParametros.RemoveAt(0);
+            tokensParametros.RemoveAt(tokensParametros.Count - 1);
 
-            List<Expressao> expressoesParametros = Expressao.Instance.ExtraiExpressoes(escopo, sequencia.tokens.GetRange(indexFirstParenteses + 1, sequencia.tokens.Count - (indexFirstParenteses + 1)));
+            if (tipoDoObjetoAReceberAInstantiacao == "Vetor")
+                tokensParametros.RemoveRange(0, 2); // retira o tipo de um elemento do vetor, mais a virgula delimitadora depois do tipo de elemento.
+
+
+
+            List<Expressao> expressoesParametros = Expressao.Instance.ExtraiExpressoes(escopo, tokensParametros);
+          
+                
             if ((expressoesParametros == null) || (expressoesParametros[0].Elementos == null) || (expressoesParametros[0].Elementos.Count == 0))
                 expressoesParametros = new List<Expressao>();
 
+        
 
             int indexConstrutor=FoundACompatibleConstructor(tipoDoObjetoAReceberAInstantiacao, expressoesParametros);
             if (indexConstrutor < 0)
@@ -213,19 +223,18 @@ namespace parser
             
             if (tipoDoObjetoAReceberAInstantiacao == "Vetor")
             {
-                exprssDaIntrucao.Elementos.RemoveAt(3);
-                exprssDaIntrucao.Elementos.Insert(3, new ExpressaoElemento("Vetor"));
-            
+                // tipo da variavel: vetor.
                 List<int> indicesVetor = new List<int>();
                 string tipoDosElementosDoVetor = sequencia.tokens[5]; // o primeiro elemento do create é reservado para o tipo do elemento do vetor, se for um vetor.
                 EvalExpression eval = new EvalExpression();
+                
                 try
                 {
 
 
-                    for (int tokenIndice = 0; tokenIndice < expressoesParametros[0].Elementos.Count; tokenIndice++)
+                    for (int tokenIndice = 0; tokenIndice < expressoesParametros.Count; tokenIndice++)
                     {
-                        object umIndice = eval.EvalPosOrdem(expressoesParametros[0].Elementos[tokenIndice], escopo);
+                        object umIndice = eval.EvalPosOrdem(expressoesParametros[tokenIndice], escopo);
                         if (umIndice != null)
                             indicesVetor.Add(int.Parse(umIndice.ToString()));
 
@@ -233,15 +242,18 @@ namespace parser
                 }
                 catch
                 {
-                    UtilTokens.WriteAErrorMensage(escopo, "Os indices da variavel vetor a ser criado: " + nomeDoObjetoAReceberAInstanciacao + " devem ser apenas numeros inteiros.", sequencia.tokens);
+                    UtilTokens.WriteAErrorMensage(escopo, "Os indices das dimensoes da variavel vetor a ser criado: " + nomeDoObjetoAReceberAInstanciacao + " devem ser apenas numeros inteiros.", sequencia.tokens);
                     return null;
                 }
 
                 escopo.tabela.GetVetores().Add(new Vetor("private", nomeDoObjetoAReceberAInstanciacao, tipoDosElementosDoVetor, escopo, indicesVetor.ToArray())); // adiciona a variavel vetor criada, para a compilação das próximas instruções, em outros builds.
+                exprssDaIntrucao.Elementos[3] = new ExpressaoElemento("Vetor");
+
                    
             }
             else
             {
+                // tipo da variável: Objeto.
                 Classe classeDoObjeto = RepositorioDeClassesOO.Instance().GetClasse(tipoDoObjetoAReceberAInstantiacao);
 
                 if (escopo.tabela.GetObjeto(nomeDoObjetoAReceberAInstanciacao, escopo) == null) // se o objeto não já foi criado, instancia o objeto, no escopo.
@@ -290,8 +302,8 @@ namespace parser
             return true;
         } // ValidaTokensDaSintaxeDaInstrucao()
 
-     
-        public static  int FoundACompatibleConstructor(string tipoObjeto, List<Expressao> parametros)
+
+        public static int FoundACompatibleConstructor(string tipoObjeto, List<Expressao> parametros)
         {
             List<Funcao> construtores = RepositorioDeClassesOO.Instance().GetClasse(tipoObjeto).construtores;
             int contadorConstrutores = 0;
@@ -308,39 +320,49 @@ namespace parser
                 bool isFoundConstrutor = true;
                 if (umConstrutor.parametrosDaFuncao == null)
                 {
-                    if ((parametros == null) || (parametros.Count == 0) || (parametros[x_parametros].Elementos.Count == 0)) 
-                        return contadorConstrutores;
-                }
-                else
-                if (umConstrutor.parametrosDaFuncao.Length > 0)
-                { 
                     if ((parametros == null) || (parametros.Count == 0) || (parametros[x_parametros].Elementos.Count == 0))
                         return contadorConstrutores;
                 }
-
-                else
-                    foreach (Expressao umParametro in parametros)
+      
+                for (int x = 0; x < parametros.Count; x++)
+                { 
+                    
+                
+                    foreach (Objeto parametroDoConstrutor in umConstrutor.parametrosDaFuncao)
                     {
-
-                        foreach (Objeto parametroDoConstrutor in umConstrutor.parametrosDaFuncao)
-                        {
-                            string tipoParametroCasting = UtilTokens.Casting(umParametro.tipo);
-                            string tipoParametroConstrutorCasting = UtilTokens.Casting(parametroDoConstrutor.GetTipo());
-
-                            if (tipoParametroCasting != tipoParametroConstrutorCasting)
-                            {
-                                isFoundConstrutor = false;
-                                break;
-                            } // if
-                        } // foreach parametroConstrutor
-
-                        if (isFoundConstrutor)
-                            return contadorConstrutores;
+                        string tipoParametroCasting = UtilTokens.Casting(parametros[x].ToString());
+                        if (Expressao.Instance.IsTipoInteiro(parametros[x].ToString()))
+                            tipoParametroCasting = "int";
                         else
-                            if (!isFoundConstrutor)
-                            break;
+                        if (Expressao.Instance.IsTipoFloat(parametros[x].ToString()))
+                            tipoParametroCasting = "float";
+                        else
+                        if (Expressao.Instance.IsTipoDouble(parametros[x].ToString()))
+                            tipoParametroCasting = "double";
+                     
+                        
+                        
+                        string tipoParametroConstrutorCasting = UtilTokens.Casting(parametroDoConstrutor.GetTipo());
 
-                    } // foreach Expressao
+                        if ((tipoParametroCasting == "float") && (tipoParametroConstrutorCasting == "double"))
+                            continue;
+                        if ((tipoParametroCasting == "double") && (tipoParametroCasting == "float"))
+                            continue;
+
+                        if (tipoParametroCasting != tipoParametroConstrutorCasting)
+                        {
+                            isFoundConstrutor = false;
+                            break;
+                        } // if
+                    } // foreach parametroConstrutor
+
+                    if (isFoundConstrutor)
+                        return contadorConstrutores;
+                    else
+                        if (!isFoundConstrutor)
+                        break;
+
+                } // foreach Expressao
 
                 contadorConstrutores++;
 
@@ -405,7 +427,11 @@ namespace parser
             if (sequencia.tokens[0] == "while")
             {
                 List<string> tokensInstrucao = sequencia.tokens.ToList<string>();
-                tokensInstrucao.RemoveAt(0);
+                tokensInstrucao.RemoveAt(0); // retira o termo-chave "while".
+
+
+                tokensInstrucao.RemoveAt(0); // retira o parenteses abre.
+                tokensInstrucao.RemoveAt(tokensInstrucao.Count - 1); // retira o parenteses fecha.
                 expressoesWhile = Expressao.Instance.ExtraiExpressoes(escopo, tokensInstrucao);
 
                 if ((expressoesWhile == null) || (expressoesWhile.Count == 0))

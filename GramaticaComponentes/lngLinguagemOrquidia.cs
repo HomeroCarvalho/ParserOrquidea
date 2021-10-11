@@ -18,6 +18,16 @@ namespace parser
             this.inicializaOperadores(false);// inicializa todos operadores das classes nativas.
         } // LinguagemOrquidea()
 
+        private static LinguagemOrquidea linguagemOrquideaSingleton;
+
+
+        public static LinguagemOrquidea Instance()
+        {
+            if (linguagemOrquideaSingleton == null)
+                linguagemOrquideaSingleton = new LinguagemOrquidea();
+            return linguagemOrquideaSingleton;
+        }
+
         public static List<Operador> operadoresCondicionais { get; set; }
         public static List<Operador> operadoresBinarios { get; set; }
         public static List<Operador> operadoresUnarios { get; set; }
@@ -28,6 +38,10 @@ namespace parser
             
             if (LinguagemOrquidea.Classes != null)
                 return;
+
+
+
+
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
             List<Operador> op_int = new List<Operador>();

@@ -158,7 +158,7 @@ namespace parser
            
 
             // verifica se há conflitos de nomes de metodos, propriedaddes, e operadores, que tem o mesmo nome, mas vêem de classes herdadas diferentes.
-            this.VerificaConflitoDeMetodosHerdados(umaClasse);
+            this.VerificaConflitoDeNomesEmPropriedadesEMetodosEOperadores(umaClasse);
 
 
             if (nomeDaClasse != null)
@@ -263,107 +263,101 @@ namespace parser
         /// resolve problemas de conflito de nomes de metodos,propriedades, operadores, que vem de classes herdadas diferentes, mas que possuem nome igual.
         /// Os metodo, propriedades, e operaores de todas classes herdadas ja foram adicionadas a classe herdeira (classe currente que está sendo construida.
         /// </summary>
-        private void VerificaConflitoDeMetodosHerdados(Classe currente)
+        private void VerificaConflitoDeNomesEmPropriedadesEMetodosEOperadores(Classe classeHerdeira)
         {
-
-            if (currente.GetPropriedades() != null)
+            if ((classeHerdeira.classesHerdadas == null) && (classeHerdeira.classesHerdadas.Count == 0))
+                return;
+            if (classeHerdeira.GetPropriedades() != null)
             {
-                for (int x = 0; x < currente.GetPropriedades().Count; x++)
-                {
-                    List<Objeto> propriedadesNomesIguais = currente.GetPropriedades().FindAll(k => k.GetNome() == currente.GetPropriedades()[x].GetNome());
-                    if (propriedadesNomesIguais.Count > 1) 
-                    {
 
 
-                        string avisoNomeLongo = "Aviso: propriedades: " + propriedadesNomesIguais[0].GetNome() + " de classes herdadas:" +
-                       " possuem nomes iguais. Fazendo nome longo para as propriedades, para evitar conflitos de chamada destas propriedades, pela classe herdeira. Utilize o nome longo ( nomeClasse+nomePropriedade) para acessar estas propriedades.";
-                        UtilTokens.WriteAErrorMensage(escopo, avisoNomeLongo, this.tokensDaClasse);
+                for (int c1 = 0; c1 < classeHerdeira.classesHerdadas.Count; c1++)
+
+                    for (int c2 = c1 + 1; c2 < classeHerdeira.classesHerdadas.Count; c2++)
+                        if ((classeHerdeira.classesHerdadas[c1].GetMetodos() != null) && (classeHerdeira.classesHerdadas[c2].GetMetodos() != null))
+
+                            for (int p1 = 0; p1 < classeHerdeira.classesHerdadas[c1].GetPropriedades().Count; p1++)
+                                for (int p2 = p1 + 1; p2 < classeHerdeira.classesHerdadas[c2].GetPropriedades().Count; p2++)
+                                {
+                                    Objeto umaPropriedadeHerdadaClasseC1 = classeHerdeira.classesHerdadas[c1].GetPropriedades()[p1];
+                                    Objeto umaPropriedadeHerdadaClasseC2 = classeHerdeira.classesHerdadas[c2].GetPropriedades()[p2];
+                                    if (umaPropriedadeHerdadaClasseC1.GetNome() == umaPropriedadeHerdadaClasseC2.GetNome())
+                                    {
+                                        // informa ao programador que as propriedades herdadas de nomes iguais, foram setadas para nomelongo: nomeClasse+nomePropriedade, para evitar conflitos de nomes.
+                                        string avisoNomeLongo = "Aviso: propriedades: " + umaPropriedadeHerdadaClasseC1.GetNome() + " de classes herdadas:" +
+                                       " possuem nomes iguais. Fazendo nome longo para as propriedades, para evitar conflitos de chamada destas propriedades, pela classe herdeira. Utilize o nome longo ( nomeClasse+nomePropriedade) para acessar estas propriedades.";
+                                        UtilTokens.WriteAErrorMensage(escopo, avisoNomeLongo, this.tokensDaClasse);
 
 
-                        string nomePropriedade = currente.GetPropriedades()[x].GetNome();
-                        currente.GetPropriedades().RemoveAll(k => k.GetNome() == nomePropriedade); // remove as propriedades em conflito, pois possuem o mesmo nome e nao se pode codificar com uma propriedade com dois nomes iguais.
-                        for (int c = 0; c < currente.classesHerdadas.Count; c++)
-                        {
-                            Objeto obj1 = currente.classesHerdadas[c].GetPropriedades().Find(k => k.GetNome() == nomePropriedade);
-                            if (obj1 != null) 
-                            {
+                                        umaPropriedadeHerdadaClasseC1.SetNomeLongo(classeHerdeira.classesHerdadas[c1].GetNome());
+                                        umaPropriedadeHerdadaClasseC2.SetNomeLongo(classeHerdeira.classesHerdadas[c2].GetNome());
+                                    }
 
-
-                                // cria uma nova propriedade com nome longo, e adiciona a classe herdeira, que teve as propriedades em conflito retiradas, justamente por nao ser possivel distinguir com nomes iguais.
-                                Objeto propriedadeComNomeLongo = new Objeto(obj1);
-                                propriedadeComNomeLongo.SetNomeLongo(currente.classesHerdadas[c].GetNome());
-
-                                currente.GetPropriedades().Add(propriedadeComNomeLongo);
-                            }
-                        }
-
-                    }
-                }
+                                }
             }
-            if (currente.GetMetodos() != null)
+            if (classeHerdeira.GetMetodos() != null)
             {
                 // obtem os metodos em conflito, remove da classe herdeira, obtem os metodos em conflito nas classes herdeiras, seta para nome longo, e adiciona a classe herdeira.
 
-                for (int x = 0; x < currente.GetMetodos().Count; x++)
-                {
-                    List<Funcao> metodosNomesIguais = currente.GetMetodos().FindAll(k => k.nome == currente.GetMetodos()[x].nome);
-                    if (metodosNomesIguais.Count > 1)
-                    {
 
-                        string avisoNomeLongo = "Aviso: metodos: " + metodosNomesIguais[0].nome + " de classes herdadas:" +
-                       " possuem nomes iguais. Fazendo nome longo para estes metodos, para evitar conflitos de chamada destes metodos, pela classe herdeira. Utilize o nome longo ( nomeClasse+nomeMetodo) para acessar estes metodos.";
-                        escopo.GetMsgErros().Add(avisoNomeLongo);
+                for (int c1 = 0; c1 < classeHerdeira.classesHerdadas.Count; c1++)
+                    for (int c2 = c1 + 1; c2 < classeHerdeira.classesHerdadas.Count; c2++)
 
-                        string nomeMetodoNomeIgual = metodosNomesIguais[0].nome;
-                      
-                        currente.GetMetodos().RemoveAll(k => k.nome == nomeMetodoNomeIgual);
-                        for (int c = 0; c < currente.classesHerdadas.Count; c++)
-                        {
-                            List<Funcao> metodosEmConflito = currente.classesHerdadas[c].GetMetodos().FindAll(k => k.nome == nomeMetodoNomeIgual).ToList<Funcao>();
-                            for (int m = 0; m < metodosEmConflito.Count; m++)
-                            {
-                                Funcao metodoComNomeLongo = metodosEmConflito[m].Clone();
-                                metodoComNomeLongo.SetNomeLongo(currente.classesHerdadas[c].GetNome());
-                                currente.GetMetodos().Add(metodoComNomeLongo);
-                            }
-                        }
-                    }
-                }
+                        if ((classeHerdeira.classesHerdadas[c1].GetMetodos() != null) && (classeHerdeira.classesHerdadas[c2].GetMetodos() != null))
+
+
+                            for (int m1 = 0; m1 < classeHerdeira.classesHerdadas[c1].GetMetodos().Count; m1++)
+
+                                for (int m2 = m1 + 1; m2 < classeHerdeira.classesHerdadas[c2].GetMetodos().Count; m2++)
+                                    if (classeHerdeira.classesHerdadas[c1].GetMetodos()[m1].nome == classeHerdeira.classesHerdadas[c2].GetMetodos()[m2].nome)
+                                    {
+                                        string avisoNomeLongo = "Aviso: metodos: " + classeHerdeira.classesHerdadas[c1].GetMetodos()[m1].nome + " de classes herdadas:" +
+                                                              " possuem nomes iguais. Fazendo nome longo para estes metodos, para evitar conflitos de chamada destes metodos, pela classe herdeira. Utilize o nome longo ( nomeClasse+nomeMetodo) para acessar estes metodos.";
+
+                                        UtilTokens.WriteAErrorMensage(escopo, avisoNomeLongo, this.tokensDaClasse);
+
+
+                                        classeHerdeira.classesHerdadas[c1].GetMetodos()[m1].SetNomeLongo(classeHerdeira.classesHerdadas[c1].GetNome());
+                                        classeHerdeira.classesHerdadas[c2].GetMetodos()[m2].SetNomeLongo(classeHerdeira.classesHerdadas[c2].GetNome());
+
+                                    }
+
+
             }
 
-            if (currente.GetOperadores() != null)
+            if (classeHerdeira.GetOperadores() != null)
             {
-                for (int x = 0; x < currente.GetOperadores().Count; x++)
-                {
-                    List<Operador> operadoresNomesIguais = currente.GetOperadores().FindAll(k => k.nome == currente.GetOperadores()[x].nome);
-                    if (operadoresNomesIguais.Count > 1)
-                    {
-                        string avisoNomeLongo = "Aviso: operadores: " + operadoresNomesIguais[0].nome + " de classes herdadas:" +
-                      " possuem nomes iguais. Fazendo nome longo para estes operadores, para evitar conflitos de chamada destes operadores, pela classe herdeira. Utilize o nome longo ( nomeClasse+nomeOperador) para acessar estes operadores.";
-                        
-                        UtilTokens.WriteAErrorMensage(escopo, avisoNomeLongo, this.tokensDaClasse);
+                for (int c1 = 0; c1 < classeHerdeira.classesHerdadas.Count; c1++)
+                    for (int c2 = c1 + 1; c2 < classeHerdeira.classesHerdadas.Count; c2++)
 
-                        string nomeOperadorIgual = operadoresNomesIguais[x].nome;
-
-                        currente.GetOperadores().RemoveAll(k => k.nome == nomeOperadorIgual);
-                        for (int c = 0; c < currente.classesHerdadas.Count; c++)
+                        if ((classeHerdeira.classesHerdadas[c1].GetMetodos() != null) && (classeHerdeira.classesHerdadas[c2].GetMetodos() != null))
                         {
-                            Operador operadorEmConflito = currente.classesHerdadas[c].GetOperadores().Find(k => k.nome == nomeOperadorIgual);
-                            if (operadorEmConflito != null)
-                            {
-                                Operador operador = operadorEmConflito.Clone();
-                                operador.prioridade = operadorEmConflito.prioridade;
-                                operador.SetNomeLongo(currente.classesHerdadas[c].nome);
-                                currente.GetOperadores().Add(operador);
-                            }
+                            for (int opc1 = 0; opc1 < classeHerdeira.classesHerdadas[c1].GetOperadores().Count; opc1++)
+                                for (int opc2 = opc1 + 1; opc2 < classeHerdeira.classesHerdadas[c2].GetOperadores().Count; opc2++)
+                                {
+                                    Operador operadorC1 = classeHerdeira.classesHerdadas[c1].GetOperadores()[opc1];
+                                    Operador operadorC2 = classeHerdeira.classesHerdadas[c2].GetOperadores()[opc2];
+
+
+                                    if (operadorC1.nome == operadorC2.nome)
+                                    {
+                                        string avisoNomeLongo = "Aviso: metodos: " + operadorC1.nome + " de classes herdadas:" +
+                                                              " possuem nomes iguais. Fazendo nome longo para estes metodos, para evitar conflitos de chamada destes metodos, pela classe herdeira. Utilize o nome longo ( nomeClasse+nomeMetodo) para acessar estes metodos.";
+
+                                        UtilTokens.WriteAErrorMensage(escopo, avisoNomeLongo, this.tokensDaClasse);
+                                        operadorC1.SetNomeLongo(classeHerdeira.classesHerdadas[c1].GetNome());
+                                        operadorC2.SetNomeLongo(classeHerdeira.classesHerdadas[c2].GetNome());
+
+                                    }
+                                }
                         }
-                    }
-                }
+
+
+
+
             }
 
-  
         }
-
         private static void RemoveItensDeClassesDeserdadas(Classe classeHerdeira, List<string> txt_nomesDeseranca)
         {
 
@@ -490,7 +484,7 @@ namespace parser
         {
             List<string> codigo = escopo.codigo.ToList<string>();
 
-            List<string> tokensDaClasse = new Tokens(new LinguagemOrquidea(), escopo.codigo).GetTokens();
+            List<string> tokensDaClasse = new Tokens(LinguagemOrquidea.Instance(), escopo.codigo).GetTokens();
             int k = 0;
             while ((k < tokensDaClasse.Count) && (tokensDaClasse[k] != "{"))
                 k++;

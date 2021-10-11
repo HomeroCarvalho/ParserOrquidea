@@ -217,8 +217,7 @@ namespace parser
             if (classeDoMetodo == null)
                 return false;
 
-            if (classeDoMetodo.GetMetodos().Find(k => k.nome == objInicial.GetTipo()) == null) 
-                return false;
+       
 
             int firstParenteses = exprssCurrente.tokens.IndexOf("(");
             if (firstParenteses == -1)
@@ -231,13 +230,11 @@ namespace parser
             tokensParametros.RemoveAt(0);
             tokensParametros.RemoveAt(tokensParametros.Count - 1);
 
-            if (nomeMetodo=="funcaoE")
-            {
-                int k = 0;
-                k++;
-            }
-
+         
             List<Expressao> parametros= Expressao.Instance.ExtraiExpressoes(escopo, tokensParametros);
+            if ((parametros.Count == 1) && (parametros[0].Elementos.Count > 0))
+                parametros = parametros[0].Elementos;
+
             if (UtilTokens.ObtemFuncaoCompativelComAChamadaDeFuncao(nomeMetodo, parametros, escopo) != null)
                 return true;
             return false;
@@ -297,6 +294,8 @@ namespace parser
 
 
                     List<Expressao> parametros = Expressao.Instance.ExtraiExpressoes(escopo, tokensParametros);
+                    if ((parametros.Count == 1) && (parametros[0].Elementos.Count > 0))
+                        parametros = parametros[0].Elementos;
 
 
                     // o token é de uma chamada de função.
@@ -579,7 +578,14 @@ namespace parser
         {
             Operador operador = Operador.GetOperador(nomeOperador,tipoExpressao, tipoOperador, Expressao.linguagem);
             if ((operador == null) && (nomeOperador == "="))
+            {
                 operador = Operador.GetOperador("=", "int", "BINARIO", linguagem);
+                ExpressaoOperador expressaoOperador = new ExpressaoOperador(operador);
+                Expressao.GetTipoExpressao(expressaoOperador, escopo);
+                expressaoCurrente.Elementos.Add(expressaoOperador);
+
+                return true;
+            }
             else
                 if (operador == null)
                 return false;
@@ -591,7 +597,7 @@ namespace parser
                 expressaoCurrente.Elementos.Add(expressaoOperador);
                 return true;
             }
-            return false;
+          
         }
 
         public static bool isOperador(string nomeOperador, Escopo escopo)
@@ -870,7 +876,7 @@ namespace parser
             this.Elementos = new List<Expressao>();
             this.MsgErros = new List<string>();
             if (linguagem == null)
-                linguagem = new LinguagemOrquidea();
+                linguagem = LinguagemOrquidea.Instance();
             this.isModify = true;
             this.oldValue = null;
             this.tokens = new List<string>();
@@ -895,7 +901,7 @@ namespace parser
                 return;
 
             if (linguagem == null)
-                linguagem = new LinguagemOrquidea();
+                linguagem = LinguagemOrquidea.Instance();
 
             this.elementosNaoProcessados = new List<string>();
             this.Elementos = new List<Expressao>();
@@ -932,7 +938,7 @@ namespace parser
                     // token de bloco, ou  token de termino de linha, termina de processar os elementos da expressao currente.
                     if ((tokens[indexToken] == "{") || (tokens[indexToken] == ";"))
                     {
-                        this.indiceProcessamentoDaProximaExpressao = -1;
+                        this.indiceProcessamentoDaProximaExpressao = indexToken;
                         this.tipo = GetTipoExpressao(this, escopo);
                         return;
                     }
@@ -1135,28 +1141,52 @@ namespace parser
                 {
                     expressoesExtraidas.Add(umaExpressao);
 
-                    if (umaExpressao.indiceProcessamentoDaProximaExpressao != -1)
-                    {
-                        int startSearch = umaExpressao.indiceProcessamentoDaProximaExpressao + 1;
-                        if ((startSearch == tokensRaw.Count) || (startSearch > tokensRaw.Count))
-                            break;
-                        else
-                            tokensRaw = tokensRaw.GetRange(startSearch, tokensRaw.Count - startSearch);
-                    }
-                    else
-                        tokensRaw.Clear();
 
-                   
+                    if (umaExpressao.indiceProcessamentoDaProximaExpressao == -1)
+                    {
+                        DivideSubExpressoesNumero(expressoesExtraidas);
+                        return expressoesExtraidas;
+                    }
+                    int startSearch = umaExpressao.indiceProcessamentoDaProximaExpressao + 1;
+                    if ((startSearch == tokensRaw.Count) || (startSearch > tokensRaw.Count))
+                        break;
+                    else
+                        tokensRaw = tokensRaw.GetRange(startSearch, tokensRaw.Count - startSearch);
                 }
                 else
                     x++;
             }
 
+            DivideSubExpressoesNumero(expressoesExtraidas);
             return expressoesExtraidas;
 
         }
 
-      
+        /// <summary>
+        /// divide sub-expressoes que são numeros, sem operadores, funcao, ou propriedades. apeanas numeros.
+        /// </summary>
+        private static void DivideSubExpressoesNumero(List<Expressao> expressoesExtraidas)
+        {
+            if (expressoesExtraidas != null)
+            {
+
+                for (int i = 0; i < expressoesExtraidas.Count; i++)
+                    for (int subExpressao = 0; subExpressao < expressoesExtraidas[i].Elementos.Count - 1; subExpressao++) 
+                    {
+                        if ((expressoesExtraidas[i].Elementos[subExpressao].GetType() == typeof(ExpressaoNumero)) && (expressoesExtraidas[i].Elementos[subExpressao + 1].GetType() == typeof(ExpressaoNumero)))
+                        {
+                            expressoesExtraidas[i].Elementos[subExpressao].isModify = true;
+                            expressoesExtraidas.Add(expressoesExtraidas[i].Elementos[subExpressao]); // separara a  sub-expressao, adicionando como uma expressao, nao sub-expressao.
+                            expressoesExtraidas[i].Elementos.RemoveAt(subExpressao); // remove a sub-expressao seprarada.
+                            subExpressao--; // acerta a variavel da malha, pois foi retirado um indice.
+                        }
+
+
+                    }
+
+            }
+        }
+
         public object ConverteParaNumero(string str_numero, Escopo escopo)
         {
             object obj_result = null;
@@ -1311,7 +1341,7 @@ namespace parser
         {
 
             List<string> resumida = new List<string>();
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             for (int x = 0; x < exprss.Elementos.Count; x++)
             {
                 //a expessao é uma funcao?
@@ -1454,7 +1484,7 @@ namespace parser
         /// <returns></returns>
         internal List<string> ObtemExpressaoCondicionalResumida(Expressao exprss, Escopo escopo)
         {
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             List<string> resumidoSubExpressao = new List<string>();
             List<string> resumidoExressaoPrincipal = new List<string>();
             List<string> tokensDaExpressao = exprss.Convert();

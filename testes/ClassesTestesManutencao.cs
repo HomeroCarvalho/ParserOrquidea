@@ -372,7 +372,7 @@ namespace ParserLinguagemOrquidea.testes
             private void ProcessaAExpressao(string definicoes, string chamadaExpressao)
             {
                 List<string> codigo_definicoes = new List<string>() { definicoes };
-                List<string> tokensDaExpressao = new Tokens(new LinguagemOrquidea(), new List<string>() { chamadaExpressao }).GetTokens();
+                List<string> tokensDaExpressao = new Tokens(LinguagemOrquidea.Instance(), new List<string>() { chamadaExpressao }).GetTokens();
 
                 this.processador = new ProcessadorDeID(codigo_definicoes);
                 this.processador.Compile();
@@ -463,7 +463,7 @@ namespace ParserLinguagemOrquidea.testes
 
 
                 List<string> codigo_definicoes = new List<string>() { codigoDefinicaoDeClasse };
-                List<string> tokensDaExpressao = new Tokens(new LinguagemOrquidea(), new List<string>() { expressao }).GetTokens();
+                List<string> tokensDaExpressao = new Tokens(LinguagemOrquidea.Instance(), new List<string>() { expressao }).GetTokens();
 
                 this.processador = new ProcessadorDeID(codigo_definicoes);
                 this.processador.Compile();
@@ -510,7 +510,7 @@ namespace ParserLinguagemOrquidea.testes
 
                 // cria os tokens da expressao a avaliar.
                 string codigoExpressao = "int c= a+b";
-                List<string> tokensExpressao = new Tokens(new LinguagemOrquidea(), new List<string>() { codigoExpressao }).GetTokens();
+                List<string> tokensExpressao = new Tokens(LinguagemOrquidea.Instance(), new List<string>() { codigoExpressao }).GetTokens();
 
                 // cria o escopo, e adiciona os objetos da expressao.
                 Escopo escopo = new Escopo(tokensExpressao);
@@ -548,6 +548,61 @@ namespace ParserLinguagemOrquidea.testes
                 programa.Run(this.processador.escopo);
             }
 
+
+            public void TesteCasesOfUse(AssercaoSuiteClasse assercao)
+            {
+                // casesOfUse ID ( case  ID_operador  ID : "
+
+                string codigo = "int b=1; int a=5; casesOfUse a ( case > b: a=6; );";
+                this.ProcessaTestes(codigo);
+                assercao.IsTrue(int.Parse(this.processador.escopo.tabela.GetObjeto("a", processador.escopo).GetValor().ToString()) == 6);
+                // agora podemos rodar estes cenarios, sempre que modificamos o código, pois pode haver quebra do código com alguma modificação.
+            }
+
+            public void Atribuicao(AssercaoSuiteClasse assercao)
+            {
+                string codigo = "int a=2; int b=1; int c= 3*b;";
+                this.ProcessaTestes(codigo);
+                assercao.IsTrue(
+                    (processador.escopo.tabela.GetObjeto("c", processador.escopo) != null) &&
+                    (int.Parse(processador.escopo.tabela.GetObjeto("c", processador.escopo).GetValor().ToString()) == 3));
+            }
+
+            public void TesteIF_Else(AssercaoSuiteClasse assercao)
+            {
+                string codigo = "int a=1; int b=5; if (a>b){a=3*b;} else {a=6;}";
+                this.ProcessaTestes(codigo);
+
+                assercao.IsTrue(int.Parse(this.processador.escopo.tabela.GetObjeto("a", processador.escopo).GetValor().ToString()) == 6);
+            }
+
+
+
+            public void TesteVariavelVetor(AssercaoSuiteClasse assercao)
+            {
+                string codigo = "Vetor v= create(int, 1,1);";
+                ProcessaTestes(codigo);
+                assercao.IsTrue(processador.escopo.tabela.GetVetor("v", processador.escopo) != null);
+            }
+
+            public void TesteChamadaDeObjetoImportado(AssercaoSuiteClasse assercao)
+            {
+                CultureInfo.CurrentCulture = CultureInfo.CurrentCulture; // para compatibilizar os numeros float como: 1.0.
+
+                /// ID ID = create ( ID , ID ) --> exemplo: int m= create(1,1).
+                /// importer ( nomeAssembly).
+
+                string codigoCreate = "importer (ParserLinguagemOrquidea.exe);  Matriz M= create(1,1);";
+                string codigoChamadaMetodo = "M.SetElement(0,0, 1.0, 5.0)";
+
+                string codigoTotal = codigoCreate + " " + codigoChamadaMetodo;
+                ProcessaTestes(codigoTotal);
+
+
+
+                assercao.IsTrue(processador.escopo.tabela.GetObjeto("M", processador.escopo) != null);
+            }
+
             public void TesteFor(AssercaoSuiteClasse assercao)
             {
                 string codigo = "int a=0; int b=5; for (int x=0;x< 3;x++) {a= a+ x;};";
@@ -578,6 +633,7 @@ namespace ParserLinguagemOrquidea.testes
 
                 assercao.IsTrue(int.Parse(this.processador.escopo.tabela.GetObjeto("x", processador.escopo).GetValor().ToString()) == 5);
             }
+
             public void TesteCasesOfUse_2(AssercaoSuiteClasse assercao)
             {
                 // casesOfUse ID ( case  ID_operador  ID : "
@@ -589,70 +645,19 @@ namespace ParserLinguagemOrquidea.testes
 
 
 
-            public void TesteChamadaDeObjetoImportado(AssercaoSuiteClasse assercao)
-            {
-                CultureInfo.CurrentCulture = CultureInfo.CurrentCulture; // para compatibilizar os numeros float como: 1.0.
-
-                /// ID ID = create ( ID , ID ) --> exemplo: int m= create(1,1).
-                /// importer ( nomeAssembly).
-
-                string codigoCreate = "Matriz M= create(1,1);";
-                string codigoChamadaMetodo = "M.SetElement(0,0, 1.0)";
-
-                string codigoTotal = codigoCreate + " " + codigoChamadaMetodo;
-                ProcessaTestes(codigoTotal);
-
-
-
-                assercao.IsTrue(processador.escopo.tabela.GetObjeto("M", processador.escopo) != null);
-            }
-
-            public void TesteVariavelVetor(AssercaoSuiteClasse assercao)
-            {
-                string codigo = "Vetor v= create(1,1);";
-                ProcessaTestes(codigo);
-                assercao.IsTrue(processador.escopo.tabela.GetVetor("v", processador.escopo) != null);
-            }
+         
 
 
             public void TesteCreateObjects(AssercaoSuiteClasse assercao)
             {
                 /// ID ID = create ( ID , ID ) --> exemplo: int m= create(1,1).
                 /// importer ( nomeAssembly).
-                string codigoCreate = "Matriz M= create(1,1);";
+                string codigoCreate = "importer (ParserLinguagemOrquidea.exe); Matriz M= create(1,1);";
 
                 string codigoTotal = codigoCreate;
                 ProcessaTestes(codigoTotal);
 
                 assercao.IsTrue(processador.escopo.tabela.GetObjeto("M", processador.escopo) != null);
-            }
-
-
-            public void TesteCasesOfUse(AssercaoSuiteClasse assercao)
-            {
-                // casesOfUse ID ( case  ID_operador  ID : "
-
-                string codigo = "int b=1; int a=5; casesOfUse a ( case > b: a=6; );";
-                this.ProcessaTestes(codigo);
-                assercao.IsTrue(int.Parse(this.processador.escopo.tabela.GetObjeto("a", processador.escopo).GetValor().ToString()) == 6);
-                // agora podemos rodar estes cenarios, sempre que modificamos o código, pois pode haver quebra do código com alguma modificação.
-            }
-
-            public void Atribuicao(AssercaoSuiteClasse assercao)
-            {
-                string codigo = "int a=2; int b=1; int c= 3*b;";
-                this.ProcessaTestes(codigo);
-                assercao.IsTrue(
-                    (processador.escopo.tabela.GetObjeto("c", processador.escopo) != null) &&
-                    (int.Parse(processador.escopo.tabela.GetObjeto("c", processador.escopo).GetValor().ToString()) == 3));
-            }
-
-            public void TesteIF_Else(AssercaoSuiteClasse assercao)
-            {
-                string codigo = "int a=1; int b=5; if (a>b){a=3*b;} else {a=6;}";
-                this.ProcessaTestes(codigo);
-
-                assercao.IsTrue(int.Parse(this.processador.escopo.tabela.GetObjeto("a", processador.escopo).GetValor().ToString()) == 6);
             }
 
          
@@ -803,8 +808,8 @@ namespace ParserLinguagemOrquidea.testes
         public ClassesTestesManutencao()
         {
 
-             ClasseTestesConstructor testesConstructors = new ClasseTestesConstructor();
-             testesConstructors.ExecutaTestes();
+            //ClasseTestesConstructor testesConstructors = new ClasseTestesConstructor();
+             //testesConstructors.ExecutaTestes();
 
 
             //TestesCompilacaoExecucaoClasses testesBuildAndExecutationExpressoesOrientadoAObjeto = new TestesCompilacaoExecucaoClasses();
@@ -824,8 +829,8 @@ namespace ParserLinguagemOrquidea.testes
             //testesDeExpressoes.ExecutaTestes();
 
 
-            //TestesAvaliacaoDeInstrucoes  testesInstrucoes = new TestesAvaliacaoDeInstrucoes();
-            //testesInstrucoes.ExecutaTestes();
+            TestesAvaliacaoDeInstrucoes  testesInstrucoes = new TestesAvaliacaoDeInstrucoes();
+            testesInstrucoes.ExecutaTestes();
 
             // TestesRecoverInstructions testesRecuperarInstrucoes = new TestesRecoverInstructions();
             // testesRecuperarInstrucoes.ExecutaTestes();

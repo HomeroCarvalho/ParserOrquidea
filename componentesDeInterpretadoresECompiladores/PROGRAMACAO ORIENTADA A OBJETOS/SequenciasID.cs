@@ -24,18 +24,18 @@ namespace parser.ProgramacaoOrentadaAObjetos
 
    
 
-        private static LinguagemOrquidea linguagem = new LinguagemOrquidea(); // linguagem utilizada: orquidea.
+        private static LinguagemOrquidea linguagem = LinguagemOrquidea.Instance(); // linguagem utilizada: orquidea.
         public int indexHandler; // indice do método handler da sequencia id.
 
      
         public UmaSequenciaID(string[] seOriginal, List<string> codigo)
         {
             
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), codigo).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), codigo).GetTokens();
       
             this.sequenciasDeBlocos = new List<List<UmaSequenciaID>>();
          
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             Random aleatorizador = new Random(50000); // compoe um nome aleatório para a sequenciaID.
         
             this.tokens = seOriginal.ToList<string>(); // inicializa os  a sequencia com os tokens originais;

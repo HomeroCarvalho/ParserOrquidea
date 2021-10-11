@@ -320,7 +320,7 @@ namespace parser.Manutencao
         private void TesteParaParserQualquerLinguagem(Assercoes assercao)
         {
             string codigo = "for (int x=0; x<5; x++){ int y=11;}";
-            LinguagemOrquidea lng = new LinguagemOrquidea();
+            LinguagemOrquidea lng = LinguagemOrquidea.Instance();
             List<string> tokens_termosChave = lng.GetTodosTermosChave();
             List<string> tokens_operadores = lng.GetTodosOperadores();
 
@@ -340,7 +340,7 @@ namespace parser.Manutencao
 
         private void testeBuildOperadorBinario(Assercoes assercao)
         {
-            LinguagemOrquidea lng = new LinguagemOrquidea();
+            LinguagemOrquidea lng = LinguagemOrquidea.Instance();
             string codigoFuncaoOperador = "int funcaoA( int D, int C) {return 1}";
             // /// operador ID ID ( ID ID, ID ID ) prioridade ID meodo ID ;
             string codigoDefinicaoOperador = "operador int Maior (int A, int B) prioridade 1 metodo funcaoA;";
@@ -362,7 +362,7 @@ namespace parser.Manutencao
 
         private void testeBuildOperadorXML(Assercoes assercao)
         {
-            LinguagemOrquidea lng = new LinguagemOrquidea();
+            LinguagemOrquidea lng = LinguagemOrquidea.Instance();
             string codigoFuncaoOperador = "int funcaoA( int D, int C) {return 1}";
             // /// operador ID ID ( ID ID, ID ID ) prioridade ID meodo ID ;
             string codigoDefinicaoOperador = "operador int Maior (int A, int B) prioridade 1 metodo funcaoA;";
@@ -437,7 +437,7 @@ namespace parser.Manutencao
             /// teste para o metodo recodificado ProcessadorID.ResumeExpressoes().
             string codigo = "public class classeA { public int a ; public int funcaoB ( int x ){ while (x>0) {x= x+1;} } } ";
 
-            LinguagemOrquidea lng = new LinguagemOrquidea();
+            LinguagemOrquidea lng = LinguagemOrquidea.Instance();
             List<string> tokensDoCodigo = new Tokens(lng, new List<string>() { codigo }).GetTokens();
             ProcessadorDeID processador = new ProcessadorDeID(new List<string>() { codigo });
             processador.CompileEmDoisEstagios();
@@ -481,7 +481,7 @@ namespace parser.Manutencao
 
         private void TesteTokensPolemicos(Assercoes assercao)
         {
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             string codigo = "int forma= inwhile+ ifa";
             List<string> tokens = new Tokens(linguagem, new List<string>() { codigo }).GetTokens();
 
@@ -514,7 +514,7 @@ namespace parser.Manutencao
             string codigo = "int y; int z; int x(int y, int z) {y=1;} ";
             string codigoExpressao = "x(1,5)+y+z;";
 
-            List<string> tokensDaExpressao = new Tokens(new LinguagemOrquidea(), new List<string>() { codigoExpressao }).GetTokens();
+            List<string> tokensDaExpressao = new Tokens(LinguagemOrquidea.Instance(), new List<string>() { codigoExpressao }).GetTokens();
             ProcessadorDeID processador = new ProcessadorDeID(new List<string>() { codigo });
             processador.CompileEmDoisEstagios();
 
@@ -538,7 +538,7 @@ namespace parser.Manutencao
             string codigoDefinicaoDeObjeto = "classeA umObjeto;";
             string codigoChamadaDeFuncao = "umObjeto.funcaoB(1);";
 
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             List<string> tokensDefinicaoDeClasse = new Tokens(linguagem, new List<string>() { codigoDefinicaoDeClasse }).GetTokens();
             List<string> tokensDefinicaoDeObjeto = new Tokens(linguagem, new List<string>() { codigoDefinicaoDeObjeto }).GetTokens();
             List<string> tokensChamadaDeFuncao = new Tokens(linguagem, new List<string>() { codigoChamadaDeFuncao }).GetTokens();
@@ -577,7 +577,7 @@ namespace parser.Manutencao
 
 
             // cenario mais complexo:
-            List<string> tokensParaLocalizar = new Tokens(new LinguagemOrquidea(), tokensALocalizar).GetTokens();
+            List<string> tokensParaLocalizar = new Tokens(LinguagemOrquidea.Instance(), tokensALocalizar).GetTokens();
             PosicaoECodigo posicaoDeTokensComplexo = new PosicaoECodigo(tokensParaLocalizar);
 
 
@@ -591,7 +591,7 @@ namespace parser.Manutencao
             /// template para instrucao "create":
             /// ID ID = create ( ID , ID  ---> tipo nomeObjeto = create (TipoParametro1 parametro1,... )
           
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
 
 
             string nomeAssembly = "ParserLinguagemOrquidea.exe";
@@ -631,7 +631,7 @@ namespace parser.Manutencao
         {
             List<string> codigo = new List<string>() { "int a=1; int b=1; int c= a+b+1;" };
             List<string> codigoExpressao = new List<string>() { "a+b+1;" };
-            List<string> tokensExpressao = new Tokens(new LinguagemOrquidea(), codigoExpressao).GetTokens();
+            List<string> tokensExpressao = new Tokens(LinguagemOrquidea.Instance(), codigoExpressao).GetTokens();
 
             ProcessadorDeID processador = new ProcessadorDeID(codigo);
             processador.CompileEmDoisEstagios();
@@ -654,7 +654,7 @@ namespace parser.Manutencao
             ProcessadorDeID processador = new ProcessadorDeID(new List<string>() { codigoFuncao });
             processador.CompileEmDoisEstagios();
 
-            List<string> tokensExpressao = new Tokens(new LinguagemOrquidea(), new List<string>() { expressaoTeste }).GetTokens();
+            List<string> tokensExpressao = new Tokens(LinguagemOrquidea.Instance(), new List<string>() { expressaoTeste }).GetTokens();
 
             List<Expressao> expressaoComplexa = Expressao.Instance.ExtraiExpressoes(processador.escopo, tokensExpressao);
             

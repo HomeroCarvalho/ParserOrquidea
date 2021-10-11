@@ -1,6 +1,8 @@
 CONJUNTO DE INSTRUÇÕES (COMANDOS) DA LINGUAGEM ORIENTADA A OBJETO:
 
-	OBJETO_INSTANCIAR= create( List<Expressao> parametros);
+	TIPO_DIO_OBJETO_INSTANCIAR OBJETO_INSTANCIAR= create( params Expressao[] parametros);
+	vetor objeto_instancias= create(tipoDoElementoDoVetor, params Expressao[] parametros);
+
 
 	classe_herdeira.construtorUP(classe_herdada, List<Expressao> parametros);
 

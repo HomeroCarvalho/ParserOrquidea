@@ -253,7 +253,7 @@ namespace parser.LISP
         public static List<string> GetTokensLISP(string textoLisp)
         {
             string[] termosChaveLisp = textoLisp.Split(new string[] { "(", ")", " ", "'" }, StringSplitOptions.RemoveEmptyEntries);
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), termosChaveLisp.ToList<string>()).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), termosChaveLisp.ToList<string>()).GetTokens();
             return tokens;
         } // GetTokensLISP()
 

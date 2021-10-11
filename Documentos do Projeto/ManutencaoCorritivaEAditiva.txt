@@ -100,8 +100,8 @@ SPRINT CURRENTE: arremate.
 				3- (feito, testado) codificacao para propriedades/metodos aninhados.
 
 				4- (a fazer) testes Execução de instruções de uma classe orquidea. Se feito, encerrar a manutencao aditiva.
-							---> parado por faltar processamento de propriedades e metodos aninhados em POO.
-							---> (codificar e testes) a codificacao e testes para expressoes validas.
+							---> (feito) parado por faltar processamento de propriedades e metodos aninhados em POO.
+							---> (feito, testado em testes, indiretamente) a codificacao e testes para expressoes validas.
 
 
 

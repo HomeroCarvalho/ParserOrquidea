@@ -8,7 +8,7 @@ namespace parser
 {
     public class UtilTokens
     {
-        private static LinguagemOrquidea linguagem = new LinguagemOrquidea();
+        private static LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
 
         /// <summary>
         /// escreve uma mensagem de erro na lista de mensagens no objeto escopo, com localização do código.
@@ -121,6 +121,9 @@ namespace parser
 
             if (tipo == "Boolean")
                 return "bool";
+
+       
+
             return tipo;
         }
 

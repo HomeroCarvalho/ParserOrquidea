@@ -19,7 +19,7 @@ namespace parser
         public static List<string> GetTokens(string textoComTokens)
         {
             
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             List<string> todosTermosChave = linguagem.GetTodosTermosChave();
             List<string> todosOperadoresLinguagem = linguagem.GetTodosOperadores();
 
@@ -226,7 +226,7 @@ namespace parser
 
         internal static List<string> ObtemPontosFlutuantes(List<string> todosTokensObtidos)
         {
-            LinguagemOrquidea linguagem = new LinguagemOrquidea();
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             for (int x = 0; x < todosTokensObtidos.Count; x++)
             {
                 if ((todosTokensObtidos[x]==".") && ((x-1)>=0) && (linguagem.VerificaSeEhNumero(todosTokensObtidos[x-1])))

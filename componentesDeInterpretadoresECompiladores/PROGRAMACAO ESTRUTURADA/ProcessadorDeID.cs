@@ -73,10 +73,18 @@ namespace parser
         /// </summary>
         public ProcessadorDeID(List<string> code) : base(code)
         {
+
+            if (RepositorioDeClassesOO.Instance().GetClasse(typeof(Objeto).Name) == null)
+            {
+                ImportadorDeClasses importer = new ImportadorDeClasses();
+                importer.ImportAClassFromApplication(typeof(Vetor));
+                importer.ImportAClassFromApplication(typeof(Objeto));
+            }
+
             if (tratadores == null)
                 tratadores = new List<MetodoTratadorOrdenacao>();
             if (linguagem == null)
-                linguagem = new LinguagemOrquidea();
+                linguagem = LinguagemOrquidea.Instance();
 
             this.instrucoes = new List<Instrucao>();
             codigo = new List<string>();  
@@ -286,6 +294,9 @@ namespace parser
                 tokensSemResumir.Add("{"); // adiciona os operadores bloco, que não estavam na lista de tokens nao resumiveis, por nas sequencias id de mapeamento estarem resumidas pelo token "BLOCO".
                 tokensSemResumir.Add("}");
 
+
+    
+
             } // if tratadores
 
         } // InitMapeamento()
@@ -403,7 +414,6 @@ namespace parser
                     
                     UmaSequenciaID sequenciaCurrente = UmaSequenciaID.ObtemUmaSequenciaID(umToken, tokens, codigo); // obtem a sequencia  seguinte.
 
-               
                 
 
                     if (sequenciaCurrente == null)
@@ -1521,17 +1531,22 @@ namespace parser
                 int index = escopo.tabela.GetObjetos().FindIndex(k => k.GetNome() == objetosNoEscopo[x].GetNome());
                 int contadorObjetos = escopo.tabela.GetObjetos().FindAll(k => k.GetNome() == objetosNoEscopo[x].GetNome()).Count;
                 if ((index != -1) && (contadorObjetos > 1))
+                {
                     escopo.tabela.GetObjetos().RemoveAt(index);
-
+                    x--; // atualiza a variavel da malha, pois foi retirado uma posição.
+                }
             }
 
             List<Vetor> vetoresNoEscopo = escopo.tabela.GetVetores();
-            for (int x = 0; x < objetosNoEscopo.Count; x++)
+            for (int x = 0; x < vetoresNoEscopo.Count; x++)
             {
                 int index = escopo.tabela.GetVetores().FindIndex(k => k.GetNome() == vetoresNoEscopo[x].GetNome()); // encontra os vetores instanciados no 1o estagoo;
                 int contadorVetores = escopo.tabela.GetVetores().FindAll(k => k.GetNome() == vetoresNoEscopo[x].GetNome()).Count;
                 if ((index != -1) && (contadorVetores > 1))
+                {
                     escopo.tabela.GetVetores().RemoveAt(index);
+                    x--; // atualiza a variavel da malha, pois foi retirado uma posição.
+                }
             }
 
 

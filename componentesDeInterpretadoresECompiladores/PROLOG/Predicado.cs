@@ -184,7 +184,7 @@ namespace parser.PROLOG
             List<string> termosChaveProlog = new List<string>() { ",", " ", ":-", "(", ")", "[", "]", "|", "." };
 
             // retira todos tokens de um texto.
-            List<string> tokens = new Tokens(new LinguagemOrquidea(), new List<string>(){texto}).GetTokens();
+            List<string> tokens = new Tokens(LinguagemOrquidea.Instance(), new List<string>(){texto}).GetTokens();
             return tokens;
         } // ExtraiDeTextoUmPredicado()
 

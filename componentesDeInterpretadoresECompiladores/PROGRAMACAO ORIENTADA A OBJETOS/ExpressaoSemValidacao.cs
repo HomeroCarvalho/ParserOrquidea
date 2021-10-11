@@ -15,7 +15,7 @@ namespace parser
         public ExpressaoSemValidacao(List<string>tokens):base()
         {
             this.tokensNotProcessed = tokens.ToList<string>();
-            LinguagemOrquidea lng = new LinguagemOrquidea();
+            LinguagemOrquidea lng = LinguagemOrquidea.Instance();
             this.tokensProcessed = new Tokens(lng, tokensNotProcessed).GetTokens();
 
             this.msgErros = new List<string>();
@@ -30,7 +30,7 @@ namespace parser
 
         private void Processamento()
         {
-            LinguagemOrquidea lng = new LinguagemOrquidea();
+            LinguagemOrquidea lng = LinguagemOrquidea.Instance();
             List<string> tokensRaw = new Tokens(lng, tokensNotProcessed).GetTokens();
 
             for (int x = 0; x < tokensRaw.Count; x++)

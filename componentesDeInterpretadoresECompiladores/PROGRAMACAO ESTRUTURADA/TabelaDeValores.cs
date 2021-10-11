@@ -105,10 +105,10 @@ namespace parser
             return tabelaClone;
         }
 
-        private static LinguagemOrquidea lng = new LinguagemOrquidea();
+        private static LinguagemOrquidea lng = LinguagemOrquidea.Instance();
         public TablelaDeValores(List<string> _codigo)
         {
-            lng = new LinguagemOrquidea();
+            lng = LinguagemOrquidea.Instance();
             if ((_codigo != null) && (_codigo.Count > 0))
                 this.codigo = _codigo.ToList<string>();
             else
@@ -612,38 +612,42 @@ namespace parser
             EvalExpression eval = new EvalExpression();
             List<int> indices = new List<int>();
             for (int x = 0; x < exprssIndices.Count; x++)
+            {
+                exprssIndices[x].isModify = true;
                 indices.Add(int.Parse(eval.EvalPosOrdem(exprssIndices[x], escopo).ToString()));
-
-            int indexOffet = this.BuildIndex(indices.ToArray());
+            }
+            int indexOffet = this.BuildIndex(indices.ToArray()) - 1;
             this.tailVetor[indexOffet].SetValor(newValue);
             
         }
 
         /// <summary>
         /// seta elemento com elementos vetor dentro de vetores, como: [[1,5],2,6,8,[1,3,5]].
+        /// Para futuros novos tipos de vetor, como JaggedArray.
         /// </summary>
         public void SetElementoAninhado(object newValue, Escopo escopo, params Expressao[] exprssoesIndices)
         {
             List<int> indices = new List<int>();
             EvalExpression eval = new EvalExpression();
-            for (int k = 0; k< exprssoesIndices.Length; k++)
+            for (int k = 0; k < exprssoesIndices.Length; k++)
+            {
+                exprssoesIndices[k].isModify = true;
                 indices.Add(int.Parse(eval.EvalPosOrdem(exprssoesIndices[k], escopo).ToString()));
-               
-            Vetor v = this;
+            }
+
+            Vetor vDinamico = this;
             for (int x = 0; x < indices.Count - 1; x++)
-                if (v.tailVetor[indices[x]].GetType() == typeof(Vetor))
-                    v = v.tailVetor[indices[x]]; // o elemento do vetor eh outro vetor.
+                if (vDinamico.tailVetor[indices[x]].GetType() == typeof(Vetor))
+                  vDinamico = vDinamico.tailVetor[indices[x]]; // o elemento do vetor eh outro vetor.
                 else
                 {
-                    v.tailVetor[indices[x]].SetValor(newValue); // o elemento eh um objeto, não um Vetor.
-                    break;
+                    vDinamico.tailVetor[indices[x]].SetValor(newValue); // o elemento eh um objeto, não um Vetor.
+                    return;
                 }
 
-            v = v.tailVetor[indices[indices.Count - 1]];
-            v.SetValor(newValue);
-
+            vDinamico.tailVetor[indices.Count - 1].SetValor(newValue);
         }
-
+        
 
         /// <summary>
         /// constroi um indice de acessso de vetores com varias dimensoes. Eh um offset de
