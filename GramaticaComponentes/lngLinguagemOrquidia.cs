@@ -24,7 +24,16 @@ namespace parser
         public static LinguagemOrquidea Instance()
         {
             if (linguagemOrquideaSingleton == null)
+            {
                 linguagemOrquideaSingleton = new LinguagemOrquidea();
+                if (RepositorioDeClassesOO.Instance().GetClasse(typeof(Objeto).Name) == null)
+                {
+                    // importa as duas estruturas de dados da linguagem: Vetor, e Objeto.
+                    ImportadorDeClasses importer = new ImportadorDeClasses();
+                    importer.ImportAClassFromApplication(typeof(Vetor));
+                    importer.ImportAClassFromApplication(typeof(Objeto));
+                }
+            }
             return linguagemOrquideaSingleton;
         }
 

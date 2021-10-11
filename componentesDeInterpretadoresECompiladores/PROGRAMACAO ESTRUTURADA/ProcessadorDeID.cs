@@ -74,12 +74,7 @@ namespace parser
         public ProcessadorDeID(List<string> code) : base(code)
         {
 
-            if (RepositorioDeClassesOO.Instance().GetClasse(typeof(Objeto).Name) == null)
-            {
-                ImportadorDeClasses importer = new ImportadorDeClasses();
-                importer.ImportAClassFromApplication(typeof(Vetor));
-                importer.ImportAClassFromApplication(typeof(Objeto));
-            }
+            
 
             if (tratadores == null)
                 tratadores = new List<MetodoTratadorOrdenacao>();

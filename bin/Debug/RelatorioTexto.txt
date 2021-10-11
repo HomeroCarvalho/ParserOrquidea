@@ -1459,3 +1459,101 @@ Time: 10/11/2021 17:10:04  Message: teste: TesteCreateObjects executado em: 121 
 
 
 
+
+
+Time: 11/10/2021 17:25:14  Message: Testes para avaliacao de instrucoes.
+Time: 10/11/2021 17:25:14  Message: Desempenho do cenario de teste:   tempo: 211
+Time: 10/11/2021 17:25:14  Message: teste: TesteCasesOfUse executado em: 211   teste passou
+
+
+Time: 10/11/2021 17:25:14  Message: Desempenho do cenario de teste:   tempo: 14
+Time: 10/11/2021 17:25:14  Message: teste: Atribuicao executado em: 14   teste passou
+
+
+Time: 10/11/2021 17:25:14  Message: Desempenho do cenario de teste:   tempo: 47
+Time: 10/11/2021 17:25:14  Message: teste: TesteIF_Else executado em: 47   teste passou
+
+
+Time: 10/11/2021 17:25:14  Message: Desempenho do cenario de teste:   tempo: 14
+Time: 10/11/2021 17:25:14  Message: teste: TesteVariavelVetor executado em: 14   teste passou
+
+
+Time: 10/11/2021 17:25:14  Message: Desempenho do cenario de teste:   tempo: 231
+Time: 10/11/2021 17:25:14  Message: teste: TesteChamadaDeObjetoImportado executado em: 231   teste passou
+
+
+Time: 10/11/2021 17:25:14  Message: Desempenho do cenario de teste:   tempo: 56
+Time: 10/11/2021 17:25:14  Message: teste: TesteFor executado em: 56   teste passou
+
+
+Time: 10/11/2021 17:25:14  Message: Desempenho do cenario de teste:   tempo: 93
+Time: 10/11/2021 17:25:14  Message: teste: TesteImporter executado em: 93   teste passou
+
+
+Time: 10/11/2021 17:25:15  Message: Desempenho do cenario de teste:   tempo: 86
+Time: 10/11/2021 17:25:15  Message: teste: TesteIF executado em: 86   teste passou
+
+
+Time: 10/11/2021 17:25:15  Message: Desempenho do cenario de teste:   tempo: 92
+Time: 10/11/2021 17:25:15  Message: teste: TesteWhile executado em: 92   teste passou
+
+
+Time: 10/11/2021 17:25:15  Message: Desempenho do cenario de teste:   tempo: 87
+Time: 10/11/2021 17:25:15  Message: teste: TesteCasesOfUse_2 executado em: 87   teste passou
+
+
+Time: 10/11/2021 17:25:15  Message: Desempenho do cenario de teste:   tempo: 91
+Time: 10/11/2021 17:25:15  Message: teste: TesteCreateObjects executado em: 91   teste passou
+
+
+
+
+
+
+Time: 11/10/2021 17:25:57  Message: Testes para avaliacao de instrucoes.
+Time: 10/11/2021 17:25:57  Message: Desempenho do cenario de teste:   tempo: 209
+Time: 10/11/2021 17:25:57  Message: teste: TesteCasesOfUse executado em: 209   teste passou
+
+
+Time: 10/11/2021 17:25:57  Message: Desempenho do cenario de teste:   tempo: 13
+Time: 10/11/2021 17:25:57  Message: teste: Atribuicao executado em: 13   teste passou
+
+
+Time: 10/11/2021 17:25:57  Message: Desempenho do cenario de teste:   tempo: 50
+Time: 10/11/2021 17:25:57  Message: teste: TesteIF_Else executado em: 50   teste passou
+
+
+Time: 10/11/2021 17:25:58  Message: Desempenho do cenario de teste:   tempo: 15
+Time: 10/11/2021 17:25:58  Message: teste: TesteVariavelVetor executado em: 15   teste passou
+
+
+Time: 10/11/2021 17:25:58  Message: Desempenho do cenario de teste:   tempo: 265
+Time: 10/11/2021 17:25:58  Message: teste: TesteChamadaDeObjetoImportado executado em: 265   teste passou
+
+
+Time: 10/11/2021 17:25:58  Message: Desempenho do cenario de teste:   tempo: 66
+Time: 10/11/2021 17:25:58  Message: teste: TesteFor executado em: 66   teste passou
+
+
+Time: 10/11/2021 17:25:58  Message: Desempenho do cenario de teste:   tempo: 118
+Time: 10/11/2021 17:25:58  Message: teste: TesteImporter executado em: 118   teste passou
+
+
+Time: 10/11/2021 17:25:58  Message: Desempenho do cenario de teste:   tempo: 83
+Time: 10/11/2021 17:25:58  Message: teste: TesteIF executado em: 83   teste passou
+
+
+Time: 10/11/2021 17:25:58  Message: Desempenho do cenario de teste:   tempo: 97
+Time: 10/11/2021 17:25:58  Message: teste: TesteWhile executado em: 97   teste passou
+
+
+Time: 10/11/2021 17:25:58  Message: Desempenho do cenario de teste:   tempo: 59
+Time: 10/11/2021 17:25:58  Message: teste: TesteCasesOfUse_2 executado em: 59   teste passou
+
+
+Time: 10/11/2021 17:25:58  Message: Desempenho do cenario de teste:   tempo: 92
+Time: 10/11/2021 17:25:58  Message: teste: TesteCreateObjects executado em: 92   teste passou
+
+
+
+
