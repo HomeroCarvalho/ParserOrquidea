@@ -616,7 +616,7 @@ namespace parser
                 exprssIndices[x].isModify = true;
                 indices.Add(int.Parse(eval.EvalPosOrdem(exprssIndices[x], escopo).ToString()));
             }
-            int indexOffet = this.BuildIndex(indices.ToArray()) - 1;
+            int indexOffet = this.BuildIndex(indices.ToArray());
             this.tailVetor[indexOffet].SetValor(newValue);
             
         }
@@ -660,11 +660,9 @@ namespace parser
                 return -1;
 
             int indiceTotal = 0;
-            int dimsAtual = 1;
             for (int x = 0; x < this.dimensoes.Length; x++)
             {
-                dimsAtual = dimsAtual * this.dimensoes[x];
-                indiceTotal += dimsAtual * indices[x];
+                indiceTotal += (this.dimensoes[x] - 1) * indices[x];
             }
             return indiceTotal;
         }
@@ -672,10 +670,9 @@ namespace parser
 
         public object GetElemento(Escopo escopo, params int[] indices)
         {
-            Vetor vt = new Vetor(this.GetAcessor(), this.GetNome(), this.GetTiposElemento(), escopo, this.dimensoes);
-            for (int x = 0; x < indices.Length; x++)
-                vt = vt.tailVetor[indices[x]];
-            return vt.GetValor();
+
+            int indexElemento = BuildIndex(indices);
+            return this.tailVetor[indexElemento].GetValor();
         }
 
 

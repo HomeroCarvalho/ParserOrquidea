@@ -47,7 +47,7 @@ namespace parser
         public void ExecutaTestes()
         {
 
-
+           
             if (metodosTeste == null)
             {
                 LoggerTests.AddMessage("Nao ha testes a serem executados nesta classe para testes.");
@@ -60,12 +60,14 @@ namespace parser
             LoggerTests.AddMessage(this.infoTextoCabacalho);
 
 
-            medicaoDesempenho.AddTemporizador(150, "Desempenho do cenario de teste: ");
+            medicaoDesempenho.AddTemporizador(200, "Desempenho total do cenario de teste: ");
             foreach (MethodInfo metodo in metodosTeste)
             {
                 try
                 {
+                    TemporizadorParaDesempenho temporizadorUmMetodo = new TemporizadorParaDesempenho();
 
+                    temporizadorUmMetodo.AddTemporizador(150, "Desempenho do método-teste: ");
 
                     int indiceAssercaoStart = AssercaoSuiteClasse.contadorValidacoes;
 
@@ -88,12 +90,9 @@ namespace parser
 
                     for (int x = indiceAssercaoStart; x < indiceAssercaoEnd; x++)
                     {
-                        string resumoDoTesteEmUmMetodo = "teste: " + metodo.Name + " executado em: " +  + medicaoDesempenho.GetTimeElapsed(150) + "   " + AssercaoSuiteClasse.validacoesFeitas[x];
+                        string resumoDoTesteEmUmMetodo = "teste: " + metodo.Name + " executado em: " +  + medicaoDesempenho.GetTimeElapsed(150) + "  mls.   " + AssercaoSuiteClasse.validacoesFeitas[x];
                         LoggerTests.AddMessage(resumoDoTesteEmUmMetodo);
                     }
-
-                    LoggerTests.WriteEmptyLines();
-                    
                 }
                 catch (Exception exc)
                 {
@@ -103,6 +102,8 @@ namespace parser
                 }
 
             }
+
+            medicaoDesempenho.End(150);
 
             LoggerTests.WriteEmptyLines();
 
@@ -186,7 +187,7 @@ namespace parser
             else
             {
                 temporizador.End();
-                LoggerTests.AddMessage(temporizador.mensagemExplicativaFinalidadeMensuracaoTempo + "  tempo: " + temporizador.timeElapsed);
+                LoggerTests.AddMessage(temporizador.mensagemExplicativaFinalidadeMensuracaoTempo + "  tempo: " + temporizador.timeElapsed+" mlsg.");
             }
         }
     }

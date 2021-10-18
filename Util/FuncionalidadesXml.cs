@@ -566,7 +566,7 @@ namespace parser
           
             
             
-            XElement noClasse = new XElement("classe", operador.nomeClasseDoOperador);
+            XElement noClasse = new XElement("classe", operador.nomeClasse);
             XElement noAcessor = new XElement("acessor", acessor);
             XElement noTipoRetorno = new XElement("tipoRetorno", operador.tipoRetorno);
             XElement noNome = new XElement("nome",operador.nome);

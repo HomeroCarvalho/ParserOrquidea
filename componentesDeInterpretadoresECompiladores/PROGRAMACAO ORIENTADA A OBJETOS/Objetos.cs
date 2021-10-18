@@ -115,9 +115,9 @@ namespace parser
         {
             this.acessor = acessor;
         }
-        public void SetNomeLongo(string classeDoObjeto)
+        public void SetNomeLongo(string nomeClasseDaPropriedade)
         {
-            this.nome = classeDoObjeto + "." + this.GetNome();
+            this.nome = nomeClasseDaPropriedade + "@" + this.GetNome();
         }
    
         public void SetValorObjeto(object newValue)
@@ -172,6 +172,7 @@ namespace parser
                     this.expressoesComObjetoPresentes[x].isModify = true;
            
         } // SetValor()
+
 
         public static Objeto GetCampo(string classeObjeto, string nomeCampo)
         {

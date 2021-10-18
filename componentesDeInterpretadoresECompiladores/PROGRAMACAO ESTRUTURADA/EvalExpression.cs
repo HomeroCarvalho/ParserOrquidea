@@ -64,7 +64,7 @@ namespace parser
 
                 if (expss.Elementos[x].GetType() == typeof(ExpressaoPropriedadesAninhadas))
                 {
-                    object valorPropriedadeAninhada = GetValorPropriedadeAninhada(expss.Elementos[0]);
+                    object valorPropriedadeAninhada = GetValorPropriedadeAninhada(expss.Elementos[x], escopo);
                     pilhaOperandos.Push(valorPropriedadeAninhada);
                 }
                 else
@@ -72,6 +72,7 @@ namespace parser
                 {
                     ExpressaoChamadaDeMetodo expssMain = (ExpressaoChamadaDeMetodo)expss.Elementos[x];
 
+                    
                     Objeto objetoCaller = expssMain.objectCaller;
                     Objeto objetoChamada = null;
 
@@ -90,14 +91,17 @@ namespace parser
                     else
                         objetoChamada = objetoCaller;
 
-                    // coleta os dados do metodo (funcao, parametros).
+                    objetoChamada = (Objeto)escopo.tabela.GetObjeto(objetoChamada.GetNome(), escopo).GetValor();
+
+
                     List<ExpressaoChamadaDeFuncao> expssChamada = expssMain.chamadaDoMetodo;
                     object result = null;
                     for (int i = 0; i < expssChamada.Count; i++)
                     {
-                        Funcao metodoDaChamada = expssChamada[i].funcao;
+                        Funcao metodoDaChamada = escopo.tabela.GetFuncao(expssChamada[i].funcao.nome, objetoChamada.GetTipo(), escopo);
+            
                         result = metodoDaChamada.ExecuteAMethod(expssChamada[i].expressoesParametros, escopo, objetoChamada); // chama o metodo, com o objetoChamada que contém o método.
-                        // o objeto "objetoChamada é modificado com o processamento do método. FIXAR PARA METODOS ANINHADOS.
+                        // o objeto "objetoChamada é modificado com o processamento do método.
                         if (result != null)
                         {
 
@@ -138,27 +142,34 @@ namespace parser
                 else
                 if (expss.Elementos[x].GetType() == typeof(ExpressaoVetor))
                 {
-                    // calculo de vetores multidimensionais!
-                    Vetor vExp = ((ExpressaoVetor)expss.Elementos[x]).vetor;
-                    Vetor vetor = escopo.tabela.GetVetor(vExp.nome, escopo);
-                    int[] indices = new int[vetor.dimensoes.Length];
+                    ExpressaoVetor exprssVetor = (ExpressaoVetor)expss.Elementos[x];
+                    // calculo de vetores multidimensionais, com expressoes a ser avaliadas,para conter os indices: v[x+1,y*2+5*funcaoB(1)]=5, exemplo.
+                    Vetor v = escopo.tabela.GetVetor(exprssVetor.vetor.GetNome(), escopo);
+                    ExpressaoOperadorMatricial expresoesIndices =exprssVetor.indicesVetor; // obtem as expressoes que contem os indices do elemento do
+                                                                                                                     // vetor, a ser atribuido.
+                   
 
-                    for (int i = 0; i < vetor.dimensoes.Length; i++)
-                        indices[i] = (int)new EvalExpression().Eval((Expressao)expss.Elementos[x].Elementos[i].GetElemento(), escopo);
+                    int[] indices = new int[v.dimensoes.Length];
 
-                    pilhaOperandos.Push(vetor.GetElemento(escopo, indices));
+                    for (int i = 0; i < expresoesIndices.indices.Count; i++)
+                        indices[i] = (int)new EvalExpression().Eval(expresoesIndices.indices[i], escopo);
+
+                    pilhaOperandos.Push(v.GetElemento(escopo, indices));
 
                 }
                 else
                 if (expss.Elementos[x].GetType() == typeof(ExpressaoObjeto))
-                { 
-                    Objeto v = ((ExpressaoObjeto)expss.Elementos[x]).objeto;
+                {
+                    Objeto v = escopo.tabela.GetObjeto(((ExpressaoObjeto)expss.Elementos[x]).objeto.GetNome(), escopo);
                     if (v != null)
                     {
                         if (v.GetValor() != null)
                         {
                             if (Expressao.Instance.IsNumero(v.GetValor().ToString())) // o objeto tem valor como numero.
                                 pilhaOperandos.Push(v.GetValor().ToString());
+                            else
+                                pilhaOperandos.Push(v);
+
                         }
                         else
                             pilhaOperandos.Push(v); // o objeto não é um numero, nem como valor- numero
@@ -266,10 +277,10 @@ namespace parser
             return result1;
         } // Eval()
 
-        private static object GetValorPropriedadeAninhada(Expressao expss)
+        private static object GetValorPropriedadeAninhada(Expressao expss, Escopo escopo)
         {
             ExpressaoPropriedadesAninhadas expressaoPropriedades = (ExpressaoPropriedadesAninhadas)expss;
-            Objeto objAninhamento = expressaoPropriedades.aninhamento[0];
+            Objeto objAninhamento = escopo.tabela.GetObjeto(expressaoPropriedades.aninhamento[0].GetNome(), escopo);
 
 
             for (int p = 1; p < expressaoPropriedades.aninhamento.Count; p++)
@@ -282,8 +293,8 @@ namespace parser
 
         private static object SetValorPropriedadeAninhada(ExpressaoPropriedadesAninhadas expressaoPropriedades, Objeto objAninhamento, object novoValor, Escopo escopo)
         {
-          
-            objAninhamento = expressaoPropriedades.aninhamento[0];
+
+            objAninhamento = escopo.tabela.GetObjeto(expressaoPropriedades.aninhamento[0].GetNome(), escopo);
 
 
             for (int p = 1; p < expressaoPropriedades.aninhamento.Count; p++)

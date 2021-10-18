@@ -1,0 +1,4 @@
+public class classeHerdadaB {public int a;  public classeHerdadaB(){a= 5;}; public int funcaoA(){a=1;}}
+public class classeHerdadaA {public int b;  public classeHerdadaA(){b=1;}; public int funcaoA(){b=2;}}
+public class classeHerdeira: +classeHerdadaA +classeHerdadaB {public int c; public classeHerdeira(){c=1;}; public int funcaoA(){c=3;}}
+

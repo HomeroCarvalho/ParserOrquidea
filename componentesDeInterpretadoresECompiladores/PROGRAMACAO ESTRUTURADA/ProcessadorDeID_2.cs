@@ -138,7 +138,17 @@ namespace parser
         protected Instrucao BuildInstrucaoCreate(UmaSequenciaID sequencia, Escopo escopo)
         {
 
-         
+
+            /// EXPRESSOES: a lista de expressões da instrução foi feita na seguinte sequência:
+            /// 0- NOME "create"
+            /// 1- tipo do objeto
+            /// 2- nome do objeto
+            /// 3- tipo template do objeto: Objeto/Vetor.
+            /// 4- expressoes indices vetor.
+            /// 5- expressoes parametros.
+            /// 6- indice do construtor.
+
+
             string tipoDoObjetoAReceberAInstantiacao = "";
             string nomeDoObjetoAReceberAInstanciacao = "";
 
@@ -171,12 +181,12 @@ namespace parser
                 }
             }
 
-            
+
             ValidaTokensDaSintaxeDaInstrucao(sequencia, escopo);
 
             ExpressaoOperadorMatricial expressoesIndicesVetor = new ExpressaoOperadorMatricial();
-            if (tipoDoObjetoAReceberAInstantiacao == "vetor")
-                expressoesIndicesVetor= ObtemIndicesVetoriais(sequencia, escopo, nomeDoObjetoAReceberAInstanciacao);
+            if (tipoDoObjetoAReceberAInstantiacao == "Vetor")
+                expressoesIndicesVetor = ObtemIndicesVetoriais(sequencia, escopo, nomeDoObjetoAReceberAInstanciacao);
 
 
 
@@ -191,14 +201,14 @@ namespace parser
 
 
             List<Expressao> expressoesParametros = Expressao.Instance.ExtraiExpressoes(escopo, tokensParametros);
-          
-                
-            if ((expressoesParametros == null) || (expressoesParametros[0].Elementos == null) || (expressoesParametros[0].Elementos.Count == 0))
+
+
+            if ((expressoesParametros == null) || (expressoesParametros.Count == 0))
                 expressoesParametros = new List<Expressao>();
 
-        
 
-            int indexConstrutor=FoundACompatibleConstructor(tipoDoObjetoAReceberAInstantiacao, expressoesParametros);
+
+            int indexConstrutor = FoundACompatibleConstructor(tipoDoObjetoAReceberAInstantiacao, expressoesParametros);
             if (indexConstrutor < 0)
             {
                 UtilTokens.WriteAErrorMensage(escopo, "Nao encotrado um construtor compativel. ", sequencia.tokens);
@@ -218,16 +228,16 @@ namespace parser
             exprssDaIntrucao.Elementos.Add(exprssParametros);
             exprssDaIntrucao.Elementos.Add(new ExpressaoElemento(indexConstrutor.ToString()));
 
-            
-            
-            
+
+
+
             if (tipoDoObjetoAReceberAInstantiacao == "Vetor")
             {
                 // tipo da variavel: vetor.
                 List<int> indicesVetor = new List<int>();
                 string tipoDosElementosDoVetor = sequencia.tokens[5]; // o primeiro elemento do create é reservado para o tipo do elemento do vetor, se for um vetor.
                 EvalExpression eval = new EvalExpression();
-                
+
                 try
                 {
 
@@ -249,15 +259,19 @@ namespace parser
                 escopo.tabela.GetVetores().Add(new Vetor("private", nomeDoObjetoAReceberAInstanciacao, tipoDosElementosDoVetor, escopo, indicesVetor.ToArray())); // adiciona a variavel vetor criada, para a compilação das próximas instruções, em outros builds.
                 exprssDaIntrucao.Elementos[3] = new ExpressaoElemento("Vetor");
 
-                   
+
             }
             else
             {
                 // tipo da variável: Objeto.
                 Classe classeDoObjeto = RepositorioDeClassesOO.Instance().GetClasse(tipoDoObjetoAReceberAInstantiacao);
+                Objeto novoObjetoInstanciado = new Objeto("private", tipoDoObjetoAReceberAInstantiacao, nomeDoObjetoAReceberAInstanciacao, null);
 
-                if (escopo.tabela.GetObjeto(nomeDoObjetoAReceberAInstanciacao, escopo) == null) // se o objeto não já foi criado, instancia o objeto, no escopo.
-                    escopo.tabela.GetObjetos().Add(new Objeto("private", tipoDoObjetoAReceberAInstantiacao, nomeDoObjetoAReceberAInstanciacao, null));
+
+                novoObjetoInstanciado.SetValor(novoObjetoInstanciado); // seta o valor do objeto, o próprio objeto, para fins de avaliação de expressões pela classe EvalExpressao.
+
+                // se o objeto não já foi criado, instancia o objeto, no escopo.
+                escopo.tabela.GetObjetos().Add(novoObjetoInstanciado);
             }
             escopo.tabela.GetExpressoes().Add(exprssDaIntrucao); // registra as expressões, a fim de otimização de modificação.
 

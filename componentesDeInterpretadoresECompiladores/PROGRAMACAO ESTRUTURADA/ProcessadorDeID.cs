@@ -113,7 +113,7 @@ namespace parser
                 string str_definicaoVariavelNaoEstaticaSemAtribuicao = "ID ID ;";
 
                 string str_definicaoVariavelVetor = "vector ID (ID, dims)";
-
+                string str_atribuicaoElementoVetor = "ID [";
 
                 // definicao de funções estruturadas, e defnição de funções.
                 string str_definicaoDeFuncaoComRetornoComUmOuMaisParametrosComCorpoOuSemCorpo = "ID ID ( ID ID";
@@ -246,6 +246,9 @@ namespace parser
 
 
                 LoadHandler(BuildVariavelVetor, str_definicaoVariavelVetor);
+                LoadHandler(Atribuicao, str_atribuicaoElementoVetor);
+
+
                 LoadHandler(BuildInstrucaoGetObjeto, DefinicaoInstrucaoGetObjeto);
                 LoadHandler(BuildInstrucaoSetVar, DefinicaoInstrucaoSetVar);
                 LoadHandler(BuildInstrucaoOperadorBinario, DefinicaoDeOperadorBinario);
@@ -304,13 +307,13 @@ namespace parser
 
 
             this.instrucoes.Clear();
-           
+            this.escopo.GetMsgErros().Clear();
             
             this.CompileEscopos(this.escopo, tokens); // segunda compilação, para erros de posição de um metodo/proriedade estiverem o uso antes  da definicao.
 
 
             this.EliminaRedundanciasCausadosPeloSistemeDeRecuperacao(this.escopo);
-            AtualizaOtimizacaoDeExpressoes(this.instrucoes);
+            
 
         }
 
@@ -409,7 +412,14 @@ namespace parser
                     
                     UmaSequenciaID sequenciaCurrente = UmaSequenciaID.ObtemUmaSequenciaID(umToken, tokens, codigo); // obtem a sequencia  seguinte.
 
-                
+                    if (sequenciaCurrente.tokens[0] == "classeHerdeira1")
+                    {
+                        int k = 0;
+                        k++;
+                    }
+
+               
+
 
                     if (sequenciaCurrente == null)
                         UtilTokens.WriteAErrorMensage(escopo, "sequencia de tokens não reconhecida: " + sequenciaCurrente.ToString(), sequenciaCurrente.tokens);  // continua o processamento, para verificar se há mais erros no codigo orquidea.
@@ -469,56 +479,6 @@ namespace parser
             } // while
 
         }// CompileEcopos()
-      
-
-        private void AtualizaOtimizacaoDeExpressoes(List<Instrucao> instrucoes)
-        {
-            if (this.instrucoes == null)
-                return;
-
-            for (int x = 0; x < instrucoes.Count; x++)
-            {
-                if (instrucoes[x].expressoes != null)
-                {
-                    for (int exprss = 0; exprss < instrucoes[x].expressoes.Count; exprss++)
-                    {
-                        Expressao expressao = instrucoes[x].expressoes[exprss];
-                        List<Objeto> objetosDestaExpressao = ExtraiObjetosDeExpressao(expressao);
-                        if (objetosDestaExpressao == null)
-                            continue;
-                        else
-                            for (int obj = 0; obj < objetosDestaExpressao.Count; obj++)
-                                if (objetosDestaExpressao[obj] != null)
-                                    objetosDestaExpressao[obj].GetExpressoesComOObjeto().Add(expressao);
-
-                    }
-
-                    if (instrucoes[x].blocos != null)
-                        for (int b = 0; b < instrucoes[x].blocos.Count; b++)
-                            if ((instrucoes[x] != null) && (instrucoes[x].blocos != null) && (instrucoes[x].blocos[b].Count > 0))
-                                AtualizaOtimizacaoDeExpressoes(instrucoes[x].blocos[b]);
-
-                }
-            }
-        }
-
-        private List<Objeto> ExtraiObjetosDeExpressao(Expressao umaExpressao)
-        {
-            List<Objeto> objetosPresentes = new List<Objeto>();
-            for (int x = 0; x < umaExpressao.Elementos.Count; x++)
-            {
-                if (umaExpressao.Elementos[x] != null)
-                {
-                    if (umaExpressao.Elementos[x].GetType() == typeof(ExpressaoObjeto))
-                        objetosPresentes.Add(((ExpressaoObjeto)umaExpressao.Elementos[x]).objeto);
-                    if (umaExpressao.Elementos[x].GetType() == typeof(ExpressaoVetor))
-                        objetosPresentes.Add(((ExpressaoVetor)umaExpressao).vetor);
-                }
-            }
-            return objetosPresentes;
-
-        }
-
        
         /// <summary>
         /// encontra indices de métodos tratadores para a sequencia ID de entrada.
@@ -850,46 +810,136 @@ namespace parser
         protected Instrucao Atribuicao(UmaSequenciaID sequencia, Escopo escopo)
         {
 
-         
 
-            string acessorObjetoAtribuicao = "private";
-            //int indiceNomeTipo = 0;
-            bool isInstanciacao = false;
+
+
+                /// estrutura de dados para atribuicao:
+                /// 0- Elemento[0]: tipo do objeto.
+                /// 1- Elemento[1]: nome do objeto.
+                /// 2- Elemento[2]: se tiver propriedades/metodos aninhados: expressao de aninhamento. Se não tiver, ExpressaoElemento("") ".
+                /// 3- expressao da atribuicao ao objeto/vetor. (se nao tiver: ExpressaoELemento("")
+                /// 4- indice de enderacamento de atribuicao a um elemento de um vetor.
+
+                bool isInstanciacao = false;
+
+
+
+            bool com_acessor = false;
+            string acessorObjetoAtribuicao = "";
             if (acessorsValidos.IndexOf(sequencia.tokens[0]) != -1)
-                acessorObjetoAtribuicao = sequencia.tokens[0];
-
-            string nomeObjetoAtribuicao = "";
-            string tipoObjetoAtribuicao = "";
-            Expressao expressaoTotal = new Expressao(sequencia.tokens.ToArray(), escopo);
-
-            if (RepositorioDeClassesOO.Instance().GetClasse(expressaoTotal.Elementos[0].ToString()) != null)
             {
-
-                tipoObjetoAtribuicao = expressaoTotal.Elementos[0].ToString();
-                nomeObjetoAtribuicao = expressaoTotal.Elementos[1].ToString();
-                isInstanciacao = true;
-                escopo.tabela.GetObjetos().Add(new Objeto(acessorObjetoAtribuicao, tipoObjetoAtribuicao, nomeObjetoAtribuicao, null));
-                expressaoTotal.Elementos.RemoveAt(0); // para compatibilizar com a instrucao de atribuicao.
+                acessorObjetoAtribuicao = sequencia.tokens[0];
+                com_acessor = true;
             }
             else
             {
-                nomeObjetoAtribuicao = expressaoTotal.Elementos[0].ToString();
-                Objeto objJaInstanciado = escopo.tabela.GetObjeto(nomeObjetoAtribuicao, escopo);
-                if (objJaInstanciado == null)
-                {
-                        UtilTokens.WriteAErrorMensage(escopo, "Objeto: " + nomeObjetoAtribuicao + " nao instanciado.", sequencia.tokens);
-                    return null;
-                }   
-                tipoObjetoAtribuicao = objJaInstanciado.GetTipo();
-                isInstanciacao = false;
+                acessorObjetoAtribuicao = "private";
+                com_acessor = false;
+            }
+            
+            
+            
+            string nomeObjetoAtribuicao = "";
+            string tipoObjetoAtribuicao = "";
+
+            if (com_acessor) // instanciacao com acessor codificado.
+            {
+                tipoObjetoAtribuicao = sequencia.tokens[1];
+                nomeObjetoAtribuicao = sequencia.tokens[2];
+            }
+            else
+            if (!com_acessor) 
+            {
+                // para melhorar a legibilidade do que está se fazendo, é feito o desnecessario teste "if".
+                tipoObjetoAtribuicao = sequencia.tokens[0];
+                nomeObjetoAtribuicao = sequencia.tokens[1];
             }
 
-            Expressao expressaoAtribuicao = new Expressao();
+            if (RepositorioDeClassesOO.Instance().GetClasse(tipoObjetoAtribuicao) == null) 
+            {
+                // instanciacao sem declaração de tipo.
+                nomeObjetoAtribuicao = sequencia.tokens[0];
+                Objeto objObterTipo = escopo.tabela.GetObjeto(nomeObjetoAtribuicao, escopo);
+                if (objObterTipo == null)
+                {
+                    UtilTokens.WriteAErrorMensage(escopo, "objeto sem instanciacao, mas atribuido.", sequencia.tokens);
+                    return null;
+                }
+                else
+                {
+                    tipoObjetoAtribuicao = objObterTipo.GetTipo();
+                }
+            }
 
+
+            Expressao expressaoTotal = new Expressao(sequencia.tokens.ToArray(), escopo);
+
+            Expressao expressaoAtribuicao = new Expressao(); // obtem a expressao de atribuicao, que guarda o calculo do valor a ser atribuido à variável.
             if (sequencia.tokens.Contains("="))
                 expressaoAtribuicao = expressaoTotal;
             else
                 expressaoAtribuicao = new Expressao();
+
+
+            /// há duas estruturas nativas da linguagem: Objeto e Vetor. Objeto pode assumir qualquer tipo de objeto de classes, mas seu tipo é determinado pelo que contem em sua propriedade principal.
+             
+
+            
+            if (tipoObjetoAtribuicao != "Vetor")
+            {
+                isInstanciacao = true;
+                escopo.tabela.GetObjetos().Add(new Objeto(acessorObjetoAtribuicao, tipoObjetoAtribuicao, nomeObjetoAtribuicao, null));
+
+            }
+            else
+            if (tipoObjetoAtribuicao=="Vetor")
+            {
+                Vetor v = escopo.tabela.GetVetor(sequencia.tokens[0], escopo);
+                if (v != null) 
+                {
+                    tipoObjetoAtribuicao = "Vetor";
+                    nomeObjetoAtribuicao = sequencia.tokens[0];
+
+                    int indiceInicioOperadorMatricial = sequencia.tokens.IndexOf("[");
+                    if (indiceInicioOperadorMatricial == -1)
+                    {
+                        UtilTokens.WriteAErrorMensage(escopo, "erro de sintaxe em elemento vetor, certifique se os operadores [ e ] está corretamente codificado.", sequencia.tokens);
+                        return null;
+                    }
+
+
+                    List<string> tokensIndicesMatriciais = UtilTokens.GetCodigoEntreOperadores(indiceInicioOperadorMatricial, "[", "]", sequencia.tokens);
+                    if (tokensIndicesMatriciais == null)
+                    {
+                        UtilTokens.WriteAErrorMensage(escopo, "erro de sintaxe de atribuicao de um elemento de um vetor. verifique a colocação de operadores matriciais.", sequencia.tokens);
+                        return null;
+                    }
+
+
+                    tokensIndicesMatriciais.RemoveAt(0);
+                    tokensIndicesMatriciais.RemoveAt(tokensIndicesMatriciais.Count - 1);
+
+                    List<Expressao> expressoesIndicies = Expressao.Instance.ExtraiExpressoes(escopo, tokensIndicesMatriciais);
+
+                    Expressao indicesEnderacamento = new Expressao();
+                    indicesEnderacamento.Elementos.AddRange(expressoesIndicies);
+
+
+
+
+                    Expressao exprrsCabecalho = new Expressao();
+                    exprrsCabecalho.Elementos.Add(new ExpressaoElemento(tipoObjetoAtribuicao));
+                    exprrsCabecalho.Elementos.Add(new ExpressaoElemento(nomeObjetoAtribuicao));
+                    exprrsCabecalho.Elementos.Add(new ExpressaoElemento(""));
+                    exprrsCabecalho.Elementos.Add(expressaoAtribuicao);
+                    exprrsCabecalho.Elementos.Add(indicesEnderacamento);
+
+
+
+                }
+
+            }
+        
 
             Instrucao instrucaoAtribuicao = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
             
@@ -1489,17 +1539,25 @@ namespace parser
         private void SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(string tipoPropriedade, string nomePropriedade, List<Expressao> aninhamento, int flag_tipoAtribuicao, int flag_tipoPropriedade, Instrucao instrucaoDeclarativa, Expressao atribuicao)
         {
             Expressao exprssCabecalho = new Expressao();
-           
+
+            /// estrutura de dados para atribuicao:
+            /// 0- Elemento[0]: tipo do objeto.
+            /// 1- Elemento[1]: nome do objeto.
+            /// 2- Elemento[2]: se tiver propriedades/metodos aninhados: expressao de aninhamento. Se não tiver, ExpressaoElemento("") ".
+            /// 3- expressao da atribuicao ao objeto/vetor. (se nao tiver: ExpressaoELemento("")
+            /// 4- se vetor, a expressao em que as sub-expressoes são expressoes de calculo de indices de enderaçamento ao elemento de vetor que ser atribuir.
+
+
+            exprssCabecalho.Elementos.Add(new ExpressaoElemento(tipoPropriedade));
+            exprssCabecalho.Elementos.Add(new ExpressaoElemento(nomePropriedade));
             if (aninhamento != null) // propriedades aninhadas.
             {
                 exprssCabecalho.Elementos.Add(new Expressao());
                 exprssCabecalho.Elementos[exprssCabecalho.Elementos.Count - 1].Elementos.AddRange(aninhamento);
             }
-            else // objeto nao aninhados.
-            {
-                exprssCabecalho.Elementos.Add(new ExpressaoElemento(tipoPropriedade));
-                exprssCabecalho.Elementos.Add(new ExpressaoElemento(nomePropriedade));
-            }
+            else
+                exprssCabecalho.Elementos.Add(new ExpressaoElemento(""));
+
             if (atribuicao != null)
                 exprssCabecalho.Elementos.Add(atribuicao);
             else
@@ -1511,87 +1569,98 @@ namespace parser
 
         private void EliminaRedundanciasCausadosPeloSistemeDeRecuperacao(Escopo escopo)
         {
-            List<Classe> classesNoEscopo = escopo.tabela.GetClasses();
-            for (int x = 0; x < classesNoEscopo.Count; x++)
+            if (escopo.tabela.GetClasses() != null)
             {
-                int index = escopo.tabela.GetClasses().FindIndex(k => k.GetNome() == classesNoEscopo[x].GetNome()); // encontra a classe do 1o. estágio.
-                int contadorClasses = escopo.tabela.GetClasses().FindAll(k => k.GetNome() == classesNoEscopo[x].GetNome()).Count;
-                if ((index != -1) && (contadorClasses > 1))
-                    escopo.tabela.GetClasses().RemoveAt(index); // remove a classe do 1o. estágio.
-            }
-
-            List<Objeto> objetosNoEscopo = escopo.tabela.GetObjetos();
-            for (int x = 0; x < objetosNoEscopo.Count; x++) // encontra os objetos instanciado do 1o. estágio.
-            {
-                int index = escopo.tabela.GetObjetos().FindIndex(k => k.GetNome() == objetosNoEscopo[x].GetNome());
-                int contadorObjetos = escopo.tabela.GetObjetos().FindAll(k => k.GetNome() == objetosNoEscopo[x].GetNome()).Count;
-                if ((index != -1) && (contadorObjetos > 1))
+                List<Classe> classesNoEscopo = escopo.tabela.GetClasses();
+                for (int x = 0; x < classesNoEscopo.Count; x++)
                 {
-                    escopo.tabela.GetObjetos().RemoveAt(index);
-                    x--; // atualiza a variavel da malha, pois foi retirado uma posição.
+                    int index = escopo.tabela.GetClasses().FindIndex(k => k.GetNome() == classesNoEscopo[x].GetNome()); // encontra a classe do 1o. estágio.
+                    int contadorClasses = escopo.tabela.GetClasses().FindAll(k => k.GetNome() == classesNoEscopo[x].GetNome()).Count;
+                    if ((index != -1) && (contadorClasses > 1))
+                        escopo.tabela.GetClasses().RemoveAt(index); // remove a classe do 1o. estágio.
                 }
             }
 
-            List<Vetor> vetoresNoEscopo = escopo.tabela.GetVetores();
-            for (int x = 0; x < vetoresNoEscopo.Count; x++)
+            if (escopo.tabela.GetObjetos() != null)
             {
-                int index = escopo.tabela.GetVetores().FindIndex(k => k.GetNome() == vetoresNoEscopo[x].GetNome()); // encontra os vetores instanciados no 1o estagoo;
-                int contadorVetores = escopo.tabela.GetVetores().FindAll(k => k.GetNome() == vetoresNoEscopo[x].GetNome()).Count;
-                if ((index != -1) && (contadorVetores > 1))
+                List<Objeto> objetosNoEscopo = escopo.tabela.GetObjetos();
+                for (int x = 0; x < objetosNoEscopo.Count; x++) // encontra os objetos instanciado do 1o. estágio.
                 {
-                    escopo.tabela.GetVetores().RemoveAt(index);
-                    x--; // atualiza a variavel da malha, pois foi retirado uma posição.
+                    int index = escopo.tabela.GetObjetos().FindIndex(k => k.GetNome() == objetosNoEscopo[x].GetNome());
+                    int contadorObjetos = escopo.tabela.GetObjetos().FindAll(k => k.GetNome() == objetosNoEscopo[x].GetNome()).Count;
+                    if ((index != -1) && (contadorObjetos > 1))
+                    {
+                        escopo.tabela.GetObjetos().RemoveAt(index);
+                        x--; // atualiza a variavel da malha, pois foi retirado uma posição.
+                    }
                 }
             }
 
+            if (escopo.tabela.GetVetores() != null)
+            {
+                List<Vetor> vetoresNoEscopo = escopo.tabela.GetVetores();
+                for (int x = 0; x < vetoresNoEscopo.Count; x++)
+                {
+                    int index = escopo.tabela.GetVetores().FindIndex(k => k.GetNome() == vetoresNoEscopo[x].GetNome()); // encontra os vetores instanciados no 1o estagoo;
+                    int contadorVetores = escopo.tabela.GetVetores().FindAll(k => k.GetNome() == vetoresNoEscopo[x].GetNome()).Count;
+                    if ((index != -1) && (contadorVetores > 1))
+                    {
+                        escopo.tabela.GetVetores().RemoveAt(index);
+                        x--; // atualiza a variavel da malha, pois foi retirado uma posição.
+                    }
+                }
+            }
+            if (escopo.tabela.GetFuncoes() != null)
+            {
+                List<Funcao> funcoesNoEscopo = escopo.tabela.GetFuncoes();
+                for (int x = 0; x < funcoesNoEscopo.Count; x++)
+                    for (int y = x + 1; y < funcoesNoEscopo.Count; y++)
+                        if (Funcao.IguaisFuncoes(funcoesNoEscopo[x], funcoesNoEscopo[y]))
+                        {
+                            funcoesNoEscopo.RemoveAt(y);
+                            y--;
+                        }
+                escopo.tabela.GetFuncoes().Clear();
+                escopo.tabela.GetFuncoes().AddRange(funcoesNoEscopo);
+            }
 
-            List<Expressao> expressoesNoEscopo = escopo.tabela.GetExpressoes(); // elimina redundâncias em expressões, pelo sistema de recuperação de sequencias nao tratadas.
-            for (int x = 0; x < expressoesNoEscopo.Count; x++)
-                for (int y = x + 1; y < expressoesNoEscopo.Count; y++)
-                    if (IguaisFuncoes(expressoesNoEscopo[x], expressoesNoEscopo[y]))
-                        expressoesNoEscopo.RemoveAt(y);
+            if (escopo.tabela.GetExpressoes() != null)
+            {
+                List<Expressao> expressoesNoEscopo = escopo.tabela.GetExpressoes(); // elimina redundâncias em expressões, pelo sistema de recuperação de sequencias nao tratadas.
+                for (int x = 0; x < expressoesNoEscopo.Count; x++)
+                    for (int y = x + 1; y < expressoesNoEscopo.Count; y++)
+                        if (IguaisExpressoes(expressoesNoEscopo[x], expressoesNoEscopo[y]))
+                        {
+                            expressoesNoEscopo.RemoveAt(y);
+                            y--;
+                        }
 
-            escopo.tabela.GetExpressoes().Clear();
-            escopo.tabela.GetExpressoes().AddRange(expressoesNoEscopo);
+                escopo.tabela.GetExpressoes().Clear();
+                escopo.tabela.GetExpressoes().AddRange(expressoesNoEscopo);
+            }
         }
 
 
-
-        private bool IguaisFuncoes(Expressao exprss1, Expressao exprss2)
+       
+        private bool IguaisExpressoes(Expressao exp1, Expressao exp2)
         {
-            if (exprss1.tipo != exprss2.tipo)
-                return false;
-            if (exprss1.Elementos.Count != exprss2.Elementos.Count)
-                return false;
-
-            List<string> nomesObjetosExprss1 = NomesObjetosEmUmaExpressao(exprss1);
-            List<string> nomesObjetosExprss2 = NomesObjetosEmUmaExpressao(exprss2);
-
-            if ((nomesObjetosExprss1 == null) && (nomesObjetosExprss2 == null))
+            if ((exp1 == null) && (exp2 == null))
                 return true;
-            if ((nomesObjetosExprss1 == null) && (nomesObjetosExprss2 != null))
+            if ((exp1 == null) && (exp2 != null))
                 return false;
-            if ((nomesObjetosExprss1 != null) && (nomesObjetosExprss2 == null))
-                return false;
-            if (nomesObjetosExprss1.Count != nomesObjetosExprss2.Count)
+            if ((exp1 != null) && (exp2 == null))
                 return false;
 
-            for (int x = 0; x < nomesObjetosExprss1.Count; x++)
-                if (nomesObjetosExprss1[x] != nomesObjetosExprss2[x])
+            if (exp1.tokens.Count != exp2.tokens.Count)
+                return false;
+
+            for (int umToken = 0; umToken < exp1.tokens.Count; umToken++)
+                if (exp1.tokens[umToken] != exp2.tokens[umToken])
                     return false;
+
             return true;
         }
-
-
-        private List<string> NomesObjetosEmUmaExpressao(Expressao exprssCurrente)
-        {
-            List<string> nomesDeObjetos = new List<string>();
-            for (int x = 0; x < exprssCurrente.Elementos.Count; x++)
-                if ((exprssCurrente.Elementos[x].GetType() == typeof(ExpressaoObjeto)) && (((ExpressaoObjeto)exprssCurrente.Elementos[x]).objeto != null))
-                    nomesDeObjetos.Add(((ExpressaoObjeto)exprssCurrente.Elementos[x]).objeto.GetNome());
-            return nomesDeObjetos;
-        }
-
+  
         //______________________________________________________________________________________________________________________
 
         

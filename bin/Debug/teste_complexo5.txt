@@ -1,4 +1,4 @@
-public class classeC { public int objD ; public classeC(){ objD= 1; };  public int funcaoE( int x ){ objD=objD+x; };}
+public class classeC { public int objD ; public classeC(){ objD= 1; };  public int funcaoE( int x ){ objD=objD+x; }}
 
 classeC obj_C = create(); 
 obj_C.funcaoE(1);

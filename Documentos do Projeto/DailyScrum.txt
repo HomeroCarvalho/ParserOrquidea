@@ -5318,7 +5318,6 @@ Daily Scrum 11.10:
 					--->(feito) nao se esquecer tb. de retirar o codigo que verifica esta condição, pois é falha facilmente...
 
 _____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-
 Daily Scrum 11.10:
 
 		TAREFAS DO DIA:
@@ -5355,3 +5354,97 @@ Daily Scrum 11.10:
 
 			---> testar conflito de nomes em propriedades/metodos/operadores herdados.
 _______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 12.10:
+
+		TAREFAS DO DIA:
+						
+						-----> fazer uma atribuicao de um elemento de vetor.
+
+										-----> o codigo de atribuicao de elemento de vetor não havia suporte correto, fixado , aguardando testes.
+										---> (codificado) criar um cenario de testes para atribuicao de elemento de um vetor.
+										---> codificacao de codigo para atribuicao de um elemento de vetor, no build de Atribuicao.
+										---> ajuste na instrucao Atribuicao, varios indices desatualizados.
+
+										----> fixado, os indices de enderecamento de vetores estava incorreto: um pouquinho de confusão..
+													----> fixado tb, a instrucao Atribuicao.
+										----> testes feitos, êxito.
+
+						----> seguindo a lista de tarefas, verificar se é possível implementar o padrão Estategy, que envolve polimorfimo entre metodos de classes.
+										---> (codficado) codificando a subscrita de uma metodo de classe herdada, por um método da classe herdeira, se os metodo são iguais.
+
+										---> (A codificar) codificar um cenario de teste para testes com polimorfismo de metodos.
+
+
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 12.10:
+
+		TAREFAS DO DIA:
+						---> codificacao do primeiro cenario de teste, para verificar técnicas de Programação a Objeto.
+						---> o build "Atribuicao" está com várias falhas, foi preciso codificar outros casos, não previstos.
+										---> devido a modificacao do codigo para compor classes com metodos herdados iguais aos metodos nao herdados,
+										foi preciso realizar testes na criação de classes.
+										---> codificado mudancas na classe ExtratoresOO, que extai propriedades, metodos e operadores de uma classe, e instancia a classe,
+											 para metodos herdados com mesmo nome, setado para nome longo, para metodos herdados e metodos nao herdados com assinatura de metodo iguais, sobreposicao de metodos nao herdados.
+
+
+
+						---> (falha) falha na atribuicao de variavel sem definicao, em casos como "c=3", é processado como "=3".
+										---> (fixado) verificando.. O build de Atribuicao estava com um codigo de outras versoes, que cortava o primeiro elemento da expressao de atribuicao. 
+
+
+						---> (codificado, testado) mudanca da composicao do nomelongo, o separador do nome da classe para o nome do objeto/metodo, passa a ser "@", porque era inviável a separação era ".", que geraria erros no processamento de expressoes, quando o código do programador tenta acessar o método com nome longo.
+
+						---> (feito) metodos herdados processado corretamente, com composição de nomesLongos, e sobreposição de metodos nao herdados, sobre metodos herdados.
+
+
+						----> (feito) testes para compor padrao de projeto estrategy, com chamadas de metodos iguais, mas de classes diferentes, sobre uma mesma classe herdada,
+											----> escrito o codigo em arquivo para o teste de polimorfismo de classes...
+											---->(fixado, erro de sintaxe no arquivo do codigo para o cenario de testes) testes, falha, na lista de instruções de um construtor, estava inserido uma ExpressaoChamadaDeMetodo, que provocou um erro fatal.
+																---> testes, falha no resultado, o polimorfismo não está funcionando...
+    																		---> verificando, há a atribuição da variavel base para a variavel herdeira.., mas a chamada de metodo está sem o valor da variavel, que seria a variavel que queriamos para compor a chamada de funcao,
+																		mas o objeto de GetValor()== object, e o compilador não aceita object, neste caso.
+																			---> solução: é possivel a conversão de um "object" para um "Objeto", mas por alguma razão, o método chamado continua sendo da classe base.
+																			---> solução: é obtido o método correto a partir de pesquisa no escopo, encontrando o método do objeto-valor da variável, que é o que queríamos invocar....
+
+					   ----> ante a modificação do código, testar novamente a chamada de método em outros cenários de testes.
+
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 13.10:
+
+		TAREFAS DO DIA:
+					----> implementar um método que verifica se a expressão termina corretamente com um ponto-e-virgula, o que detectaria erros por sintaxes sem ponto-e-virgula.
+									----> há casos de exceção: 
+													1- expressão-número não precisa terminar com ponto-e-virgula.
+													2- expressão cujo elemento anterior é um operador braças "{".
+													3- expressões com um token somente, é um caso exceção, necessitando mais código para identificar este caso.
+
+
+
+					----> verificar se na instrução create, é válido setar o valor como o próprio Objeto criado. Com isso é solução para chamadas de método, que envolve chamada dinâmica de métodos.										
+									---> verificando, testando, a modificação na instrução create inviabiliza a chamada dinâmica de objetos.
+									---> mas analisando, a classe EvalExpression seta o valor de objetos para o valor resultante de uma atribuição.... Então, não precisaria verificar o valor de Objeto, para chamada dinâmica de métodos.
+
+
+					----> verificar se na composição de expressoes chamada de método, é valido setar o valor do objeto da chamada para um valor = o próprio objeto da chamada.
+									----> UMA SOLUÇÃO seria verificar se o valor de um objeto é nulo, se for, o objeto chamada é o próprio objeto, se o valor não for nulo, o objeto chamada será o valor do objeto.
+															----> verificar novamente o build da instrução "create".
+															----> era sabotagem aqui do país, mesmo: seta o valor de um objeto para o próprio objeto, supre a classe EvalExpresion efetuar chamadas de objeto...
+					----> cenario de teste para chamada dinâmica de objeto, teve êxito. SOLUÇÃO: INSTANCIAR UM OBJETO E ATRIBUIR VALOR INICIAL O PROPRIO OBJETO.
+
+					----> testar com cenários de testes para chamada de método, ante a modificação significativa do código na classe EvalExpression.
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 14.10:
+
+		TAREFAS DO DIA:
+
+
+					----> testes para verificação de inconsistência em chamada de métodos aninhados.
+										----> o teste principal, com chamada de métodos aninhados, teve êxito.
+											  Porém, no teste de chamada de método e atribuição de propriedades aninhadas, falhou.
+											  (fixado), não estava obtendo o valor do objeto aninhado, no escopo, mas da expressão, o que obviamente estava desatualizado.. ante as modificações no códigos, é bom que testes pegue erros feitos com a modificação do código, em outro trecho do código.
+										----> testes para propriedades, e métodos aninhados, teve êxito.
+
+
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+

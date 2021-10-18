@@ -54,7 +54,6 @@ E:\ProjetoLinguagensOrquideaVisualStudio2019_2\bin\Debug\MathNet.Spatial.dll
 E:\ProjetoLinguagensOrquideaVisualStudio2019_2\bin\Debug\MathNet.Numerics.xml
 E:\ProjetoLinguagensOrquideaVisualStudio2019_2\bin\Debug\MathNet.Spatial.xml
 E:\ProjetoLinguagensOrquideaVisualStudio2019_2\obj\Debug\ParserLinguagemOrquidea.csproj.CoreCompileInputs.cache
-E:\ProjetoLinguagensOrquideaVisualStudio2019_2\obj\Debug\ParserLinguagemOrquidea.csproj.CopyComplete
 E:\ProjetoLinguagensOrquideaVisualStudio2019_2\obj\Debug\ParserLinguagemOrquidea.exe
 E:\ProjetoLinguagensOrquideaVisualStudio2019_2\obj\Debug\ParserLinguagemOrquidea.pdb
 E:\ProjetoLinguagensOrquideaVisualStudio2019_2\obj\Debug\ParserLinguagemOrquidea.csproj.AssemblyReference.cache

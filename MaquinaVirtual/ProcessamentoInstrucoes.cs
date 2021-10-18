@@ -631,22 +631,25 @@ namespace parser
             /// 1- Elemento[1]: nome do objeto.
             /// 2- Elemento[2]: se tiver propriedades/metodos aninhados: expressao de aninhamento. Se não tiver, ExpressaoElemento("") ".
             /// 3- expressao da atribuicao ao objeto/vetor. (se nao tiver: ExpressaoELemento("")
+            /// 4- se vetor, a expressao em que as sub-expressoes são expressoes de calculo de indices de enderaçamento ao elemento de vetor que ser atribuir.
 
-            string tipoAtribuicao = null;
-            string nomeAtribuicao = null;
+            string tipoObjetoAAtribuir = null;
+            string nomeObjetoAAtribuir = null;
             string nomeCampo = null;
             Expressao atribuicao = null;
             ExpressaoPropriedadesAninhadas propriedadesAninhadas = null;
+           
+
             if (instrucao.expressoes[0].GetType()==typeof(ExpressaoChamadaDeMetodo)) 
             {
 
                 EvalExpression eval = new EvalExpression();
                 object result= eval.EvalPosOrdem(instrucao.expressoes[1], escopo);
 
-                tipoAtribuicao = instrucao.expressoes[1].Elementos[0].ToString();
-                nomeAtribuicao = instrucao.expressoes[1].Elementos[1].ToString();
+                tipoObjetoAAtribuir = instrucao.expressoes[0].Elementos[0].ToString();
+                nomeObjetoAAtribuir = instrucao.expressoes[0].Elementos[1].ToString();
 
-                escopo.tabela.GetObjetos().Add(new Objeto("private", tipoAtribuicao, nomeAtribuicao, result));
+                escopo.tabela.GetObjetos().Add(new Objeto("private", tipoObjetoAAtribuir, nomeObjetoAAtribuir, result));
                 return result;
             }
             else
@@ -654,16 +657,16 @@ namespace parser
             {
                 if (RepositorioDeClassesOO.Instance().GetClasse(instrucao.expressoes[0].Elementos[0].ToString()) != null) 
                 {
-                    nomeAtribuicao = instrucao.expressoes[0].Elementos[1].ToString();
-                    tipoAtribuicao = instrucao.expressoes[0].Elementos[0].ToString();
+                    nomeObjetoAAtribuir = instrucao.expressoes[0].Elementos[1].ToString();
+                    tipoObjetoAAtribuir = instrucao.expressoes[0].Elementos[0].ToString();
                 }
                 else
                 {
-                    nomeAtribuicao = instrucao.expressoes[0].Elementos[0].ToString();
+                    nomeObjetoAAtribuir = instrucao.expressoes[0].Elementos[0].ToString();
                     for (int x = 0; x < escopo.tabela.GetObjetos().Count; x++)
                     {
-                        tipoAtribuicao = ObtemTipoRecursivamente(escopo, nomeAtribuicao, escopo.tabela.GetObjetos()[x]);
-                        if (tipoAtribuicao != null)
+                        tipoObjetoAAtribuir = ObtemTipoRecursivamente(escopo, nomeObjetoAAtribuir, escopo.tabela.GetObjetos()[x]);
+                        if (tipoObjetoAAtribuir != null)
                             break;
                     }
 
@@ -675,9 +678,9 @@ namespace parser
             else
             if (instrucao.expressoes[0].GetType() == typeof(ExpressaoPropriedadesAninhadas))
             {
-                ExpressaoPropriedadesAninhadas aninhadas = ((ExpressaoPropriedadesAninhadas)instrucao.expressoes[0]);
-                nomeAtribuicao = aninhadas.objetoInicial.GetNome();
-                tipoAtribuicao = aninhadas.objetoInicial.GetTipo();
+                ExpressaoPropriedadesAninhadas aninhadas = ((ExpressaoPropriedadesAninhadas)instrucao.expressoes[0].Elementos[2]);
+                nomeObjetoAAtribuir = aninhadas.objetoInicial.GetNome();
+                tipoObjetoAAtribuir = aninhadas.objetoInicial.GetTipo();
                 propriedadesAninhadas = aninhadas;
                 atribuicao = aninhadas.expresaoAtribuicao;
             }
@@ -693,7 +696,7 @@ namespace parser
                            
                             object novoValorDoCampoDoObjeto = new EvalExpression().EvalPosOrdem(atribuicao, escopo);
 
-                            Objeto obj1 = escopo.tabela.GetObjeto(nomeAtribuicao, escopo);
+                            Objeto obj1 = escopo.tabela.GetObjeto(nomeObjetoAAtribuir, escopo);
                             if ((obj1 != null) && (atribuicao != null))
                             {
                                 
@@ -719,39 +722,29 @@ namespace parser
                         break;
 
                     case Instrucao.EH_VETOR:
-                        object novoValor3 = new EvalExpression().EvalPosOrdem(instrucao.expressoes[1], escopo);
+                        
+                        
+                        object novoValor3 = new EvalExpression().EvalPosOrdem(instrucao.expressoes[0].Elementos[3], escopo); // calcula o valor de atribuição.
 
-                        Vetor umVetor = escopo.tabela.GetVetor(nomeAtribuicao, escopo);
-                        if (umVetor != null)
-                        {
-                            List<Expressao> expressoesIndices = instrucao.expressoes[5].Elementos;
-                            List<int> indices = new List<int>();
+                        Vetor umVetor = escopo.tabela.GetVetor(nomeObjetoAAtribuir, escopo); // obtem o vetor do elementoa receber novo valor.
+                        Expressao expressoesEndecamentoMatricial = instrucao.expressoes[0].Elementos[4];
 
-                            if (expressoesIndices == null)
-                                expressoesIndices = new List<Expressao>();
-                            else
-                            {
-                                EvalExpression eval = new EvalExpression();
-                                for (int x = 0; x < expressoesIndices.Count; x++)
-                                    indices.Add(int.Parse(eval.EvalPosOrdem(expressoesIndices[x], escopo).ToString()));
 
-                            }
+                        List<Expressao> expressoesIndices = expressoesEndecamentoMatricial.Elementos; // lista de indices de enderecamento a um dos elementos do vetor.
+                         umVetor.SetElementoPorOffset(expressoesIndices, novoValor3, escopo); // seta o elemento do vetor para um indices!
+                        
+                        
+                        return umVetor;
 
-                            umVetor.SetValor(novoValor3);
-                            umVetor.dimensoes = indices.ToArray();
-
-                            return umVetor;
-                        }
-                        return null;
 
                     case Instrucao.EH_PRPOPRIEDADE_ESTATICA:
-                        string tipoDaPropriedadeEstatica = tipoAtribuicao;
-                        string nomeDaPropriedadeEstatica = nomeAtribuicao;
+                        string tipoDaPropriedadeEstatica = tipoObjetoAAtribuir;
+                        string nomeDaPropriedadeEstatica = nomeObjetoAAtribuir;
 
                         Classe classe = escopo.tabela.GetClasse(tipoDaPropriedadeEstatica, escopo);
                         if (classe != null)
                         {
-                            object novoValor4 = new EvalExpression().EvalPosOrdem(instrucao.expressoes[1], escopo);
+                            object novoValor4 = new EvalExpression().EvalPosOrdem(instrucao.expressoes[0].Elementos[3], escopo);
                             Objeto propriedadeEstatica = classe.propriedadesEstaticas.Find(k => k.GetNome().Equals(nomeDaPropriedadeEstatica));
                             propriedadeEstatica.SetValor(novoValor4);
                             return propriedadeEstatica;
@@ -812,6 +805,7 @@ namespace parser
                             return escopo.tabela.GetObjeto(nomeDoObjeto, escopo);
                         }
                         
+
 
                     case Instrucao.EH_VETOR:
                         Vetor vtJaExistente = escopo.tabela.GetVetor(nomeDoObjeto, escopo);

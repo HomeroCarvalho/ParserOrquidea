@@ -21,12 +21,12 @@ namespace parser
         public string nomeClasse { get; set; }
 
 
-        public string nomeClasseDoOperador { get; set; }
+     
 
-        public void SetNomeLongo(string nomeClasse)
+        public void SetNomeLongo(string classeDoMetodo)
         {
             // muda o nome do metodo para o nome longo (nomeDaClasseDoMetodo+"."+ nomeDoMetodo).
-            this.nomeLongo = nomeClasse + "." + nome;
+            this.nomeLongo = classeDoMetodo + "@" + nome;
             this.nome = this.nomeLongo;
         }
         public int prioridade { get; set; } // prioridade de execução em expressões.
@@ -94,12 +94,7 @@ namespace parser
         /// </summary>
         public object ExecuteAMethod(List<Expressao> parametrosDoMetodo, Escopo escopo,  Objeto objetoCaller)
         {
-            if (this.nome == "funcaoC")
-            {
-                int k = 0;
-                k++;
-            }
-
+           
             Classe classeDoObjeto = RepositorioDeClassesOO.Instance().GetClasse(objetoCaller.GetTipo());
 
 
@@ -361,6 +356,36 @@ namespace parser
             
         }
 
+
+        public static bool IguaisFuncoes(Funcao fncA, Funcao fncB)
+        {
+            if (fncA.nome != fncB.nome)
+                return false;
+
+            if ((fncA.parametrosDaFuncao == null) && (fncB.parametrosDaFuncao == null))
+                return true;
+
+            if ((fncA.parametrosDaFuncao == null) && (fncB.parametrosDaFuncao != null))
+                return false;
+
+            if ((fncA.parametrosDaFuncao != null) && (fncB.parametrosDaFuncao == null))
+                return false;
+
+            if (fncA.parametrosDaFuncao.Length != fncB.parametrosDaFuncao.Length)
+                return false;
+
+          
+            for (int x = 0; x < fncA.parametrosDaFuncao.Length; x++)
+                if (fncA.parametrosDaFuncao[x].GetTipo() != fncB.parametrosDaFuncao[x].GetTipo())
+                    return false;
+
+            if (fncA.tipoReturn != fncB.tipoReturn)
+                return false;
+
+            return true;
+        }
+
+
         public override string ToString()
         {
             string str = "";
@@ -475,7 +500,7 @@ namespace parser
             this.nome = nomeOperador;
             this.tipoRetorno = tipoRetorno;
             this.prioridade = prioridade;
-            this.nomeClasseDoOperador = nomeClase;
+            this.nomeClasse = nomeClase;
             this.instrucoesFuncao = instrucoesCorpo.ToList<Instrucao>();
             this.parametrosDaFuncao = parametros;
             LinguagemOrquidea.RegistraOperador(this); // adiciona o operador criado, para a lista de operadores da linguagem, atualizando a lista de operadores para processamento.
@@ -490,6 +515,26 @@ namespace parser
             return operador;
         }
 
+        public static bool IguaisOperadores(Operador op1, Operador op2)
+        {
+            if ((op1.parametrosDaFuncao == null) && (op2.parametrosDaFuncao == null))
+                return true;
+             
+            if ((op1.parametrosDaFuncao == null) && (op2.parametrosDaFuncao != null))
+                return false;
+
+            if ((op1.parametrosDaFuncao != null) && (op2.parametrosDaFuncao == null))
+                return false;
+
+            if (op1.parametrosDaFuncao.Length != op2.parametrosDaFuncao.Length)
+                return false;
+
+            for (int x = 0; x < op1.parametrosDaFuncao.Length; x++)
+                if (op1.parametrosDaFuncao[x].GetTipo() != op2.parametrosDaFuncao[x].GetTipo())
+                    return false;
+
+            return true;
+        }
 
 
         public static Operador GetOperador(string nomeOperador, string classeOperador, string tipo, UmaGramaticaComputacional lng)

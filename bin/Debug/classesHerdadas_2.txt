@@ -1,0 +1,10 @@
+public class classeBase {public int b;  public classeBase(){b=1;}; public int funcaoA(){b=2;}}
+public class classeHerdeira1: +classeBase {public int c; public classeHerdeira1(){c=1;}; public int funcaoA(){c=3;}}
+public class classeHerdeira2: +classeBase {public int d; public classeHerdeira2(){d=1;}; public int funcaoA(){d=5;}}
+
+classeBase variavelBase;
+classeHerdeira1 variavelHerdeira1= create();
+classeHerdeira2 variavelHerdeira2= create();
+
+variavelBase= variavelHerdeira1;
+variavelBase.funcaoA();
