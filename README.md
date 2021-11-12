@@ -3,7 +3,24 @@ implementacao de linguagens de programacao LISP, PROLOG, programacao estruturada
 
 # LinguagensDoOrquidea
 
-Projeto para criacao de uma base de linguagens: lisp, prolog, programcao estruturada, programacao orientada a objetos.
+Projeto ParserLinguagemOrquidea
+
+	Este projeto é um estudo holístico de construção de linguagens de programação.	Contém classes para um interpretador LISP, um interpretador PROLOG,
+	um compilador e maquina virtual para uma linguagem Orientada a Objetos, e comando que implanta Programação Orientada a Aspectos, dentro da linguagem orientada a objetos.
+	
+	Para descrição das instruções (comandos de uma linguagem) LISP,
+	vide: 
+	"ProjetoLinguagensOrquideaVisualStudio2019_2\Documentos do Projeto\comandos Lisp.txt".
+	
+	Para descrição dos comandos do interpretador PROLOG,
+	vide:
+	"ProjetoLinguagensOrquideaVisualStudio2019_2\Documentos do Projeto\FUNCIONALIDADES PROLOG.txt".
+	
+	Para descrição dos comandos da linguagem de programação orientada a objetos, e programação orientada a aspectos, vide:
+	"ProjetoLinguagensOrquideaVisualStudio2019_2\Documentos do Projeto\instrucoes Linguagem Orientada a Objeto.txt".
+
+
+Projeto para criacao de uma base de linguagens: lisp, prolog, programacao estruturada, programacao orientada a objetos, programacao orientada a aspectos.
 Ante de compilar o projeto, acrescente os pacotes NuGet: MathNet.Numerics, MathNet.Spatial, sem os quais resultarao em erros na compilacao.
 
 Instrucoes da parte Programacao Orientada a Objetos, e tambem Programacao Estruturada.

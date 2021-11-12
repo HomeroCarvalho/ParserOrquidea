@@ -170,10 +170,13 @@
     <Content Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\classes de Apoio\readme.txt" />
     <Content Include="Documentos do Projeto\comandos e funcoes interpretador Prolog.txt" />
     <Content Include="Documentos do Projeto\comandos e instrucoes  do interpretador lisp.txt" />
+    <Content Include="Documentos do Projeto\comandos Lisp.txt" />
     <Content Include="Documentos do Projeto\DailyScrum.txt" />
     <Content Include="Documentos do Projeto\Entregas do Projeto.txt" />
     <Content Include="Documentos do Projeto\esboço do sistema de aspectos.txt" />
+    <Content Include="Documentos do Projeto\FUNCIONALIDADES PROLOG.txt" />
     <Content Include="Documentos do Projeto\instrucoes Linguagem Orientada a Objeto.txt" />
+    <Content Include="Documentos do Projeto\instrucoesBasicasLisp.txt" />
     <Content Include="Documentos do Projeto\lista funcionalidades projeto orquidea.txt" />
     <Content Include="Documentos do Projeto\PrimeiraManutencaoCorritivaEAditiva.txt" />
     <Content Include="Documentos do Projeto\SegundaManutencaoOrquidea.txt" />
