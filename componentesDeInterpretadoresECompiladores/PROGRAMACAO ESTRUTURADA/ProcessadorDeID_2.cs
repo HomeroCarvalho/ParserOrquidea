@@ -41,7 +41,7 @@ namespace parser
 
             Expressao exprss_comando = new Expressao(new string[] { "importer", nomeArquivoAsssembly }, escopo);
 
-            escopo.tabela.GetExpressoes().Add(exprss_comando);
+            escopo.tabela.AdicionaExpressoes(escopo, exprss_comando);
 
             ImportadorDeClasses importador = new ImportadorDeClasses(nomeArquivoAsssembly);
             importador.ImportAllClassesFromAssembly(); // importa previamente as classes do arquivo assembly.
@@ -120,6 +120,8 @@ namespace parser
             expressaoCabecalho.Elementos.Add(new ExpressaoElemento(indexConstrutor.ToString()));
             expressaoCabecalho.Elementos.Add(pacoteParametros);
 
+            escopo.tabela.AdicionaExpressoes(escopo, expressoesParametros.ToArray()); // adiciona as expressoes-parametros, para fins de otimização.
+
             Instrucao instrucaoConstrutorUP = new Instrucao(ProgramaEmVM.codeConstructorUp, expressaoCabecalho.Elementos, new List<List<Instrucao>>());
             return instrucaoConstrutorUP;
         }
@@ -184,11 +186,6 @@ namespace parser
 
             ValidaTokensDaSintaxeDaInstrucao(sequencia, escopo);
 
-            ExpressaoOperadorMatricial expressoesIndicesVetor = new ExpressaoOperadorMatricial();
-            if (tipoDoObjetoAReceberAInstantiacao == "Vetor")
-                expressoesIndicesVetor = ObtemIndicesVetoriais(sequencia, escopo, nomeDoObjetoAReceberAInstanciacao);
-
-
 
             int indexFirstParenteses = sequencia.tokens.IndexOf("(");
             List<string> tokensParametros = UtilTokens.GetCodigoEntreOperadores(indexFirstParenteses, "(", ")", sequencia.tokens);
@@ -216,16 +213,16 @@ namespace parser
             }
 
             Expressao exprssDaIntrucao = new Expressao();
-            Expressao exprssParametros = new Expressao();
-            exprssParametros.Elementos.AddRange(expressoesParametros);
+            Expressao parametros = new Expressao();
+            parametros.Elementos.AddRange(expressoesParametros);
 
 
             exprssDaIntrucao.Elementos.Add(new ExpressaoElemento("create"));
             exprssDaIntrucao.Elementos.Add(new ExpressaoElemento(tipoDoObjetoAReceberAInstantiacao));
             exprssDaIntrucao.Elementos.Add(new ExpressaoElemento(nomeDoObjetoAReceberAInstanciacao));
             exprssDaIntrucao.Elementos.Add(new ExpressaoElemento("Objeto"));
-            exprssDaIntrucao.Elementos.Add(expressoesIndicesVetor);
-            exprssDaIntrucao.Elementos.Add(exprssParametros);
+            exprssDaIntrucao.Elementos.Add(new ExpressaoElemento("tipo do elemento do vetor"));
+            exprssDaIntrucao.Elementos.Add(parametros);
             exprssDaIntrucao.Elementos.Add(new ExpressaoElemento(indexConstrutor.ToString()));
 
 
@@ -235,45 +232,30 @@ namespace parser
             {
                 // tipo da variavel: vetor.
                 List<int> indicesVetor = new List<int>();
-                string tipoDosElementosDoVetor = sequencia.tokens[5]; // o primeiro elemento do create é reservado para o tipo do elemento do vetor, se for um vetor.
-                EvalExpression eval = new EvalExpression();
-
-                try
-                {
-
-
-                    for (int tokenIndice = 0; tokenIndice < expressoesParametros.Count; tokenIndice++)
-                    {
-                        object umIndice = eval.EvalPosOrdem(expressoesParametros[tokenIndice], escopo);
-                        if (umIndice != null)
-                            indicesVetor.Add(int.Parse(umIndice.ToString()));
-
-                    }
-                }
-                catch
-                {
-                    UtilTokens.WriteAErrorMensage(escopo, "Os indices das dimensoes da variavel vetor a ser criado: " + nomeDoObjetoAReceberAInstanciacao + " devem ser apenas numeros inteiros.", sequencia.tokens);
-                    return null;
-                }
-
-                escopo.tabela.GetVetores().Add(new Vetor("private", nomeDoObjetoAReceberAInstanciacao, tipoDosElementosDoVetor, escopo, indicesVetor.ToArray())); // adiciona a variavel vetor criada, para a compilação das próximas instruções, em outros builds.
-                exprssDaIntrucao.Elementos[3] = new ExpressaoElemento("Vetor");
-
-
+                // o vetor será instanciado somente durante a execução do programa.
+                int tokenTipoElementoDoVetor = sequencia.tokens.IndexOf("(") + 1;
+                string tipoDosElementosDoVetor = sequencia.tokens[tokenTipoElementoDoVetor];
+                exprssDaIntrucao.Elementos[4] = new ExpressaoElemento(tipoDosElementosDoVetor);
+                    
+            
             }
             else
             {
                 // tipo da variável: Objeto.
                 Classe classeDoObjeto = RepositorioDeClassesOO.Instance().GetClasse(tipoDoObjetoAReceberAInstantiacao);
+
+
                 Objeto novoObjetoInstanciado = new Objeto("private", tipoDoObjetoAReceberAInstantiacao, nomeDoObjetoAReceberAInstanciacao, null);
-
-
                 novoObjetoInstanciado.SetValor(novoObjetoInstanciado); // seta o valor do objeto, o próprio objeto, para fins de avaliação de expressões pela classe EvalExpressao.
 
-                // se o objeto não já foi criado, instancia o objeto, no escopo.
-                escopo.tabela.GetObjetos().Add(novoObjetoInstanciado);
+
+                
+                escopo.tabela.GetObjetos().Add(novoObjetoInstanciado); // se o objeto não já foi criado, instancia o objeto, no escopo.
             }
-            escopo.tabela.GetExpressoes().Add(exprssDaIntrucao); // registra as expressões, a fim de otimização de modificação.
+
+            // registra as expressões, a fim de otimização de modificação.
+            if (expressoesParametros.Count > 0)
+                escopo.tabela.AdicionaExpressoes(escopo, expressoesParametros.ToArray());
 
             // cria a instrucao do objeto.
             Instrucao instrucaoCreate = new Instrucao(ProgramaEmVM.codeCreateObject, new List<Expressao>() { exprssDaIntrucao }, new List<List<Instrucao>>());
@@ -284,18 +266,6 @@ namespace parser
 
 
 
-        protected ExpressaoOperadorMatricial ObtemIndicesVetoriais(UmaSequenciaID sequencia, Escopo escopo, string nomeDoObjeto)
-        {
-            Vetor vetor = escopo.tabela.GetVetores().Find(k => k.nome == nomeDoObjeto);
-            List<Expressao> expressoesDaequencia = Expressao.Instance.ExtraiExpressoes(escopo, sequencia.tokens);
-            ExpressaoOperadorMatricial indicesMatriciais = null;
-         
-            foreach (Expressao expressaoComando in expressoesDaequencia)
-                if (expressaoComando.GetType() == typeof(ExpressaoOperadorMatricial))
-                    return (ExpressaoOperadorMatricial)indicesMatriciais;
-
-            return null;
-        }
 
         protected bool ValidaTokensDaSintaxeDaInstrucao(UmaSequenciaID sequencia, Escopo escopo)
         {
@@ -317,7 +287,7 @@ namespace parser
         } // ValidaTokensDaSintaxeDaInstrucao()
 
 
-        public static int FoundACompatibleConstructor(string tipoObjeto, List<Expressao> parametros)
+        private static int FoundACompatibleConstructor(string tipoObjeto, List<Expressao> parametros)
         {
             List<Funcao> construtores = RepositorioDeClassesOO.Instance().GetClasse(tipoObjeto).construtores;
             int contadorConstrutores = 0;
@@ -406,7 +376,9 @@ namespace parser
             ProcessadorDeID.SetValorNumero(v, expressaoNumero, escopo);
 
             Expressao exprss = new Expressao(sequencia.tokens.ToArray(), escopo);
-            escopo.tabela.GetExpressoes().Add(exprss);
+
+            // adiciona a expressao para a lista de expressoes do escopo, para fins de otimização.
+            escopo.tabela.AdicionaExpressoes(escopo, exprss);
 
             Instrucao instrucaoSet = new Instrucao(ProgramaEmVM.codeSetObjeto, new List<Expressao>() { exprss }, new List<List<Instrucao>>());
             return instrucaoSet;
@@ -427,10 +399,12 @@ namespace parser
             if (v == null)
                 return null;
 
-            Expressao exprss = new Expressao(sequencia.tokens.ToArray(), escopo);
-            escopo.tabela.GetExpressoes().Add(exprss);
+            Expressao expressaoGetObjeto = new Expressao(sequencia.tokens.ToArray(), escopo);
 
-            Instrucao instrucaoGet = new Instrucao(ProgramaEmVM.codeGetObjeto, new List<Expressao>() { exprss }, new List<List<Instrucao>>());
+            // adiciona a expressao para a lista de expressoes, para fins de otimizações.
+            escopo.tabela.AdicionaExpressoes(escopo, expressaoGetObjeto); 
+
+            Instrucao instrucaoGet = new Instrucao(ProgramaEmVM.codeGetObjeto, new List<Expressao>() { expressaoGetObjeto }, new List<List<Instrucao>>());
             return instrucaoGet;
         }
 
@@ -440,13 +414,24 @@ namespace parser
             /// while (exprss) bloco .
             if (sequencia.tokens[0] == "while")
             {
-                List<string> tokensInstrucao = sequencia.tokens.ToList<string>();
-                tokensInstrucao.RemoveAt(0); // retira o termo-chave "while".
+                int indexStartExpressionCondicional = sequencia.tokens.IndexOf("(");
+
+                if (indexStartExpressionCondicional == -1)
+                {
+                    UtilTokens.WriteAErrorMensage(escopo, "erro de sintaxe em instrucao while", sequencia.tokens);
+                    return null;
+                }
+                List<string> tokensExpressaoCondicional = UtilTokens.GetCodigoEntreOperadores(indexStartExpressionCondicional, "(", ")", sequencia.tokens);
+                if ((tokensExpressaoCondicional == null) || (tokensExpressaoCondicional.Count == 0))
+                {
+                    UtilTokens.WriteAErrorMensage(escopo, "erro na formacao da expressao condicional de instrucao while. ", sequencia.tokens);
+                    return null;
+                }
+                tokensExpressaoCondicional.RemoveAt(0);
+                tokensExpressaoCondicional.RemoveAt(tokensExpressaoCondicional.Count - 1);
 
 
-                tokensInstrucao.RemoveAt(0); // retira o parenteses abre.
-                tokensInstrucao.RemoveAt(tokensInstrucao.Count - 1); // retira o parenteses fecha.
-                expressoesWhile = Expressao.Instance.ExtraiExpressoes(escopo, tokensInstrucao);
+                expressoesWhile = Expressao.Instance.ExtraiExpressoes(escopo, tokensExpressaoCondicional);
 
                 if ((expressoesWhile == null) || (expressoesWhile.Count == 0))
                 {
@@ -461,7 +446,7 @@ namespace parser
                     return null;
                 }
 
-                 escopo.tabela.GetExpressoes().AddRange(expressoesWhile); // registra a expressão na lista de expressões do escopo currente.
+                 escopo.tabela.AdicionaExpressoes(escopo, expressoesWhile.ToArray()); // registra a expressão na lista de expressões do escopo currente.
 
                 ProcessadorDeID processador = null;
                 Instrucao instrucaoWhile = new Instrucao(ProgramaEmVM.codeWhile, new List<Expressao>() { expressoesWhile[0] }, new List<List<Instrucao>>());
@@ -546,11 +531,11 @@ namespace parser
 
                 if (!Expressao.Instance.isExpressionAritmetico(expressoesDaInstrucaoFor[2], escopo)) // valida a expressão de incremento/decremento.
                     UtilTokens.WriteAErrorMensage(escopo, "o tipo da expressão: " + sequencia.expressoes[2].Convert() + " da instrução de incremento for não é do tipo inteiro.", sequencia.tokens);
-         
 
-                // registra as expressões no escopo.
+
+                // registra as expressões no escopo, para fins de otimização.
                 for (int x = 0; x < 3; x++)
-                    escopo.tabela.GetExpressoes().Add(expressoesDaInstrucaoFor[x]);
+                    escopo.tabela.AdicionaExpressoes(escopo, expressoesDaInstrucaoFor[x]);
 
                 Instrucao instrucaoFor = null;
                 int offsetIndexBloco = sequencia.tokens.FindIndex(k => k == "{"); // calcula se há um token de operador bloco abre.
@@ -614,8 +599,8 @@ namespace parser
                 }
 
 
-
-                escopo.tabela.GetExpressoes().AddRange(expressoesIf); // adiciona a expressão de atribuição na tabela de valores do escopo currente, para fins de otimização.
+                // adiciona a expressão de atribuição na tabela de valores do escopo currente, para fins de otimização.
+                escopo.tabela.AdicionaExpressoes(escopo, expressoesIf.ToArray()); 
 
               
 
@@ -734,7 +719,10 @@ namespace parser
                     UtilTokens.WriteAErrorMensage(escopo, "Erro na montagem da expressão do case: " + nameVarCase + "  numa instrução de casesOfUse", sequencia.tokens);
                     return null;
                 } // if
-                escopo.tabela.GetExpressoes().Add(exprssaoCabecalho);
+
+
+                escopo.tabela.AdicionaExpressoes(escopo, exprssaoCabecalho); // adiciona a expressao, para fins de otimização.
+
                 if (!Expressao.Instance.ValidaExpressaoCondicional(exprssaoCabecalho, escopo))
                 {
                     UtilTokens.WriteAErrorMensage(escopo, " expressao nao condificional para o case: " + nameVarCase, sequencia.tokens);
@@ -834,10 +822,10 @@ namespace parser
 
             Escopo escopoBloco = new Escopo(bloco);
 
-            processadorBloco = new ProcessadorDeID(bloco); 
+            processadorBloco = new ProcessadorDeID(bloco);
             processadorBloco.escopo.tabela = TablelaDeValores.Clone(escopo.tabela); // copia a tabela de valores do escopo currente.
 
-            escopo.escopoFolhas.Add(processadorBloco.escopo); // faz o escopo do bloco como escopo folha do escopo da instrucao, ou função, ou escopo principal.
+            UtilTokens.LinkEscopoPaiEscopoFilhos(escopo, processadorBloco.escopo);
             processadorBloco.CompileEmDoisEstagios(); // faz a compilacao do bloco.
 
             escopo.tabela = TablelaDeValores.Clone(processadorBloco.escopo.tabela);
@@ -876,20 +864,12 @@ namespace parser
             }
             else
             {
-                escopo.tabela.GetExpressoes().Add(exprssRetorno[0]);
+                escopo.tabela.AdicionaExpressoes(escopo, exprssRetorno[0]); // adiciona a expressao para a lista de expressao do escopo, para fins de otimização.
 
                 Instrucao instrucaoReturn = new Instrucao(ProgramaEmVM.codeReturn, new List<Expressao>() { exprssRetorno[0] }, new List<List<Instrucao>>());
                 return instrucaoReturn;
             }
         }
-
-        // gera mensagem de erros configurável.
-        //protected static void GeraMensagemDeErroEmUmaInstrucao(UmaSequenciaID sequencia, Escopo escopo, string mensagem)
-        //{
-
-         //   UtilTokens.WriteAErrorMensage(escopo, mensagem, sequencia.original);
-
-        //}
 
     } // class
 

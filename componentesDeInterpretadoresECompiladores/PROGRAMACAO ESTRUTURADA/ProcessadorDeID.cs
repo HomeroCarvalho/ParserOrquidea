@@ -30,7 +30,7 @@ namespace parser
         public  List<string> codigo { get; set; }
 
         // linguagem contendo classes, métodos, propriedades, funções, variáveis, e operadores.
-        private static LinguagemOrquidea linguagem { get; set; }
+        private static LinguagemOrquidea lng { get; set; }
 
         public Escopo escopo { get; set; }
 
@@ -49,16 +49,8 @@ namespace parser
 
         private static List<string> acessorsValidos = new List<string>() { "public", "private", "protected" };
 
-        /// <summary>
-        /// guarda os tokens que não são resumiveis, no processamento de match de sequencias do codigo e sequencias resumidas.
-        /// </summary>
-        public static List<string> tokensSemResumir { get; set; }
+         
 
-        public enum TipoAtribuicao { INICIALIZACAO, MODIFICACAO };
-
-        public enum TipoPropriedadeAtribuicao { OBJETO, VARIAVEL, VARIAVEL_VETOR, PROPRIEDADE };
-
-  
     
         public List<Instrucao> GetInstrucoes()
         {
@@ -73,19 +65,18 @@ namespace parser
         /// </summary>
         public ProcessadorDeID(List<string> code) : base(code)
         {
-
             
 
             if (tratadores == null)
                 tratadores = new List<MetodoTratadorOrdenacao>();
-            if (linguagem == null)
-                linguagem = LinguagemOrquidea.Instance();
+            if (lng == null)
+                lng = LinguagemOrquidea.Instance();
 
             this.instrucoes = new List<Instrucao>();
-            codigo = new List<string>();  
+            codigo = new List<string>();
             codigo.AddRange(code);
-            this.escopo = new Escopo(code); // obtém um escopo para o processador de sequencias ID.
 
+            this.escopo = new Escopo(code); // obtém um escopo para o processador de sequencias ID.
             this.InitMapeamento(); // inicializa as sequencias id mapeadas resumidas.
 
         } // ProcessadorDeID()
@@ -141,7 +132,10 @@ namespace parser
 
 
                 string str_chamadaAFuncaoComParametrosESemRetorno = "ID ( ID";
-                
+
+                // definição de Programação Orientada a Aspectos.
+                string str_definicaoAspecto = "aspecto ( ID ID ";
+
 
                 // sequencias de instruções da linguagem.
 
@@ -257,8 +251,8 @@ namespace parser
                 LoadHandler(BuildInstrucaoConstrutorUP, str_ConstrutorUp);
 
 
-                ProcessadorDeID.tokensSemResumir = new List<string>(); // tokens presentes nas sequencia de definicoes, que nao sejam ID.
-                                                                       // utilizado no metodo de Resumir Expessoes.
+                // programacao orientada a aspectos.
+                LoadHandler(BuildDefinicaoDeAspecto, str_definicaoAspecto);
 
                 // ordena a lista de métodos tratadores, pelo cumprimento de seus testes de sequencias ID.            
                 ProcessadorDeID.MetodoTratadorOrdenacao.ComparerMetodosTratador comparer = new MetodoTratadorOrdenacao.ComparerMetodosTratador();
@@ -270,77 +264,61 @@ namespace parser
                     for (int umHandler = 0; umHandler < tratadores.Count; umHandler++) // varre as sequencias já mapeadas, procurando um match entre sequencias já mapeadas, e a sequencia de entrada resumida.
                     {
                         sequenciasJaMapeadas.Add(new List<string>());
-                        List<string> tokensDaSequenciaMapeada = new Tokens(linguagem, new List<string>() { tratadores[umHandler].sequenciaID }).GetTokens();
+                        List<string> tokensDaSequenciaMapeada = new Tokens(lng, new List<string>() { tratadores[umHandler].sequenciaID }).GetTokens();
                         sequenciasJaMapeadas[umHandler].AddRange(tokensDaSequenciaMapeada);
 
-                        foreach (string umTokenAResumir in tokensDaSequenciaMapeada)
-                        {
-                            if (!umTokenAResumir.Equals("ID"))
-                            {
-                                if (tokensSemResumir.FindIndex(k => k.Equals(umTokenAResumir)) == -1) // retira token currente que ja esta na lista de tokens.
-                                    tokensSemResumir.Add(umTokenAResumir);
-                            }
-                        }
+               
                     } // for mHandler
                 } // if
 
-                // retira oa acessor, pois sao resumiveis, e termos-chave.
-                tokensSemResumir.RemoveAll(k => k.Equals("public"));
-                tokensSemResumir.RemoveAll(k => k.Equals("private"));
-                tokensSemResumir.RemoveAll(k => k.Equals("protected"));
 
-                tokensSemResumir.Add("{"); // adiciona os operadores bloco, que não estavam na lista de tokens nao resumiveis, por nas sequencias id de mapeamento estarem resumidas pelo token "BLOCO".
-                tokensSemResumir.Add("}");
-
-
+                lng.RemoveTermoChave("public");
+                lng.RemoveTermoChave("private");
+                lng.RemoveTermoChave("protected");
     
 
             } // if tratadores
 
         } // InitMapeamento()
-
-
-        public void Compile()
+        private void ProcessaAspectos()
         {
-            List<string> tokens = new Tokens(linguagem, codigo).GetTokens();
+            // faz uma varredura nas classes, encontrando objetos e/ou metodos monitorados, para inserir  aspectos no codigo.
+            if (lng.Aspectos != null)
+            {
+                for (int x = 0; x < lng.Aspectos.Count; x++)
+                    lng.Aspectos[x].AnaliseAspecto(escopo);
+            }
+        }
+        public void CompileEmDoisEstagios()
+        {
+            List<string> tokens = new Tokens(lng, codigo).GetTokens();
             this.CompileEscopos(this.escopo, tokens); // primeira compilação. pode haver erros de uso de codigo antes da definição deste código.
 
 
-            this.instrucoes.Clear();
-            this.escopo.GetMsgErros().Clear();
-            
-            this.CompileEscopos(this.escopo, tokens); // segunda compilação, para erros de posição de um metodo/proriedade estiverem o uso antes  da definicao.
-
-
-            this.EliminaRedundanciasCausadosPeloSistemeDeRecuperacao(this.escopo);
-            
-
-        }
-
-        /// <summary>
-        /// compila o codigo, saida no objeto escopo desta classe.
-        /// </summary>
-        public void CompileEmDoisEstagios()
-        {
-
-            try
+            if ((escopo.GetMsgErros() != null) && (escopo.GetMsgErros().Count > 0)) 
             {
+                if (escopo.GetMsgErros() != null)
+                    this.escopo.GetMsgErros().Clear();
                 
-                List<string> tokens = new Tokens(linguagem, codigo).GetTokens();
-                this.CompileEscopos(this.escopo, tokens);
+                if (instrucoes != null)
+                    this.instrucoes.Clear();
+
+                if (lng.Aspectos != null)
+                    lng.Aspectos.Clear();
+
+                this.CompileEscopos(this.escopo, tokens); // segunda compilação, para erros de posição de um metodo/proriedade estiverem o uso antes  da definicao.
+                this.EliminaRedundanciasCausadosPeloSistemeDeRecuperacao(this.escopo); // elimina duplicações causadas pela dupla compilação.
             }
 
-            catch (Exception excecao)
-            {
-                ModuloTESTES.LoggerTests.AddMessage("Erro no processamento de tokens. Stack: " + excecao.StackTrace);
-            }
-         
+            this.ProcessaAspectos();
+        
         }
 
+       
         /// <summary>
         /// faz a compilacao de um escopo.
         /// </summary>
-        internal void CompileEscopos(Escopo escopo, List<string> tokens)
+        private void CompileEscopos(Escopo escopo, List<string> tokens)
         {
             
       
@@ -362,7 +340,7 @@ namespace parser
                             List<string> tokensDaInterface= UtilTokens.GetCodigoEntreOperadores(umToken, "{", "}", tokens);
 
 
-                            ExtratoresOO extratorDeClasses = new ExtratoresOO(escopo, linguagem, tokensDaInterface);
+                            ExtratoresOO extratorDeClasses = new ExtratoresOO(escopo, lng, tokensDaInterface);
                             Classe umaInterface = extratorDeClasses.ExtraiUmaInterface();
                             if (extratorDeClasses.MsgErros.Count > 0)
                                 this.escopo.GetMsgErros().AddRange(extratorDeClasses.MsgErros);
@@ -382,7 +360,7 @@ namespace parser
                 
 
                             List<string> tokensDaClasse = UtilTokens.GetCodigoEntreOperadores(umToken, "{", "}", tokens);
-                            ExtratoresOO extratorDeClasses = new ExtratoresOO(escopo, linguagem, tokensDaClasse);
+                            ExtratoresOO extratorDeClasses = new ExtratoresOO(escopo, lng, tokensDaClasse);
 
 
                             Classe umaClasse = extratorDeClasses.ExtaiUmaClasse(Classe.tipoBluePrint.EH_CLASSE);
@@ -406,21 +384,12 @@ namespace parser
                     }
                 }
                 else
-                if (linguagem.VerificaSeEhID(tokens[umToken]) || (linguagem.isTermoChave(tokens[umToken])))
+                if (lng.IsID(tokens[umToken]) || (lng.isTermoChave(tokens[umToken])))
                 {
 
-                    
                     UmaSequenciaID sequenciaCurrente = UmaSequenciaID.ObtemUmaSequenciaID(umToken, tokens, codigo); // obtem a sequencia  seguinte.
 
-                    if (sequenciaCurrente.tokens[0] == "classeHerdeira1")
-                    {
-                        int k = 0;
-                        k++;
-                    }
-
-               
-
-
+                
                     if (sequenciaCurrente == null)
                         UtilTokens.WriteAErrorMensage(escopo, "sequencia de tokens não reconhecida: " + sequenciaCurrente.ToString(), sequenciaCurrente.tokens);  // continua o processamento, para verificar se há mais erros no codigo orquidea.
            
@@ -437,7 +406,8 @@ namespace parser
                         }
 
                         // trata de problemas de sintaxe da sequencia currente, emitindo uma mensagem de erro.
-                        UtilTokens.WriteAErrorMensage(escopo, "sequencia de tokens não reconhecida: ", sequenciaCurrente.tokens);
+                        UtilTokens.WriteAErrorMensage(escopo, "sequencia de tokens não reconhecida, verifique a sintaxe, COLOCANDO PONTO-E-VIGULA NO FINAL DESTA INSTRUÇÃO, E NAS ANTERIORES TAMBÉM: ", sequenciaCurrente.tokens);
+
                     
                         umToken += sequenciaCurrente.tokens.Count;
                         continue;  // continua, para capturar mais erros em outras sequencias currente.   
@@ -449,19 +419,20 @@ namespace parser
                         {
                             // chamada do método tratador para processar a costrução de escopos, da 0sequencia de entrada.
                             Instrucao instrucaoTratada = tratadores[sequenciaCurrente.indexHandler].metodo(sequenciaCurrente, escopo);
-                            if (instrucaoTratada != null)
+                            if ((instrucaoTratada != null) && (instrucaoTratada.code != -1))
                                 this.instrucoes.Add(instrucaoTratada);
                             else
+                            if (instrucaoTratada == null)
                             {
                                 Instrucao instrucaoExpressaoCorreta = BuildExpressaoValida(sequenciaCurrente, escopo); // a sequencia id pode ser uma expressao correta, há build para expressoes corretas.
-                                if (instrucaoExpressaoCorreta != null)
+                                if ((instrucaoExpressaoCorreta != null) && (instrucaoExpressaoCorreta.code != -1))
                                 {
                                     this.instrucoes.Add(instrucaoExpressaoCorreta); // a sequencia id é uma expressao correta, processa e adiciona a instrucao de expressao correta.
                                     umToken += sequenciaCurrente.tokens.Count;
                                     continue;
                                 }
                                 else
-                                    UtilTokens.WriteAErrorMensage(escopo, "sequencia de tokens: " + sequenciaCurrente + " nao reconhecida, verifique a sintaxe, incluindo operadores ponto-e-virgula.", sequenciaCurrente.tokens);
+                                    UtilTokens.WriteAErrorMensage(escopo, "sequencia de tokens: " + sequenciaCurrente + " nao reconhecida, verifique a sintaxe e tambem COLOCANDO PONTO-E-VIGULA NO FINAL DESTA INSTRUÇÃO, E NAS ANTERIORES TAMBÉM:  ", sequenciaCurrente.tokens);
                             }
                             umToken += sequenciaCurrente.tokens.Count; // atualiza o iterator de tokens, consumindo os tokens que foram utilizados no processamento da seuencia id currente.
                             continue;
@@ -486,7 +457,7 @@ namespace parser
         private void MatchSequencias(UmaSequenciaID sequencia, Escopo escopo)
         {
 
-            if (tokensSemResumir.FindIndex(k => k.Equals(sequencia.tokens[0])) != -1)
+            if (lng.isTermoChave(sequencia.tokens[0]))
             {
 
                 for (int seqMapeada = 0; seqMapeada < tratadores.Count; seqMapeada++)
@@ -505,7 +476,7 @@ namespace parser
             {
 
 
-                List<string> AMapear = ResumeExpressoes(sequencia.tokens, ProcessadorDeID.tokensSemResumir);
+                List<string> AMapear = ResumeExpressoes(sequencia.tokens, escopo);
 
                 for (int seqMapeada = 0; seqMapeada < tratadores.Count; seqMapeada++) // varre as sequencias já mapeadas, procurando um match entre sequencias já mapeadas, e a sequencia de entrada resumida.
                 {
@@ -527,37 +498,299 @@ namespace parser
 
         } // MatchSequenciasMapeadas()
 
+        private delegate bool IsElementoResumivel(int indexAtual, List<string> expressao);
 
-
-        /// Faz um  resumo das expressõoes, convertendo para ID: operadores, ids, numeros, e tokens componentes de sequencias id mapeados.
-        private List<string> ResumeExpressoes(List<string> tokensExpressao, List<string> tokensNaoResumiveis)
+        private bool IsDoisIDsSEguidos(int indexAtual, List<string> expressao)
         {
-            List<string> aResumir = new List<string>();
-            int umToken = 0;
-           
+            return ((indexAtual+1)< expressao.Count) && lng.IsID(expressao[indexAtual]) && (lng.IsID(expressao[indexAtual+1]));
+        }
 
-            while ((umToken >= 0) && (umToken < tokensExpressao.Count))
+        private bool IsOperadorEmSubExpressao(int indexAtual, List<string> expressao)
+        {
+            if (((indexAtual + 1) < expressao.Count) &&
+                (lng.isOperador(expressao[indexAtual])) &&
+                (tokensPresentesNoMapeamento.IndexOf(expressao[indexAtual]) == -1) &&
+                (lng.IsID(expressao[indexAtual + 1])))
+                return true;
+            else
+            if (((indexAtual + 1) < expressao.Count) &&
+                (lng.isOperador(expressao[indexAtual])) &&
+                (tokensPresentesNoMapeamento.IndexOf(expressao[indexAtual]) == -1) &&
+                (lng.IsNumero(expressao[indexAtual + 1])))
+                return true;
+            else
+            if (((indexAtual + 1) >= expressao.Count) &&
+                (lng.isOperador(expressao[indexAtual])) &&
+                (tokensPresentesNoMapeamento.IndexOf(expressao[indexAtual]) == -1))
+                return true;
+          
+                return false;
+        }
+
+
+        private bool IsTermoChave(int indexAtual, List<string> expressao)
+        {
+            return ((lng.isTermoChave(expressao[indexAtual])) &&
+                (tokensPresentesNoMapeamento.IndexOf(expressao[indexAtual]) == -1) &&
+                (acessorsValidos.IndexOf(expressao[indexAtual]) == -1) && (!lng.isOperador(expressao[indexAtual])));
+        }
+
+        private bool IsAcessor(int indexAtual, List<string> expressao)
+        {
+            return acessorsValidos.IndexOf(expressao[indexAtual]) != -1;
+        }
+
+        private bool IsTokenPresenteNoMapeamento(int indexAtual, List<string> expressao)
+        {
+            return tokensPresentesNoMapeamento.IndexOf(expressao[indexAtual]) != -1;
+        }
+
+        private bool IsTokenTerminoExpressao(int indexAtual, List<string> expressao)
+        {
+            return expressao[indexAtual] == ";";
+        }
+
+        private bool IsNumero(int indexAtual, List<string> expressao)
+        {
+            return lng.IsNumero(expressao[indexAtual]);
+        }
+
+        private bool IsIDsomente(int indexAtual, List<string> expressao)
+        {
+            if (((indexAtual + 1) < expressao.Count) && (lng.IsID(expressao[indexAtual])))
+                return true;
+            else
+            if (((indexAtual + 1) >= expressao.Count) && (lng.IsID(expressao[indexAtual])))
+                return true;
+            return false;
+        }
+
+        private bool IsParentesesAbreSubExpressao(int indexAtual, List<string> expressao)
+        {
+            if (((indexAtual - 1) >= 0) && (lng.isOperador(expressao[indexAtual - 1])) && (expressao[indexAtual] == "("))
+                return true;
+            else
+            if ((indexAtual - 1 < 0) && (expressao[indexAtual] == "("))
+                return true;
+
+            return false;       
+        }
+
+        private bool IsParentesesFechaSubExpressao(int indexAtual, List<string> expressao)
+        {
+            if (((indexAtual + 1) < expressao.Count) && (expressao[indexAtual] == ")") && (expressao[indexAtual + 1] == ";"))
+                return true;
+            else
+            if (((indexAtual + 1) >= expressao.Count) && (expressao[indexAtual] == ")"))
+                return true;
+
+            return false;
+        }
+
+        private bool IsOperador(int index, List<string> expressao)
+        {
+            return lng.IsOperadorBinario(expressao[index]) || lng.IsOperadorUnario(expressao[index]);
+        }
+
+        private bool IsOperadorMatricialAbre(int indexAtual, List<string> expressao)
+        {
+            return (expressao[indexAtual] == "[");
+        }
+
+        private bool IsOperadorBinarioEmSubExpressao(int indexAtual, List<string> expressao)
+        {
+            // caso: x+y.
+            if (((indexAtual - 1) >= 0) &&
+                    ((lng.IsID(expressao[indexAtual - 1])) || (lng.IsNumero(expressao[indexAtual - 1]) || (expressao[indexAtual - 1] == ")"))) &&
+                    (lng.IsOperadorBinario(expressao[indexAtual])) &&
+                    ((indexAtual + 1) < expressao.Count) && (lng.IsID(expressao[indexAtual + 1])) && (tokensPresentesNoMapeamento.IndexOf(expressao[indexAtual]) == -1)) 
+                return true;
+            else
+            // caso: +x.
+            if (((indexAtual + 1) >= expressao.Count) && (lng.IsOperadorBinario(expressao[indexAtual])) &&
+                ((lng.IsID(expressao[indexAtual - 1])) || (lng.IsNumero(expressao[indexAtual - 1])) || (expressao[indexAtual - 1] == ")")) &&
+                (tokensPresentesNoMapeamento.IndexOf(expressao[indexAtual])==-1))
+                return true;
+
+            return false;
+        }
+
+        private bool IsOperadorUnarioEmSubExpressao(int indexAtual, List<string> expressao)
+        {
+            if (((indexAtual - 1) >= 0) && (lng.IsOperadorUnario(expressao[indexAtual])) && (lng.IsID(expressao[indexAtual - 1])) &&
+                (tokensPresentesNoMapeamento.IndexOf(expressao[indexAtual]) == -1)) 
+                return true;
+            else
+            if (((indexAtual + 1) < expressao.Count) && (lng.IsID(expressao[indexAtual + 1])) && (lng.IsOperadorUnario(expressao[indexAtual])) &&
+                (tokensPresentesNoMapeamento.IndexOf(expressao[indexAtual]) == -1)) 
+                return true;
+            return false;
+        }
+
+
+        private bool IsParentesesAbreDeFuncao(int indexAtual, List<string> expressao)
+        {
+            if ((expressao[indexAtual] == "(") &&
+                ((indexAtual - 1 >= 0)) && (lng.IsID(expressao[indexAtual - 1])))
+                return true;
+            else
+                return false;
+        }
+
+        private bool IsParentesesFechaDeFuncao(int indexAtual, List<string> expressao)
+        {
+            return ((expressao[indexAtual] == ")") && ((indexAtual - 1) >= 0) && (lng.IsID(expressao[indexAtual - 1])));
+        }
+
+        List<string> tokensPresentesNoMapeamento = new List<string>() { ",", ".", "@", "=", ";" }; // parenteses embora estam no mapeamento, tem funcoes resumiveis proprias para tratamento.
+ 
+
+
+        // Faz um  resumo das expressõoes, convertendo para ID: operadores, ids, numeros, e tokens componentes de sequencias id mapeados.
+        public List<string> ResumeExpressoes(List<string> tokensExpressao, Escopo escopo)
+        {
+            if (lng == null)
+                lng = LinguagemOrquidea.Instance();
+
+            Expressao expressao = Expressao.Instance.ExtraiUmaExpressaoSemValidar(tokensExpressao, escopo);
+            if ((expressao == null) || (expressao.Elementos.Count == 0))
+                return null;
+
+            List<string> exprss = new List<string>();
+            for (int i = 0; i < expressao.Elementos.Count; i++)
+                exprss.Add(expressao.Elementos[i].ToString());
+
+
+            List<IsElementoResumivel> IsSubExpressao = new List<IsElementoResumivel>();
+
+            IsSubExpressao.Add(IsOperador);
+            IsSubExpressao.Add(IsParentesesAbreSubExpressao);
+            IsSubExpressao.Add(IsParentesesAbreDeFuncao);
+            IsSubExpressao.Add(IsParentesesFechaDeFuncao);
+            IsSubExpressao.Add(IsParentesesFechaSubExpressao);
+            IsSubExpressao.Add(IsOperadorBinarioEmSubExpressao);
+            IsSubExpressao.Add(IsOperadorMatricialAbre);
+            IsSubExpressao.Add(IsOperadorUnarioEmSubExpressao);
+            IsSubExpressao.Add(IsDoisIDsSEguidos);
+            IsSubExpressao.Add(IsIDsomente);
+            IsSubExpressao.Add(IsOperadorEmSubExpressao);
+            IsSubExpressao.Add(IsTermoChave);
+            IsSubExpressao.Add(IsAcessor);
+            IsSubExpressao.Add(IsTokenPresenteNoMapeamento);
+            IsSubExpressao.Add(IsTokenTerminoExpressao);
+            IsSubExpressao.Add(IsNumero);
+
+
+            List<string> tokensResumidos = new List<string>();
+            int x = 0;
+      
+            while ((x >= 0) && (x < exprss.Count))
             {
-                // adiciona o token se estiver na lista de tokens nao resumiveis, ou se o token for um operador, ou se for o operador de ids: @.
-                if (IsTokensPresentesEmDefinicoes(tokensExpressao[umToken], tokensNaoResumiveis))
-                    aResumir.Add(tokensExpressao[umToken]);
-                else
+              
+                
+                foreach (IsElementoResumivel umaFuncaoResumo in IsSubExpressao)
                 {
-                    if (!linguagem.isOperador(tokensExpressao[umToken]))
-                        aResumir.Add("ID");
-                    else
-                    if (tokensExpressao[umToken].Contains("@"))
-                        aResumir.Add("ID");
-                    else
-                        aResumir.Add(tokensExpressao[umToken]);
+                    if (umaFuncaoResumo(x, exprss))
+                    {
+                    
+                        if (IsOperadorBinarioEmSubExpressao(x, exprss))
+                        {
+                            if ((x - 1) >= 0)
+                            {
+                                if (lng.IsID(exprss[x - 1]))
+                                {
+                                    exprss[x - 1] = "";
+                                    tokensResumidos[tokensResumidos.Count - 1] = "";
+                                }
+                            }
+                            if ((x + 1) < exprss.Count)
+                            {
+                                exprss[x + 1] = "";
+                                x = x + 1;
+                            }
+                            tokensResumidos.Add("ID");
+                        }
+                        else
+                        if (IsOperadorUnarioEmSubExpressao(x, exprss))
+                        {
+                            if ((x - 1) >= 0)
+                            {
+                                if (lng.IsID(exprss[x - 1]))
+                                {
+                                    exprss[x - 1] = "";
+                                    tokensResumidos[tokensResumidos.Count - 1] = "";
+                                }
+                            }
+                            else
+                            if ((x + 1) < exprss.Count)
+                            {
+                                if (lng.IsID(exprss[x + 1]))
+                                {
+                                    exprss[x + 1] = "";
+                                    x = x + 1;
+                                }
+                            }
+
+
+                        }
+                        else
+                        if (IsDoisIDsSEguidos(x, exprss))
+                        {
+                            tokensResumidos.Add("ID");
+                            tokensResumidos.Add("ID");
+                            x = x + 1;
+                        }
+                        else
+                             if ((IsIDsomente(x, exprss)) || (IsAcessor(x, exprss)))
+                            tokensResumidos.Add("ID");
+                        else
+                        if ((IsParentesesAbreDeFuncao(x, exprss)) || (IsParentesesFechaDeFuncao(x, exprss)))
+                            tokensResumidos.Add(exprss[x]);
+                        else
+                        if ((IsNumero(x, exprss)) ||
+                         (IsParentesesAbreSubExpressao(x, exprss)) || (IsParentesesFechaSubExpressao(x, exprss)))
+                        {
+                            ExtraiSubExpressao(exprss, ref x, "(", ")");
+                            if (tokensResumidos[tokensResumidos.Count - 1] != "ID")
+                                tokensResumidos.Add("ID"); //adiciona um id como resumo da sub-expressao inteira, somente se o elemento anterior nao for um ID, o que simplifica a sub-expressao.
+                        }
+                        else
+                        if (IsOperadorMatricialAbre(x, exprss))
+                        {
+                            ExtraiSubExpressao(exprss, ref x, "[", "]");
+                            if (tokensResumidos[tokensResumidos.Count - 1] != "ID")
+                                tokensResumidos.Add("ID");
+                        }
+                        else
+                        if ((IsTermoChave(x, exprss)) || (IsTokenPresenteNoMapeamento(x, exprss)) || (IsTokenTerminoExpressao(x, exprss)))
+                            tokensResumidos.Add(exprss[x]);
+                     
+                        break; // conseguiu processar o elemento currentem, pára a malha por procura de funcoes resumiveis.
+
+                    }
+
+
                 }
-                umToken++;
+                x = x + 1;
+
             }
+            for (int p = 0; p < tokensResumidos.Count; p++)
+                if (tokensResumidos[p] == "")
+                {
+                    tokensResumidos.RemoveAt(p);
+                    p--;
+                }
 
-            SimplificarUmaExpressaoSemTermosChave(aResumir, tokensNaoResumiveis);
 
-            return aResumir;
-        } // ResumeTodasExprss()
+            return tokensResumidos;
+        }
+
+        private static void ExtraiSubExpressao(List<string> exprss, ref int indexElementAtual, string operadorAbre, string operadorFecha)
+        {
+            List<string> tokensSubExpressaoEntreParenteses = UtilTokens.GetCodigoEntreOperadores(indexElementAtual, operadorAbre, operadorFecha, exprss);
+            if ((tokensSubExpressaoEntreParenteses != null) && (tokensSubExpressaoEntreParenteses.Count > 0))
+                indexElementAtual += tokensSubExpressaoEntreParenteses.Count - 1; // retira os elementos entre parênteses, pois formam uma sub-expressao resumivel.
+        }
 
 
         /// <summary>
@@ -583,81 +816,6 @@ namespace parser
         } // MatchBlocos()
 
 
-        private bool IsTokensPresentesEmDefinicoes(string token, List<string> tokensNaoResumiveis)
-        {
-            return tokensNaoResumiveis.Find(k => k.Equals(token)) != null;
-        }
-
-        // resume expressoes em id, unindo "id+operador+id" em um unico "id", se o operador for binario.
-        // e resume tb expressoes em id, unindo tb "id+operadorUnario" em "id".
-        // e resume tb expressoes em id, unindo "operadorUnario+id".
-        // e resume tb expressoes de um token id, para em "id".
-        private void SimplificarUmaExpressaoSemTermosChave(List<string> aResumir, List<string> tokensNaoResumiveis)
-        {
-
-            int umTokenResumido = 0;
-            while ((umTokenResumido >= 0) && (umTokenResumido < aResumir.Count))
-            {
-                string umToken = aResumir[umTokenResumido];
-
-                if (umToken.Equals("{"))
-                {
-                    List<string> umBloco = UtilTokens.GetCodigoEntreOperadores(umTokenResumido, "{", "}", aResumir);
-                    if ((umBloco != null) && (umBloco.Count > 0))
-                    {
-                        aResumir.RemoveRange(umTokenResumido, umBloco.Count);
-                        aResumir.Insert(umTokenResumido, "BLOCO");
-                        umTokenResumido += umBloco.Count;
-                        continue;
-                    }
-                }
-                else
-                if ((umToken != "ID") && (!IsTokensPresentesEmDefinicoes(umToken, tokensNaoResumiveis)))
-                {
-                    if (
-                        ((umTokenResumido - 1) >= 0) &&
-                        ((umTokenResumido + 1) < aResumir.Count) &&
-                        (linguagem.IsOperadorBinario(aResumir[umTokenResumido])) &&
-                        (aResumir[umTokenResumido - 1] == "ID") &&
-                        (aResumir[umTokenResumido + 1] == "ID"))
-                    {
-                        aResumir.RemoveRange(umTokenResumido - 1, 3);
-                        aResumir.Insert(umTokenResumido - 1, "ID");
-
-                        continue;
-                    }
-                    else
-                    if (((umTokenResumido - 1) >= 0) && (linguagem.IsOperadorUnario(umToken)) && (aResumir[umTokenResumido - 1] == "ID"))
-                    {
-                        aResumir.RemoveRange(umTokenResumido - 1, 2);
-                        aResumir.Insert(umTokenResumido - 1, "ID");
-                        continue;
-
-                    }
-                    else
-                    if (((umTokenResumido + 1) < aResumir.Count) && (linguagem.IsOperadorUnario(umToken)) && (aResumir[umTokenResumido + 1] == "ID"))
-                    {
-                        aResumir.RemoveRange(umTokenResumido, 2);
-                        aResumir.Insert(umTokenResumido, "ID");
-                        continue;
-                    }
-                    else
-                    if (linguagem.VerificaSeEhID(umToken))
-                    {
-                        aResumir.RemoveAt(umTokenResumido);
-                        aResumir.Insert(umTokenResumido, "ID");
-                    }
-                }
-
-                umTokenResumido++;
-            }
-        }
-
-        private bool IsResumivel(string token, List<string> tokensNaoResumiveis)
-        {
-            return tokensNaoResumiveis.Find(k => k.Equals(token)) == null;
-        }
-      
 
         /// <summary>
         /// verifica as expressões Amapear, e JaMapeado são iguais, contando como elementos da expressão de JaMapeado.
@@ -684,7 +842,7 @@ namespace parser
         {
             //   OP. ID
 
-            if ((linguagem.VerificaSeEhID(sequencia.tokens[0]) && (linguagem.VerificaSeEhOperadorUnario(sequencia.tokens[1]))))
+            if ((lng.IsID(sequencia.tokens[0]) && (lng.VerificaSeEhOperadorUnario(sequencia.tokens[1]))))
             {
 
 
@@ -696,7 +854,7 @@ namespace parser
                 
 
                 string nomeOperador = sequencia.tokens[0];
-                Operador umOperador = Operador.GetOperador(nomeOperador, v.GetTipo(), "UNARIO", linguagem);
+                Operador umOperador = Operador.GetOperador(nomeOperador, v.GetTipo(), "UNARIO", lng);
 
                 if (umOperador == null)
                     UtilTokens.WriteAErrorMensage(escopo, "operador: " + nomeOperador + "  não é unário.", sequencia.tokens);
@@ -719,7 +877,7 @@ namespace parser
                 }
                 else
                 {
-                    escopo.tabela.GetExpressoes().Add(new Expressao(new string[] { nomeOperador + " " + nomeObjeto }, escopo));
+                    escopo.tabela.AdicionaExpressoes(escopo, new Expressao(new string[] { nomeOperador + " " + nomeObjeto }, escopo));
                     return new Instrucao(ProgramaEmVM.codeOperadorUnario, new List<Expressao>(), new List<List<Instrucao>>());
                 }
             } // if
@@ -730,7 +888,7 @@ namespace parser
         {
             // ID OPERADOR
 
-            if ((linguagem.VerificaSeEhID(sequencia.tokens[1]) && (linguagem.VerificaSeEhOperadorUnario(sequencia.tokens[0]))))
+            if ((lng.IsID(sequencia.tokens[1]) && (lng.VerificaSeEhOperadorUnario(sequencia.tokens[0]))))
             {
 
                 string nomeObjeto = sequencia.tokens[1];
@@ -740,7 +898,7 @@ namespace parser
                     UtilTokens.WriteAErrorMensage(escopo, "objeto: " + nomeObjeto + "  inexistente.", sequencia.tokens);
       
                 string nomeOperador = sequencia.tokens[0];
-                Operador umOperador = Operador.GetOperador(nomeOperador, v.GetTipo(), "UNARIO", linguagem);
+                Operador umOperador = Operador.GetOperador(nomeOperador, v.GetTipo(), "UNARIO", lng);
                 if (umOperador.GetTipo() != "OPERADOR UNARIO")
                     UtilTokens.WriteAErrorMensage(escopo, "operador: " + nomeOperador + "  não é unário.", sequencia.tokens);
      
@@ -756,7 +914,7 @@ namespace parser
                     UtilTokens.WriteAErrorMensage(escopo, "operador: " + nomeObjeto + "  inexistente.", sequencia.tokens);
                 else
                 {
-                    escopo.tabela.GetExpressoes().Add(new Expressao(new string[] { nomeObjeto + " " + nomeOperador }, escopo));
+                    escopo.tabela.AdicionaExpressoes(escopo, new Expressao(new string[] { nomeObjeto + " " + nomeOperador }, escopo));
                     return new Instrucao(ProgramaEmVM.codeOperadorUnario, new List<Expressao>(), new List<List<Instrucao>>());
                 }
             } // if
@@ -795,11 +953,13 @@ namespace parser
 
         protected Instrucao BuildExpressaoValida(UmaSequenciaID sequencia, Escopo escopo)
         {
+            if (sequencia.tokens == null)
+                return null;
             Expressao expressaoCorreta = new Expressao(sequencia.tokens.ToArray(), escopo);
             if ((expressaoCorreta != null) && (expressaoCorreta.Elementos.Count > 0))
             {
                 // adiciona a expressao correta, para a lista de expressoes do escopo, para fins de otimização.
-                escopo.tabela.GetExpressoes().Add(expressaoCorreta);
+                escopo.tabela.AdicionaExpressoes(escopo, expressaoCorreta);
 
                 // cria a instrucao para a expressao correta.
                 Instrucao instrucaoExpressaoCorreta = new Instrucao(ProgramaEmVM.codeExpressionValid, new List<Expressao>() { expressaoCorreta }, new List<List<Instrucao>>());
@@ -810,17 +970,14 @@ namespace parser
         protected Instrucao Atribuicao(UmaSequenciaID sequencia, Escopo escopo)
         {
 
+            /// estrutura de dados para atribuicao:
+            /// 0- Elemento[0]: tipo do objeto.
+            /// 1- Elemento[1]: nome do objeto.
+            /// 2- Elemento[2]: se tiver propriedades/metodos aninhados: expressao de aninhamento. Se não tiver, ExpressaoElemento("") ".
+            /// 3- expressao da atribuicao ao objeto/vetor. (se nao tiver: ExpressaoELemento("")
+            /// 4- indice de enderacamento de atribuicao a um elemento de um vetor.
 
-
-
-                /// estrutura de dados para atribuicao:
-                /// 0- Elemento[0]: tipo do objeto.
-                /// 1- Elemento[1]: nome do objeto.
-                /// 2- Elemento[2]: se tiver propriedades/metodos aninhados: expressao de aninhamento. Se não tiver, ExpressaoElemento("") ".
-                /// 3- expressao da atribuicao ao objeto/vetor. (se nao tiver: ExpressaoELemento("")
-                /// 4- indice de enderacamento de atribuicao a um elemento de um vetor.
-
-                bool isInstanciacao = false;
+            bool isInstanciacao = true; // se true, eh o caso de instanciar o objeto, se false, apenas modificação.
 
 
 
@@ -868,6 +1025,7 @@ namespace parser
                 else
                 {
                     tipoObjetoAtribuicao = objObterTipo.GetTipo();
+                    isInstanciacao = false;
                 }
             }
 
@@ -880,22 +1038,13 @@ namespace parser
             else
                 expressaoAtribuicao = new Expressao();
 
-
-            /// há duas estruturas nativas da linguagem: Objeto e Vetor. Objeto pode assumir qualquer tipo de objeto de classes, mas seu tipo é determinado pelo que contem em sua propriedade principal.
-             
-
-            
-            if (tipoObjetoAtribuicao != "Vetor")
-            {
-                isInstanciacao = true;
+            if ((tipoObjetoAtribuicao != "Vetor") && (isInstanciacao))
                 escopo.tabela.GetObjetos().Add(new Objeto(acessorObjetoAtribuicao, tipoObjetoAtribuicao, nomeObjetoAtribuicao, null));
-
-            }
             else
-            if (tipoObjetoAtribuicao=="Vetor")
+            if (tipoObjetoAtribuicao == "Vetor")
             {
                 Vetor v = escopo.tabela.GetVetor(sequencia.tokens[0], escopo);
-                if (v != null) 
+                if (v != null)
                 {
                     tipoObjetoAtribuicao = "Vetor";
                     nomeObjetoAtribuicao = sequencia.tokens[0];
@@ -945,7 +1094,7 @@ namespace parser
             
             
             instrucaoAtribuicao.expressoes.Add(expressaoTotal);
-            escopo.tabela.GetExpressoes().Add(expressaoTotal);
+            escopo.tabela.AdicionaExpressoes(escopo, expressaoTotal);
             
             
             int flag_tipoInstanciacao = 0;
@@ -953,7 +1102,9 @@ namespace parser
                 flag_tipoInstanciacao = Instrucao.EH_DEFINICAO;
             else
                 flag_tipoInstanciacao = Instrucao.EH_MODIFICACAO;
-                this.SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(tipoObjetoAtribuicao, nomeObjetoAtribuicao, null, flag_tipoInstanciacao, Instrucao.EH_OBJETO, instrucaoAtribuicao, expressaoAtribuicao);
+
+
+            this.SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(tipoObjetoAtribuicao, nomeObjetoAtribuicao, null, flag_tipoInstanciacao, Instrucao.EH_OBJETO, instrucaoAtribuicao, expressaoAtribuicao);
 
             return instrucaoAtribuicao;
         }
@@ -975,7 +1126,7 @@ namespace parser
             string nomeObjeto = sequencia.tokens[1];
          
             
-            escopo.tabela.GetExpressoes().Add(aninhadas); // registra a expressao, para fins de otimização sobre o valor da expressão.
+            escopo.tabela.AdicionaExpressoes(escopo, aninhadas); // registra a expressao, para fins de otimização sobre o valor da expressão.
             Expressao exprssDeclarativa = new Expressao();
 
 
@@ -1049,11 +1200,11 @@ namespace parser
             }
 
             if (exprssAtribuicaoDePropriedadeEstatica.Elementos.Count > 0)
-                escopo.tabela.GetExpressoes().Add(exprssAtribuicaoDePropriedadeEstatica); // registra as expressoes de atribuicao no escopo, para fins de otimização.
-
-
+                escopo.tabela.AdicionaExpressoes(escopo, exprssAtribuicaoDePropriedadeEstatica); // registra as expressoes de atribuicao no escopo, para fins de otimização.
+   
 
             instrucaoAtribuicao.expressoes.AddRange(new List<Expressao>() { exprssDeclaracaoPropriedadeEstatica, exprssAtribuicaoDePropriedadeEstatica });
+
             return instrucaoAtribuicao;
 
 
@@ -1081,7 +1232,7 @@ namespace parser
 
         ///______________________________________________________________________________________________________________________________________________________
         /// MÉTODOS TRATADORES DE CHAMADA DE FUNÇÃO.
-        protected Instrucao ChamadaFuncao(UmaSequenciaID sequencia, Escopo escopo)
+        public Instrucao ChamadaFuncao(UmaSequenciaID sequencia, Escopo escopo)
         {
             // ID ( ID )
 
@@ -1104,8 +1255,11 @@ namespace parser
             exprssDefinicaoDaChamada.Elementos.Add(exprssFuncaoChamada);
 
 
+            // registra as expessoes parametros, no escopo, para fins de otimização sobre o valor.
+            escopo.tabela.AdicionaExpressoes(escopo, expressoesParametros.ToArray());
+            escopo.tabela.AdicionaExpressoes(escopo, exprssFuncaoChamada);
 
-            escopo.tabela.GetExpressoes().AddRange(expressoesParametros); // registra as expessoes parametros, no escopo, para fins de otimização sobre o valor.
+
             Instrucao instrucaoChamada = new Instrucao(ProgramaEmVM.codeCallerFunction, new List<Expressao>() { exprssDefinicaoDaChamada }, new List<List<Instrucao>>());
             return instrucaoChamada;
         } // ChamadaFuncaoSemRetornoEComParametros()
@@ -1133,7 +1287,9 @@ namespace parser
             exprssDefinicaoDaChamada.Elementos.Add(new ExpressaoElemento("chamada"));
             exprssDefinicaoDaChamada.Elementos.Add(chamadaAMetodo);
 
-            escopo.tabela.GetExpressoes().AddRange(expressoesParametros); // inclui na funcionalidade de otimização de expressoes, as expressões parâmetros.
+            // inclui na funcionalidade de otimização de expressoes, as expressões parâmetros.
+            escopo.tabela.AdicionaExpressoes(escopo, expressoesParametros.ToArray());
+            escopo.tabela.AdicionaExpressoes(escopo, chamadaAMetodo);
 
             Instrucao instrucaoChamada = new Instrucao(ProgramaEmVM.codeCallerMethod, new List<Expressao>() { exprssDefinicaoDaChamada }, new List<List<Instrucao>>());
             return instrucaoChamada;
@@ -1143,12 +1299,28 @@ namespace parser
         protected Instrucao ChamadaDeMetodoComAtribuicao(UmaSequenciaID sequencia, Escopo escopo)
         {
             Expressao chamadaMetodoComAtribuicao = new Expressao(sequencia.tokens.ToArray(), escopo);
-            ExpressaoElemento expressaoCabecalho = new ExpressaoElemento("AtribuicaoChamadaDeMetodo");
+            string nomeObjetoAAtribuir = chamadaMetodoComAtribuicao.Elementos[0].ToString();
 
-            Instrucao instrucaoPropriedade = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
-            instrucaoPropriedade.expressoes.Add(expressaoCabecalho);
-            instrucaoPropriedade.expressoes.Add(chamadaMetodoComAtribuicao);
-            return instrucaoPropriedade;
+            Objeto objetoAAtribuir = escopo.tabela.GetObjeto(nomeObjetoAAtribuir, escopo);
+            if (objetoAAtribuir == null)
+            {
+                UtilTokens.WriteAErrorMensage(escopo, "objeto nao instanciado, mas tentativa de atribuir.", sequencia.tokens);
+                return null;
+            }
+            else
+            {
+                Instrucao instrucaoDaAtribuicao = new Instrucao(ProgramaEmVM.codeAtribution, new List<Expressao>(), new List<List<Instrucao>>());
+
+                // adiciona a expressao de atribuicao, a instrução de atribuicao.
+                instrucaoDaAtribuicao.expressoes.Add(chamadaMetodoComAtribuicao);
+                
+
+                this.SetCabecalhoDefinicaoVariavelPropriedadeOuObjeto(objetoAAtribuir.GetTipo(), objetoAAtribuir.GetNome(), null, Instrucao.EH_MODIFICACAO, Instrucao.EH_OBJETO, instrucaoDaAtribuicao, chamadaMetodoComAtribuicao);
+
+                // adiciona a expressao ao escopo, para fins de processamento de expressoes com modificação nas variáveis. 
+                escopo.tabela.AdicionaExpressoes(escopo, chamadaMetodoComAtribuicao);
+                return instrucaoDaAtribuicao;
+            }
         }
 
         protected Instrucao BuildDefinicaoDeMetodo(UmaSequenciaID sequencia, Escopo escopo)
@@ -1183,7 +1355,7 @@ namespace parser
             umMetodoComCorpo.nome = nomeMetodo;
             umMetodoComCorpo.tipoReturn = tipoRetornoMetodo;
             umMetodoComCorpo.acessor = acessor;
-
+            umMetodoComCorpo.escopo = new Escopo(sequencia.tokens);
             if (parametrosDoMetodo.Count > 0)
                 umMetodoComCorpo.parametrosDaFuncao = parametrosDoMetodo.ToArray();
 
@@ -1197,9 +1369,10 @@ namespace parser
             }
 
             escopo.tabela.RegistraFuncao(umMetodoComCorpo); // registra a função com bloco.
-            umMetodoComCorpo.escopo = new Escopo(escopo); // faz uma copia do escopo principal, que será modificado no corpo da função.
+            umMetodoComCorpo.escopo = new Escopo(sequencia.tokens); // faz uma copia do escopo principal, que será modificado no corpo da função.
+            umMetodoComCorpo.escopo.tabela.RegistraFuncao(umMetodoComCorpo);
 
-            escopo.escopoFolhas.Add(umMetodoComCorpo.escopo); // escopos de metodos são escopos folhas de escopos de classe ou escopo principal.
+            UtilTokens.LinkEscopoPaiEscopoFilhos(escopo, umMetodoComCorpo.escopo);
 
             Instrucao instrucoesCorpoDaFuncao = new Instrucao(ProgramaEmVM.codeDefinitionFunction, null, null);
 
@@ -1265,17 +1438,20 @@ namespace parser
             umaFuncaoComCorpo.nome = nomeFuncao;
             umaFuncaoComCorpo.tipoReturn = tipoRetornoFuncao;
             umaFuncaoComCorpo.acessor = acessorFuncao;
-
+            umaFuncaoComCorpo.escopo = new Escopo(sequencia.tokens);
 
             if (parametrosDoMetodo.Count > 0)
                 umaFuncaoComCorpo.parametrosDaFuncao = parametrosDoMetodo.ToArray();
 
+            umaFuncaoComCorpo.escopo = new Escopo(sequencia.tokens); // cria o escopo da funcao.
+            escopo.tabela.RegistraFuncao(umaFuncaoComCorpo);
+            umaFuncaoComCorpo.escopo.tabela.RegistraFuncao(umaFuncaoComCorpo); // o escopo da função registra a função!.
 
-            // registra a função e adiciona as instruções do corpo da função.
-            escopo.tabela.RegistraFuncao(umaFuncaoComCorpo); // registra a função com bloco.
-            umaFuncaoComCorpo.escopo = new Escopo(escopo); // faz uma copia do escopo principal, que será modificado no corpo da função.
 
-            escopo.escopoFolhas.Add(umaFuncaoComCorpo.escopo); // escopos de funcoes são escopos folhas do escopo principal.
+            
+            UtilTokens.LinkEscopoPaiEscopoFilhos(escopo, umaFuncaoComCorpo.escopo);  // monta a hierarquia de escopos.
+
+
 
             Instrucao instrucaoDefinicaoDeMetodo = new Instrucao(ProgramaEmVM.codeDefinitionFunction, null, null);
 
@@ -1285,7 +1461,7 @@ namespace parser
             
             
     
-            // RETIRA OS PARÂMETROS DA FUNÇÃO, o que é logico tambem, pois o escopo da funcao ja foi copiado,paa a funcao, e a variavel parametro nao tem que ficar no escopo principal.
+            // retira os parâmetros da funcao, do escopo, o que é logico tambem, pois o escopo da funcao ja foi copiado,paa a funcao, e a variavel parametro nao tem que ficar no escopo principal.
             for (int x = 0; x < parametrosDoMetodo.Count; x++)
                 escopo.tabela.RemoveObjeto(parametrosDoMetodo[x].GetNome());
 
@@ -1293,6 +1469,101 @@ namespace parser
             return instrucaoDefinicaoDeMetodo;
 
         } // BuildDefinicaoDeFuncao()
+
+        protected Instrucao BuildDefinicaoDeAspecto(UmaSequenciaID sequencia, Escopo escopo)
+        {
+            /// template: aspecto NameId typeInsertId (TipoOjbeto:string, string, NomeMetodo: string ) { funcaoCorte(Objeto x){}}.
+            int indexNameAspect = 1;
+            string nomeAspecto = sequencia.tokens[indexNameAspect];
+
+            int indexTypeInsert = sequencia.tokens.IndexOf(nomeAspecto) + 1;
+            List<string> tiposInsercao = new List<string>() { "before", "after", "all" };
+            if (tiposInsercao.IndexOf(sequencia.tokens[indexTypeInsert]) == -1)
+            {
+                UtilTokens.WriteAErrorMensage(escopo, "tipo de insercao invalido, esperado: before, after ou all", sequencia.tokens);
+                return null;
+            }
+
+            string typeInserction = sequencia.tokens[indexTypeInsert];
+
+            int indexStartInterface = sequencia.tokens.IndexOf("(");
+            if (indexStartInterface == -1)
+            {
+                UtilTokens.WriteAErrorMensage(escopo, "instrucao aspecto com erros de sintaxe.", sequencia.tokens);
+                return null;
+            }
+            List<string> tokensInterface = UtilTokens.GetCodigoEntreOperadores(indexStartInterface, "(", ")", sequencia.tokens);
+            if ((tokensInterface == null) || (tokensInterface.Count == 0))
+            {
+                UtilTokens.WriteAErrorMensage(escopo, "instrucao aspecto com erros de sintaxe, interface de parametros nao construida corretamente", sequencia.tokens);
+                return null;
+            }
+
+
+            int indexTypeObjectName = tokensInterface.IndexOf("(") + 1;
+            if (indexTypeObjectName<0)
+            {
+                UtilTokens.WriteAErrorMensage(escopo, "instrucao aspecto com erros de sintaxe, interface de parametros nao construida corretamente", sequencia.tokens);
+                return null;
+            }
+
+       
+            string tipoObjetoAMonitorar = tokensInterface[indexTypeObjectName];
+
+            string metodoAMonitorar = null;
+
+            int indexMethodName = indexTypeObjectName + 2; // +1 do typeObject, +1 do operador virgula.
+            if ((indexMethodName >= 2) && (indexMethodName< tokensInterface.Count))
+                metodoAMonitorar = tokensInterface[indexMethodName];
+
+
+
+            int indexStartInstructionsAspect = sequencia.tokens.IndexOf("{");
+            if (indexStartInstructionsAspect == -1)
+            {
+                UtilTokens.WriteAErrorMensage(escopo, "instrucao aspecto com erros de sintaxe, sem definicao do bloco de instruções que compoe o aspecto.", sequencia.tokens);
+                return null;
+            }
+
+
+            List<string> tokensDaFuncaoCorte = UtilTokens.GetCodigoEntreOperadores(indexStartInstructionsAspect, "{", "}", sequencia.tokens);
+            if ((tokensDaFuncaoCorte == null) || (tokensDaFuncaoCorte.Count == 0))
+            {
+                UtilTokens.WriteAErrorMensage(escopo, "instrucao aspecto com erros de sintaxe, erro na descrição do bloco de instruções que compoe o aspecto.", sequencia.tokens);
+                return null;
+            }
+            tokensDaFuncaoCorte.RemoveAt(0);
+            tokensDaFuncaoCorte.RemoveAt(tokensDaFuncaoCorte.Count - 1);
+
+
+
+
+            ProcessadorDeID processador = new ProcessadorDeID(tokensDaFuncaoCorte);
+            processador.CompileEmDoisEstagios();
+
+            Funcao funcaoCorte = null;
+            if ((processador.escopo.tabela.GetFuncoes() != null) && (processador.escopo.tabela.GetFuncoes().Count == 1))
+            {
+                funcaoCorte = processador.escopo.tabela.GetFuncoes()[0];
+                if ((funcaoCorte.parametrosDaFuncao == null) || (funcaoCorte.parametrosDaFuncao.Length != 1)) 
+                {
+                    UtilTokens.WriteAErrorMensage(escopo, "a funcao de corte deve conter um parametro somente, e do tipo Objeto.", sequencia.tokens);
+                    return null;
+                }
+            }
+
+            List<Expressao> expressoesDaInstrucao = new List<Expressao>();
+
+            expressoesDaInstrucao.Add(new ExpressaoChamadaDeFuncao(funcaoCorte));
+            expressoesDaInstrucao.Add(new ExpressaoElemento(tipoObjetoAMonitorar));
+            
+
+            Aspecto aspecto = new Aspecto(nomeAspecto, tipoObjetoAMonitorar, metodoAMonitorar, funcaoCorte, escopo, Aspecto.TypeAlgoritmInsertion.ByObject, typeInserction);
+            lng.Aspectos.Add(aspecto);
+
+            return new Instrucao(-1, null, null);
+
+        }
 
         protected static void ExtraiParametrosDaFuncao(UmaSequenciaID sequencia, List<Objeto> parametrosDoMetodo, int indexParentesAbre, Escopo escopo)
         {
@@ -1344,19 +1615,19 @@ namespace parser
 
             /// operador ID ID ( ID ID, ID ID ) prioridade ID meodo ID ;
             if ((sequencia.tokens[0].Equals("operador")) &&
-               (linguagem.VerificaSeEhID(sequencia.tokens[1])) &&
-               (linguagem.VerificaSeEhID(sequencia.tokens[2])) &&
+               (lng.IsID(sequencia.tokens[1])) &&
+               (lng.IsID(sequencia.tokens[2])) &&
                (sequencia.tokens[3] == "(") &&
-               (linguagem.VerificaSeEhID(sequencia.tokens[4])) &&
-               (linguagem.VerificaSeEhID(sequencia.tokens[5])) &&
+               (lng.IsID(sequencia.tokens[4])) &&
+               (lng.IsID(sequencia.tokens[5])) &&
                (sequencia.tokens[6] == ",") &&
-               (linguagem.VerificaSeEhID(sequencia.tokens[7])) &&
-               (linguagem.VerificaSeEhID(sequencia.tokens[8])) &&
+               (lng.IsID(sequencia.tokens[7])) &&
+               (lng.IsID(sequencia.tokens[8])) &&
                (sequencia.tokens[9] == ")") &&
                (sequencia.tokens[10] == "prioridade") &&
-               (linguagem.VerificaSeEhID(sequencia.tokens[11])) &&
+               (lng.IsID(sequencia.tokens[11])) &&
                (sequencia.tokens[12] == "metodo") &&
-               (linguagem.VerificaSeEhID(sequencia.tokens[13]) &&
+               (lng.IsID(sequencia.tokens[13]) &&
                ((sequencia.tokens[14] == ";"))))
             {
                 string nomeClasseOperadorETipoDeRetorno = sequencia.tokens[1];
@@ -1444,6 +1715,7 @@ namespace parser
                 Classe classe = RepositorioDeClassesOO.Instance().GetClasse(nomeClasseOperadorETipoDeRetorno);
                 if (classe != null)
                     classe.GetOperadores().Add(opNovo);
+                LinguagemOrquidea.operadoresBinarios.Add(opNovo);
 
                 return instrucaoOperadorBinario;
             }
@@ -1456,16 +1728,16 @@ namespace parser
 
 
             if ((sequencia.tokens[0] == "operador") &&
-                (linguagem.VerificaSeEhID(sequencia.tokens[1])) &&
-                (linguagem.VerificaSeEhID(sequencia.tokens[2])) &&
+                (lng.IsID(sequencia.tokens[1])) &&
+                (lng.IsID(sequencia.tokens[2])) &&
                 (sequencia.tokens[3] == "(") &&
-                (linguagem.VerificaSeEhID(sequencia.tokens[4])) &&
-                (linguagem.VerificaSeEhID(sequencia.tokens[5])) &&
+                (lng.IsID(sequencia.tokens[4])) &&
+                (lng.IsID(sequencia.tokens[5])) &&
                 (sequencia.tokens[6] == ")") &&
                 (sequencia.tokens[7] == "prioridade") &&
-                (linguagem.VerificaSeEhID(sequencia.tokens[8])) &&
+                (lng.IsID(sequencia.tokens[8])) &&
                 (sequencia.tokens[9] == "metodo") &&
-                (linguagem.VerificaSeEhID(sequencia.tokens[10])) &&
+                (lng.IsID(sequencia.tokens[10])) &&
                 (sequencia.tokens[11] == ";"))
             {
                 string tipoRetornoDoOperador = sequencia.tokens[1];
@@ -1529,6 +1801,8 @@ namespace parser
                 if (classe != null)
                     classe.GetOperadores().Add(opNovo);
 
+                LinguagemOrquidea.operadoresUnarios.Add(opNovo);
+
                 return instrucaoOperadorUnario;
 
             } // if
@@ -1581,6 +1855,41 @@ namespace parser
                 }
             }
 
+
+            if (LinguagemOrquidea.Instance().GetClasses() != null)
+            {
+                List<Classe> classesNoEscopo = LinguagemOrquidea.Instance().GetClasses();
+                for (int x = 0; x < classesNoEscopo.Count; x++)
+                {
+                    int index = LinguagemOrquidea.Instance().GetClasses().FindIndex(k => k.GetNome() == classesNoEscopo[x].GetNome()); // encontra a classe do 1o. estágio.
+
+
+                    int contadorClasses = LinguagemOrquidea.Instance().GetClasses().FindAll(k => k.GetNome() == classesNoEscopo[x].GetNome()).Count;
+
+
+                    if ((index != -1) && (contadorClasses > 1))
+                        LinguagemOrquidea.Instance().GetClasses().RemoveAt(index); // remove a classe do 1o. estágio.
+                }
+            }
+
+
+
+            if (RepositorioDeClassesOO.Instance().GetClasses() != null)
+            {
+                List<Classe> classesNoEscopo = RepositorioDeClassesOO.Instance().GetClasses();
+                for (int x = 0; x < classesNoEscopo.Count; x++)
+                {
+                    int index = RepositorioDeClassesOO.Instance().GetClasses().FindIndex(k => k.GetNome() == classesNoEscopo[x].GetNome()); // encontra a classe do 1o. estágio.
+
+
+                    int contadorClasses =RepositorioDeClassesOO.Instance().GetClasses().FindAll(k => k.GetNome() == classesNoEscopo[x].GetNome()).Count;
+
+
+                    if ((index != -1) && (contadorClasses > 1))
+                        RepositorioDeClassesOO.Instance().GetClasses().RemoveAt(index); // remove a classe do 1o. estágio.
+                }
+            }
+
             if (escopo.tabela.GetObjetos() != null)
             {
                 List<Objeto> objetosNoEscopo = escopo.tabela.GetObjetos();
@@ -1612,7 +1921,7 @@ namespace parser
             }
             if (escopo.tabela.GetFuncoes() != null)
             {
-                List<Funcao> funcoesNoEscopo = escopo.tabela.GetFuncoes();
+                List<Funcao> funcoesNoEscopo = escopo.tabela.GetFuncoes().ToList<Funcao>();
                 for (int x = 0; x < funcoesNoEscopo.Count; x++)
                     for (int y = x + 1; y < funcoesNoEscopo.Count; y++)
                         if (Funcao.IguaisFuncoes(funcoesNoEscopo[x], funcoesNoEscopo[y]))
@@ -1624,9 +1933,9 @@ namespace parser
                 escopo.tabela.GetFuncoes().AddRange(funcoesNoEscopo);
             }
 
-            if (escopo.tabela.GetExpressoes() != null)
+            if (TablelaDeValores.expressoes != null)
             {
-                List<Expressao> expressoesNoEscopo = escopo.tabela.GetExpressoes(); // elimina redundâncias em expressões, pelo sistema de recuperação de sequencias nao tratadas.
+                List<Expressao> expressoesNoEscopo = TablelaDeValores.expressoes.ToList<Expressao>(); // elimina redundâncias em expressões, pelo sistema de recuperação de sequencias nao tratadas.
                 for (int x = 0; x < expressoesNoEscopo.Count; x++)
                     for (int y = x + 1; y < expressoesNoEscopo.Count; y++)
                         if (IguaisExpressoes(expressoesNoEscopo[x], expressoesNoEscopo[y]))
@@ -1635,8 +1944,8 @@ namespace parser
                             y--;
                         }
 
-                escopo.tabela.GetExpressoes().Clear();
-                escopo.tabela.GetExpressoes().AddRange(expressoesNoEscopo);
+                TablelaDeValores.expressoes.Clear();
+                escopo.tabela.AdicionaExpressoes(escopo, expressoesNoEscopo.ToArray());
             }
         }
 

@@ -11,10 +11,270 @@ using parser.ProgramacaoOrentadaAObjetos;
 
 namespace ParserLinguagemOrquidea.testes
 {
+    class ClassesTestesProgramacaoOrientadaAspcecto : SuiteClasseTestes
+    {
+
+
+        public ClassesTestesProgramacaoOrientadaAspcecto() : base("testes para o sistema programacao com Aspectos.")
+        {
 
     
+        }
+
+        public void Teste_05(AssercaoSuiteClasse assercao)
+        {
+            ParserAFile.InitSystem();
+            string fileCode = @"codigoClasseTestes_6.txt";
+            ParserAFile parser = new ParserAFile(fileCode);
+
+            ProcessadorDeID processador = new ProcessadorDeID(parser.GetCode());
+            processador.CompileEmDoisEstagios();
+
+            ProgramaEmVM aplicativo = new ProgramaEmVM(processador.GetInstrucoes());
+            aplicativo.Run(processador.escopo);
 
 
+
+            assercao.IsTrue(
+                (processador.escopo.tabela.GetObjeto("objA", processador.escopo) != null) &&
+                (processador.escopo.tabela.GetObjeto("c", processador.escopo).GetValor() != null) &&
+                (int.Parse(processador.escopo.tabela.GetObjeto("c", processador.escopo).GetValor().ToString()) == 0));
+
+        }
+
+
+        public void Teste_04(AssercaoSuiteClasse assercao)
+        {
+
+            ParserAFile.InitSystem();
+            string fileCode = @"codigoClasseTestes_7.txt";
+            ParserAFile parser = new ParserAFile(fileCode);
+
+            ProcessadorDeID processador = new ProcessadorDeID(parser.GetCode());
+            processador.CompileEmDoisEstagios();
+
+            ProgramaEmVM aplicativo = new ProgramaEmVM(processador.GetInstrucoes());
+            aplicativo.Run(processador.escopo);
+
+
+
+            assercao.IsTrue(processador.escopo.tabela.GetObjeto("c", processador.escopo) != null &&
+                (int.Parse(processador.escopo.tabela.GetObjeto("c", processador.escopo).GetValor().ToString()) == 0));
+        }
+
+        public void Teste_02(AssercaoSuiteClasse assercao)
+        {
+            ParserAFile.InitSystem();
+            string fileCode = @"codigoClasseTestes_5.txt";
+            ParserAFile parser = new ParserAFile(fileCode);
+
+            ProcessadorDeID processador = new ProcessadorDeID(parser.GetCode());
+            processador.CompileEmDoisEstagios();
+
+            ProgramaEmVM aplicativo = new ProgramaEmVM(processador.GetInstrucoes());
+            aplicativo.Run(processador.escopo);
+
+
+            assercao.IsTrue(processador.escopo.tabela.GetObjeto("objA", processador.escopo) != null);
+        }
+
+        public void Teste_01(AssercaoSuiteClasse assercao)
+        {
+            ParserAFile.InitSystem();
+            string fileCode = @"codigoClasseTestes_3.txt";
+            ParserAFile parser = new ParserAFile(fileCode);
+
+            ProcessadorDeID processador = new ProcessadorDeID(parser.GetCode());
+            processador.CompileEmDoisEstagios();
+
+            assercao.IsTrue(LinguagemOrquidea.Instance().Aspectos != null && LinguagemOrquidea.Instance().Aspectos.Count == 1);
+        }
+
+       
+
+        public void Teste_03(AssercaoSuiteClasse assercao)
+        {
+            ParserAFile.InitSystem();
+            string fileCode = @"codigoClasseTestes_7.txt";
+            ParserAFile parser = new ParserAFile(fileCode);
+
+            ProcessadorDeID processador = new ProcessadorDeID(parser.GetCode());
+            processador.CompileEmDoisEstagios();
+
+            ProgramaEmVM aplicativo = new ProgramaEmVM(processador.GetInstrucoes());
+            aplicativo.Run(processador.escopo);
+
+
+            assercao.IsTrue(true); // teste feito sem execuções fatais.
+            assercao.IsTrue(
+                (processador.escopo.tabela.GetObjeto("objA", processador.escopo) != null) &&
+                (processador.escopo.tabela.GetObjeto("c", processador.escopo).GetValor() != null) &&
+                (int.Parse(processador.escopo.tabela.GetObjeto("c", processador.escopo).GetValor().ToString()) == 0));
+
+        }
+
+    }
+
+    class ClasseTesteExpressoesNulas :SuiteClasseTestes
+    {
+        public ClasseTesteExpressoesNulas() : base("testes para expressoes nulas")
+        {
+
+        }
+
+        public void Teste_02(AssercaoSuiteClasse assercao)
+        {
+            string codigoExpressao = "Objeto a=nill; a==nill";
+            List<string> tokensCodigo = ParserUniversal.GetTokens(codigoExpressao);
+            Escopo escopo = new Escopo(tokensCodigo);
+
+            Objeto objetoNuloTeste = new Objeto("private", "Objeto", "a", null);
+            escopo.tabela.GetObjetos().Add(objetoNuloTeste);
+
+            List<Expressao> expressaoNula = Expressao.Instance.ExtraiExpressoes(escopo, tokensCodigo);
+
+            EvalExpression eval = new EvalExpression();
+            object result=eval.EvalPosOrdem(expressaoNula[1], escopo);
+
+            assercao.IsTrue(result.ToString() == "True"); 
+        }
+
+        public void Teste_01(AssercaoSuiteClasse assercao)
+        {
+            string codigoExpressao = "int a=0;  a==nill;";
+            List<string> tokensCodigo = ParserUniversal.GetTokens(codigoExpressao);
+            Escopo escopo = new Escopo(tokensCodigo);
+
+            List<Expressao> expressaoNula = Expressao.Instance.ExtraiExpressoes(escopo, tokensCodigo);
+
+            assercao.IsTrue(expressaoNula!=null && expressaoNula.Count==2 && expressaoNula[1].Elementos[2].GetType()==typeof(ExpessaoNILL));
+        }
+
+    }
+
+
+ 
+    class ClasseTestesLigacoesDeEscopos: SuiteClasseTestes
+    {
+        public ClasseTestesLigacoesDeEscopos():base("classe para verificacao entre escopo pai com escopos filhos")
+        {
+
+        }
+
+        public void Teste1(AssercaoSuiteClasse assercao)
+        {
+            ParserAFile parser = new ParserAFile(@"classesHerdadas_1.txt");
+
+            ProcessadorDeID processador = new ProcessadorDeID(parser.GetTokens());
+            processador.CompileEmDoisEstagios();
+
+            assercao.IsTrue(true); // execução do teste feito sem erros fatais.
+        }
+
+        public void Teste2(AssercaoSuiteClasse assercao)
+        {
+            ParserAFile parser = new ParserAFile(@"classeVerificarEscoposAninhados.txt");
+            ProcessadorDeID processador = new ProcessadorDeID(parser.GetTokens());
+            processador.CompileEmDoisEstagios();
+            assercao.IsTrue(true);
+        }
+    }
+
+    class ClasseTestesExtracaoDeExpressoesSemValidacao:SuiteClasseTestes
+    {
+        public ClasseTestesExtracaoDeExpressoesSemValidacao() : base("testes automatizados para extração de expressões, sem identificação")
+        {
+
+        }
+
+        private Expressao Processamento(string expressao)
+        {
+            List<string> tokensDaExpressao = ParserUniversal.GetTokens(expressao);
+            Escopo escopo = new Escopo(tokensDaExpressao);
+
+
+            Expressao umaExpressao = Expressao.Instance.ExtraiUmaExpressaoSemValidar(tokensDaExpressao, escopo);
+
+            AssercaoSuiteClasse assercao = new AssercaoSuiteClasse();
+            assercao.IsTrue(umaExpressao.Elementos.Count == tokensDaExpressao.Count);
+            return umaExpressao;
+
+        }
+
+     
+        public void Teste_02(AssercaoSuiteClasse assercao)
+        {
+
+
+            string expressaoResumivel4 = "x=x+y+z*(x+1)";
+            ProcessamentoExpressaoResumivel(expressaoResumivel4, 2);
+
+            string expressaoResumivel1 = "public funcaoA ( int x, int y)";
+            ProcessamentoExpressaoResumivel(expressaoResumivel1, 6);
+
+
+            string expressaoResumivel2 = "Vetor v= create(int,1,1);";
+            ProcessamentoExpressaoResumivel(expressaoResumivel2, 5);
+
+            string expressaoResumivel3 = "objetoA.a=2";
+            ProcessamentoExpressaoResumivel(expressaoResumivel3, 3);
+
+
+        }
+
+        private void ProcessamentoExpressaoResumivel(string expressaoAResumir, int quantidadeDeIDs)
+        {
+            List<string> tokensDaExpressao = ParserUniversal.GetTokens(expressaoAResumir);
+            Escopo escopo = new Escopo(tokensDaExpressao);
+
+
+            ProcessadorDeID processador = new ProcessadorDeID(tokensDaExpressao);
+            List<string> tokensResumidos = processador.ResumeExpressoes(tokensDaExpressao, escopo);
+
+
+            AssercaoSuiteClasse assercao = new AssercaoSuiteClasse();
+            assercao.IsTrue(ContadorIDs(tokensResumidos) == quantidadeDeIDs); 
+        }
+
+        private int ContadorIDs(List<string> tokensResumidos)
+        {
+            if ((tokensResumidos == null) || (tokensResumidos.Count == 0))
+                return 0;
+            else
+            {
+                int countID = 0;
+                for (int x = 0; x < tokensResumidos.Count; x++)
+                    if (tokensResumidos[x] == "ID")
+                        countID++;
+
+                return countID;
+            }
+        }
+
+        public void Teste_01(AssercaoSuiteClasse assercao)
+        {
+            string expressao6 = "(x+1)+a";
+            Processamento(expressao6);
+
+
+            string expressao1 = "x+1;";
+            Processamento(expressao1);
+
+            string expressao2 = "x=x+1;";
+            Processamento(expressao2);
+
+            string expressao3 = "x=x+1";
+            Processamento(expressao3);
+
+            string expressao4 = "x";
+            Processamento(expressao4);
+
+            string expressao5 = "1";
+            Processamento(expressao5);
+        }
+
+
+    }
 
 
     class ClassteArremate :SuiteClasseTestes
@@ -34,7 +294,7 @@ namespace ParserLinguagemOrquidea.testes
 
 
             this.processador = new ProcessadorDeID(tokens);
-            this.processador.Compile();
+            this.processador.CompileEmDoisEstagios();
 
             ProgramaEmVM program = new ProgramaEmVM(this.processador.GetInstrucoes());
             program.Run(this.processador.escopo);
@@ -91,7 +351,7 @@ namespace ParserLinguagemOrquidea.testes
             ParserAFile parser = new ParserAFile("codigoTesteConstructor_UP.txt");
 
             ProcessadorDeID processador = new ProcessadorDeID(parser.GetTokens());
-            processador.Compile();
+            processador.CompileEmDoisEstagios();
 
 
 
@@ -154,7 +414,7 @@ namespace ParserLinguagemOrquidea.testes
                     parser = new ParserAFile(fileNameCode);
                
                 this.processador = new ProcessadorDeID(parser.GetTokens());
-                this.processador.Compile();
+                this.processador.CompileEmDoisEstagios();
 
 
                 ProgramaEmVM program = new ProgramaEmVM(this.processador.GetInstrucoes());
@@ -170,7 +430,7 @@ namespace ParserLinguagemOrquidea.testes
 
 
                 this.processador = new ProcessadorDeID(tokens);
-                this.processador.Compile();
+                this.processador.CompileEmDoisEstagios();
 
                 ProgramaEmVM program = new ProgramaEmVM(this.processador.GetInstrucoes());
                 program.Run(this.processador.escopo);
@@ -293,7 +553,7 @@ namespace ParserLinguagemOrquidea.testes
             {
                 List<string> codigo = ParserUniversal.GetTokens(codigoDefinicao);
                 this.processador = new ProcessadorDeID(codigo);
-                this.processador.Compile();
+                this.processador.CompileEmDoisEstagios();
             }
 
             public void Teste_02(AssercaoSuiteClasse assercao)
@@ -392,7 +652,7 @@ namespace ParserLinguagemOrquidea.testes
             {
                 string codigo = "int funcaoA(){c=1;}; int c=3;"; // a definição está no escopo-pai, mas o escopo-pai está depois da atribuição.
                 this.processador = new ProcessadorDeID(new List<string>() { codigo });
-                this.processador.Compile();
+                this.processador.CompileEmDoisEstagios();
 
                 assercao.IsTrue(this.processador.GetInstrucoes().Count == 2);
             }
@@ -401,7 +661,7 @@ namespace ParserLinguagemOrquidea.testes
             {
                 string codigo = "int b=1; int c=funcaoA(b); int funcaoA(int x){return x;};";
                 this.processador = new ProcessadorDeID(new List<string>() { codigo });
-                this.processador.Compile();
+                this.processador.CompileEmDoisEstagios();
 
                 assercao.IsTrue(this.processador.GetInstrucoes().Count==3); // essa assercao foi definida apos o teste com exito, com o fim de em outros testes, gere um cenario de testes válido, em casos como verificação se o código não quebrou, ao mexer em outras partes do código;
             }
@@ -419,10 +679,10 @@ namespace ParserLinguagemOrquidea.testes
             private void ProcessaAExpressao(string definicoes, string chamadaExpressao)
             {
                 List<string> codigo_definicoes = new List<string>() { definicoes };
-                List<string> tokensDaExpressao = new Tokens(LinguagemOrquidea.Instance(), new List<string>() { chamadaExpressao }).GetTokens();
+                List<string> tokensDaExpressao = ParserUniversal.GetTokens(chamadaExpressao);
 
                 this.processador = new ProcessadorDeID(codigo_definicoes);
-                this.processador.Compile();
+                this.processador.CompileEmDoisEstagios();
 
                 ProgramaEmVM programa = new ProgramaEmVM(this.processador.GetInstrucoes());
                 programa.Run(this.processador.escopo);
@@ -439,7 +699,7 @@ namespace ParserLinguagemOrquidea.testes
                 Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
                 string expressao = "int a=1; int b=2; int c; int funcaoA(int x, int y){return x+y;};";
-                string expressao_chamada = "int c= funcaoA(a,b);";
+                string expressao_chamada = "c= funcaoA(a,b);";
                 this.ProcessaAExpressao(expressao, expressao_chamada);
 
                 assercao.IsTrue(int.Parse(this.escopo.tabela.GetObjeto("c", this.escopo).GetValor().ToString()) == 3);
@@ -513,7 +773,7 @@ namespace ParserLinguagemOrquidea.testes
                 List<string> tokensDaExpressao = new Tokens(LinguagemOrquidea.Instance(), new List<string>() { expressao }).GetTokens();
 
                 this.processador = new ProcessadorDeID(codigo_definicoes);
-                this.processador.Compile();
+                this.processador.CompileEmDoisEstagios();
 
                 Expressao exprssaoAProcessar = new Expressao(tokensDaExpressao.ToArray(), processador.escopo);
                 EvalExpression eval = new EvalExpression();
@@ -590,7 +850,7 @@ namespace ParserLinguagemOrquidea.testes
             private void ProcessaTestes(string codigo)
             {
                 this.processador = new ProcessadorDeID(new List<string>() { codigo });
-                this.processador.Compile();
+                this.processador.CompileEmDoisEstagios();
                 ProgramaEmVM programa = new ProgramaEmVM(this.processador.GetInstrucoes());
                 programa.Run(this.processador.escopo);
             }
@@ -726,7 +986,7 @@ namespace ParserLinguagemOrquidea.testes
                 ParserAFile parser = new ParserAFile(fileNameCode);
                 List<string> tokens = parser.GetTokens();
                 this.processador = new ProcessadorDeID(tokens);
-                this.processador.Compile();
+                this.processador.CompileEmDoisEstagios();
 
             }
             
@@ -814,7 +1074,7 @@ namespace ParserLinguagemOrquidea.testes
                 ParserAFile parser = new ParserAFile(fileNameCode);
                 List<string> tokens = parser.GetTokens();
                 this.processador = new ProcessadorDeID(tokens);
-                this.processador.Compile();
+                this.processador.CompileEmDoisEstagios();
 
             }
 
@@ -846,7 +1106,7 @@ namespace ParserLinguagemOrquidea.testes
                 List<string> tokensCodigo = parser.GetTokens();
 
                 ProcessadorDeID processador = new ProcessadorDeID(tokensCodigo);
-                processador.Compile();
+                processador.CompileEmDoisEstagios();
                 ProgramaEmVM programa = new ProgramaEmVM(processador.GetInstrucoes());
                 programa.Run(processador.escopo);
             }
@@ -854,16 +1114,28 @@ namespace ParserLinguagemOrquidea.testes
         }
         public ClassesTestesManutencao()
         {
+            ClassesTestesProgramacaoOrientadaAspcecto testesAspecto = new ClassesTestesProgramacaoOrientadaAspcecto();
+            testesAspecto.ExecutaTestes();
+
+            //ClasseTesteExpressoesNulas testesExpressoesNulas = new ClasseTesteExpressoesNulas();
+            //testesExpressoesNulas.ExecutaTestes();
+
+            //ClasseTestesLigacoesDeEscopos testesLigacoesEscopo = new ClasseTestesLigacoesDeEscopos();
+            //testesLigacoesEscopo.ExecutaTestes();
+
+            //ClasseTestesExtracaoDeExpressoesSemValidacao testesExtracaoExpressoes = new ClasseTestesExtracaoDeExpressoesSemValidacao();
+            //testesExtracaoExpressoes.ExecutaTestes();
+
             //ClassteArremate classeArremate = new ClassteArremate();
             //classeArremate.ExecutaTestes();
 
 
             //ClasseTestesConstructor testesConstructors = new ClasseTestesConstructor();
-             //testesConstructors.ExecutaTestes();
+            //testesConstructors.ExecutaTestes();
 
 
-            TestesCompilacaoExecucaoClasses testesBuildAndExecutationExpressoesOrientadoAObjeto = new TestesCompilacaoExecucaoClasses();
-            testesBuildAndExecutationExpressoesOrientadoAObjeto.ExecutaTestes();
+            //TestesCompilacaoExecucaoClasses testesBuildAndExecutationExpressoesOrientadoAObjeto = new TestesCompilacaoExecucaoClasses();
+            //testesBuildAndExecutationExpressoesOrientadoAObjeto.ExecutaTestes();
 
             //ClasseTestesPosicaoECodigo testesPosicionamentoTokens = new ClasseTestesPosicaoECodigo();
             //testesPosicionamentoTokens.ExecutaTestes();

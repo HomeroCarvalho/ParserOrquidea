@@ -10,7 +10,7 @@ namespace parser
 
 
 
-        internal List<Instrucao> instrucoes = new List<Instrucao>();// lista todas instruções do programa, rorando dentro da VM.
+        private List<Instrucao> instrucoes = new List<Instrucao>();// lista todas instruções do programa, rorando dentro da VM.
         internal static Dictionary<int, HandlerInstrucao> dicHandlers = null;
 
 
@@ -43,10 +43,12 @@ namespace parser
         internal static int codeCallerMethod = 25;
         internal static int codeExpressionValid = 26;
         internal static int codeConstructorUp = 27;
+        internal static int codeAspectos = 28;
+        internal static int codeRiseError = 29;
 
         public delegate object HandlerInstrucao(Instrucao umaInstrucao, Escopo escopo);
 
-        public  int IP_contador = 0; // guarda o id das sequencias.
+        private int IP_contador = 0; // guarda o id das sequencias.
         private bool isQuit = false;
 
         public object resultLastInstruction;
@@ -54,7 +56,7 @@ namespace parser
         // inicia o programa na VM.
         public void Run(Escopo escopo)
         {
-       
+
             IP_contador = 0; // inicia a primeira instrução do software.
 
             while (IP_contador < instrucoes.Count)
@@ -99,14 +101,15 @@ namespace parser
                 dicHandlers[codeReturn] = InstrucaoReturn;
                 dicHandlers[codeExpressionValid] = InstrucaoExpressaoValida;
                 dicHandlers[codeConstructorUp] = InstrucaoConstrutorUP;
+                dicHandlers[codeAspectos] = InstrucaoAspecto;
             }
         } // InstrucoesVM()
 
 
         /// executa uma instrução dentro do programa contido na VM.
-        internal object ExecutaUmaInstrucao(Instrucao umaInstrucao, Escopo escopo)
+        private object ExecutaUmaInstrucao(Instrucao umaInstrucao, Escopo escopo)
         {
-            this.resultLastInstruction = dicHandlers[umaInstrucao.code](umaInstrucao, escopo); 
+            this.resultLastInstruction = dicHandlers[umaInstrucao.code](umaInstrucao, escopo);
             return this.resultLastInstruction;
         } // ExecutaUmaInstrucao()
 
@@ -119,17 +122,17 @@ namespace parser
         }
 
 
-        public object InstrucaoImporter(Instrucao instrucao, Escopo escopo)
+        private object InstrucaoImporter(Instrucao instrucao, Escopo escopo)
         {
             // as classes já foram importadas no compilador..
             return null;
 
         } // InstrucaoCreateObject()
 
-        public object InstrucaoChamadaDeMetodo(Instrucao instrucao, Escopo escopo)
+        private object InstrucaoChamadaDeMetodo(Instrucao instrucao, Escopo escopo)
         {
             Expressao expressaoChamadaDeMetodo = instrucao.expressoes[0].Elementos[1];
-
+            expressaoChamadaDeMetodo.isModify = true;
 
             EvalExpression eval = new EvalExpression();
             return eval.EvalPosOrdem(expressaoChamadaDeMetodo, escopo);
@@ -137,15 +140,21 @@ namespace parser
 
         } // InstrucaoCreateObject()
 
-        public object InstrucaoExpressaoValida(Instrucao instrucao, Escopo escopo)
+        private object InstrucaoExpressaoValida(Instrucao instrucao, Escopo escopo)
         {
             Expressao expressao = instrucao.expressoes[0];
             EvalExpression eval = new EvalExpression();
-            return eval.EvalPosOrdem(expressao, escopo);
+            
+            
+            object result = eval.EvalPosOrdem(expressao, escopo);
+            instrucao.expressoes[0].isModify = true;
+
+
+            return result;
 
         } // InstrucaoCreateObject()
 
-        public object InstrucaoConstrutorUP(Instrucao instrucao, Escopo escopo)
+        private object InstrucaoConstrutorUP(Instrucao instrucao, Escopo escopo)
         {
             ///   Cabecalho de listas de expressoes:
             ///   0- nomeDaClasseHerdeira
@@ -158,7 +167,7 @@ namespace parser
             ///           pode ser o objeto "actual";
             ///           
 
-            
+
 
             string nomeDaClasseHerdeira = instrucao.expressoes[0].ToString();
             string nomeClasseHerdada = instrucao.expressoes[1].ToString();
@@ -184,7 +193,6 @@ namespace parser
             Escopo escopoConstrutorUP = escopo.Clone();
 
 
-     
             // executa o construtor, com o escopo que detém os valores dos objetos herdados.
             construtor.ExecuteAConstructor(parametrosParaOConstrutor, nomeClasseHerdada, escopoConstrutorUP, indexConstrutorClasseHerdada);
 
@@ -228,7 +236,7 @@ namespace parser
                 }
         }
 
-        public object InstrucaoCreateObject(Instrucao instrucao, Escopo escopo)
+        private object InstrucaoCreateObject(Instrucao instrucao, Escopo escopo)
         {
 
             /// EXPRESSOES: a lista de expressões da instrução foi feita na seguinte sequência:
@@ -239,7 +247,7 @@ namespace parser
             /// 4- expressoes indices vetor.
             /// 5- expressoes parametros.
             /// 6- indice do construtor.
-            
+
 
 
             if (instrucao.expressoes[0].Elementos[0].ToString() != "create")
@@ -252,13 +260,13 @@ namespace parser
 
 
             Expressao expressoesParametros;
-            if (instrucao.expressoes[0].Elementos[5].Elementos.Count >0)
+            if (instrucao.expressoes[0].Elementos[5].Elementos.Count > 0)
                 expressoesParametros = instrucao.expressoes[0].Elementos[5];
             else
                 expressoesParametros = new Expressao();
 
-           
-        
+
+
 
             if (tipoTemplateObjeto == "Objeto")
             {
@@ -293,9 +301,13 @@ namespace parser
                 }
 
                 AdicionaPropriedadesNaoHerdadas(objJaInstanciado, classeDoObjetoInstanciado, escopoCreate); // adiciona ao escopo create os campos do objeto instanciado.
-
+                ///__________________________________________________________________________________________________________________________________________________
                 // CONSTROI UMA NOVA INSTANCIA DO OBJETO, o objeto construido está no [escopoCreate].
                 construtor.ExecuteAConstructor(expressoesParametros.Elementos, tipoDoObjetoAReceberAInstanciacao, escopoCreate, indexConstructor);
+                //____________________________________________________________________________________________________________________________________________________
+                objJaInstanciado.SetValor(escopoCreate.tabela.GetObjeto(objJaInstanciado.GetNome(), escopo));
+
+                AtualizaTabelaExpressoes(objJaInstanciado); // atualiz a lista de expressoes, pois o objeto foi instanciado e modificado.
 
                 SetaValoresModificadosDePropriedades(objJaInstanciado, escopoCreate); // repassa os valores modificados na construção, ao objeto instanciado.
                 SetVetoresModificadosNaInstanciacao(escopo, escopoCreate); // seta vetores alterados na instanciação das propriedades do objeto instanciados.
@@ -307,15 +319,19 @@ namespace parser
                 }
                 RemovePropriedadesNaoHerdadosDoEscopo(objJaInstanciado, classeDoObjetoInstanciado, escopoCreate); // remove os campos do objeto instanciado, presentes no escopo create.
 
-
-
-
-
-
-                
-
-
-
+                /*
+                 *  ESTRUTURA DE DADOS CONTIDA NA LISTA DE EXPRESSOES.
+                 * 
+                   posicao 0: token "create";
+                   posicao 1: tipo do objeto instanciado.
+                   posicao 2: nome do objeto instanciado.
+                   posicao 3: token "Objeto" ou "Vetor")
+                   posicao 4: tipo de um elemento do vetor.
+                   posicao 5: lista de parametros, para o create, se for Objeto, ou parametros que compoe os indices matriciais se for Vetor.
+                   posicao 6: indice do construtor compativel, se for Objeto.
+            
+                 * 
+                 */
 
                 escopo = escopoCreate.Clone(); // o escopoCreate é o escopo + propriedades do objeto instanciado, fazer o escopo ser um clone do objeto traz os objetos modificados pelo construtor.
 
@@ -324,23 +340,59 @@ namespace parser
             else
             if (tipoTemplateObjeto == "Vetor")
             {
-                
-                Vetor vetor = escopo.tabela.GetVetor(nomeDoObjetoAReceberAInstanciacao, escopo); // cria objetos vetor! o objeto vetor foi construido pelo 
-                                                                                                 // build de compilação "create", Um vetor é um objeto passado por referência!
-                if (vetor != null)
+                string tipoElementosDoVetor = instrucao.expressoes[0].Elementos[4].ToString();
+
+                List<Expressao> indicesDoVetor = instrucao.expressoes[0].Elementos[5].Elementos; // calcula as dimensões do vetor.
+
+
+                if (indicesDoVetor != null)
                 {
 
-                    
-                    List<Expressao> indicesDoVetor = instrucao.expressoes[0].Elementos[5].Elementos; // calcula as dimensões do vetor.
-                    vetor.SetElementoPorOffset(indicesDoVetor,new object(), escopo); // cria um novo valor para o vetor criado.
-                    return vetor; // os indices de criação do vetor são imutáveis, então a instância da variável é constante e calculada no build de compilação. 
+
+                    List<int> indicesDimensionais = new List<int>();
+                    EvalExpression eval = new EvalExpression();
+                    for (int x = 0; x < indicesDoVetor.Count; x++)
+                    {
+                        object umIndice = eval.EvalPosOrdem(indicesDoVetor[0], escopo);
+                        if (Expressao.Instance.IsTipoInteiro(umIndice.ToString()))
+                            indicesDimensionais.Add(int.Parse(umIndice.ToString()));
+                        else
+                            UtilTokens.WriteAErrorMensage(escopo, "expressao para criacao de vetor: " + nomeDoObjetoAReceberAInstanciacao.ToString() + " nao é do tipo inteiro, para constituir um indice dimensional do vetor", escopo.codigo);
+                    }
+
+                    Vetor vetorInstanciado = new Vetor("private", nomeDoObjetoAReceberAInstanciacao, tipoElementosDoVetor, escopo, indicesDimensionais.ToArray());
+                    escopo.tabela.GetVetores().Add(vetorInstanciado);
+                    return vetorInstanciado;
                 }
+                else
+                {
+                    Vetor vetorInstaciado = new Vetor("privete", nomeDoObjetoAReceberAInstanciacao, tipoElementosDoVetor, escopo, 1);
+                    escopo.tabela.GetVetores().Add(vetorInstaciado);
+                    return vetorInstaciado;
+                }
+
             }
-            
+
             return null;
 
-            
+
         } // InstrucaoCreateObject()
+
+        private static void AtualizaTabelaExpressoes(Objeto objJaInstanciado)
+        {
+            ExpressaoObjeto expressaoObjetoInstanciado = new ExpressaoObjeto(objJaInstanciado);
+            if (TablelaDeValores.expressoes != null)
+                for (int x = 0; x < TablelaDeValores.expressoes.Count; x++)
+                {
+                    if ((TablelaDeValores.expressoes[x].Elementos != null) && (TablelaDeValores.expressoes[x].Elementos.Count > 0))
+                    {
+                        for (int subExprss = 0; subExprss < TablelaDeValores.expressoes[x].Elementos.Count; subExprss++)
+                            if (Expressao.Instance.IsEqualsExpressions(TablelaDeValores.expressoes[x].Elementos[subExprss], expressaoObjetoInstanciado))
+                                TablelaDeValores.expressoes[x].isModify = true;
+
+                    }
+                }
+        }
 
         private static void SetaValoresModificadosDePropriedades(Objeto objJaInstanciado, Escopo escopoCreate)
         {
@@ -409,23 +461,25 @@ namespace parser
 
 
         //  instrução de construção do casesOfUses. como não é uma instrução feita massivamente, a construção de um objeto ProcessadorDeID não afeta o desempenho.
-        public object InstrucaoCasesOfUse(Instrucao instrucao, Escopo escopo)
+        private object InstrucaoCasesOfUse(Instrucao instrucao, Escopo escopo)
         {
             List<Expressao> expressoes = instrucao.expressoes;
             string nomeObjetoPrincipal = instrucao.expressoes[0].GetElemento().ToString();
 
 
             List<Expressao> exprssCodicionaisDoCase = instrucao.expressoes.GetRange(1, instrucao.expressoes.Count - 1);
-     
+
             EvalExpression eval = new EvalExpression(); // inicializa o avaliador de expressões.
 
             // percorre os cases da instrução, se a expressão condicional do case for true, roda a lista de instruções do case.
             for (int x = 0; x < exprssCodicionaisDoCase.Count; x++)
             {
+                exprssCodicionaisDoCase[x].isModify = true;
                 bool resultCondicionalDoCase = (bool)eval.EvalPosOrdem(exprssCodicionaisDoCase[x], escopo);
                 if (resultCondicionalDoCase)
                 {
-                    List<Instrucao> instrucoesDoCase = instrucao.blocos[x]; // obtém o bloco de instruções para o case avaliado.
+                    // obtém o bloco de instruções do case avaliado.
+                    List<Instrucao> instrucoesDoCase = instrucao.blocos[x]; 
                     for (int i = 0; i < instrucoesDoCase.Count; i++)
                         this.ExecutaUmaInstrucao(instrucoesDoCase[i], escopo);
                 } // if
@@ -434,7 +488,7 @@ namespace parser
         } // InstrucaoCasesOfUse()
 
 
-        public object InstrucaoOperadorBinario(Instrucao instrucao, Escopo escopo)
+        private object InstrucaoOperadorBinario(Instrucao instrucao, Escopo escopo)
         {
             // obtém alguns dados do novo operador binario.
             string tipoRetornoDoOperador = ((ExpressaoElemento)instrucao.expressoes[0]).GetElemento().ToString();
@@ -461,6 +515,8 @@ namespace parser
             // adiciona o novo operador binario para a classe do tipo de retorno do operador.
             classeDoOperador.GetOperadores().Add(novoOperadorBinario);
 
+            LinguagemOrquidea.Instance().AddOperator(novoOperadorBinario);
+
             // atualiza a classe no repositório.
             Classe classeRepositorio = RepositorioDeClassesOO.Instance().GetClasse(tipoRetornoDoOperador);
             if (classeRepositorio != null)
@@ -469,7 +525,7 @@ namespace parser
         }
 
         // instrução de construção de operador binario. como não é uma instrução feita massivamente, a construção de um objeto ProcessadorDeID não afeta o desempenho.
-        public object InstrucaoOperadorUnario(Instrucao instrucao, Escopo escopo)
+        private object InstrucaoOperadorUnario(Instrucao instrucao, Escopo escopo)
         {
             // obtém alguns dados do novo operador unario.
             string tipoRetornoDoOperador = ((ExpressaoElemento)instrucao.expressoes[0]).GetElemento().ToString();
@@ -494,6 +550,7 @@ namespace parser
             // atualiza a classe no escopo.
             classeDoOperador.GetOperadores().Add(novoOperadorUnario); // adiciona o novo operador unario para a classe do tipo de retorno do operador.
 
+            LinguagemOrquidea.Instance().AddOperator(novoOperadorUnario);
 
             // atualiza a classe no repositorio.
             Classe classeRepositorioOperador = RepositorioDeClassesOO.Instance().GetClasse(tipoRetornoDoOperador);
@@ -517,24 +574,33 @@ namespace parser
         {
             Objeto v = ((ExpressaoObjeto)instrucao.expressoes[0]).objeto;
             v.SetValor(((ExpressaoElemento)instrucao.expressoes[1]).elemento);
+            AtualizaTabelaExpressoes(v);
             return null;
         }
 
-        public object InstrucaoReturn(Instrucao instrucao, Escopo escopo)
+        private object InstrucaoReturn(Instrucao instrucao, Escopo escopo)
         {
             if ((instrucao.expressoes == null) || (instrucao.expressoes.Count == 0))
                 return null;
+
+            instrucao.expressoes[0].isModify = true;
             EvalExpression eval = new EvalExpression();
             return eval.EvalPosOrdem(instrucao.expressoes[0], escopo);
+          
 
         }
 
         private object InstrucaoWhile(Instrucao instrucao, Escopo escopo)
         {
-            
 
             Expressao exprssControle = instrucao.expressoes[0];
+            if (!exprssControle.isInPosOrdem)
+            {
+                exprssControle = exprssControle.PosOrdemExpressao();
+                exprssControle.isInPosOrdem = true;
+            }
             EvalExpression eval = new EvalExpression();
+            exprssControle.isModify = true;
             while ((bool)eval.EvalPosOrdem(exprssControle, escopo))
             {
                 Executa_bloco(instrucao, escopo, 0);
@@ -550,14 +616,18 @@ namespace parser
             // blocos: instrucoes.Blocos. (2 para else).
 
             Expressao exprssControle = instrucao.expressoes[0];
+            exprssControle.isModify = true;
+            
+            
             EvalExpression eval = new EvalExpression();
             if ((bool)eval.EvalPosOrdem(exprssControle, escopo))
-                Executa_bloco(instrucao, escopo, 0);
+                return Executa_bloco(instrucao, escopo, 0);
             else
             {
                 if (instrucao.blocos.Count > 1)  //procesamento da instrução else. O segundo bloco é para instrução else.
-                Executa_bloco(instrucao, escopo, 1);
+                    return Executa_bloco(instrucao, escopo, 1);
             }
+            exprssControle.isModify = true;
             return null;
         } // IfElseInstrucao()
 
@@ -572,8 +642,8 @@ namespace parser
                     continue;
                 if (instrucao.blocos[bloco][umaInstrucao].code == codeReturn)
                     return new EvalExpression().EvalPosOrdem(instrucao.blocos[bloco][umaInstrucao].expressoes[1], escopo);
-                result= ExecutaUmaInstrucao(instrucao.blocos[bloco][umaInstrucao], escopo);
-              
+                result = ExecutaUmaInstrucao(instrucao.blocos[bloco][umaInstrucao], escopo);
+
             } // for bloco
             return result;
         }
@@ -587,39 +657,41 @@ namespace parser
             ///    instrucao.expressoes[1]; expressão de controle para a instrução.
             ///    instrucao.expressoes[2]: expressão de incremento da instrucao.
             ///    
-        
+
             Expressao exprssAtribuicao = instrucao.expressoes[0];
             Expressao exprsCondicional = instrucao.expressoes[1];
             Expressao exprsIncremento = instrucao.expressoes[2];
 
             EvalExpression eval = new EvalExpression();
-        
+
             int varAtribuicao = int.Parse(eval.EvalPosOrdem(exprssAtribuicao, escopo).ToString()); // faz a primeira atribuição do controle da malha.
 
             // calcula o limite do contador para o "for".
             Expressao exprssControle = new Expressao(new string[] { instrucao.expressoes[1].Elementos[2].ToString() }, escopo);
+            exprssControle.isModify = true;
+
             int limiteMalha = int.Parse(eval.EvalPosOrdem(exprssControle, escopo).ToString());
-   
+
             while ((bool)eval.EvalPosOrdem(exprsCondicional, escopo))  // avalia a expressão de controle.
             {
                 exprsCondicional.isModify = true;
                 if ((instrucao.blocos[0] != null) && (instrucao.blocos[0].Count > 0))
                 {
                     Executa_bloco(instrucao, escopo, 0);
-                   
+
                     escopo.tabela.GetObjeto(exprsIncremento.Elementos[0].ToString(), escopo).SetValor(varAtribuicao);
 
 
                     exprsIncremento.isModify = true;
                     varAtribuicao += (int)eval.EvalPosOrdem(exprsIncremento, escopo); // atualiza a expressão de incremento.
-                    if (varAtribuicao > limiteMalha) 
+                    if (varAtribuicao > limiteMalha)
                         break;
 
                 }
                 else
                     break;
             } // while
- 
+
             return null;
         } // ForInstrucao()
 
@@ -638,13 +710,13 @@ namespace parser
             string nomeCampo = null;
             Expressao atribuicao = null;
             ExpressaoPropriedadesAninhadas propriedadesAninhadas = null;
-           
 
-            if (instrucao.expressoes[0].GetType()==typeof(ExpressaoChamadaDeMetodo)) 
+
+            if (instrucao.expressoes[0].GetType() == typeof(ExpressaoChamadaDeMetodo))
             {
 
                 EvalExpression eval = new EvalExpression();
-                object result= eval.EvalPosOrdem(instrucao.expressoes[1], escopo);
+                object result = eval.EvalPosOrdem(instrucao.expressoes[1], escopo);
 
                 tipoObjetoAAtribuir = instrucao.expressoes[0].Elementos[0].ToString();
                 nomeObjetoAAtribuir = instrucao.expressoes[0].Elementos[1].ToString();
@@ -655,7 +727,7 @@ namespace parser
             else
             if (instrucao.expressoes[0].GetType() != typeof(ExpressaoPropriedadesAninhadas))
             {
-                if (RepositorioDeClassesOO.Instance().GetClasse(instrucao.expressoes[0].Elementos[0].ToString()) != null) 
+                if (RepositorioDeClassesOO.Instance().GetClasse(instrucao.expressoes[0].Elementos[0].ToString()) != null)
                 {
                     nomeObjetoAAtribuir = instrucao.expressoes[0].Elementos[1].ToString();
                     tipoObjetoAAtribuir = instrucao.expressoes[0].Elementos[0].ToString();
@@ -663,17 +735,14 @@ namespace parser
                 else
                 {
                     nomeObjetoAAtribuir = instrucao.expressoes[0].Elementos[0].ToString();
-                    for (int x = 0; x < escopo.tabela.GetObjetos().Count; x++)
-                    {
-                        tipoObjetoAAtribuir = ObtemTipoRecursivamente(escopo, nomeObjetoAAtribuir, escopo.tabela.GetObjetos()[x]);
-                        if (tipoObjetoAAtribuir != null)
-                            break;
-                    }
-
+                    if (escopo.tabela.GetObjeto(nomeObjetoAAtribuir, escopo) != null)
+                        tipoObjetoAAtribuir = escopo.tabela.GetObjeto(nomeObjetoAAtribuir, escopo).GetTipo();
+                    else
+                        return null;
                 }
                 nomeCampo = "";
                 atribuicao = instrucao.expressoes[0];
-                
+
             }
             else
             if (instrucao.expressoes[0].GetType() == typeof(ExpressaoPropriedadesAninhadas))
@@ -693,24 +762,26 @@ namespace parser
                     case Instrucao.EH_OBJETO:
                         if (propriedadesAninhadas == null)
                         {
-                           
                             object novoValorDoCampoDoObjeto = new EvalExpression().EvalPosOrdem(atribuicao, escopo);
 
-                            Objeto obj1 = escopo.tabela.GetObjeto(nomeObjetoAAtribuir, escopo);
-                            if ((obj1 != null) && (atribuicao != null))
+                            if ((escopo.tabela.GetObjeto(nomeObjetoAAtribuir, escopo) != null) && (atribuicao != null))
                             {
-                                
-                                    if (nomeCampo != "")
-                                        obj1.SetValorField(nomeCampo, novoValorDoCampoDoObjeto); // guarda o valor calculado, na propriedade do aninhamento.
-                                    else
-                                        obj1.SetValorObjeto(novoValorDoCampoDoObjeto);
 
-                                    return obj1;
+                                if (nomeCampo != "")
+                                    escopo.tabela.GetObjeto(nomeObjetoAAtribuir, escopo).SetValorField(nomeCampo, novoValorDoCampoDoObjeto); // guarda o valor calculado, na propriedade do aninhamento.
+                                else
+                                    escopo.tabela.GetObjeto(nomeObjetoAAtribuir, escopo).SetValor(novoValorDoCampoDoObjeto);
+
+
+                                AtualizaTabelaExpressoes(escopo.tabela.GetObjeto(nomeObjetoAAtribuir, escopo));
+                                return escopo.tabela.GetObjeto(nomeObjetoAAtribuir, escopo);
                             }
                         }
                         else
                         {
-                            Objeto objAAtribuir = propriedadesAninhadas.objetoInicial;
+                            Objeto objAAtribuir = escopo.tabela.GetObjeto(propriedadesAninhadas.objetoInicial.GetNome(), escopo);
+                            Objeto objAAtribuirOriginal = objAAtribuir;
+
                             for (int x = 1; x < propriedadesAninhadas.aninhamento.Count; x++)
                                 objAAtribuir = objAAtribuir.GetField(propriedadesAninhadas.aninhamento[x].GetNome());
 
@@ -718,12 +789,17 @@ namespace parser
                             object result = eval.EvalPosOrdem(atribuicao, escopo);
                             objAAtribuir.SetValor(result);
 
+                            if (escopo.tabela.GetObjeto(objAAtribuirOriginal.GetNome(), escopo) != null)
+                                escopo.tabela.GetObjeto(objAAtribuirOriginal.GetNome(), escopo).SetValor(objAAtribuirOriginal.GetValor());
+
+                            AtualizaTabelaExpressoes(objAAtribuirOriginal);
+
                         }
                         break;
 
                     case Instrucao.EH_VETOR:
-                        
-                        
+
+
                         object novoValor3 = new EvalExpression().EvalPosOrdem(instrucao.expressoes[0].Elementos[3], escopo); // calcula o valor de atribuição.
 
                         Vetor umVetor = escopo.tabela.GetVetor(nomeObjetoAAtribuir, escopo); // obtem o vetor do elementoa receber novo valor.
@@ -731,9 +807,12 @@ namespace parser
 
 
                         List<Expressao> expressoesIndices = expressoesEndecamentoMatricial.Elementos; // lista de indices de enderecamento a um dos elementos do vetor.
-                         umVetor.SetElementoPorOffset(expressoesIndices, novoValor3, escopo); // seta o elemento do vetor para um indices!
-                        
-                        
+                        umVetor.SetElementoPorOffset(expressoesIndices, novoValor3, escopo); // seta o elemento do vetor para um indices!
+
+                        if (escopo.tabela.GetVetor(umVetor.nome, escopo) != null)
+                            escopo.tabela.GetVetor(umVetor.nome, escopo).SetValor(umVetor.GetValor());
+
+
                         return umVetor;
 
 
@@ -745,9 +824,13 @@ namespace parser
                         if (classe != null)
                         {
                             object novoValor4 = new EvalExpression().EvalPosOrdem(instrucao.expressoes[0].Elementos[3], escopo);
-                            Objeto propriedadeEstatica = classe.propriedadesEstaticas.Find(k => k.GetNome().Equals(nomeDaPropriedadeEstatica));
-                            propriedadeEstatica.SetValor(novoValor4);
-                            return propriedadeEstatica;
+
+                            Objeto objPropEstatica = classe.propriedadesEstaticas.Find(k => k.GetNome().Equals(nomeDaPropriedadeEstatica));
+                            if (objPropEstatica != null)
+                                classe.propriedadesEstaticas.Find(k => k.GetNome().Equals(nomeDaPropriedadeEstatica)).SetValor(novoValor4);
+
+                            AtualizaTabelaExpressoes(objPropEstatica);
+                            return classe.propriedadesEstaticas.Find(k => k.GetNome().Equals(nomeDaPropriedadeEstatica));
 
                         }
                         return null;
@@ -757,7 +840,9 @@ namespace parser
 
 
 
-            } // if MODIFICACAO
+            }
+            //___________________________________________________________________________________________________________________________________________________________________________________
+            /// parte de atribuicao que não há instanciação, apenas atribuição a um objeto ou vetor já existente.
             if (instrucao.flags.Contains(Instrucao.EH_DEFINICAO))
             {
                 /// na natureza, nada ser cria, nada se perde, tudo se transforma...
@@ -796,6 +881,7 @@ namespace parser
                         if (escopo.tabela.GetObjeto(nomeDoObjeto, escopo) == null)
                         {
                             obj1 = new Objeto("private", tipoDoObjeto, nomeDoObjeto, novoValor);
+                            obj1.SetValor(novoValor); // seta novamente o valor, para otimização de expressoes que contem o objeto criado.
                             escopo.tabela.RegistraObjeto(obj1);
                             return obj1;
                         }
@@ -804,7 +890,7 @@ namespace parser
                             escopo.tabela.GetObjeto(nomeDoObjeto, escopo).SetValor(novoValor);
                             return escopo.tabela.GetObjeto(nomeDoObjeto, escopo);
                         }
-                        
+
 
 
                     case Instrucao.EH_VETOR:
@@ -859,26 +945,12 @@ namespace parser
             return null;
         }
 
-        private static Objeto ObtemPropriedadeAAtribuir_2(ExpressaoChamadaDeMetodo expressaoChamada, Escopo escopo)
-        {
-            Objeto objetoCurrente = escopo.tabela.GetObjeto(expressaoChamada.proprieades.objetoInicial.GetNome(), escopo); // é preciso acessar o objeto pelo escopo, pois através da expressão pode estar atualizado.
-            List<Objeto> propriedadesAninhadas = expressaoChamada.proprieades.aninhamento;
-            int x = 0;
-            while ((x<propriedadesAninhadas.Count) &&  (objetoCurrente.GetField(propriedadesAninhadas[x].GetNome()) != null))
-            {
-                objetoCurrente = objetoCurrente.GetField(propriedadesAninhadas[x].GetNome());
-                x++;
-            }
-            return objetoCurrente;
-        }
-
-
         private object InstrucaoChamadaDeFuncao(Instrucao instrucao, Escopo escopo)
         {
-        
-            if (instrucao.expressoes[1].GetType() == typeof(ExpressaoChamadaDeFuncao ))
+
+            if (instrucao.expressoes[1].GetType() == typeof(ExpressaoChamadaDeFuncao))
             {
-                ExpressaoChamadaDeFuncao  funcaoExpressao = (ExpressaoChamadaDeFuncao )instrucao.expressoes[1];
+                ExpressaoChamadaDeFuncao funcaoExpressao = (ExpressaoChamadaDeFuncao)instrucao.expressoes[1];
                 Funcao funcaoDaChamada = funcaoExpressao.funcao;
                 List<Expressao> expressoesParametros = funcaoExpressao.expressoesParametros;
                 return funcaoDaChamada.ExecuteAFunction(funcaoExpressao.expressoesParametros, funcaoDaChamada.caller, escopo);
@@ -886,11 +958,92 @@ namespace parser
             return null;
         }
 
-      
+
+
 
         private object InstrucaoDefinicaoDeFuncao(Instrucao instrucao, Escopo escopo)
         {
             // a instrucao de definicao nao eh executada no programa VM
+            return null;
+        }
+
+
+        private object InstrucaoRiseError(Instrucao instrucao, Escopo escopo)
+        {
+            if (instrucao.blocos.Count > 0)
+            {
+                try
+                {
+                    if ((instrucao.blocos[0] != null) && (instrucao.blocos[0] != null) && (instrucao.blocos[0].Count > 0)) 
+                    {
+                        List<Instrucao> umBlocoTry = instrucao.blocos[0];
+                        for (int x = 0; x < umBlocoTry.Count; x++)
+                            ExecutaUmaInstrucao(umBlocoTry[x], escopo);
+
+                        return null;
+                    }
+                }
+                catch
+                {
+                    if ((instrucao.blocos.Count > 1) && (instrucao.blocos[1] != null) && (instrucao.blocos[1].Count > 0))
+                    {
+                        List<Instrucao> umBlocoRiseError = instrucao.blocos[0];
+                        for (int x = 0; x < umBlocoRiseError.Count; x++)
+                            ExecutaUmaInstrucao(umBlocoRiseError[x], escopo);
+
+                        return null;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private object InstrucaoAspecto(Instrucao instrucao, Escopo escopo)
+        {
+
+            if (instrucao.expressoes[0].GetType() == typeof(ExpressaoChamadaDeFuncao))
+            {
+                // obtem a funcao do corte aspecto.
+                ExpressaoChamadaDeFuncao umaExpressaoChamadaDeFuncao = (ExpressaoChamadaDeFuncao)instrucao.expressoes[0];
+                Funcao funcaoDaChamada = umaExpressaoChamadaDeFuncao.funcao;
+
+                // obtem o nome do objeto parametro da funcao corte.
+                string nomeObjetoMonitorado = ((ExpressaoElemento)instrucao.expressoes[1]).ToString();
+                
+                
+                if (escopo.tabela.GetObjeto(nomeObjetoMonitorado, escopo) != null)
+                {
+                    /// int b; 
+                    /// int funcao(int x);
+                    /// x.valor= b.valor;
+                    /// b.valor= funcao(x);
+                    
+                    Objeto objetoSobAspecto = escopo.tabela.GetObjeto(nomeObjetoMonitorado, escopo);// obtem o objeto sob aspecto, no escopo.
+                    funcaoDaChamada.parametrosDaFuncao[0].SetValor(objetoSobAspecto.GetValor());
+
+                    // obtem o valor da funcao corte, tendo parametro com valor do objeto monitorado.
+                    object novoValor = funcaoDaChamada.ExecuteAFunction(
+                        new List<Expressao>() { new ExpressaoObjeto(funcaoDaChamada.parametrosDaFuncao[0]) },
+                        funcaoDaChamada.caller, escopo);
+
+                    // seta o valor do objeto monitorado, com o valor de retorno da função.
+                    escopo.tabela.GetObjeto(nomeObjetoMonitorado, escopo).SetValor(novoValor);
+
+                    // atualiza a situação das expressoes que possuem o objeto monitorado.
+                    AtualizaTabelaExpressoes(objetoSobAspecto);
+
+                    if (escopo.tabela.GetObjeto(funcaoDaChamada.parametrosDaFuncao[0].GetNome(), escopo) != null)
+                    {
+                        escopo.tabela.GetObjeto(funcaoDaChamada.parametrosDaFuncao[0].GetNome(), escopo).SetValor(novoValor);
+                        // atualiza a situação das expressoes que possuem o objeto parametro da funcao de corte.
+                        AtualizaTabelaExpressoes(escopo.tabela.GetObjeto(funcaoDaChamada.parametrosDaFuncao[0].GetNome(), escopo));
+                    }
+
+                    return novoValor;
+                }
+                
+            } // if
             return null;
         }
 
@@ -945,6 +1098,7 @@ namespace parser
             dicNamesOfInstructions[ProgramaEmVM.codeCallerMethod] = "Call a method";
             dicNamesOfInstructions[ProgramaEmVM.codeExpressionValid] = "Valid Express";
             dicNamesOfInstructions[ProgramaEmVM.codeConstructorUp] = "Constructor base";
+            dicNamesOfInstructions[ProgramaEmVM.codeAspectos] = "aspect insertion";
 
     
         }
@@ -964,6 +1118,10 @@ namespace parser
         }
 
    
+        public Instrucao()
+        {
+            // do nothing, for instructions processed, but not needs execution in run-time.
+        }
 
         // construtor. contém os elementos de uma instrução VM: codigo ID, expressoes associadas, e blocos de instruções.
         public Instrucao(int code, List<Expressao> expressoesDaInstrucao, List<List<Instrucao>> blocos)

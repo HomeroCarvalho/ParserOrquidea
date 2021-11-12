@@ -17,7 +17,7 @@ namespace parser
         public bool isStatic { get; set; }
         private List<Objeto> campos = new List<Objeto>();
 
-        private List<Expressao> expressoesComObjetoPresentes = new List<Expressao>();
+        private List<Expressao> expressoes = new List<Expressao>();
 
       
 
@@ -91,9 +91,9 @@ namespace parser
             } 
         }
 
-        public List<Expressao> GetExpressoesComOObjeto()
+        public List<Expressao> exprssPresentes()
         {
-            return this.expressoesComObjetoPresentes;
+            return this.expressoes;
         }
 
         public Funcao GetMetodo(string nome)
@@ -131,8 +131,9 @@ namespace parser
             if (index != -1)
             {
                 this.campos[index] = novoField;
-                for (int x = 0; x < this.campos[index].expressoesComObjetoPresentes.Count; x++)
-                    this.campos[index].expressoesComObjetoPresentes[x].isModify = true;
+                if (campos[index].expressoes != null)
+                    for (int x = 0; x < this.campos[index].expressoes.Count; x++)
+                        this.campos[index].expressoes[x].isModify = true;
             }
         }
 
@@ -151,8 +152,9 @@ namespace parser
             this.GetField(nome).valor = novoValor;
             int index = this.campos.FindIndex(k => k.tipo == nome);
             if (index != -1)
-                for (int x = 0; x < this.campos[index].expressoesComObjetoPresentes.Count; x++)
-                    this.campos[index].expressoesComObjetoPresentes[x].isModify = true;
+                for (int x = 0; x < this.campos[index].expressoes.Count; x++)
+                    if (campos[index].expressoes[x] != null)
+                        this.campos[index].expressoes[x].isModify = true;
     
         } // SetValor()
 
@@ -168,9 +170,10 @@ namespace parser
             this.valor = novoValor;
             int index = this.campos.FindIndex(k => k.tipo == nome);
             if (index != -1)
-                for (int x = 0; x < this.expressoesComObjetoPresentes.Count; x++)
-                    this.expressoesComObjetoPresentes[x].isModify = true;
-           
+                if (expressoes != null)
+                    for (int x = 0; x < this.expressoes.Count; x++)
+                        this.expressoes[x].isModify = true;
+
         } // SetValor()
 
 

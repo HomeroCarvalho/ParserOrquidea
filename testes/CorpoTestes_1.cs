@@ -824,7 +824,7 @@ namespace parser
 
             assercao.MsgSucess("construção de código para expressão feito sem erros fatais.");
 
-            if ((processador.escopo.tabela.GetExpressoes().Count == 4) && (processador.escopo.tabela.GetObjetos().Count == 4))
+            if ((TablelaDeValores.expressoes.Count == 4) && (TablelaDeValores.expressoes.Count == 4))
                 assercao.MsgSucess("construção de escopo feito com cálculos exatos.");
         } // TesteRegistraExpressao()
 
@@ -1035,11 +1035,11 @@ namespace parser
             assercao.MsgSucess("processamento de expressao de propriedades feita sem erros fatais.");
 
             if ((processador.escopo.escopoFolhas[0].tabela.GetObjetos().Count == 2) &&
-                (processador.escopo.escopoFolhas[0].tabela.GetExpressoes().Count == 1) &&
+                (TablelaDeValores.expressoes.Count == 1) &&
                 (processador.escopo.escopoFolhas[0].tabela.GetFuncoes().Count == 1))
                 assercao.MsgSucess("processamento de expressão de propriedades feita com exatidão.");
 
-        } // TesteAtribuicaoPropriedade()
+        }// TesteAtribuicaoPropriedade()
 
    
 

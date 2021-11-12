@@ -10,23 +10,42 @@ namespace parser
     {
 
   
-        public object EvalPosOrdem(Expressao expss, Escopo escopo)
+        public object EvalPosOrdem(Expressao expss_, Escopo escopo)
         {
+            if (expss_.GetType() == typeof(ExpressaoNumero))
+                return Expressao.Instance.ConverteParaNumero(expss_.ToString(), escopo);
 
-            if (expss.isModify == false)
-                return expss.oldValue;
+            if (!expss_.isInPosOrdem)
+            {
+                expss_ = expss_.PosOrdemExpressao();
+                expss_.isInPosOrdem = true;
+            }
+            int indexExpressao = TablelaDeValores.expressoes.FindIndex(k => k.IsEqualsExpressions(k, expss_));
+            if (indexExpressao == -1)
+                return null;
+
+            Expressao expressaoOriginal = TablelaDeValores.expressoes[indexExpressao];
+
+            if (TablelaDeValores.expressoes[indexExpressao].isModify == false)
+              return TablelaDeValores.expressoes[indexExpressao].oldValue;
             else
             {
-                if (!expss.isInPosOrdem)
+                if (!TablelaDeValores.expressoes[indexExpressao].isInPosOrdem)
                 {
              
-                    expss = expss.PosOrdemExpressao();
-                    expss.isInPosOrdem = true;
+                    TablelaDeValores.expressoes[indexExpressao] = TablelaDeValores.expressoes[indexExpressao].PosOrdemExpressao();
+                    TablelaDeValores.expressoes[indexExpressao].isInPosOrdem = true;
                 }
 
-                expss.isModify = false;
-                return this.Eval(expss, escopo);
+                TablelaDeValores.expressoes[indexExpressao].isModify = false;
+
+                object valorExpressao= this.Eval(TablelaDeValores.expressoes[indexExpressao], escopo);
+
+                TablelaDeValores.expressoes[indexExpressao].oldValue = valorExpressao;
+
+                return valorExpressao;
             }
+        
         } // EvalPosOrdem()
 
         protected object Eval(Expressao expss, Escopo escopo)
@@ -37,6 +56,7 @@ namespace parser
             
             if (expss.Elementos.Count == 0)
             {
+                
                 if (Expressao.Instance.IsTipoInteiro(expss.ToString()))
                     return int.Parse(expss.ToString());
                 else
@@ -62,6 +82,15 @@ namespace parser
             for (int x = 0; x < expss.Elementos.Count; x++)
             {
 
+                if (expss.Elementos[x].GetType() == typeof(ExpessaoNILL))
+                {
+                    object elementoAVerificar = pilhaOperandos.Pop();
+                    if (elementoAVerificar == null)
+                        return true;
+                    else
+                        return false;
+                }
+                else
                 if (expss.Elementos[x].GetType() == typeof(ExpressaoPropriedadesAninhadas))
                 {
                     object valorPropriedadeAninhada = GetValorPropriedadeAninhada(expss.Elementos[x], escopo);
@@ -75,6 +104,7 @@ namespace parser
                     
                     Objeto objetoCaller = expssMain.objectCaller;
                     Objeto objetoChamada = null;
+
 
                     List<Objeto> propriedades = expssMain.proprieades.aninhamento;
                     if ((propriedades != null) && (propriedades.Count > 0))
@@ -91,33 +121,33 @@ namespace parser
                     else
                         objetoChamada = objetoCaller;
 
-                    objetoChamada = (Objeto)escopo.tabela.GetObjeto(objetoChamada.GetNome(), escopo).GetValor();
+                    Objeto objetoQueChamaOMetodo = (Objeto)escopo.tabela.GetObjeto(objetoChamada.GetNome(), escopo);
 
 
                     List<ExpressaoChamadaDeFuncao> expssChamada = expssMain.chamadaDoMetodo;
                     object result = null;
                     for (int i = 0; i < expssChamada.Count; i++)
                     {
-                        Funcao metodoDaChamada = escopo.tabela.GetFuncao(expssChamada[i].funcao.nome, objetoChamada.GetTipo(), escopo);
+                        Funcao metodoDaChamada = escopo.tabela.GetFuncao(expssChamada[i].funcao.nome, objetoQueChamaOMetodo.GetTipo(), escopo);
             
-                        result = metodoDaChamada.ExecuteAMethod(expssChamada[i].expressoesParametros, escopo, objetoChamada); // chama o metodo, com o objetoChamada que contém o método.
+                        result = metodoDaChamada.ExecuteAMethod(expssChamada[i].expressoesParametros, escopo, objetoCaller); // chama o metodo, com o objetoChamada que contém o método.
                         // o objeto "objetoChamada é modificado com o processamento do método.
                         if (result != null)
                         {
 
                             if ((result.GetType() == typeof(Objeto)) || (result.GetType() == typeof(ExpressaoPropriedadesAninhadas)))
                             {
-                                objetoChamada = (Objeto)result;
-                                result = objetoChamada;
+                                objetoQueChamaOMetodo = (Objeto)result;
+                                result = objetoQueChamaOMetodo;
                             }
                             else
                             if (result.GetType() == typeof(Vetor))
                             {
-                                objetoChamada = (Vetor)result;
-                                result = objetoChamada;
+                                objetoQueChamaOMetodo = (Vetor)result;
+                                result = objetoQueChamaOMetodo;
                             }
                             else
-                                objetoChamada.SetValor(result); // para objetos importados da linguagem base.
+                                objetoQueChamaOMetodo.SetValor(result); // para objetos importados da linguagem base.
 
                             pilhaOperandos.Push(result);
                         }
@@ -172,7 +202,7 @@ namespace parser
 
                         }
                         else
-                            pilhaOperandos.Push(v); // o objeto não é um numero, nem como valor- numero
+                            pilhaOperandos.Push(v.GetValor()); // o objeto não é um numero, nem como valor- numero
 
                     }
                     else

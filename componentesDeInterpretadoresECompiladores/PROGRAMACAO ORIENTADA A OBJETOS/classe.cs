@@ -76,7 +76,6 @@ namespace parser
 
         private static LinguagemOrquidea linguagem;
 
-
         MethodInfo[] metodoReflexao { get; set; }
         ConstructorInfo[] construtoresReflexao { get; set; }
         

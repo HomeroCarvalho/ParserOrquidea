@@ -10,28 +10,41 @@ namespace parser
     public class LinguagemOrquidea : UmaGramaticaComputacional
     {
    
-        /// <summary>
-        /// inicializa dados da linguagem orquídea.
-        /// </summary>
-        public LinguagemOrquidea() : base()
+       
+        private LinguagemOrquidea() : base()
         {
-            this.inicializaOperadores(false);// inicializa todos operadores das classes nativas.
+            Aspectos = new List<Aspecto>();
+            
+            
+            this.inicializaOperadores(false);
+
+
+            this.GetTodosTermosChave().Add("aspecto");
+
+
         } // LinguagemOrquidea()
 
+      
         private static LinguagemOrquidea linguagemOrquideaSingleton;
 
-
+     
         public static LinguagemOrquidea Instance()
         {
             if (linguagemOrquideaSingleton == null)
             {
                 linguagemOrquideaSingleton = new LinguagemOrquidea();
+                
                 if (RepositorioDeClassesOO.Instance().GetClasse(typeof(Objeto).Name) == null)
                 {
                     // importa as duas estruturas de dados da linguagem: Vetor, e Objeto.
                     ImportadorDeClasses importer = new ImportadorDeClasses();
                     importer.ImportAClassFromApplication(typeof(Vetor));
                     importer.ImportAClassFromApplication(typeof(Objeto));
+
+                    /*
+                    List<Funcao> operadoresObjeto = new OperadoresImplementacao().GetImplentacao("parser.Objeto");
+                    List<Funcao> operadoresVetor = new OperadoresImplementacao().GetImplentacao("parse.Vetor");
+                    */
                 }
             }
             return linguagemOrquideaSingleton;
@@ -40,6 +53,8 @@ namespace parser
         public static List<Operador> operadoresCondicionais { get; set; }
         public static List<Operador> operadoresBinarios { get; set; }
         public static List<Operador> operadoresUnarios { get; set; }
+
+       
 
         public void inicializaOperadores(bool inicializaClassesImportadas)
         {
@@ -80,8 +95,6 @@ namespace parser
             CriaOperadores(op_bool, operadores_boolean);
             CriaOperadores(op_matriz, operadores_matriz);
 
-            if ((RepositorioDeClassesOO.Instance().GetClasses() != null) && (RepositorioDeClassesOO.Instance().GetClasses().Count > 0))
-                RepositorioDeClassesOO.Instance().InitRepositorio();
 
             LinguagemOrquidea.Classes = new List<Classe>();
 
@@ -145,6 +158,8 @@ namespace parser
             this.GetOperadores().Add(operador);
             return true;
         } // AddOperatorInLanguem()
+
+        public  List<Aspecto> Aspectos { get; set; }
 
         public static List<Classe> Classes { get; set; }
         

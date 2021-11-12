@@ -23,6 +23,7 @@ namespace parser
             List<string> todosTermosChave = linguagem.GetTodosTermosChave();
             List<string> todosOperadoresLinguagem = linguagem.GetTodosOperadores();
 
+            List<TokenComPosicao> tokensNaoOrdenados = new List<TokenComPosicao>();
 
             // retira dos termos-chave os operadores, que também são termos-chave, mas nao convem.
             for (int x = 0; x < todosOperadoresLinguagem.Count; x++)
@@ -31,24 +32,21 @@ namespace parser
             List<string> termosChavePresentes = new List<string>();
 
           
-            string textoComTokensTMP = (string)textoComTokens.Clone();
-
+  
             for (int x = 0; x < todosTermosChave.Count; x++)
             {
 
                 int posicaoTermoChave = textoComTokens.IndexOf(todosTermosChave[x]);
                
-                if (todosTermosChave[x]=="interface")
-                {
-                    int k = 0;
-                    k++;
-                }
                 if (posicaoTermoChave >= 0)
                 {
                     // verifica se o token termo-chave é um token polêmico, exemplo: termo-chave "if", e token "Verifica", o token "Verifica" contém o token "if", eñtão o token "if" não deve ser retirado.
                     if (!IsTokenPolemico(todosTermosChave[x], textoComTokens)) 
                     {
-                        termosChavePresentes.Add(todosTermosChave[x]);
+
+                        tokensNaoOrdenados.Add(new TokenComPosicao(todosTermosChave[x], posicaoTermoChave));
+                        
+                        // retira o token encontrado, mantendo os indices de posicao dos demais tokens.
                         textoComTokens = Util.PreencherVazios.PreencheVazio(textoComTokens, todosTermosChave[x]);
                         x--;
                     } // if
@@ -66,7 +64,9 @@ namespace parser
             todosOperadores.Add("}");
 
             ComparerTexts comparer = new ComparerTexts();
-            todosOperadores.Sort(comparer); // ordena os operadores decrescentemente pelo comprimento de seus caracteres
+            todosOperadores.Sort(comparer); // ordena os operadores decrescentemente pelo comprimento de seus caracteres, 
+                                            // pois há operadores que são a uniao de dois outros operadores, como "<=", "!=",
+                                            // e que devem ser reconhecidos antes dos operadores-parte.
 
             List<string> operadoresPresentes = new List<string>();
             for (int x = 0; x < todosOperadores.Count; x++)
@@ -78,59 +78,30 @@ namespace parser
                 {
                     if (posicaoOperador != -1)
                     {
-                        operadoresPresentes.Add(todosOperadores[x]);
+                        tokensNaoOrdenados.Add(new TokenComPosicao(todosOperadores[x], posicaoOperador));
                         textoComTokens = Util.PreencherVazios.PreencheVazio(textoComTokens, todosOperadores[x]);
                         x--;
                     }  // if
                 } // if
-
+                else
                 if (posicaoOperador >= 0)
                 {
-
-                    operadoresPresentes.Add(todosOperadores[x]);
+                    tokensNaoOrdenados.Add(new TokenComPosicao(todosOperadores[x], posicaoOperador));
                     textoComTokens = Util.PreencherVazios.PreencheVazio(textoComTokens, todosOperadores[x]);
                     x--;
                 } // if
 
             } // for x
-           
-            for (int x = 0; x < termosChavePresentes.Count; x++)
-                textoComTokens = ReplaceTokens(termosChavePresentes[x], textoComTokens);
-
-            for (int x = 0; x < operadoresPresentes.Count; x++)
-                textoComTokens = ReplaceTokens(operadoresPresentes[x], textoComTokens);
-
-            List<string> idsPresentes = textoComTokens.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();        
-
-     
-            RetiraEmptyWords(ref operadoresPresentes); // retira items vazios.
-            RetiraEmptyWords(ref idsPresentes);
-            RetiraEmptyWords(ref termosChavePresentes);
-
-            List<string> allTokens = new List<string>();
-            allTokens.AddRange(termosChavePresentes);
-            allTokens.AddRange(idsPresentes);
-            allTokens.AddRange(operadoresPresentes);
-
-            RetiraEmptyWords(ref allTokens);
-
-            ComparerTexts comparerTexts = new ComparerTexts();
-            allTokens.Sort(comparerTexts);
-
-            List<TokenComPosicao> tokensNaoOrdenados = new List<TokenComPosicao>();
-            for (int k = 0; k < allTokens.Count; k++)
-            {
-         
-
-                int posicao = textoComTokensTMP.IndexOf(allTokens[k]);
-                if (posicao != -1)
+          
+            List<string> idsPresentes = textoComTokens.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+            if (idsPresentes != null)
+                for (int x = 0; x < idsPresentes.Count; x++)
                 {
-                    TokenComPosicao umToken = new TokenComPosicao(allTokens[k], posicao);
-                    tokensNaoOrdenados.Add(umToken);
-                    textoComTokensTMP = UtilString.RetiraTokenDeUmaFrase(textoComTokensTMP, allTokens[k]);
-                    k--;
+                    int indexID = textoComTokens.IndexOf(idsPresentes[x]);
+                    tokensNaoOrdenados.Add(new TokenComPosicao(idsPresentes[x], indexID));
+                    textoComTokens = Util.PreencherVazios.PreencheVazio(textoComTokens, idsPresentes[x]);
                 }
-            } // for k
+
 
             ComparerTokensPosicao comparer1 = new ComparerTokensPosicao();
             tokensNaoOrdenados.Sort(comparer1);
@@ -229,11 +200,11 @@ namespace parser
             LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             for (int x = 0; x < todosTokensObtidos.Count; x++)
             {
-                if ((todosTokensObtidos[x]==".") && ((x-1)>=0) && (linguagem.VerificaSeEhNumero(todosTokensObtidos[x-1])))
+                if ((todosTokensObtidos[x]==".") && ((x-1)>=0) && (linguagem.IsNumero(todosTokensObtidos[x-1])))
                 {
                     int indiceDigitosAnteriores = x - 1;
                     int contadorDigitosAnteriores = 1;
-                    while ((indiceDigitosAnteriores >= 0) && (linguagem.VerificaSeEhNumero(todosTokensObtidos[indiceDigitosAnteriores]))) 
+                    while ((indiceDigitosAnteriores >= 0) && (linguagem.IsNumero(todosTokensObtidos[indiceDigitosAnteriores]))) 
                     {
                         indiceDigitosAnteriores--;
                         contadorDigitosAnteriores++;
@@ -248,7 +219,7 @@ namespace parser
 
 
                     todosTokensObtidos.RemoveRange(indiceNumeroInicial, contadorDigitosAnteriores); // retira o numero inicial
-                    while ((indiceNumero< todosTokensObtidos.Count) && (linguagem.VerificaSeEhNumero(todosTokensObtidos[indiceNumero])))
+                    while ((indiceNumero< todosTokensObtidos.Count) && (linguagem.IsNumero(todosTokensObtidos[indiceNumero])))
                     {
                         numeroPontoFlutuante += todosTokensObtidos[indiceNumero].ToString();
                         todosTokensObtidos.RemoveAt(indiceNumero);

@@ -89,11 +89,7 @@ namespace parser
             int indexTokenLocalizar = 0;
             foreach (tokenEPosicao codigoPosicionado in PosicaoECodigo.tokensPosicionados)
             {
-                if (codigoPosicionado.token == "classeB")
-                {
-                    int k = 0;
-                    k++;
-                }
+               
                 if (codigoPosicionado.token == tokens[indexTokenLocalizar])
                 {
                     linhaLocalizada.Add(codigoPosicionado);

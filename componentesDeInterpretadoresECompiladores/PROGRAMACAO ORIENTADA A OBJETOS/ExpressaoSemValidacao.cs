@@ -55,9 +55,9 @@ namespace parser
                     }
                 }
                 
-                if (!lng.VerificaSeEhNumero(tokensRaw[x]))
+                if (!lng.IsNumero(tokensRaw[x]))
                 {
-                    if ((lng.VerificaSeEhID(tokensRaw[x])) && ((x + 1) < tokensRaw.Count) && (tokensRaw[x + 1] == "(")) 
+                    if ((lng.IsID(tokensRaw[x])) && ((x + 1) < tokensRaw.Count) && (tokensRaw[x + 1] == "(")) 
                     {
                         List<string> tokensChamadaDeFuncao = UtilTokens.GetCodigoEntreOperadores(x + 1, "(", ")", tokensRaw);
                         if ((tokensChamadaDeFuncao != null) && (tokensChamadaDeFuncao.Count > 0))
@@ -73,32 +73,32 @@ namespace parser
                             return;
                         }
                     } //if
-                    if ((lng.VerificaSeEhID(tokensRaw[x])) && (tokensRaw[x] == ")"))
+                    if ((lng.IsID(tokensRaw[x])) && (tokensRaw[x] == ")"))
                     {
                         this.tokensProcessed.Add(tokensRaw[x]);
                         continue;
                     } // if
 
-                    if ((lng.VerificaSeEhID(tokensRaw[x])) && (tokensRaw[x] != "(") && (tokensRaw[x] != ")"))
+                    if ((lng.IsID(tokensRaw[x])) && (tokensRaw[x] != "(") && (tokensRaw[x] != ")"))
                     {
                         this.tokensProcessed.Add(tokensRaw[x]);
                         continue;
                     } // if
                 } // if
-                if (lng.VerificaSeEhNumero(tokensRaw[x]))
+                if (lng.IsNumero(tokensRaw[x]))
                 {
                     this.tokensProcessed.Add(tokensRaw[x]);
                     continue;
                 }
                 if (lng.VerificaSeEhOperadorBinario(tokensRaw[x]))
                 {
-                    if (((x - 1) >= 0) && ((x + 1) < tokensRaw.Count) && (!lng.VerificaSeEhID(tokensRaw[x - 1])) && (!lng.VerificaSeEhID(tokensRaw[x + 1])) && (tokensRaw[x + 1] != ")") && (tokensRaw[x - 1] != "("))
+                    if (((x - 1) >= 0) && ((x + 1) < tokensRaw.Count) && (!lng.IsID(tokensRaw[x - 1])) && (!lng.IsID(tokensRaw[x + 1])) && (tokensRaw[x + 1] != ")") && (tokensRaw[x - 1] != "("))
                     {
                         this.msgErros.Add("Erro na colocacao de operador binario: " + tokensRaw[x] + " nos tokens da expressao: " + Util.UtilString.UneLinhasLista(tokensRaw));
                         this.tokensProcessed = new List<string>();
                         return;
                     }
-                    if (((x + 1) < tokensRaw.Count) && (lng.VerificaSeEhID(tokensRaw[x + 1])))
+                    if (((x + 1) < tokensRaw.Count) && (lng.IsID(tokensRaw[x + 1])))
                     {
                         this.tokensProcessed.Add(tokensRaw[x]);
                         continue;
@@ -116,20 +116,20 @@ namespace parser
                         this.tokensProcessed.Add(tokensRaw[x]);
                         continue;
                     }
-                    if (((x + 1) < tokensRaw.Count) && (lng.VerificaSeEhID(tokensRaw[x + 1]))) 
+                    if (((x + 1) < tokensRaw.Count) && (lng.IsID(tokensRaw[x + 1]))) 
                         {
                         this.msgErros.Add("Erro na colocacao de operador unario: " + tokensRaw[x] + " nos tokens da expressao: " + Util.UtilString.UneLinhasLista(tokensRaw));
                         this.tokensProcessed = new List<string>();
                         return;
                     }
-                    if (((x - 1) >= 0) && (lng.VerificaSeEhID(tokensRaw[x - 1]))) 
+                    if (((x - 1) >= 0) && (lng.IsID(tokensRaw[x - 1]))) 
                     {
                         this.msgErros.Add("Erro na colocacao de operador unario: " + tokensRaw[x] + " nos tokens da expressao: " + Util.UtilString.UneLinhasLista(tokensRaw));
                         this.tokensProcessed = new List<string>();
                         return;
 
                     }
-                    if (((x - 1) >= 0) && ((x + 1) < tokensRaw.Count) && (!lng.VerificaSeEhID(tokensRaw[x - 1])) && (!lng.VerificaSeEhID(tokensRaw[x + 1])))
+                    if (((x - 1) >= 0) && ((x + 1) < tokensRaw.Count) && (!lng.IsID(tokensRaw[x - 1])) && (!lng.IsID(tokensRaw[x + 1])))
                     {
                         this.msgErros.Add("Erro na colocacao de operador unario: " + tokensRaw[x] + " nos tokens da expressao: " + Util.UtilString.UneLinhasLista(tokensRaw));
                         this.tokensProcessed = new List<string>();

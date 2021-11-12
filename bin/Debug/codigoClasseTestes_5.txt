@@ -1,0 +1,7 @@
+public class classeA { public int a=5 ; public classeA(){}; public int MetodoA(int x,int y){return 1;}; public classeA MetodoB ( classeA x ){ x=nill; return x; } }
+
+
+aspecto apecto_5 after (classeA) { classeA funcaoB(classeA b){ if (b==nill){b=create();} return b;}};
+classeA objA= create();
+objA.MetodoB(objA);
+ 

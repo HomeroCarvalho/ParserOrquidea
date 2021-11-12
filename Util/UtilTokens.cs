@@ -130,7 +130,7 @@ namespace parser
         /// <summary>
         /// obtem uma funcao de uma classe especificada com parametros de funcao, compativel com o nome e parametros.
         /// </summary>
-        public static Funcao ObtemFuncaoCompativelComAChamadaDeFuncao(string nomeMetodo, string nomeClasse, List<Expressao> expressaoParametros, Escopo escopo)
+        public static Funcao ObtemFuncaoCompativelComAChamadaDeMetodo(string nomeMetodo, string nomeClasse, List<Expressao> expressaoParametros, Escopo escopo)
         {
             List<Funcao> FuncoesCandidatosDaChamada = new List<Funcao>();
 
@@ -175,7 +175,10 @@ namespace parser
                 string tipoParametroDaExpressao = UtilTokens.Casting(Expressao.GetTipoExpressao(expressaoParametros[x], escopo));
                 string tipoFuncaoCandidata = UtilTokens.Casting(funcaoCandidata.parametrosDaFuncao[x].GetTipo());
 
-                if (linguagem.VerificaSeEhNumero(expressaoParametros[x].ToString()))
+                if (expressaoParametros[x].GetType() == typeof(ExpressaoObjeto))
+                    tipoParametroDaExpressao = ((ExpressaoObjeto)expressaoParametros[x]).objeto.GetTipo();
+
+                if (linguagem.IsNumero(expressaoParametros[x].ToString()))
                 {
                     if (Expressao.Instance.IsTipoInteiro(expressaoParametros[x].ToString()))
                         tipoParametroDaExpressao = "int";
@@ -186,6 +189,8 @@ namespace parser
                     if (Expressao.Instance.IsTipoDouble(expressaoParametros[x].ToString()))
                         tipoParametroDaExpressao = "double";
                 }
+
+
 
                 if (((tipoParametroDaExpressao == "float") && (tipoFuncaoCandidata == "double")) ||
                     (tipoParametroDaExpressao == "double") && (tipoFuncaoCandidata == "float"))
@@ -244,6 +249,13 @@ namespace parser
             }
             return null;
         }
+
+        public static void LinkEscopoPaiEscopoFilhos(Escopo escopoPai, Escopo escopoFilho)
+        {
+         //   escopoPai.escopoFolhas.Add(escopoFilho);
+            escopoFilho.escopoPai = escopoPai;
+        }
+
 
     }
 

@@ -1,0 +1,3 @@
+public class classeHerdadaB {public int a;  public classeHerdadaB(){a= 5;}; public int funcaoA(){a=1;}}
+
+classeHerdadaB b= create();

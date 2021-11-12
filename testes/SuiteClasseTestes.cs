@@ -79,7 +79,7 @@ namespace parser
                         metodoAntes.Invoke(this, null); // executa o metodo preparador para o teste.
 
                     if ((metodo.Name != "Antes") && (metodo.Name != "Depois"))
-                        metodo.Invoke(this, new object[] { assercao }); // executa o teste. (nao contem parametros).
+                        metodo.Invoke(this, new object[] { assercao }); // executa o teste. 
 
                     if (metodoDepois != null)
                         metodoDepois.Invoke(this, null); // executa o metodo finalizador para o teste.

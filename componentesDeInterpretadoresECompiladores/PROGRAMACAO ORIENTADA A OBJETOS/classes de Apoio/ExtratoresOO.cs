@@ -17,6 +17,8 @@ namespace parser
         // constroi a estrutura de uma classe ou interface, a partir de tokens vindo da compilação.
         
         private LinguagemOrquidea linguagem { get; set; }
+        private Escopo escopoDaClasse { get; set; }
+
         private Escopo escopo { get; set; }
         private List<string> codigo { get; set; }
 
@@ -24,12 +26,12 @@ namespace parser
 
         private List<string> tokensRaw { get; set; }
         public List<string> MsgErros { get; set; }
-        public Escopo escopoDaClasse { get; set; }
-
+ 
         public string nomeClasse { get; set; }
         public ExtratoresOO(Escopo escopo, LinguagemOrquidea lng, List<string> tokensRaw)
         {
             this.escopo = escopo;
+          
             this.linguagem = lng;
             this.codigo = escopo.codigo;
             this.MsgErros = new List<string>();
@@ -80,7 +82,7 @@ namespace parser
         {
 
             this.templateBluePrint = bluePrint;
-           
+
             List<string> tokensTotais = new List<string>();
 
             // nome da classe, a ser encontrada.
@@ -92,29 +94,21 @@ namespace parser
             List<string> tokensDoCorpoDaClasse = new List<string>();
 
             // obtém o código da classe, incluindo nome, cabeçalho da herança, e o corpo da classe.
-            this.ExtraiCodigoDeUmaClasse(this.tokensRaw, out nomeDaClasse, out nomeDaInterface, out tokensDoCabecalhoDaClasse,out acessorDaClasseOuInterface, out tokensDoCorpoDaClasse);
+            this.ExtraiCodigoDeUmaClasse(this.tokensRaw, out nomeDaClasse, out nomeDaInterface, out tokensDoCabecalhoDaClasse, out acessorDaClasseOuInterface, out tokensDoCorpoDaClasse);
 
             this.nomeClasse = nomeDaClasse;
 
 
-
-            if (this.nomeClasse == "classeHerdeira")
-            {
-                int k = 0;
-                k++;
-            }
-
-
             tokensTotais = tokensDoCabecalhoDaClasse.ToList<string>();
             tokensTotais.AddRange(tokensDoCorpoDaClasse.ToList<string>());
-            
-   
+
+
             if (nomeDaClasse != null)
                 nomeDeClasseOuInterface = nomeDaClasse;
             else
                 nomeDeClasseOuInterface = nomeDaInterface;
 
-            
+
             if (tokensTotais == null)
                 return null;
 
@@ -128,8 +122,9 @@ namespace parser
             ProcessadorDeID processador = new ProcessadorDeID(tokensDoCorpoDaClasse);
             processador.CompileEmDoisEstagios(); // compila o corpo da classe, obtendo propriedades, metodos e operadores da classe.
 
-             this.escopoDaClasse = new Escopo(processador.escopo);
+            this.escopoDaClasse = new Escopo(processador.escopo);
 
+            UtilTokens.LinkEscopoPaiEscopoFilhos(escopo, escopoDaClasse);
 
             List<Classe> interfacesHerdadas = new List<Classe>();
 
@@ -160,20 +155,14 @@ namespace parser
             else
             if (bluePrint == Classe.tipoBluePrint.EH_CLASSE)
             {
-                UtilTokens.WriteAErrorMensage(escopo, "nao ha nenhum construtores codificado para esta classe!", codigo);
+                UtilTokens.WriteAErrorMensage(escopoDaClasse, "nao ha nenhum construtores codificado para esta classe!", codigo);
                 return null;
             }
 
-            
+
             //********************************************************************************************************
             umaClasse.tokensDaClasse = tokensTotais;
             umaClasse.escopoDaClasse = escopoDaClasse.Clone(); // guarda o escopo da classe.
-
-            if (this.nomeClasse == "classeHerdeira")
-            {
-                int k = 0;
-                k++;
-            }
 
             // verifica se há conflitos de nomes de metodos, propriedaddes, e operadores, que tem o mesmo nome, mas vêem de classes herdadas diferentes.
             this.VerificaConflitoDeNomesEmPropriedadesEMetodosEOperadores(umaClasse);
@@ -181,10 +170,17 @@ namespace parser
 
             if (nomeDaClasse != null)
             {
-                // registra a classe no repositório de classes.
-                RepositorioDeClassesOO.Instance().RegistraUmaClasse(umaClasse);
+                int indexClasse = LinguagemOrquidea.Classes.FindIndex(k => k.GetNome().Equals(nomeClasse));
+                if (indexClasse != -1)
+                    LinguagemOrquidea.Classes.RemoveAt(indexClasse);
+
+                LinguagemOrquidea.Instance().GetClasses().Add(umaClasse);
+
+            
+
                 // registra a classe no escopo da classe.
                 escopo.tabela.RegistraClasse(umaClasse);
+
                 // recompoe os tokens consumidos pela construção da classe.
                 umaClasse.tokensDaClasse = tokensTotais.ToList<string>();
 
@@ -199,7 +195,7 @@ namespace parser
 
 
             // Faz a validacao de interfaces herdadas (se foram implementadas pela classe ou outra interface.
-            if ((umaClasse.interfacesHerdadas != null) && (umaClasse.interfacesHerdadas.Count > 0)) 
+            if ((umaClasse.interfacesHerdadas != null) && (umaClasse.interfacesHerdadas.Count > 0))
             {
                 for (int i = 0; i < umaClasse.interfacesHerdadas.Count; i++)
                 {
@@ -208,7 +204,7 @@ namespace parser
                         this.MsgErros.Add("Interface:" + umaClasse.interfacesHerdadas[i].nome + " nao implementada completamente na classe: " + umaClasse.nome + ".");
                 }
             }
-           
+
 
             return umaClasse;
         }  // ConstroiClasses() 
@@ -306,7 +302,7 @@ namespace parser
                                 // informa ao programador que as propriedades herdadas de nomes iguais, foram setadas para nomelongo: nomeClasse+nomePropriedade, para evitar conflitos de nomes.
                                 string avisoNomeLongo = "Aviso: propriedades: " + todasPropriedadesHerdadas[x].GetNome() + " de classes herdadas:" +
                                " possuem nomes iguais. Fazendo nome longo para as propriedades, para evitar conflitos de chamada destas propriedades, pela classe herdeira. Utilize o nome longo ( nomeClasse+nomePropriedade) para acessar estas propriedades.";
-                                UtilTokens.WriteAErrorMensage(escopo, avisoNomeLongo, escopo.codigo);
+                                UtilTokens.WriteAErrorMensage(escopoDaClasse, avisoNomeLongo, escopoDaClasse.codigo);
 
                                 classeHerdeira.GetPropriedades().Remove(todasPropriedadesHerdadas[x]);
                                 classeHerdeira.GetPropriedades().Remove(todasPropriedadesHerdadas[y]);
@@ -346,7 +342,7 @@ namespace parser
                             string avisoNomeLongo = "Aviso: operador: " + todosMetodoHerdados[x].nome + " de classes herdadas:" +
                                                    " possuem nomes iguais. Fazendo nome longo para estes metodos, para evitar conflitos de chamada destes metodos, pela classe herdeira. Utilize o nome longo ( nomeClasse+nomeMetodo) para acessar estes metodos.";
 
-                            UtilTokens.WriteAErrorMensage(escopo, avisoNomeLongo, escopo.codigo);
+                            UtilTokens.WriteAErrorMensage(escopoDaClasse, avisoNomeLongo, escopoDaClasse.codigo);
 
                             classeHerdeira.GetMetodos().Remove(todosMetodoHerdados[x]);
                             classeHerdeira.GetMetodos().Remove(todosMetodoHerdados[y]);
@@ -386,7 +382,7 @@ namespace parser
                             string avisoNomeLongo = "Aviso: metodos: " + todosOperadoresHerdados[y].nome + " de classes herdadas:" +
                                                             " possuem nomes iguais. Fazendo nome longo para estes metodos, para evitar conflitos de chamada destes metodos, pela classe herdeira. Utilize o nome longo ( nomeClasse+nomeMetodo) para acessar estes metodos.";
 
-                            UtilTokens.WriteAErrorMensage(escopo, avisoNomeLongo, escopo.codigo);
+                            UtilTokens.WriteAErrorMensage(escopoDaClasse, avisoNomeLongo, escopoDaClasse.codigo);
 
 
                             classeHerdeira.GetOperadores().Remove(todosOperadoresHerdados[x]);
@@ -500,12 +496,24 @@ namespace parser
         private void ExtraiMetodos(Classe classeCurrente, Escopo escopo)
         {
 
+            Escopo escopoClasseTmp = escopo.Clone();
 
+            if ((escopo.tabela.GetFuncoes() != null) && (escopo.tabela.GetFuncoes().Count > 0))
+            {
+                foreach(Funcao umMetodo in escopo.tabela.GetFuncoes())
+                {
+                    // o escopo contendo os metodos, também contém as propriedades, pois
+                    // vem do mesmo processamento, o escopoDaClasse. Retira os objetos do escopo da classe.
+                    if (umMetodo.escopo.tabela.GetObjetos() != null)
+                        umMetodo.escopo.tabela.GetObjetos().Clear(); 
+                    
+                    classeCurrente.GetMetodos().Add(umMetodo); // adiciona o metodo para os metodos da classe.
+                    umMetodo.escopo.tabela.GetFuncoes().Add(umMetodo); // salva uma referencia do metodo, no escopo do proprio metodo (opcional).
 
-            if ((escopo.tabela.GetFuncoes() != null) &&
-                (escopo.tabela.GetFuncoes().Count > 0)) // é um escopo folha porque a própria definição de classe tem um bloco, que delimita um escopo da classe.
-                classeCurrente.GetMetodos().AddRange(escopo.tabela.GetFuncoes());
+                }
+            }
 
+            escopo = escopoClasseTmp.Clone();
 
             if ((escopo.tabela.GetOperadores() != null) && (escopo.tabela.GetOperadores().Count > 0))
                 classeCurrente.GetOperadores().AddRange(escopo.tabela.GetOperadores());
@@ -633,7 +641,8 @@ namespace parser
             int indexCorpo = tokens.IndexOf("{");
             if (indexCorpo == -1)
             {
-                escopo.GetMsgErros().Add("classe com erro de sintaxe, linha: " + new PosicaoECodigo(tokens).linha.ToString());
+                UtilTokens.WriteAErrorMensage(escopo, "classe com erro de sintaxe ", escopoDaClasse.codigo);
+              
                 tokensCabecalhoDaClasse = new List<string>();
                 this.tokensDaClasse = new List<string>();
 

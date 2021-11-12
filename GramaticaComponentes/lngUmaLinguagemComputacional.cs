@@ -56,7 +56,8 @@ namespace parser
                     if (producoes[producao].termos_Chave != null)
                     {
                         foreach (string umTermoChave in producoes[producao].termos_Chave)
-                            this.RegistraTermoChave(umTermoChave);
+                            if (todosTermosChave.IndexOf(umTermoChave) == -1)
+                                this.RegistraTermoChave(umTermoChave);
                     }
                 } // for producao
 
@@ -68,10 +69,15 @@ namespace parser
                                 strOperadores.Add(nomesOperador);
 
             } // if producoes.Count==0.
-           
+
+            todosTermosChave.Add("aspecto");
             
         } // UmaGramaticaComputacional()
 
+        public void RemoveTermoChave(string termoChaveAExcluir)
+        {
+            todosTermosChave.Remove(termoChaveAExcluir);
+        }
 
         public static void RegistraOperador(Operador operador)
         {
@@ -252,7 +258,7 @@ namespace parser
         /// </summary>
         /// <param name="token">palavra a ser investigada se é número.</param>
         /// <returns>[true] se o token e numero, [false] se nao.</returns>
-        public bool VerificaSeEhNumero(string token)
+        public bool IsNumero(string token)
         {
             int iNumero = 0;
             float fNumero = 0;
@@ -319,7 +325,7 @@ namespace parser
         /// <returns>retorna [true] se a palavra for um ID,
         ///                 [true] se a  palavra for um número, ou
         ///                 [false] se a palavra for reservada (contendo termos-chave, e não é um número).</returns>
-        public bool VerificaSeEhID(string token)
+        public bool IsID(string token)
         {
             token = token.TrimStart(' ').TrimEnd(' ');
             List<string> todosTermosChaveETodosOperadores = new List<string>();
@@ -331,7 +337,7 @@ namespace parser
             int index = todosTermosChaveETodosOperadores.FindIndex(k => k == token);
             if (index != -1)
                 return false;          
-            if (this.VerificaSeEhNumero(token).Equals("[NUMERO]"))
+            if (this.IsNumero(token).Equals("[NUMERO]"))
                 return false;
             return true;
         } // bool VerificaSeEhID(string)

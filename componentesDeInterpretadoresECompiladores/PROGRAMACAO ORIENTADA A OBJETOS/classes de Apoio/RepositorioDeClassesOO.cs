@@ -33,15 +33,11 @@ namespace parser.ProgramacaoOrentadaAObjetos
         /// </summary>
         private RepositorioDeClassesOO()
         {
-            InitRepositorio();
+            this.classesRegistradas = new List<Classe>();
+            this.interfacesRegistradas = new List<Classe>();
 
         } // RepositorioDeClassesOO()
 
-        public void InitRepositorio()
-        {
-            this.classesRegistradas = new List<Classe>();
-            this.interfacesRegistradas = new List<Classe>();
-        }
         /// <summary>
         /// método de instanciação do Repositório, melhhor, ponto de acesso ao Repositório.
         /// </summary>

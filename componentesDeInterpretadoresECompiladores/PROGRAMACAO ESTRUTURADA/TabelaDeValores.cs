@@ -74,9 +74,9 @@ namespace parser
 
         private List<Classe> Classes = new List<Classe>();
         private List<Operador> operadores = new List<Operador>();
-      
 
-        internal List<Expressao> expressoes = new List<Expressao>(); // contém as expressões validadas no escopo currente.
+
+        internal static List<Expressao> expressoes { get; set; } // contém as expressões validadas no escopo currente.
         private List<Funcao> Funcoes = new List<Funcao>(); // contém as funções do escopo currente.
 
        
@@ -96,11 +96,12 @@ namespace parser
             {
                 tabelaClone.Classes = this.Classes.ToList<Classe>();
                 tabelaClone.operadores = this.operadores.ToList<Operador>();
-                tabelaClone.expressoes = this.expressoes.ToList<Expressao>();
+                TablelaDeValores.expressoes = expressoes.ToList<Expressao>();
                 tabelaClone.Funcoes = this.Funcoes.ToList<Funcao>();
                 tabelaClone.VariaveisVetor = this.VariaveisVetor.ToList<Vetor>();
                 tabelaClone.objetos = this.objetos.ToList<Objeto>();
                 tabelaClone.codigo = this.codigo.ToList<string>();
+                
             }
             return tabelaClone;
         }
@@ -113,12 +114,76 @@ namespace parser
                 this.codigo = _codigo.ToList<string>();
             else
                 this.codigo = new List<string>();
+            if (expressoes == null)
+                expressoes = new List<Expressao>();
         } //TabelaDeValores()
 
-        
-        public List<Expressao> GetExpressoes()
+        public void AdicionaExpressoes(Escopo escopo, params Expressao[] expressoesAIncluir)
         {
-            return this.expressoes;
+            List<Expressao> expressFound = new List<Expressao>();
+
+          
+            if ((expressoesAIncluir != null) && (expressoesAIncluir.Length > 0))
+            {
+                foreach (Expressao umaExpressao in expressoesAIncluir)
+
+
+                    if ((umaExpressao.Elementos != null) && (umaExpressao.Elementos.Count > 0))
+                        foreach (Expressao subExpressao in umaExpressao.Elementos)
+                            if (subExpressao != null)
+                                if (escopo.tabela.GetObjeto(subExpressao.ToString(), escopo) != null)
+                                {
+                                    escopo.tabela.GetObjeto(subExpressao.ToString(), escopo).exprssPresentes().Add(umaExpressao);
+                                    expressFound.Add(umaExpressao);
+                                }
+                                else
+                                if (escopo.tabela.GetVetor(subExpressao.ToString(), escopo) != null)
+                                {
+                                    escopo.tabela.GetVetor(subExpressao.ToString(), escopo).exprssPresentes().Add(umaExpressao);
+                                    expressFound.Add(umaExpressao);
+                                }
+                                else
+                                if (Expressao.Instance.IsNumero(subExpressao.ToString()))
+                                {
+                                    expressFound.Add(umaExpressao);
+                                }
+                expressoes.AddRange(expressFound);
+                for (int x = 0; x < expressoes.Count; x++)
+                    for (int y = 0; y < expressoes.Count; y++)
+                        if ((x != y) && (Expressao.Instance.IsEqualsExpressions(expressoes[x], expressoes[y]))) 
+                            expressoes.RemoveAt(y);
+
+                for (int x = 0; x < expressoes.Count; x++)
+                {
+                    expressoes[x] = expressoes[x].PosOrdemExpressao();
+                    expressoes[x].isInPosOrdem = true;
+                }
+            }
+
+        }
+
+      
+
+        public void AdicionaObjetos(Escopo escopo, params Objeto[] objetos)
+        {
+            if ((objetos != null) && (objetos.Length > 0))
+            {
+                this.objetos.AddRange(objetos);
+                if ((expressoes != null) && (expressoes.Count > 0))
+                    for (int exprss = 0; exprss < expressoes.Count; exprss++)
+                    {
+                        for (int umObjeto = 0; umObjeto < objetos.Length; umObjeto++)
+                        {
+                            if (objetos[umObjeto].exprssPresentes().IndexOf(expressoes[exprss]) == -1)
+                                objetos[umObjeto].exprssPresentes().Add(expressoes[exprss]);
+                        }
+                    }
+            }
+        }
+
+        private List<Expressao> GetExpressoes()
+        {
+            return expressoes;
         } // GetExpressoes()
 
         public List<Operador> GetOperadores()
@@ -587,6 +652,18 @@ namespace parser
             }
 
         }
+        public void AddElements(int qtdDeElementos)
+        {
+            if (this.tailVetor == null)
+                this.tailVetor = new List<Vetor>();
+            if (qtdDeElementos <= 0)
+                return;
+            else
+                for (int x = 0; x < qtdDeElementos; x++)
+                    this.tailVetor.Add(new Vetor());
+        }
+
+
 
         private void Init(string nomeVariavel, string tipoElemento, int[] dims)
         {

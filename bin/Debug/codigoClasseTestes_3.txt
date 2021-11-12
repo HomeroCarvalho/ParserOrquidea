@@ -1,1 +1,4 @@
-public class classeA { public int a=5 ; public classeA(){ a=1;}; public int MetodoA(int x,int y){return x+y;}; public int MetodoB ( int x ){ while (x>0) {x=x-1;}} } 
+public class classeA { public int a=5 ; public classeA(){ a=1;}; public int MetodoA(int x,int y){return x+y;}; public int MetodoB ( int x ){ while (x>0) {x=x-1;}; return x;} } 
+
+
+aspecto apecto_5 after (int) { int funcaoB(int x){ if (x==1){x=0;}; return x;} };

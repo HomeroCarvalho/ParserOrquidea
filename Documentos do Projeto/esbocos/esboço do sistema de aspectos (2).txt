@@ -1,0 +1,199 @@
+ levantamento de requisitos, e planejamento das funcionalidades, de programação orientada a aspectos.
+_______________________________________________________________________________________________________________________________________________________________
+INSIGHT: UMA FUNCIONALIDADE ASPECTO: MONITORAMENTO DE UM DETERMINADO INSTRUCAO, COMO create, for, while, if...
+_______________________________________________________________________________________________________________________________________________________________
+(IMPLEMENTAR) INSIGHT: UMA INSTRUÇÃO COM TRATAMENTO DE EXCEÇÕES! ESSA INSTRUÇÃO CONTÉM UM BLOCO DE INSTRUÇÕES, QUE SERÃO AS INSTRUÇÕES
+QUE SERÃO MONITORADAS PELO BLOCO try/catch.
+
+		
+			public class InstrucaoTratamentoExcecoes: Instrucao
+			{
+				public void InsereInstrucoes(inst: Instrucao, int indexStartGrupoInstrucao, List<Instrucao> instrucoesAMonitorar)			
+				public InstrucaoTratamentoExcecoes()
+				{
+					try
+					{
+						foreach(Instrucao umaInstrucao in instrucoesAMonitorar)
+							programaVM.ExecutaInstrucoes(umaInstrucao);
+					}
+					catch (Exception ex)
+					{
+						// Ou faz uma serie de cacths para cada tipo de exceção, ou faz metodos de tratamento de exceções para cada tipo de erro.
+						// Os dados da exceção (objeto ex), ficam indisponiveis para o codigo orquidea.
+					}
+				}	
+			
+			}
+			
+	mudança aprovada, pela relevância do tópico relacionado (tratamento por exceções), facilidade de implementação,e ainda
+agrega valor ao projeto!.	
+_______________________________________________________________________________________________________________________________________________________________
+
+PARA FUNCIONALIDADES ESPALHADAS POR TODO CODIGO, UMA DAS SOLUÇÕES É A POA (orientação a aspectos).
+
+	FUNCIONALIDADES no esboço do sistema aspectos:
+			---> um padrão para inserir instruções, quando uma condição de corte é detectada em tempo de compilação.
+			---> um método para analisar expressões, que são a base da linguagem orquidea. Precisa-se saber:
+
+					---> 1: objetos:					
+						--se há objeto com determinado tipo, em que é necessário o corte aspecto.
+						--se há criação de um objeto de determinado tipo.
+
+					---> 2: metodos:
+					 	se há chamada a um determinado método, em que se quer tratar com um aspecto.
+						Exemplo: acesso a um banco de dados, em que se quer tratar a entrada/saída do método chamador,
+						com um aspecto.
+					
+					---->3: grupo de instruções :
+					             um sistema de realocação de um grupo de instruções, com destino a uma lista de instruções dentro de 
+					             uma instrução de uma funcionalidade aspecto, como exemplo, um bloco try/catch implementado com um aspecto.
+
+
+				
+			---> analise de objetos e metodos para corte aspecto, é fácil de implementar: entrada (objeto em que se quer monitorar,  modificar),
+			e saída (inserção da instrução aspecto, antes ou após a instrução a monitorar).
+			
+_______________________________________________________________________________________________________________________________________________________________			
+			
+			A FACILIDADE DA IMPLANTAÇÃO DA POA: MONITORAR A LISTA DE EXPRESSÕES DE CADA INSTRUÇÃO ORQUIDEA.
+					----> cada instrução orquidea contém: o código da instrução, uma lista de expressões para executar a instrução,
+					e uma lista de instruções que formam blocos para execução da instrução.
+							---> quando encontra numa expressão, o tipo de objeto e/ou o metodo que se quer executar o aspecto,
+							é inserido as instruções do aspecto, mas com listas de expressões, contendo o nome do objeto encontrado na
+							expressão!
+_______________________________________________________________________________________________________________________________________________________________					
+
+			---> a inserção de um grupo de instruções para dentro de uma instrução, é simples: uma instrução que trata exceções, por
+			exemplo, tem em seu bloco de instrução, a definição do que é uma instrução, há um try/catch/finally implementado na instrução aspecto.
+			o bloco desta instrução recebe o grupo de instruções em que se quer proteger por uma instrução aspecto.
+
+_______________________________________________________________________________________________________________________________________________________________
+			LISTA DE FINCIONALIDADES, E O ALGORITMO DE INSERÇÃO DE ASPECTOS:
+			
+			
+			o desenvolvedor deverá codificar o conteúdo do aspecto num método: 
+			
+			----> nomeAspecto= Cut(){ instrucoes do aspecto aqui}
+							----> nem todos os parâmetros podem estar presentes, pode-se ter um nome, um metodo.
+							
+							
+			----> dentro da codificacao do metodo Cut(), deverá escolher entre tipos de weaver:
+						---> nomeAspecto.WeaverByObject();
+						---> nomeAspecto.WeaverByCallinMethod();
+						---> nomeAspecto.WeaverByInstructionsMethod();
+						---> nomeAspecto.WeaverTryCatchHandler();
+						
+					(estuda-se a possbilidade de inserir blocos try/catch como um tipo de inserção Waver).
+						apos, deverá especificar se a inserção é antes ou depois da instrução monitorada.
+
+						----> nomeAspecto.ModeInsert= ASPECTO.Before, ou ASPECTO.After, ASPECTO.All_instructions_in_method.
+						
+						
+						
+			
+			----> O aspecto está pronto, o algoritmo do sistema faz uma varredura, tentando encontrar expressoes que contenham:
+						---> o tipo do objeto de Cut.
+						---> se tiver especificado, com o nome do objeto.
+						---> se tiver esecificado, a chamada de metodo.
+						
+						Ao encontrar uma instrução, o sistema deverá substituir o nome do objeto, dentro das instrucoes aspecto, pelo nome do objeto,
+						encontrado na busca...
+						
+			
+			
+			
+	implementação das funcionalidades: 
+			
+			public class Aspecto
+			{
+				----> algoritmo do Aspecto:
+				
+					1- o codigo faz uma analise de nomes de objetos a monitorar. Quando encontra um 
+					   match, faz a inserção da chamada de metodo de NomeAspecto.Cut(); A chamada de metodo é compilada,
+					   e inserida da lista de instrucoes do codigo currente.
+					2- a cada execução do programa VM, a chamada do metodo "Cut" faz o tratamento do aspecto, antes ou depois da instrução monitorada.
+							
+
+				----> enum typeInsert	{ before, after, all}
+
+
+				----> public Cut: Funcao;
+					/// estudo para inserir a lista de instruções orquidea diretamente, sem uma chamada de método...
+					
+				
+				----> public programa: ProgramVM ;
+				
+				
+				
+				public DataWatch: class 
+				{
+					// estas tres propriedades orientam a ligação do metodo Cut (que implementa o codigo do aspecto), com
+					// os objetos que podem sofrer modificações pelo aspecto.
+					
+					
+						----> public nameObjectToWatch: string;
+						----> public classOfObjectToWatch: string;
+						----> public nameMethodToWatch: string;
+				}	
+		
+				o metodo Cut teria que ter um dos metodos seguintes, alem do que fazer pelo aspecto:
+	
+		
+				----> uma instrução orquidea chamada de metodo: Cut(escopo:Escopo), com acesso ao escopo da classe Aspecto;
+						----->	o escopo pode ser modificado para igualar este dado ao escopo da instrucao a ter inserida.
+		
+				
+
+				public void InsertCutByObject(dataToWatch: dataWatch, aspecto: Aspecto, tipo: typeInsert);
+						Descricao: "este metodo insere a lista de instruções do aspecto, quando encontrar o objeto [objetoAMonitorar].
+								   o metodo chama o metodo Analise(), e quando retornar nomes de objetos que combinam com a inserção,
+								   faz a insersao do aspecto."
+						
+						
+						
+				public void InsertCutByMethodCalling(dataToWatch: dataWatch, aspecto: Aspecto, tipo: typeInsert);
+						Descrição: "este metodo insere um aspecto quando encontra a chamada de metodo, de um nome de metodo da entrada.
+						este metodo trata inclusive metodos como "create", que cria um objeto."
+						
+						
+				public void InsertAExceptionHandler(dataToWatch: dataWatch, aspecto: Aspecto, tipo: typeInsert);
+						Descrição: "este metodo pega a lista de instrucoes do metodo, e a insere como um bloco de uma instrucao aspecto, com corpo tendo um bloco try/catch,
+						fazendo que haja tratamento de exceções para um método, sem complicar o codigo. Um problema é que a exceção é geral, não uma exceção especializada, como IndexBoundException.
+						Outro problema é especificar as instruções da instrução "catch"."
+						
+				
+				public void InsertCutIntoMethod(dataToWatch: dataWatch, aspecto: Aspecto, tipo: typeInsert);
+						Descrição: "insere um aspecto, dentro do começo, fim, ou em todas instrucoes de um metodo".
+						
+			
+				public Analise(escopoComAsClassesDoProgramaVM: Escopo,
+							   classe objetoAMonitorar: Default=null,
+							   metodo metodoAMonitorar: Default=null): List<Objeto> 
+							   
+						Descrição: "este metodo coleta nomes de objetos que se encaixam	com o tipo do objeto e/ou metodo monitorado. certas instrucoes também, como "create" que instancia novos objetos.
+								   Agora imagine que há um aspecto que verifique se o objeto é null, e impeça a execução das demais instruções,
+								   dentro do metodo que criou o objeto. Iaso sem causar complexidade no codigo, reusar o codigo do aspecto em muitas partes do codigo..."
+
+								   Este metodo é executado concomitantemente com os metodos de insercao. Quando um objeto da inserção é encontrado, é chamado um
+								   dos metodos InsertCut(), que implementa a chamada do método "Cut()".
+
+									poderia por simplicidade, fazer o método Analise inserir nas instruções encontradas, as instruções do aspecto, quando encontra um nome de objeto,
+									mas seria utilizar o metodo Analise() para duas funcionalidades ao mesmo tempo. Principio da Responsabilidade Unica, enquanto a POO sobreviver, temos que
+									seguir os gurus da POO, independentemente de ideologia.
+									
+						Este metodo é invocado por cada um dos metodos acima, para capturar os nomes dos objetos, que instancia a classe monitorada, fazendo
+						a ligação "especificacoes do aspecto---> programaVM contendo instruções compiladas").
+					
+			}	
+			
+		
+_______________________________________________________________________________________________________________________________________________________________
+	
+	LISTAS LISP PODEM SER CONSIDERADAS VETORES JAGGED!
+		uma lista pode ser implementada como um vetor jagged: [1,2,[5,3],[7,8,5,1],1,[3,5,7,8,5,6],5].
+		Cada elemento que é um sub - vetor pode ser considerado uma lista.
+		
+		processamento de listas lisp:
+			----> Obter tokens entre operadores "[","]": cada lista de tokens entre operadores, pode ser considerada uma lista.
+			----> para cada lista lisp encontrada, fazer recursivamente a obtenção de tokens entre operadores "[","]", formando sub-listas.
+___________________________________________________________________________________________________________________________________________________________

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using parser.ProgramacaoOrentadaAObjetos;
+
 namespace parser
 {
     
@@ -14,7 +16,7 @@ namespace parser
     {
         private List<string> tokens;
         private List<string> code;
-        private static LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
+       
 
         private List<char> caracteresRemover = new List<char>() { '\t', '\n' };
 
@@ -32,10 +34,21 @@ namespace parser
             return this.tokens;
         }
 
+      
+
+        public static void InitSystem()
+        {
+            TablelaDeValores.expressoes = new List<Expressao>();
+            LinguagemOrquidea.Instance().Aspectos = new List<Aspecto>();
+            
+        }
+
 
         /// Le o arquivo na entrada, e converte em tokens e codigos na saída.
         private void Parser(string fileName)
         {
+            InitSystem();
+            
             PosicaoECodigo.InitCalculoPosicoes();   // essencial para se contar a posicao de tokens, é preciso inicializar algumas propriedades estáticas.
 
             this.code = new List<string>();
@@ -52,6 +65,8 @@ namespace parser
                     code.Add(lineOfCode.Trim(' '));
                 
             } // while
+        
+            LinguagemOrquidea linguagem = LinguagemOrquidea.Instance();
             if ((code != null) && (code.Count > 0))
                 this.tokens = new Tokens(linguagem, code).GetTokens(); // converte o código para uma lista de tokens.
 

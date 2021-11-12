@@ -90,44 +90,6 @@ namespace parser
         } // public producao
 
 
-        // ordena produçoes por posição que aparecem no código.
-        public static void OrdenaProducoes(List<producao> producoes)
-        {
-            if (producoes == null)
-                return;
-            if (producoes.Count == 1)
-                return;
-
-            List<PosicaoECodigo> posicoes = new List<PosicaoECodigo>();
-            for (int p = 0; p < producoes.Count; p++)
-            {
-                PosicaoECodigo posicao = producoes[p].posicao;
-                posicao.indexParaOrdenacao = p;
-            } // for p
-            ComparerPosicaoECodigo comparer = new ComparerPosicaoECodigo();
-            posicoes.Sort(comparer);
-
-            for (int x = 0; x < posicoes.Count; x++)
-                producoes[x] = new producao(producoes[posicoes[x].indexParaOrdenacao]);
-        } // OrdenaProducoes()
-
-
-        public override int GetHashCode()
-        {
-            int hashCode = 0;
-            for (int c = 0; c < this.nomeProducao.Length; c++)
-            {
-                hashCode += (int)this.nomeProducao[c];
-            } // for termo
-            for (int termo = 0; termo < this.termos_Chave.Count; termo++)
-            {
-                for (int c = 0; c < this.termos_Chave[termo].Length; c++)
-                {
-                    hashCode += (int)(this.termos_Chave[termo][c]);
-                } // for c
-            } // for termo
-            return hashCode;
-        }
 
     } // class producao
 

@@ -192,7 +192,7 @@ namespace parser
 
             assercao.MsgSucess("Construção de escopos das expressões feito sem erros fatais.");
 
-            if (processador.escopo.tabela.GetExpressoes().Count == 1)
+            if (TablelaDeValores.expressoes.Count == 1)
                 assercao.MsgSucess("Construção de escopos para expressões e definições de variáveis feito com exatidão.");
 ///________________________________________________________________________________________________________________________________________________________________
             // teste com operadores binarios.

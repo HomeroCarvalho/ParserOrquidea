@@ -22,6 +22,8 @@ CONJUNTO DE INSTRUÇÕES (COMANDOS) DA LINGUAGEM ORIENTADA A OBJETO:
 
 	operador classe_do_operador nome_do_operador ( classe_do_primeiro_operando nome_do_primeiro_operando) prioridade X metodo MetodoDeChamadaDoOperando;
 
+	nill (objeto nulo dentro da linguagem).
+
 	break;
 
 	continue;
@@ -56,4 +58,32 @@ CONJUNTO DE INSTRUÇÕES (COMANDOS) DA LINGUAGEM ORIENTADA A OBJETO:
 	interface:
 		como classes, mas metodos nao tem corpo, mas pode haver instanciacao de propriedades.
 
+______________________________________________________________________________________________________________________________________________________________________________________
+
+PROGRAMACAO ORIENTADA A ASPECTOS:
+
+    aspecto:
 	
+	aspecto NameId typeInsertId (TypeObject:string, nameTemporaryObject: string ,nameMethod: string ) { Funcao  funcaoCorte(Objeto x){}}.
+			NameID: nome de identificação do aspecto.
+	
+	typeInsertId: "before", "after", ou "all".
+				"before": insercao da funcao de corte antes da instrucao monitorada.
+				"afer": insercao da funcao de corte apos a instrucao monitorada.
+				"all": após cada instrução de um método.
+	
+	TypeObjetct: nome do tipo de objetos a monitorar (a sofrer a funcao Corte).
+	
+	nameTemporaryObject: nome temporario (alias), que será processado pelas instruções da funcao Corte.
+								Este nome temporario deverá ser o mesmo quando da manipulação do objeto monitorado, na funcao de corte.
+		
+	
+	nameMethod: nome do metodo, que junto do TypeObject, server de orientação para inserção de função corte.
+	
+	[BLOCO]:  contém a definição da funcao corte. deve ter um parametro, o Objeto que será modificado quando houver a chamada da função de corte, nas instrucoes do programaEmVM.
+
+
+________________________________________________________________________________________________________________________________________________________________________________________
+
+
+

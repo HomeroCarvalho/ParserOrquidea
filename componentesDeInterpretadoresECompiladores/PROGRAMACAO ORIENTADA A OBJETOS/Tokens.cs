@@ -194,8 +194,8 @@ namespace parser
             {
                 // terceiro caso de uso: o token e o token seguinte são ids, devem ser resumidos a um só id, para fins de resumo.
                 if (((i + 1) < tokensDeUmaProducao.Count) &&
-                    (linguagem.VerificaSeEhID(tokensDeUmaProducao[i])) &&
-                    (linguagem.VerificaSeEhID(tokensDeUmaProducao[i + 1])))
+                    (linguagem.IsID(tokensDeUmaProducao[i])) &&
+                    (linguagem.IsID(tokensDeUmaProducao[i + 1])))
                 {
                     tokensDeUmaProducao.RemoveRange(i, 2);
                     tokensDeUmaProducao.Insert(i, "ID");

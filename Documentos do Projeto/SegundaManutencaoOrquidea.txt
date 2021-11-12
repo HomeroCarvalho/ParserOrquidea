@@ -1,0 +1,682 @@
+-----> NOVAS FUNCIONALIDADES E MODIFICAÇÕES NO PROJETO PARSER-ORQUIDEA!
+
+
+PRODUCT BACKLOG:
+
+
+	----> na instrução "create", para vetores, extrair expressões que compõem os indices, mas sem avaliá-los como inteiros,
+	deixando a avaliação das expressões-indícies, para a execução da instrução.
+	
+	----> na classe "Vetor", acrescentar o método Add(), para adicionar espaço para mais elementos no vetor.
+	
+	----> no metodo ProcessadorID.ResumeExpressoes(), substituir pelo método Expressao.ExtraiExpressaoSemValidar(),
+	mas para extrair expressões sem saber se há elementos variaveis, tipos, funções, métodos, propriedades, constantes,
+	será um método semelhante a ExtraiExpressoes(). Após a extração, substituir por "ID", os elementos da expressão.
+		
+	----> Programação Orientada a Aspectos! Seguir o esboço já planejado para as funcionalidades de um Aspecto.
+	Será o acréscimo mais complexo, exige detalhamento de especificações de funcionalidades, descrição de cada funcionalidade,
+	"receita" textual dos algoritmos, e depois  codificação...
+					----> a programação orientada a aspectos aumenta o valor agregado ao projeto, com validações de objetos (como um objeto banco de dados, com verificação se já está instanciado, 
+					e outros tipos de validações, além de desvio de fluxo, se encontrar um objeto null...).
+
+________________________________________________________________________________________________________________________________
+
+SPRINT ANTERIOR:
+
+	SPRINT BACKLOG:
+		----> (codficado) classe Vetor: no métod create, quando é um vetor a instanciar, guardar as expressoes_indices na estrutura
+		de expressoes da instrução, e na execução do programa, as expressoe_indices são avaliadas e é criado o vetor,
+		tendo as expressões, que podem incluir expressões, com objetos, chamadas de metodos, chamada de funcoes, para 
+		constituir sua estrutura: vetor, matriz, matriz de matriz: matriz tridimensional (sem aplicação à vista, mas..).
+
+		----> (codificado) adicionar na classe Vetor, o método Add(expressaoTipoInteiro), que acrescenta espaço para o Vetor.
+
+
+		----> (codificado, em testes) reconstruir um novo método ResumeExpressoes(): com o metodo
+		      "Expressao.ExtraiExpressaoSemValidar()", sem identificacao de ids, para compor as expressoes,
+		que serão resumidas;
+
+	SPRINT REVIEW:
+				----> o uso de padrões de projeto "Command", permitiu a solução legível e mais robusta, do método
+				ProcessadorID.ResumoExpressoes(), mas levou a um questionamento antigo deste desenvolvedor, e engenheiro,
+				de algoritmos expandiveis, de um modo fácil e escalável (NO SENTIDO INDUSTRIAL)!.
+
+_______________________________________________________________________________________________________________________________________________________________________________________________
+SPRINT CURRENTE:
+
+	SPRINT BACKLOG:
+		----> planejamento da implementação de Aspectos.
+		----> codificação da classe Aspecto.
+		----> testes.
+
+----> Sprint Review: cuidado com objetos estáticos!, uma sequencia de testes, causam possíveis erros, justamente porque as classes da linguagem são objetos estáticos. Um
+teste anterior pode não apagar as classes deste teste, e se propagar as classes para o teste posterior.
+
+_______________________________________________________________________________________________________________________________________________________________________________________________
+
+Daily Scrum 28.10:
+		
+		----> codificado a modificacao na instrucao "create" no caso do objeto for "vetor", para guardar as expressoes-dimensionais do vetor, e ser processado em tempo de execução.
+		----> adicionado o método Vetor.Add(expressaoInteiroDeQuantidade).
+		----> codificado, testado: o novo método de ExtraiExpressoesSemValidar(), para retornar uma expressao.
+					----> compor o novo metodo ProcessadorID.ResumeExpressoes(), que está pouco claro, sujeito a erros, se aumentarmos os tipos de expressoes, e elementos de expressoes...
+									---> codificado o metodo ProcessadorID.ResumeExpressoes(), aguardando testes.
+									---> testes, fixado (a linguagem nao havia sido inicializado), retornou para o numero correto de IDs da expressao,
+									no entato, como o token "public" na expressao nao estava presente na expressao resumida, é necessário verificar se "public" é um ID, para a linguagem.
+									---> verificando o mapa de instrucoes no metodo ProcessadorID.InitMapeamento(), os acessors como "public" é resumivel, pois não está no mapeamento.
+
+
+		----> testes para novo metodo ResumeExpressao(), passou,
+		      mas é necessário mais testes, pois este método "Expressao.ExtraiExpressaoSemValidar()", é uma peça de algoritmo cruscial, na compilação de instrucoes.
+									---> segunda expressão no cenario teste para ResumeExpressao(), a expressão foi corretamente recortada pelo método Expressao.ExtraiExpressaoSemValidar().
+		----> testes, falha: um ID vindo apos o operador ".", não foi registrado. fixado: o token "=" está no mapeamento.
+
+		----> falha no processamento da expressao: "Vetor v= create(int,1,1)".
+									---> a situação para resolver este problema é um "lodaçal", há muitos sub-casos para ser tratado.
+									---> nesta expressão, os números estão contados como dois "ID"s, deveria ser 1 "ID".
+									---> situação problemática, o testes para esta expressão passou..
+
+		---> visando adições de condições de validação de resumo de expressao, foi refatorado o metodo ResumeExpressoes(), compondo com funções que verificam se o token currente é ou não resumivel.
+		e acréscimo de funcao para subExpressoes do tipo (x+z+1).
+									---> verificar o algoritmo, quanto às funcoes de resumo.
+
+
+
+_______________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 29.10:
+
+		-----> mais testes:
+					---> foram acrescentado varios casos de funcaoResumivel(), testes, sucesso parcial,
+						 há dificuldade em retirar subExpressoes, como "x+y", que deveria resultar em "ID". O problema é que 
+						 é preciso retirar os tokens anteriores ao operador e tokens posteriores. (fixado).
+
+		----> (ficado)Só mais uma fixar: não está distinguindo um parenteses de função de um parenteses de expressão, fixado,
+		o problema é em outra funcao resumivel, e na lista dos elementos presentes no mapeamento, pois os parenteses tem
+		funcoes proprias de resumo, o que teve que ser excluído da lista de elementos do mapeamento.
+
+		----> (fixado) fixado também o problema de que, se for uma sub-expressao sob parenteses, deve-se resumir a sub-expressao inteira
+		com um "ID", e se tiver outro elemento resumido por um ID, nao se acrescenta o ID da sub-expressão resumida.
+					---> a solução até corrigiu o cenario de teste: a expressao "x=(x+y)*z", por exemplo,
+						deve ser resumida para "ID=ID", dois ids, e não três como na validação do cenário.
+
+
+		---->(anotacao) com a quebra dos casos de resumo, em funções que descrevem o tipo de resumo, ficou fácil,
+		não somente ler, mas aumentar facilmente os casos de resumo, o que permite um processo de escalonamento do algoritmo
+		do metodo ProcessadorID.ResumoExpressoes(). ESTA SOLUÇÃO FOI CRUSCIAL NO ENTENDIMENTO DE ALGORITMOS
+		QUE SÃO FÁCEIS DE ACRESCENTAR FUNCIONALIDADES, PARA UM MESMO CONTEXTO, CRIANDO CODIGOS EXPANSIVEIS MUITO FACILMENTE
+		(Padrao de Projeto "Command");
+
+
+		----> (verificado) VERIFICAR URGENTEMENTE SE AS LISTAS DE OPERADORES BINARIOS E OPERADORES UNARIOS ESTÃO SENDO ATUALIZADAS QUANDO UM NOVO OPERADOR É ACRESCENTADO.
+						----> verificado.
+						----> observando os operadores, constatou-se que novos operadores binarios e unarios, feitos com instrucao orquidea,
+							  nao estavam sendo acrescentados aos operadores da linguagem orquidea.
+
+		----> (verificado) VERIFICAR URGENTEMENTE SE A INSTANCIACAO DA LINGUAGEM ORQUIDEA SE DÁ COM APENAS UM SINGLETON,
+		POIS COM O SINGLETON, OS OPERADORES ACRESCENTADOS VIA CODIGO NÃO SERÃO PERDIDOS, COM INSTANCIAÇÃO DE OBJETOS LinguagemOrquidea.
+						----> verificado, o construtor básico da classe LinguagemOrquidea é chamado uma só vez: na instanciação do Objeto Singleton da classe,
+						mas só para confirmar e evitar problemas futuros, tornou-se privado o construtor. 
+
+		---> (fechamento da sprint) com os testes do ProcessadorID.ResumoExpressão(), o ultimo e mais complexo das novas funcionalidades
+		da manutenção aditiva, é a implementação de Programação Orientada a Aspectos.
+_________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 31.10:
+
+		----->(feito, aguardando testes) IMPLEMENTAR URGENTEMENTE, A LIGAÇÃO ENTRE ESCOPOS, COMO ESCOPO DE METODO, COM ESCOPO DA CLASSE, 
+					OU ESCOPO DA CLASSE, COM O ESCOPO DO CODIGO PRINCIPAL.
+						---> do jeito que está, não é possível acessar dados  do escopo principal, por um objeto de classe orquidea (classe compilada).
+						---> codificado a hierarquia de escopo pai- escopos filhos, para escopos  da classe, e escopo principal.
+						---> codificado a hierarquia do escopo principal/escopoDaClasse, com o escopo-filho escopo-do-metodo.
+						---> codificado a hierarquia de escopoo principal/escopoDeUmBloco.
+
+		----> codificado um teste, aguardando o execcutar do teste.
+						--->testes, verificado que a extração de codigos de sequencias,  que passa pelo metodo Expressao.ExtraiExpressaoSemValidacao()
+							recentemente codificado, mas não testado em todas possiblidades possíveis, está funcionando bem..
+							---> nao está registrando as classes, no escopo principal.
+								----> falha no processador da extracao de uma classe.
+								----> o metodo ProcessadorID.ResumeExpressoes() está funcionando bem,
+								o que foi o erro era a não remoção dos acessor como termos-chave, ainda bem que eu lembrei que precisei fazer
+								a mesma coisa alguns meses atras, no mesmo codigo (havia no metodo antigo ResumoExpressoes, o tratamento para 
+								acessor, com a implantacao do metodo atual, perdeu-se a capacidade no metodo Match() de processar como termo-
+								chave os acessors: "public","private","protected").
+
+						---> apesar da fixamento dos acessors, não está registrando as classes.
+								---> verificando, o codigo ResumeExpressoes() quebrou!.
+										----> para tokens de uma função, incluindo o bloco do corpo da funcao, está lançando exceção.
+										----> depurando, foi verificado que o metodo Expressao.ExtraiExpressoesSemValidar() está quebrado!
+													----> depurando, o metodo Expressao.ExtraiExpressoesEntreOperadoresDuplos() foi o que quebrou!!!
+																	----> o metodo Expressao.ExtraiExpressoesEntreOperadoresDuplos() não previu o caso exemplo: funcaoA(), sem tokens entre os parenteses,
+																	e tentava registra um aviso, mas a lista de tokens estava vazia ou nula, ocasionando o erro.
+
+										----> verificar se é necessário processar tokens entre operadores bloco: "{", "}".
+													----> o processamento de blocos ("{codigo}"), não é necessário para reconhecer uma definicao de funcao, por exemplo.
+										----> falha na colocação de escopos folha, em definição de um método, por exemplo (o metodo contem um bloco que forma o corpo de instruções..).
+													----> verificando, está correto, havia seis funcoes, então teria que haver 6 escopos folhas, mas
+													não é o desejado, o corpo do metodo, deveria ser registrado no escopo da classe do método.
+																	---> verificando, há construção da hierarquia de escopos (o nome técnico é esse, "hierarquia"),
+																	mas os escopos dos metodos estão iguais ao escopo da classe, justamente porque o escopo do método é "filho" do escopo da classe.
+																	---> no escopo do metodo, está uma copia por referencia ao escopo-pai (termo técnico), o escopo da classe.
+																				----> os escopos de classes e escopos de seus metodos está funcionando bem,
+																				mas no escopo do método está registradno tambem proprieades presentes no escopo da classe.
+																				---->foi feito a ligação apenas do escopo-filho---> escopo-pai, e
+																				não escopo-pai--->escopo-filho, por é necessário, quando buscar nomes de objetos e metodos, um escopo acima, que é a regra para escopos
+																				("o escopo mais externo nao pode ver o escopo interno, mas o escopo interno pode ver o escopo mais externo").
+
+										---->(fixado) VERIFICAR A PASSAGEM NOS ESCOPOS DE METODOS, PROPRIEDADES DA CLASSE.
+													----> às vezes o proprio codigo surpreende: o escopo de um metodo pode enxergar propriedades da mesma classe do método! Fixado.
+																				---> o fato é que as propriedades da classe deveriam estar registradas apenas no escopo da classe,
+																				mas há cópia no escopo do metodo.
+																				---> fixado este possivel problema: as referencias de objetos da classe dentro do escopo dos metodos, foi removidos,
+																				pois metodos e propriedades são compilados sobre um mesmo escopo em comum: o escopoClasse.
+
+
+										---> (fixado) ante a muitas modificações no codigo, o metodo compileEmDoisEstagios quebrou!!.
+													----> fixado: lembrou-se da "trava" para compilar a segunda vez, somente quando o nivel da compilacao for o nivel=0, pois
+														  o metodo CompileDoisEstagios() é chamado recursivamente, para extração de codigos de classe, metodos.
+
+Resumo do dia:
+			---->(fixado, testes feitos) testes mais complexos, com classes, revelou erro no metodo "Expressao.ExtraiExpressoesEntreOperadoresDuplos()",
+			quando nao há tokens entre os parenteses (um operador duplo), o que lançava um erro, pois uma expressao sem tokens é uma expressao null!.
+
+			----> (feito, testes feitos) amarração dos escopos, ficando fácil um método acessar uma propriedade da classe (o que já estava ocorrendo),
+			e metodos da classe acessar funçoes/variaveis do escopo mais externo... e uma função acessar uma variavel fora do seu corpo de instrução.
+
+			----> (fixado) as adições de referencias de objetos da classe, no escopo de um metodo desta classe. e adição de referencia do objeto Funcao do metodo, para dentro
+			do escopo do metodo.
+
+			----> (anotação) com a hierarquia de escopos, cumpre-se a função do escopo: separar visoes externas de verem visões mais internas, mas a visão interna pode ver as visões mais externas.
+			Isto torna o codigo mais estruturado.
+
+			----> (fixado) fixado o método CompilacaoEmDoisEstagios(), que não estava funcionando... entre umas e outras modificações no código, o método regrediram porque se acreditavam brasileiros
+			que o código era supérfulo, mas não viram porque é um problema da linguagem C, exemplo. Em C, uma funcao apenas reconhece o que está anterior a seu codigo. Porque 
+			um codigo instanciado antes de sua declaração é por isso que a compilação em dois estágios corrige.
+
+
+			----> NOTA PARA SPRINT REVIEW: 
+					---> tem que haver um procedimento para testes de todas possibilidades, mas um só teste para um tipo de possibilidade (pesquisar autmação de testes por Mutação).
+___________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 01.11:
+
+			----> planejamento e codificacao do sistema de aspectos.
+					----> planejamento:
+								----> houve um resumo dos parametros dos algoritmos-cut: é a mesma coisa, porém mais simples, sem a classe "DataWatch".
+								----> uma descoberta, é que o método "Cut", que faz o tratamento do aspecto, é uma função da linguagem orquidea, não uma função da linguagem base.
+								----> outra descoberta é que o código pode se alterar, inserindo e compilando texto de instruções!.
+
+					----> (em codificação) codificação das funcionalidades do sistema de aspectos.
+					---->(em planejamento) estudar a possibilidade de outras instruções de inserção, não só uma chamada do metodo "Cut",
+						 como uma instrução "if", que se validada, tem uma instrução "return", o que na prática, controla o fluxo do código, se uma condição, como objeto null, for encontrada.
+_____________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 02.11:
+
+			----> uma falha na instrução create: o objeto instanciado não estava sendo passado explicitamente, mas pelo escopo. fixado.
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 03.11:
+
+			----> codificado sistema de aspectos.
+							----> o sistema funciona como segue:
+										----> uma funcaoCorte é criada, com a lista de instrucoes da funcao, da entrada.
+										----> varredura pelas classes, metodos, expressoes, procurando match em tipo de objeto e/ou nome de metodo.
+										----> ao encontrar um match, insere uma instrução do tipo "chamadaDeFuncao", no codigo da classe, e metodo.
+										----> suporte  ao sistema aspecto:
+													---> (codificado) criar uma classe Aspecto, que constroi a chamada de função hook, constroi a função Hook, com um bloco de instruções.
+																class Aspecto
+																{
+																	tipoInsercao: TypeInsert;
+																	Instrucao BuildInstrucaoChamadaDeFuncao();
+																	Funcao BuildFuncaoCorte();
+																}
+
+													---> se criarmos uma instrucao aspecto, não precisamos fazer a chamada de função hook, isso é feito pela
+														instrução aspecto, e então conseguimos acesso aos objetos do escopo, e chamamos a função hook com o objeto desejado...
+										----> ao executar o programa, quando chega na instrucao aspecto, a chamada de função é executada (não sem antes obter o objeto monitorado, do escopo), fazendo o processamento do aspecto...
+
+
+			---> VERIFICAR URGENTE SE A EXECUÇÃO DE UM METODO, NÃO SE CARREGA TODAS AS PROPRIEDADES DO OBJETO CALLER, E NÃO AS PROPRIEDADES DA CLASSE DO OBJETO...
+
+			---> codificar a instrucao aspecto:
+										----> (codificado) Build: contem um bloco de instuções, que é o corpo da função hook de corte, o tipo de insercao, o tipo do objeto, o nome do metodo a monitorar.
+													-----> (A FAZER) inserir o nome "aspecto" na lista de producoes XML.
+										----> (codificado) RunTime: carrega do escopo o objeto especificado na lista de expressoes da instrucao, e faz a chamada de função, com o paramêtro o objeto especificado.
+
+
+										Definido:
+													---> definicao da lista de expressoes a ser passada para a execução da instrução.
+																---> a lista de expressoes, na Analise(), é: expressao[0]=nomeDoAspecto, expressao[1]==nome do tipo do objeto.
+																
+																---> do jeito que está, o objeto é inserido na chamada de função, pelo método Aspecto.Analise(),
+																			retirando a responsabilidade de construir a expressao, no metodo Build(), deixando a criação
+																			da instrucao para o método Aspecto.Analise.
+																----> A definição da lista de expressoes não é relevante.
+																									
+																										
+
+													---> construcao da instrucao, para 1: obter o objeto no escopo, e 2: fazer a chamada de funcao do metodo hook Cut.
+																---> a construção da instrução é como uma instrucao de chamadaDeFuncao, que processa corretamente,
+																os seus parâmetros, na propria instrucao chamada de função...
+
+
+
+______________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 04.11:
+
+				----> inspeção do codigo da InstrucaoAspecto. A instrução pode não ser processada por chamada de funcao,
+				mas pela propria instrução aspecto. Nesta instrucao, a chamada de função do metodo corte é feita.
+
+				----> mudança no construtor do aspecto: a lista de instruções foi substituida por uma lista de tokens de instruções.
+				a compilacao é feita dentro da classe Aspecto. Torna mais facil programar um aspecto.
+								----> terminar o codigo da instrucao Aspecto, que não está codificado o caso que é uma das expressoes é a chamada de um metodo.
+											----> insight: o nome do metodo é apenas para identificar o corte, não é necessário inserir este caso na instrucaoAspecto.
+
+
+				----> reajustar  a obtencao de corte, mais de uma vez por instrucao. Do jeito que está, numa expressao: "x=x+1",
+					  com objeto tipo "int", o corte será feito duas vezes na expressão!. 
+		
+
+
+				----> iniciado testes, falha no match de sequencia "aspecto".
+								----> o termo-chave "aspecto" nao estava sendo reconhecido, justamente por nao estar no arquivo .XML da linguagem.
+								foi feito um atalho, na classe UmaLingugagemComputacional, para inserção do token "aspecto" como termo chave.
+								(INSERIR URGENTEMENTE A PRODUÇÃO DA INSTRUCAO ASPECTO, NO ARQUIVO .XML).
+								---> reconhecido o handler build da instrucao, fixado, gerou um Aspecto, porem as instruções do aspecto não está com todas instrucoes.
+							---> o fato é que a construção de aspectos está sendo feito várias vezes, justamente porque o metodo CompiladorDeDoisEstagios() está sendo chamado mesmo sem o fluxo principal...
+
+							---> (feito) modificar o metodo Compile(), para que faz a compilacao em dois estagios, E a construcao dos aspectos.
+
+							--->(fixado) o aspecto está sendo construido, porém o processador não retorna nenhuma instrução, o esperado
+								seria uma instrução aspecto.fixado: o metodo CompiladorEmDoisEstagios estava limpando a lista de instruções, antes de chamar
+								a compilação ultima. Colocando o metodo que processa os aspectos no mesmo bloco da ultima compilação, a instrução voltou a aparecer...
+
+				----> um problema, mas insolvivel, é a compilação de todo codigo esta sendo feita duas vezes, nao importando se há mensagens
+				de erro por atribuicao antes de instanciação! Se não há mensagens de erro, não há porque executar a segunda compilação.
+
+
+				---> um ultimo problema no teste_01: a construção da funcao de corte não está sendo feita corretamente, está faltando a primeira instrução.
+							----> verificando o processamento de instruções dentro da construcao de Aspecto, o processador está pulando uma instrucao.
+								  verificar a construção de instruções dentro do Build dos Aspectos...
+								  ----> acredite se quiser, o cenario de testes está com sintaxe de erro na instrução "if", que estava faltando...
+												----> o corpo da função corte está com uma variável x não instanciada, gerando o erro que invalida a instrução "if".
+
+				----> planejamento para construir um nome temporario para o objeto a ser monitorado, e que será processado, na
+				instrução corte. Este nome temporario será substituido pelo objeto encontrado na Analise do Aspecto.
+
+								----> (codificado) incluir na instrução Aspecto, um nome temporario para o objeto aspecto.
+								----> no metodo BuildAspect(), modificar os objetos com nomes temporários (nome alias),
+									  para o nome do objeto match encontrado na analise...
+
+				----> (codificado) a instrucao aspecto será responsavel por substituir o nome alias do objeto, para o nome do objeto
+				encontrado na Aspecto.Analise(), dentro da função de corte!
+								----> o "link" do nome alias do objeto monitorado, para o nome real do objeto, foi
+								feito dentro da expressao chamadaDeFuncao, como um parâmetro da expressão chamada,
+								e a ligação é processado em tempo-de-execução pelo metodo: 
+										"ProgramaEmVM.SetObjectAliasAspecto(Funcao funcaoCorte, string nomeAlias, string nomeObjetoAMonitorar, Escopo escopo)"
+
+				---->(testado) continuando os testes da construcao do aspecto, falha justamente porque a classe construida no teste,
+					  nao está sendo registrada no objeto Linguagem.GetClasses().fixado.
+					  falha na construcao da instruacao "aspecto", justamente por causa da inserção de um nome alias do objeto, na instrucao,
+					  e que nao havia sido testado. fixado.
+
+
+
+				----> testes para a construção das inserções da instrucao "aspecto". pelo metodo Aspecto.BuildAspect(),
+				sucesso na procura de objetos a serem monitorados pelo aspecto!..
+
+	
+
+Resumo do Dia:
+		----> Complemento do planejamento, codificação e testes de uma nova instrucao: "aspecto".
+		----> Resolver um problema de chamada de Compilacao, que não estava funcionando muito bem.
+		----> Resolver um problema aleatório no metodo ParserUniversal.GetTokens().
+		----> planejamento e codificação da execução da instrução "aspecto", na VM.
+________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 05.11:
+
+		----> testes para execução em tempo-real de uma instrução "aspecto".
+		----> (codificado, testado) como parte do planejamento desta manutencao, ficou acordado, embora em outro documento, a refatoração do ParserUniversal.GetToken().
+						----> o método Expressao.ExtraiExpressoes e construtor Expressao(), quebraram!!! E estavam quebrados antes da modificaçao relatada acima.
+										----> os tipos de cada sub-expressao não estava sendo calculado, como expressao Objeto. fixado.
+										----> falha na execução da função no metodo EvalExpression.Eval(). o objeto-caller é null, no caso do teste.
+														----> os parametros da função não estão sendo passados para o escopo. 
+																	1- calcula os valores de parametros, 
+																	2- seta os parametros da funcao com esses valores, 
+																	3- adiciona ao escopo os parametros da funcao. 
+																	4- calcula o valor da funcao,
+																	5- remove os parametros da funcao, do escopo, 
+																	6- retorna o valor resultante.
+
+										----> os metodos Expressao.ExtraiExpressoes e construtor Expressao() não quebraram completamente, apenas no caso de chamadaDeExpressao, não estava encontrando funcao compativel, pois objetos do tipo Objeto não estavam sendo retirado seus tipos.
+										----> ainda estou lembrado de resolver o mesmo erro, no mesmo metodo... sabotagem?
+
+
+		----> (verificado, solucionado) outra parte da manutenção, foi verificar se as propriedades (Objeto.Fields()) estão sendo passados ao escopo da
+		execução de um metodo; sim, estão sendo passados.
+
+
+
+		----> continuando o testes da instrução "aspecto", não o build, mas a execução da instrucao "aspecto", no ProgramaEmVM...
+										----> as instrucoes de insercao não estão sendo passados por referencia, então modificações de insercao não são passados às instrucoes do metodo.
+										----> as Listas de instrucoes dos metodos monitorados, estão agora sendo passados por referencia, e setados apos as insercoes, para as listas de instrucoes por referencia.
+
+		----> Nike! As instruções da função de corte foram inseridas com sucesso!., nos metodos em que há um objeto do tipo especificado a monitorar..
+
+		---> completado a ocultação de membros publicos apenas chamados na classe ProgramEmVM, escondendo e também tornando a classe mais simples de se codificar..
+
+
+		---> testar a execução da instrução aspecto em tempo real.
+		
+										Mudanças avaliáveis:
+												----> um novo conhecimento, que a construcao da chamada da função de corte, pode substituir o nome alias,
+													  pelo nome do objeto monitorado, no metodo Aspecto.BuildAspect(), simplificaria a execução da instrução "aspect",
+													  em tempo-real. O jeito atual está dependendo de fazer em tempo-real esta substituicao, o que gastaria muito 
+													  tempo de processamento, com algo que seria preciso fazer apenas uma vez...
+													  
+												(a codificar) mudança aprovada, alterar a construcao da funcao de corte, para substituir o nome alias do objeto, para o nome do objeto monitorado,
+												na instrução "chamadaDeFuncao".	
+												
+												----> (codificado) a nova versao da instrucao "aspect", com uma funcao especificada pelos codigo do bloco.
+															----> modificado a classe Aspect, a instrucao aspect, e o build de definicaoAspecto().
+										
+										----> um novo tipo de aspecto, em vez de uma chamada de função de corte, para uma instrução qualquer
+										não necessariamente uma chamada de função... Isso permitiria instruções que controlem o fluxo do codigo a partir
+										da instrução "aspect", como "if (x<0) return".
+												(A CODIFICAR) adição aprovada, agrega valor ao sistema de aspectos. Talvez seja preciso modificar a sintaxe da instrução "aspect".
+
+
+	----> testes para a nova sintaxe da instrucao "aspect", falha na construcao da funcao de corte, pela compilacao dos tokens contido no bloco da instrucao.
+				---> verificando a instrução faltante, um "if", chegou-se ao metodo Expressao.Instance.ExtraiExpressoes(), que não está reconhecendo o operador "==".
+				---> a listagem de operadores contem o operador "==" para "int"..
+				---> surpresa! a classe Objeto não contem operadores "==", por exemplo...
+							
+	---> testes para build da instrucao "aspect" passou, mas não há métodos definidos para a classe Objeto.
+				---> tentando modificar o parametro da funcao de corte, de "Objeto" para "int".
+							---> Sucesso! funcao corte construida com parametro "int". Não fazia sentido o parametro da funcao ser do tipo "Objeto",
+								 pois este tipo é genérico, pode ser qualquer coisa, é um objeto de infraestrutura.
+
+	----> ante as modificações no código, retestar a construcao de um Aspecto, até a sua função de corte.
+				----> (codificado) modificar o metodo Aspecto.BuildAspect(), para setar a chamadaDeFuncao.parametro=ExpressaoObjetoAMonitorar...
+
+
+	----> (verificado, codificado) verificar e/ou modificar a instrução "aspect", na execução da instrução, para chamar a chamada de metodo, com uma ExpressaoObjeto.
+
+	----> apenas recordando, quando há um metodo a monitorar, tem que ser algo como: nomeObjeto.nomeMetodo(), em uma
+	expressão "ExpressaoChamadaMetodo", que será o ponto de inserção da função de corte...
+
+	----> verificar se a construção de "ChamadaDeMetodo" está sendo feito corretamente, uma vista rápida parece que não processou corretamente.
+
+	----> instrucao "aspect" na VM, codificada, aguardando testes.
+
+	
+Resumo do Dia:
+	----> refatoração do metodo ParserUniversal.GetToken().
+	----> fixo o erro no metodo Funcao.ExectureFunction().
+	----> verificado que as propriedades do objeto na chamada de um objeto estão com os valores corretos.
+	----> novo planejamento da instrução "aspect".
+	----> planejamento ante a modificação da forma que a função corte é construida, mais legivel e simples de se codificar.
+	----> construção do metodo de avaliação de instrução "aspect".
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________
+DailyScrum 08.11:
+
+	----> verificar e/ou corrigir o metodo handler BuildChamadaDeMetodo().ERRO DE SINTAXE NO CODIGO DO CENARIO DE TESTE.
+	----> testar um ProgramEmVM, para codigo com aspecto.
+	----> (codificado) planejamento de um novo tipo de aspecto: em vez de uma funcao de corte, uma unica instrução, que quando executada, permite execução de uma instrução,
+	não uma chamada de função. Uma instrucao poderia ser algo como: "if (x<0) return;", sendo necessário a especificação do nomeAlias para ligar, no exemplo: "x"...
+
+			----> (codificado) antes de testar a execução da instrução "aspect", é melhor codificar o outro tipo de aspecto, sem função de corte,
+			mas uma lista de instruções, que pode entre outros, mudar o fluxo do codigo.
+							----> codificado a construcao e execução do aspecto, com uma lista de insercao de instrucoes, nao uma função de corte.
+
+
+	---> em testes, os aspectos são construidos, mas nao ha nenhuma insercao da chamada de funcao de corte (no currente cenario de teste), nas instruções de um metodo.
+			----> verificando novamente, os aspectos estão sendo construidas, mas não há insercões de corte no código.
+							----> deve ser um problema de referencias... as instruções de corte são inseridas,
+								  mas ao chegar no metodo do cenario de teste, os metodos das classes monitoradas nao sao atualizadas.
+								  ----> tentativa de carregar classes e metodos pelo escopo, falha, não está passando as instruções dos metodos corretamente.
+
+			----> falha na compilação de instrucoes com operador ".".
+								 ----> verificando, a instrução create está quebrada!. não, não está: erro de sintaxe no arquivo de codigo do teste.
+								 ----> CUIDADO NA SINTAXE DAS INSTRUÇÕES: COLOQUE SEMPRE PONTOS-E-VIRGULAS NO TERMINOS DAS INSTRUÇÕES...
+											----> DEIXAR EXPLICITO NA DOCUMENTAÇÃO DO PROJETO.
+
+								 ----> com a inserção do ";", o sistema voltou a reconhecer as chamadas de método, conforme relatado na Daily Scum anterior.
+
+			----> (verificado) VERIFICAR URGENTEMENTE O REGISTRO DAS EXPRESSÕES, PARA TODAS INSTRUÇÕES, É CRUSCIAL NO PROCESSAMENTO DE AVALIAÇÃO DE EXPRESÕES COM VARIAVEIS NAO MODIFICADAS!.
+
+			----> a instruções de cada função não estão sendo processadas!.
+								----> modificação no processamento dos aspectos, apagou a lista de instruções dos métodos!!
+
+			----> (fixado) (FIXAR O METODO DE CONSTRUÇÃO DE ASPECTOS, ESTÁ RETIRANDO AS LISTAS DE INSTRUÇÕES DE CADA FUNÇÃO DE CADA CLASSE!).
+								---> a lista de instrução não serão clareadas, se houver modificações com instruções de corte, é igualada a lista de instruções modificadas.
+								---> confusão: tudo começou com breakPoints não funcionando, e levou um atraso na detecção do erro, que era na passagem de instruções modificadas nos métodos.
+
+
+
+			----> testes para execução da instrução "aspect" em tempo real, falha justamente pela
+				  falta de padronização da estrutura de dados de expressões, passada para a instrução "aspect" em tempo de execução.
+_________________________________________________________________________________________________________________________________________________________________________________________________________
+DailyScrum 09.11:
+
+
+				  ----> UM INSIGHT!!!!: CONSTRUÇÃO DO "HEAP", A PARTIR DOS ESCOPOS: PRINCIPAL, DE CLASSES, DE METODOS, COM PROPRIEDADES.
+				  para ser armazenado no Heap, o "wrapper" tem que ter: o nome da classe, o nome do metodo, e o nome da variavel, e indice da instrucao da variavel, dentro da lista de instrucoes do metodo!(REQUISITOS).
+
+							  -----> com o "heap", pode conseguir acesso a todas varaveis, sem barreira de escopos, facilitando
+									 o gerenciamento de objetos, expressoes...
+
+							 -----> INICIO DO PLANEJAMENTO DO "HEAP" (termo técnico).
+							 
+
+
+		
+				----> codificado a instrução "aspect" em tempo de execução. Testes.
+							 ----> testes, a parte pela instrução aspecto em tempo de execução, funcionou, mas
+								   o codigo de chamada de metodo no metodo EvalExpression.Eval() está quebrado. (fixado)
+
+								   ---> há duplicação de código. as classes construidas são duas vezes, na linguagem.Classes. fixado (as classes são registrados em três objetos diferentes: na linguagem, no escopo, e no repositorio...
+								        A eliminação de redundância, causada pela compilação 2 estágios só estava eliminando classes redundantes num só desses locais.).
+
+							----> tentando simplificar a depuração do teste, somente um dos metodos da classe do teste terá um corte aspecto.
+
+							----> as instruções construidas na compilação não estavam sendo eliminados na compilacao de 2 estagios, fixado.
+
+							----> no entanto, as chamadas da funcao de corte está sendo executado mais de 1 vez...
+											----> verificar se a função de corte está sendo executado quando da declaração do aspecto.
+											----> verificar também se há inserção de corte na propria definição do aspecto.
+															----> há insercao de corte também na instrucao aspecto!!!.
+
+
+							---> o método Funcao.ExecuteAFunction() está duplicando o valor parâmetro!!!	
+											---> há um erro desconhecido, que está inserindo 3 vezes o parâmetro.
+											---> PRESTAR ATENÇÃO QUANTO AOS NOMES DE OBJETOS: NOMES PARECIDOS PODE CAUSAR USO DE OBJETO DIFERENTE DO PRETENDIDO.
+														----> o erro está no metodo Funcao.ExecuteFunction, que retornava antes de "dar baixa" no objeto parametro da função. E alem, havia confusao entre "parametros" do metodo, com "parametrosDaFuncao" da função.
+							
+							
+							---> (êxito, e falha) (êxito) simplificando, feito os testes, manualmente (e depois feito automatizado), o teste obteve êxito! Primeira comprovação de programação orientada a aspectos!.
+											----> (falha) modificando a chamada de metodo, fazendo percorrer a malha do metodoB mais de uma vez, falha. Verificar se parâmetro da funcao correto está sendo eliminado...
+															---> TEM QUE TOMAR CUIDADO AO UTILIZAR ASPECTOS: no metodoB, a insercao corte do aspecto, foi feita duas vezes, uma na após a instrução "while", e outra dentro do bloco do "while". É por isso que a instrução "aspecto" estava sendo invocada mais de uma vez...
+															---> verificar se a utilização da função aspecto mais de uma vez no mesmo metodo, causa falha!. E falha por que???
+
+															----> e há razão: o aspecto muda o valor da variavel, de modo que não se consegue sair da malha "while", pois ao atingir 0, é setada para 3, o que faz continuar a iteração da malha!..
+															
+
+							----> verificar se operações com bloco, em "while", se retorna valores nulos, quando sob aspectos.
+											----> pode ter sido um erro de sintaxe, o metodo metodoB() não estava retornando nenhum valor...
+
+											----> os aspectos são úteis para objetos grandes, não "int"s, que aparecem em todos lugares. É quando se quer instanciar um objeto, se ele for nulo pelo codigo sem o aspecto. coisas assim...
+							
+							
+							----> continuando os testes, agora com uma situação mais útil, se um objeto monitorado é nulo, o aspecto constroi uma instancia e associa o valor criado para o objeto monitorado.
+											----> o codigo do teste estava sintaticamente errado, legal ver as mensagens de erro sinalizando erro.
+											----> os cortes aspectos estão bem constuídos, inserindo chamada de função de corte no metodo que havia o objeto monitorado...
+											----> um erro desconhecido no codigo do cenario de teste, nao localizado, resulta em um nao processamento do programa em VM.
+																----> a funcao de corte do aspecto do teste está bem formada, a expressao com NILL está construída também....
+																----> houve um erro na formulação de instrucao aspecto, no build retorna um codigo= -1, que um erro na expressao estava não processando a instrucao da função de corte, mas o aspecto foi construido.
+
+
+
+
+
+
+				---->(implementado, codificado, testado) implementar URGENTEMENTE a função (nill).
+						----> para implementar o Null, foi planejado uma ExpressaolNILL, que tem baixa prioridade (menor que o operador "=").
+											---> implementado um novo tipo de expressao.
+											---> implementado no metodo Expressao.PosOrdem(), tratamento para expressao Nill.
+											---> implementado no metodo EvalExpression.Eval(), operacao booleano para expressões nill.
+						----> testes feitos, para operador "==" (comparacao para objetos nulos).
+
+				----> planejamento, codificação da instrução "riseError".	
+_____________________________________________________________________________________________________________________________________________________________________________________________________
+Proxima Daily Scrumm:
+				---> planejamento e codificação da instrução "riseError".
+											---> planeejado (em dias anteriores) e codificado uma instrução de erro generica, nao é recomendavel, mas era o possível a fazer.
+												faltando o build de compilação para a instrucao. e resistro como termos-chave: rise, e error, e colocar a string identificação no metodo ProcessadorID.InitMapeamento().
+
+
+
+				---> (fixado) correção do código do teste 02 de processamento de aspectos,a errro de passagem por referência, dentro de um dos métodos.
+											----> a sequencia da chamada de metodo está bem construída, o erro está no processamento da expressão, no construtor de Expressao.
+											----> o repositorio de classes está com classe codificada em duplicação.
+											----> É MELHOR VER SEMPRE O CASO BASE, no construtor Expressao.Expressao(), o caso base era com um token só, que nao verificava o tipo de dado do token único, retornando
+												 como ExpressaoElemento. Isso seria válido, mas no metodo parametrosExpressao[].GetTipoExpressao, resultava em valor errado, atrapalhando a busca por função compatível.
+											----> fixado, o codigo processou corretamente o comando chamada de método corretamente.		
+
+									----> VERIFICAR SE HÁ VAZAMENTO DE REFERENCIAS NAS OPERACOES DE ATRIBUICAO, COM EXPESSOES DE ATRIBUICOES TENDO O PROPRIO OBJETO A ATRIBUIR...
+											----> (refazer o teste) o erro do teste com aspectos, é um erro de referência, na atribuição...
+											----> falha no teste, justamente por ter uma expressao de atribuicao com chamadaDeMetodo.
+											----> (a testar) fixando erro em atribuicao com chamada de metodo como expressao atribuicao.
+														----> as passagens por referencia nao estao funcionando como esperado, por isso o teste com aspectos com atribuicao com o proprio objeto da atribuição resultava em valor nao esperado...
+																	---> fixando passagens por referencia, na instrucao Atribuicao, para modificações de objeto, vetor, ou propriedade estática...
+																	---> o codigo do cenario de teste estava incorreto, faltou um ";" após a instrução "if/else", que levou a um nao processamento da segunda instrução da função, justamente o "return x";
+																	---> mais um erro no cenario de teste, a função "MetodoB", retorna um "int", mas a instrucao chamada de metodo está atribuindo a um objeto não "int", mas "classeA".
+
+					
+									----> o problema esta no processamento do aspecto: cenario de teste para verificação de chamada de método resultou em valores esperados.
+																	---> as linguagens de programação geralmente passam valores por referência, quando o valor de algum objeto é modificado, deve ser algum tipo de otimização.
+																	---> retirada a passagem de referencia de objetos, no processamento da instrucao "aspect", melhorou, numa primeira passada resulta em valor valido, mas falha quando na execução da segunda chamada de função..
+
+																	---> uma fixação na execução de uma função, foi do escopo, que daria valores inconsistentes se executasse a função dentro de outra chamada da mesma função,
+																		tal fixo foi empregado na execução de um método. Não resolve o problema da instrução "aspect", mas..
+
+
+												---> por mais que planejamos, sempre falta algo... o metodo EvalExpression.Eval(), não estava processando a expressao da instrucao "return", pois o sistema de otimização não estava atualizando as expressoes modificadas...
+																	---> 2 opções: 1- retira a otimização, 2- investigar porque o metodo Objeto.SetValor() não está atualizando a lista de expressoes modificadas, quando uma variavel da expressão é modificada...
+
+																	---> (ENCONTRADO!) a otimização não está ocorrendo, porque ao adicionarmos uma expressão, pelo método GetExpressoes(), fazemos um "Add", sem acrescentar a expressao no na lista de expressoes do escopo!!! Vai dar um trabalho...
+
+
+
+				----> (fixado) a duplicação de objetos classe, no repositorio de classes. No entanto, é desconhecido qual codigo registra a classe no RepositorioDeClasses.
+
+				----> (verificado) verificado se atribuicoes com "NILL" resulta em valorObjeto=null, pela classe EvalExpression.Eval().
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 11.11:
+
+		Atividades a serem realizadas:
+
+		1- TESTES COM A INSTRUÇÃO "aspect."
+		2- IMPLANTAÇÃO CORRETIVA DA OTIMIZAÇÕES DE CÁLCULOS DE EXPRESSÕES:
+
+			(feito)
+			----> retirar o metodo TabelaDeValores.GetExpressoes(), para o metodo TabelaDeValores.AdicionaExpressoes(), para implantar
+				  definitivamente a otimização por modificação de objetos.					  
+			----> no escopo de classe, registrar as expressões presentes em métodos da classe.
+	
+			----> (fixado) falha no algoritmo de retirar expressoes unicas. TabelaDeValores.AdicionaExpressoes().
+						----> parada para pensar em um algoritmo solução.
+						----> este algoritmo é complicado mesmo, envolve uma malha dupla, para capturar expressoes iguais.
+
+			----> (fixado) falha nos testes, o objeto "x" não está sendo carregado, e seu valor é "null".
+						----> (fixado) falha no calculo da expressao de entrada para EvalExpression.Eval(). Uma expressao numero nao tem a expressao armazenada na lista de expressoes da TabelaDeValores...
+						----> falha no valor esperado, a instrução while não está funcionando bem...
+										---> a instrução "while" nao foi construida!!!.
+													----> foi testada 100 vezes, mas o codigo estava "forçasamentes com defeito", se não é sabotagem, é o que então???
+													----> as expressoes armazenadas precisam estar em Pos-Ordem, para reconhecer a expressao no calculo do metodo EvalExpression.Eval().
+
+													----> o teste sem a instrucao "aspect" passou. a maior parte dos erros,
+														 estava nos metodos Funcao.ExecuteAFuncton(), e Funca.ExecuteAMethod(), 
+														 além é claro a imprecisão da cálculo do objeto monitorado na instrução "aspect",
+														 passando por erros também na classe Expressao (construtor), build da instrução "while", e erros na classe EvalExpression.
+
+
+
+			----> (falha) teste com a instucao "aspect"	inclusa no codigo: falha no PROCESSO da chamada de metodo.
+						----> falha adivinha em que? No reconhecimento de uma expressão se é igual a outra...
+						----> (fixado) fixar o metodo Expressao.IsEqualsExpression().
+						----> teste para instrucao "aspect", passou, mas sem otimização de valores de expressões.
+
+
+			(FALTANDO A OTIMIZAÇÃO DE EXPRESSÕES)
+						----> somente quando um dos objetos compondo uma expressao, é modificado, o calculo da expressão é refeito,
+						caso contrário, retorna o campo "Expressao.oldValue".
+
+						----> para otimização de expressoes:
+								----> faltando definir como o valor anterior da expressão será calculado.
+											----> o valor anterior da expressão é calculado no metodo EvalExpression.Eval().
+
+								----> faltando definir listas de expressoes para objetos internos dos metodos, como parametros de função.
+									----> quando criar um objeto-parametro, criar objeto e setar na lista de expressoes, a expressao-objeto do objeto criado.
+
+
+								----> a lista de expressoes é atualizada em:
+										1- instrucao "aspect";
+										2- instrucao "atribution" (para criacao de objetos, modificacao de objetos, modificacao de propriedades estaticas).
+
+										a lista de expressoes contem expressoes como ExpressaoObjeto(), de toda definição de objetos.
+
+
+
+		ATIVIDADES RELACIONADAS:
+			(feito)
+			----> retirar do metodo InstrucaoReturn, o setar da expressao[0].isModify=true.	  
+
+			(feito)
+			----> modificar a instrucao "Atribuicao", quando cria um objeto, atualiza as expressoes do escopo currente, para registrar no objeto criado, a lista de expressoes que contem o objeto, para fins de otimização.
+
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Daily Scrum 12.11:
+
+
+Atividades Realizadas:
+		
+		----> (codificado) completar a atualização da situação da lista de expressões, para outras instruções que não "aspect", e "atribution", e se a otimização vale a pena, pois é preciso atualizar a lista em muitos lugares do codigo.
+		
+		
+		----> (testado com êxito) testar a avaliação de expressoes com o sistema de otimizações.
+
+		
+		
+
+		----> (testado todos testes escritos até aqui com êxito) completar os testes para a instrução "aspect", com lista de instruções, e não função de corte.
+						----> teste 2o. "aspect", está retornando "null"....
+						----> fixado. é preciso colocar em pos-ordem cada expressao avaliada no método EvalExpression.Eval()...
+						----> teste 3o, sem "aspect", erro em tempo de execução.
+								----> as classes nao estão sendo recompiladas!.
+										----> no teste em sequencia, a classe do codigo está com a definição da classe do teste anterior.
+										----> o sistema "teima" em nao APAGAR a classe com aspecto... Há duas copias das classes, uma com aspectos, e a segunda, a correta, sem aspecto.
+													----> fixado, se há definições de uma classe > 1, apaga a classe anterior, de mesmo nome.
+
+						----> há código confuso, na inicialização das classes compiladas.., não há como apagar um cenario de teste anterior as classes formadas, no teste anterior. 
+							  a solução encontrada foi apagar a definição de classe, se há mais de uma definição desta classe....
+____________________________________________________________________________________________________________________________________________________________________________________________________
+Proxima Daily Scrum:
+		----> ANOTAÇÕES:
+					---> a otimização de expressões é útil quando há tempo ocioso, o computador não está executando nenhuma operação com expressões,
+					ou o tempo de resposta é proporcional à reação humana, o computador fica ocioso enquanto espera uma reação, gastando tempo em
+					calculando expressões que não mudam neste período de espera por ação humana.
+					
+					---> tem-se que ter cuidado com programação com aspetos: se o objeto a sofrer intervenção de um aspecto, for muito comum,
+					haverá muitos cortes aspecto, o que pode levar a resultados inesperados, indo facilmente entrar em loop infinito: se o tipo de objeto
+					for um "int", em uma malha "for", exemplo, pode levar resultados não pretendidos, interferindo no processamento da malha, indo
+					também entre outras situações, para loop infinito...
+					
+
+					----> SE HOUVER TESTES SOBRE O FUNCIONAMENTO DA LINGUAGEM , COMECE O CENÁRIO CHAMANDO O MÉTODO: ParserAFile.InitSystem(),
+					pois há objetos estáticos que se prolongam entre um teste e outro...
+					
+
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________
+
+

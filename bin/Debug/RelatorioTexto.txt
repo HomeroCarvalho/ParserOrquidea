@@ -1,141 +1,1254 @@
 
 
-Time: 13/10/2021 14:47:31  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 05/11/2021 14:48:59  Message: testes para o sistema programcao com Aspectos.
+Time: 11/05/2021 14:48:59  Message: Desempenho do método-teste:   tempo: 444 mlsg.
+Time: 11/05/2021 14:48:59  Message: teste: Teste_01 executado em: 444  mls.   teste passou
+Time: 11/05/2021 14:49:00  Message: Desempenho do método-teste:   tempo: 503 mlsg.
+Time: 11/05/2021 14:49:00  Message: teste: Teste_02 executado em: 503  mls.   teste passou
+Time: 11/05/2021 14:49:00  Message: Desempenho do método-teste:   tempo: 503 mlsg.
 
 
-Time: 13/10/2021 14:51:42  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
 
 
-Time: 13/10/2021 14:54:45  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 11:31:15  Message: testes para o sistema programcao com Aspectos.
 
 
-Time: 13/10/2021 14:57:05  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 11:37:58  Message: testes para o sistema programcao com Aspectos.
 
 
-Time: 13/10/2021 15:03:15  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 11:43:02  Message: testes para o sistema programcao com Aspectos.
+Time: 11/08/2021 11:43:03  Message: Desempenho do método-teste:   tempo: 1102 mlsg.
+Time: 11/08/2021 11:43:03  Message: teste: Teste_01 executado em: 1102  mls.   teste passou
+Time: 11/08/2021 11:43:04  Message: Desempenho do método-teste:   tempo: 791 mlsg.
+Time: 11/08/2021 11:43:04  Message: teste: Teste_02 executado em: 791  mls.   teste passou
+Time: 11/08/2021 11:43:04  Message: Desempenho do método-teste:   tempo: 791 mlsg.
 
 
-Time: 13/10/2021 15:04:11  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
 
 
-Time: 13/10/2021 15:08:07  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
-Time: 10/13/2021 15:08:44  Message: Desempenho do cenario de teste:   tempo: 37365
-Time: 10/13/2021 15:08:44  Message: teste: TesteProgramacaoOrientadaObjeto_PadraoEstrategy executado em: 37365mls.   teste passou
+Time: 08/11/2021 11:44:15  Message: testes para o sistema programcao com Aspectos.
 
 
-Time: 13/10/2021 15:10:20  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 11:46:02  Message: testes para o sistema programcao com Aspectos.
 
 
-Time: 13/10/2021 15:15:59  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 11:55:23  Message: testes para o sistema programcao com Aspectos.
 
 
-Time: 13/10/2021 15:22:20  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 11:55:48  Message: testes para o sistema programcao com Aspectos.
+Time: 11/08/2021 11:55:48  Message: Desempenho do método-teste:   tempo: 509 mlsg.
+Time: 11/08/2021 11:55:48  Message: teste: Teste_01 executado em: 509  mls.   teste passou
+Time: 11/08/2021 11:55:49  Message: Desempenho do método-teste:   tempo: 338 mlsg.
+Time: 11/08/2021 11:55:49  Message: teste: Teste_02 executado em: 338  mls.   teste passou
+Time: 11/08/2021 11:55:49  Message: Desempenho do método-teste:   tempo: 338 mlsg.
 
 
-Time: 13/10/2021 15:27:57  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
 
 
-Time: 13/10/2021 16:21:27  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 11:55:52  Message: testes para o sistema programcao com Aspectos.
+Time: 11/08/2021 11:55:53  Message: Desempenho do método-teste:   tempo: 338 mlsg.
+Time: 11/08/2021 11:55:53  Message: teste: Teste_01 executado em: 338  mls.   teste passou
+Time: 11/08/2021 11:55:53  Message: Desempenho do método-teste:   tempo: 317 mlsg.
+Time: 11/08/2021 11:55:53  Message: teste: Teste_02 executado em: 317  mls.   teste passou
+Time: 11/08/2021 11:55:53  Message: Desempenho do método-teste:   tempo: 317 mlsg.
 
 
-Time: 13/10/2021 16:22:03  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
 
 
-Time: 13/10/2021 16:23:26  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 11:56:28  Message: testes para o sistema programcao com Aspectos.
+Time: 11/08/2021 11:56:29  Message: Desempenho do método-teste:   tempo: 499 mlsg.
+Time: 11/08/2021 11:56:29  Message: teste: Teste_01 executado em: 499  mls.   teste passou
+Time: 11/08/2021 11:56:29  Message: Desempenho do método-teste:   tempo: 500 mlsg.
+Time: 11/08/2021 11:56:29  Message: teste: Teste_02 executado em: 500  mls.   teste passou
+Time: 11/08/2021 11:56:29  Message: Desempenho do método-teste:   tempo: 500 mlsg.
 
 
-Time: 13/10/2021 16:26:43  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
 
 
-Time: 13/10/2021 16:31:19  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 12:25:05  Message: testes para o sistema programcao com Aspectos.
 
 
-Time: 13/10/2021 17:05:56  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 12:30:06  Message: testes para o sistema programcao com Aspectos.
+Time: 11/08/2021 12:30:07  Message: Desempenho do método-teste:   tempo: 1014 mlsg.
+Time: 11/08/2021 12:30:07  Message: teste: Teste_01 executado em: 1014  mls.   teste passou
+Time: 11/08/2021 12:30:08  Message: Desempenho do método-teste:   tempo: 664 mlsg.
+Time: 11/08/2021 12:30:08  Message: teste: Teste_02 executado em: 664  mls.   teste passou
+Time: 11/08/2021 12:30:08  Message: Desempenho do método-teste:   tempo: 664 mlsg.
 
 
-Time: 13/10/2021 17:06:53  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
-Time: 10/13/2021 17:07:39  Message: Desempenho do cenario de teste:   tempo: 45949
-Time: 10/13/2021 17:07:39  Message: teste: TesteProgramacaoOrientadaObjeto_PadraoEstrategy executado em: 45949mls.   teste passou
-Time: 10/13/2021 17:07:39  Message: Desempenho do cenario de teste:   tempo: 272
-Time: 10/13/2021 17:07:39  Message: teste: TesteProgramacaoOrientadaAObjeto_ClassesHerdadas executado em: 272mls.   teste passou
-Time: 10/13/2021 17:07:39  Message: Desempenho do cenario de teste:   tempo: 33
-Time: 10/13/2021 17:07:39  Message: teste: TesteAtribuicaoEmVetores executado em: 33mls.   teste passou
 
 
+Time: 08/11/2021 12:37:22  Message: testes para o sistema programcao com Aspectos.
+Time: 11/08/2021 12:37:45  Message: Desempenho do método-teste:   tempo: 22421 mlsg.
+Time: 11/08/2021 12:37:45  Message: teste: Teste_01 executado em: 22421  mls.   teste passou
+Time: 11/08/2021 12:37:45  Message: Desempenho do método-teste:   tempo: 214 mlsg.
+Time: 11/08/2021 12:37:45  Message: teste: Teste_02 executado em: 214  mls.   teste passou
+Time: 11/08/2021 12:37:45  Message: Desempenho do método-teste:   tempo: 214 mlsg.
 
 
-Time: 13/10/2021 17:12:19  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
-Time: 10/13/2021 17:12:28  Message: Desempenho do método-teste:   tempo: 9814
-Time: 10/13/2021 17:12:28  Message: teste: TesteProgramacaoOrientadaObjeto_PadraoEstrategy executado em: 9814mls.   teste passou
-Time: 10/13/2021 17:12:29  Message: Desempenho do método-teste:   tempo: 270
-Time: 10/13/2021 17:12:29  Message: teste: TesteProgramacaoOrientadaAObjeto_ClassesHerdadas executado em: 270mls.   teste passou
-Time: 10/13/2021 17:12:29  Message: Desempenho do método-teste:   tempo: 34
-Time: 10/13/2021 17:12:29  Message: teste: TesteAtribuicaoEmVetores executado em: 34mls.   teste passou
-Time: 10/13/2021 17:12:29  Message: Desempenho do método-teste:   tempo: 34
 
 
+Time: 08/11/2021 12:38:10  Message: testes para o sistema programcao com Aspectos.
+Time: 11/08/2021 12:38:10  Message: Desempenho do método-teste:   tempo: 553 mlsg.
+Time: 11/08/2021 12:38:10  Message: teste: Teste_01 executado em: 553  mls.   teste passou
 
 
-Time: 13/10/2021 23:14:38  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 12:39:58  Message: testes para o sistema programcao com Aspectos.
 
 
-Time: 13/10/2021 23:27:33  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 14:42:51  Message: testes para o sistema programcao com Aspectos.
 
 
-Time: 13/10/2021 23:30:43  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 14:47:59  Message: testes para o sistema programcao com Aspectos.
+Time: 11/08/2021 14:48:00  Message: Desempenho do método-teste:   tempo: 409 mlsg.
+Time: 11/08/2021 14:48:00  Message: teste: Teste_01 executado em: 409  mls.   teste passou
 
 
-Time: 13/10/2021 23:33:59  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 14:49:44  Message: testes para o sistema programcao com Aspectos.
+Time: 11/08/2021 14:49:44  Message: Desempenho do método-teste:   tempo: 569 mlsg.
+Time: 11/08/2021 14:49:44  Message: teste: Teste_01 executado em: 569  mls.   teste passou
 
 
-Time: 13/10/2021 23:34:28  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 14:55:44  Message: testes para o sistema programcao com Aspectos.
+Time: 11/08/2021 14:55:45  Message: Desempenho do método-teste:   tempo: 883 mlsg.
+Time: 11/08/2021 14:55:45  Message: teste: Teste_01 executado em: 883  mls.   teste passou
+Time: 11/08/2021 14:57:57  Message: Desempenho do método-teste:   tempo: 132444 mlsg.
+Time: 11/08/2021 14:57:57  Message: teste: Teste_02 executado em: 132444  mls.   teste passou
+Time: 11/08/2021 14:57:57  Message: Desempenho do método-teste:   tempo: 132444 mlsg.
 
 
-Time: 13/10/2021 23:35:25  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
 
 
-Time: 13/10/2021 23:36:04  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 14:58:13  Message: testes para o sistema programcao com Aspectos.
 
 
-Time: 13/10/2021 23:38:21  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
+Time: 08/11/2021 15:03:00  Message: testes para o sistema programcao com Aspectos.
+Time: 11/08/2021 15:03:01  Message: Desempenho do método-teste:   tempo: 789 mlsg.
+Time: 11/08/2021 15:03:01  Message: teste: Teste_01 executado em: 789  mls.   teste passou
+Time: 11/08/2021 15:03:01  Message: Desempenho do método-teste:   tempo: 598 mlsg.
+Time: 11/08/2021 15:03:01  Message: teste: Teste_02 executado em: 598  mls.   teste passou
+Time: 11/08/2021 15:03:01  Message: Desempenho do método-teste:   tempo: 598 mlsg.
 
 
-Time: 13/10/2021 23:39:58  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
 
 
-Time: 13/10/2021 23:41:30  Message: testes para atribuicao de vetor, verificacao do padrao strategy na programacao orientada a objetos.
-Time: 10/13/2021 23:49:49  Message: Desempenho do método-teste:   tempo: 498700 mlsg.
-Time: 10/13/2021 23:49:49  Message: teste: TesteProgramacaoOrientadaObjeto_PadraoEstrategy executado em: 498700  mls.   teste passou
-Time: 10/13/2021 23:49:49  Message: Desempenho do método-teste:   tempo: 273 mlsg.
-Time: 10/13/2021 23:49:49  Message: teste: TesteProgramacaoOrientadaAObjeto_ClassesHerdadas executado em: 273  mls.   teste passou
-Time: 10/13/2021 23:49:52  Message: Desempenho do método-teste:   tempo: 3294 mlsg.
-Time: 10/13/2021 23:49:52  Message: teste: TesteAtribuicaoEmVetores executado em: 3294  mls.   teste passou
-Time: 10/13/2021 23:49:52  Message: Desempenho do método-teste:   tempo: 3294 mlsg.
+Time: 08/11/2021 15:05:24  Message: testes para o sistema programcao com Aspectos.
 
 
+Time: 08/11/2021 15:08:04  Message: testes para o sistema programcao com Aspectos.
+Time: 11/08/2021 15:08:07  Message: Desempenho do método-teste:   tempo: 2785 mlsg.
+Time: 11/08/2021 15:08:07  Message: teste: Teste_01 executado em: 2785  mls.   teste passou
+Time: 11/08/2021 15:08:13  Message: Desempenho do método-teste:   tempo: 6042 mlsg.
+Time: 11/08/2021 15:08:13  Message: teste: Teste_02 executado em: 6042  mls.   teste passou
+Time: 11/08/2021 15:08:13  Message: Desempenho do método-teste:   tempo: 6042 mlsg.
 
 
-Time: 14/10/2021 15:09:20  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 10/14/2021 15:10:00  Message: Desempenho do método-teste:   tempo: 40472 mlsg.
-Time: 10/14/2021 15:10:00  Message: teste: Teste_03 executado em: 40472  mls.   teste passou
 
 
-Time: 14/10/2021 15:23:19  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
+Time: 08/11/2021 15:13:37  Message: testes para o sistema programcao com Aspectos.
 
 
-Time: 14/10/2021 15:32:35  Message: Testes para compilacao e execução de chamadas de metodos aninhados e propriedades aninhadas.
-Time: 10/14/2021 15:34:55  Message: Desempenho do método-teste:   tempo: 139966 mlsg.
-Time: 10/14/2021 15:34:55  Message: teste: Teste_06 executado em: 139966  mls.   teste passou
-Time: 10/14/2021 15:35:00  Message: Desempenho do método-teste:   tempo: 4531 mlsg.
-Time: 10/14/2021 15:35:00  Message: teste: Teste_03 executado em: 4531  mls.   teste passou
-Time: 10/14/2021 15:35:00  Message: Desempenho do método-teste:   tempo: 178 mlsg.
-Time: 10/14/2021 15:35:00  Message: teste: Teste_05 executado em: 178  mls.   teste passou
-Time: 10/14/2021 15:35:00  Message: Desempenho do método-teste:   tempo: 290 mlsg.
-Time: 10/14/2021 15:35:00  Message: teste: Teste_01 executado em: 290  mls.   teste passou
-Time: 10/14/2021 15:35:00  Message: Desempenho do método-teste:   tempo: 215 mlsg.
-Time: 10/14/2021 15:35:00  Message: teste: Teste_04 executado em: 215  mls.   teste passou
-Time: 10/14/2021 15:35:01  Message: Desempenho do método-teste:   tempo: 189 mlsg.
-Time: 10/14/2021 15:35:01  Message: teste: Teste_02 executado em: 189  mls.   teste passou
-Time: 10/14/2021 15:35:01  Message: Desempenho do método-teste:   tempo: 189 mlsg.
+Time: 08/11/2021 15:16:57  Message: testes para o sistema programcao com Aspectos.
+Time: 11/08/2021 15:17:00  Message: Desempenho do método-teste:   tempo: 3199 mlsg.
+Time: 11/08/2021 15:17:00  Message: teste: Teste_01 executado em: 3199  mls.   teste passou
+Time: 11/08/2021 15:17:13  Message: Desempenho do método-teste:   tempo: 13049 mlsg.
+Time: 11/08/2021 15:17:13  Message: teste: Teste_02 executado em: 13049  mls.   teste passou
+Time: 11/08/2021 15:17:13  Message: Desempenho do método-teste:   tempo: 13049 mlsg.
+
+
+
+
+Time: 08/11/2021 15:28:50  Message: testes para o sistema programcao com Aspectos.
+Time: 11/08/2021 15:28:53  Message: Desempenho do método-teste:   tempo: 2762 mlsg.
+Time: 11/08/2021 15:28:53  Message: teste: Teste_01 executado em: 2762  mls.   teste passou
+
+
+Time: 08/11/2021 15:33:26  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 15:34:26  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 15:35:26  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 15:37:16  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 15:41:38  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 15:42:29  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 15:44:52  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 15:51:30  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 15:52:25  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 15:58:52  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 16:01:36  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 16:37:01  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 16:39:57  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 16:42:33  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 16:44:50  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 17:03:31  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 17:23:29  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 18:25:16  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 08/11/2021 18:40:18  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 08:13:39  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 08:24:57  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 08:32:08  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 08:37:11  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 08:38:00  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 08:39:59  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 08:44:48  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 08:57:58  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 08:59:50  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:00:22  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:01:56  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:02:50  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:05:26  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:06:52  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:10:49  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:12:20  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:22:37  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:25:07  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:31:27  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:38:36  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:40:30  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:43:41  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:46:19  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:52:28  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 09:57:42  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 10:05:18  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 10:06:40  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 10:07:21  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 10:10:40  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 10:17:20  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 10:24:04  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 10:30:49  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 10:38:18  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 10:47:02  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 10:50:12  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 10:51:35  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 10:54:31  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 10:55:29  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 10:57:03  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 10:58:27  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 11:06:57  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 11:09:08  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 11:12:17  Message: testes para o sistema programcao com Aspectos.
+Time: 11/09/2021 11:15:12  Message: Desempenho do método-teste:   tempo: 175416 mlsg.
+Time: 11/09/2021 11:15:12  Message: teste: Teste_02 executado em: 175416  mls.   teste passou
+Time: 11/09/2021 11:15:13  Message: Desempenho do método-teste:   tempo: 559 mlsg.
+Time: 11/09/2021 11:15:13  Message: teste: Teste_01 executado em: 559  mls.   teste passou
+Time: 11/09/2021 11:15:13  Message: Desempenho do método-teste:   tempo: 559 mlsg.
+
+
+
+
+Time: 09/11/2021 11:18:41  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 11:28:20  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 11:30:47  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 11:32:07  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 11:35:35  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 14:46:31  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 14:48:02  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 14:48:22  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 14:50:40  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 14:50:54  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 14:57:33  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 15:00:10  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 15:02:38  Message: testes para expressoes nulas
+Time: 11/09/2021 15:02:52  Message: Desempenho do método-teste:   tempo: 13921 mlsg.
+Time: 11/09/2021 15:02:52  Message: teste: Teste_01 executado em: 13921  mls.   teste passou
+Time: 11/09/2021 15:02:52  Message: Desempenho do método-teste:   tempo: 13921 mlsg.
+
+
+
+
+Time: 09/11/2021 15:04:03  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 15:05:12  Message: testes para expressoes nulas
+Time: 11/09/2021 15:05:25  Message: Desempenho do método-teste:   tempo: 13295 mlsg.
+Time: 11/09/2021 15:05:25  Message: teste: Teste_01 executado em: 13295  mls.   teste passou
+Time: 11/09/2021 15:05:25  Message: Desempenho do método-teste:   tempo: 13295 mlsg.
+
+
+
+
+Time: 09/11/2021 15:08:50  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 15:09:36  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 15:11:17  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 15:12:51  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 15:14:43  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 15:15:43  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 15:19:40  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 15:20:41  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 15:21:51  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 15:22:54  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 15:24:57  Message: testes para expressoes nulas
+Time: 11/09/2021 15:26:34  Message: Desempenho do método-teste:   tempo: 96144 mlsg.
+Time: 11/09/2021 15:26:34  Message: teste: Teste_02 executado em: 96144  mls.   teste passou
+Time: 11/09/2021 15:26:34  Message: Desempenho do método-teste:   tempo: 2 mlsg.
+Time: 11/09/2021 15:26:34  Message: teste: Teste_01 executado em: 2  mls.   teste passou
+Time: 11/09/2021 15:26:34  Message: Desempenho do método-teste:   tempo: 2 mlsg.
+
+
+
+
+Time: 09/11/2021 15:27:24  Message: testes para expressoes nulas
+
+
+Time: 09/11/2021 15:29:03  Message: testes para expressoes nulas
+Time: 11/09/2021 15:29:16  Message: Desempenho do método-teste:   tempo: 12741 mlsg.
+Time: 11/09/2021 15:29:16  Message: teste: Teste_02 executado em: 12741  mls.   teste passou
+Time: 11/09/2021 15:29:16  Message: Desempenho do método-teste:   tempo: 2 mlsg.
+Time: 11/09/2021 15:29:16  Message: teste: Teste_01 executado em: 2  mls.   teste passou
+Time: 11/09/2021 15:29:16  Message: Desempenho do método-teste:   tempo: 2 mlsg.
+
+
+
+
+Time: 09/11/2021 15:30:10  Message: testes para expressoes nulas
+Time: 11/09/2021 15:30:34  Message: Desempenho do método-teste:   tempo: 23210 mlsg.
+Time: 11/09/2021 15:30:34  Message: teste: Teste_02 executado em: 23210  mls.   teste passou
+Time: 11/09/2021 15:30:34  Message: Desempenho do método-teste:   tempo: 2 mlsg.
+Time: 11/09/2021 15:30:34  Message: teste: Teste_01 executado em: 2  mls.   teste passou
+Time: 11/09/2021 15:30:34  Message: Desempenho do método-teste:   tempo: 2 mlsg.
+
+
+
+
+Time: 09/11/2021 15:44:10  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 15:46:27  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 15:52:52  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 15:54:49  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 15:56:09  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 15:57:31  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 16:03:23  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 16:16:35  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 16:19:17  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 09/11/2021 16:20:07  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 09:07:06  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 09:07:47  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 09:21:31  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 09:22:45  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 09:24:50  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 09:28:11  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 09:29:33  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 09:34:19  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 09:36:59  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 09:38:32  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 09:39:36  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 09:44:55  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 09:52:59  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 09:57:20  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 13:05:56  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 13:07:34  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 13:19:36  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 13:22:52  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 13:49:07  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 13:51:03  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 13:56:40  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 13:58:04  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 14:03:20  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 14:17:56  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 14:20:31  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 15:24:58  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 15:26:32  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 15:28:39  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 15:32:48  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 15:38:20  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 15:42:29  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 15:44:30  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 15:47:25  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 15:57:15  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 16:00:43  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 16:18:48  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 16:22:12  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 16:28:25  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 17:30:35  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 17:32:24  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 17:35:40  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 17:43:32  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 17:57:55  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 17:58:58  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 10/11/2021 18:02:42  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 08:56:41  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 08:58:14  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 08:59:45  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 09:00:23  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 09:01:48  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 09:10:25  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 09:13:30  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 09:23:52  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 09:24:45  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 09:27:24  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 09:41:36  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 09:43:04  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 09:44:19  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 09:45:36  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 09:50:42  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 09:57:33  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 10:05:18  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 10:09:13  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 10:11:33  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 10:16:05  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 10:17:18  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 10:18:17  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 10:22:07  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 10:27:41  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 10:28:58  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 10:31:37  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 10:42:40  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 10:49:03  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 10:52:52  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 11:08:53  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 11:12:53  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 11:13:21  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 11:18:46  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 11:23:14  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 11:25:15  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 11:33:41  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 13:35:20  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 13:37:50  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 13:46:14  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 13:47:12  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 13:50:12  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 13:54:05  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 13:57:53  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:00:43  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:04:34  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:11:07  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:11:52  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:13:19  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:14:49  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:17:45  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:24:03  Message: testes para o sistema programcao com Aspectos.
+Time: 11/11/2021 14:24:04  Message: Desempenho do método-teste:   tempo: 571 mlsg.
+Time: 11/11/2021 14:24:04  Message: teste: Teste_03 executado em: 571  mls.   teste passou
+Time: 11/11/2021 14:24:04  Message: teste: Teste_03 executado em: 571  mls.   teste nao passou.
+Time: 11/11/2021 14:24:04  Message: Desempenho do método-teste:   tempo: 397 mlsg.
+Time: 11/11/2021 14:24:04  Message: teste: Teste_02 executado em: 397  mls.   teste passou
+Time: 11/11/2021 14:24:04  Message: Desempenho do método-teste:   tempo: 366 mlsg.
+Time: 11/11/2021 14:24:04  Message: teste: Teste_01 executado em: 366  mls.   teste passou
+
+
+Time: 11/11/2021 14:24:46  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:27:50  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:29:04  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:37:54  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:40:44  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:41:49  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:44:40  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:45:09  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:48:14  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:55:45  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 14:58:46  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 15:00:57  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 15:03:47  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 15:04:34  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 15:16:18  Message: testes para o sistema programcao com Aspectos.
+Time: 11/11/2021 15:22:24  Message: Desempenho do método-teste:   tempo: 365897 mlsg.
+Time: 11/11/2021 15:22:26  Message: teste: Teste_05 executado em: 365897  mls.   teste passou
+Time: 11/11/2021 15:22:28  Message: teste: Teste_05 executado em: 365897  mls.   teste passou
+
+
+Time: 11/11/2021 15:31:49  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 11/11/2021 15:37:09  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 10:01:08  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 10:02:54  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 10:26:10  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 10:29:23  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 10:29:24  Message: Desempenho do método-teste:   tempo: 368 mlsg.
+Time: 11/12/2021 10:29:24  Message: teste: Teste_04 executado em: 368  mls.   teste passou
+Time: 11/12/2021 10:29:24  Message: teste: Teste_04 executado em: 368  mls.   teste passou
+
+
+Time: 12/11/2021 10:29:53  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 10:29:53  Message: Desempenho do método-teste:   tempo: 461 mlsg.
+Time: 11/12/2021 10:29:53  Message: teste: Teste_04 executado em: 461  mls.   teste passou
+Time: 11/12/2021 10:29:53  Message: teste: Teste_04 executado em: 461  mls.   teste passou
+
+
+Time: 12/11/2021 10:31:48  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 10:31:49  Message: Desempenho do método-teste:   tempo: 542 mlsg.
+Time: 11/12/2021 10:31:49  Message: teste: Teste_04 executado em: 542  mls.   teste passou
+Time: 11/12/2021 10:31:49  Message: teste: Teste_04 executado em: 542  mls.   teste passou
+
+
+Time: 12/11/2021 10:33:12  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 10:35:53  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 10:36:06  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 10:39:56  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 10:39:57  Message: Desempenho do método-teste:   tempo: 936 mlsg.
+Time: 11/12/2021 10:39:57  Message: teste: Teste_05 executado em: 936  mls.   teste passou
+Time: 11/12/2021 10:39:57  Message: teste: Teste_05 executado em: 936  mls.   teste nao passou.
+
+
+Time: 12/11/2021 10:41:08  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 10:42:26  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 10:45:33  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 10:49:04  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 10:49:10  Message: Desempenho do método-teste:   tempo: 5530 mlsg.
+Time: 11/12/2021 10:49:10  Message: teste: Teste_05 executado em: 5530  mls.   teste nao passou.
+
+
+Time: 12/11/2021 10:51:46  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 10:55:09  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 10:56:45  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 10:59:37  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 10:59:38  Message: Desempenho do método-teste:   tempo: 665 mlsg.
+Time: 11/12/2021 10:59:38  Message: teste: Teste_05 executado em: 665  mls.   teste passou
+
+
+Time: 12/11/2021 11:01:28  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 11:07:48  Message: Desempenho do método-teste:   tempo: 379887 mlsg.
+Time: 11/12/2021 11:07:48  Message: teste: Teste_04 executado em: 379887  mls.   teste passou
+
+
+Time: 12/11/2021 11:08:38  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 11:08:44  Message: Desempenho do método-teste:   tempo: 5877 mlsg.
+Time: 11/12/2021 11:08:44  Message: teste: Teste_04 executado em: 5877  mls.   teste passou
+
+
+Time: 12/11/2021 11:10:28  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 11:10:34  Message: Desempenho do método-teste:   tempo: 6511 mlsg.
+Time: 11/12/2021 11:10:37  Message: teste: Teste_05 executado em: 6511  mls.   teste passou
+
+
+Time: 12/11/2021 11:11:18  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 11:11:19  Message: Desempenho do método-teste:   tempo: 594 mlsg.
+Time: 11/12/2021 11:11:19  Message: teste: Teste_05 executado em: 594  mls.   teste passou
+
+
+Time: 12/11/2021 11:12:42  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 11:12:49  Message: Desempenho do método-teste:   tempo: 7448 mlsg.
+Time: 11/12/2021 11:12:49  Message: teste: Teste_05 executado em: 7448  mls.   teste passou
+
+
+Time: 12/11/2021 11:13:13  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 11:13:14  Message: Desempenho do método-teste:   tempo: 549 mlsg.
+Time: 11/12/2021 11:13:14  Message: teste: Teste_05 executado em: 549  mls.   teste passou
+
+
+Time: 12/11/2021 11:15:43  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 11:15:43  Message: Desempenho do método-teste:   tempo: 703 mlsg.
+Time: 11/12/2021 11:15:43  Message: teste: Teste_05 executado em: 703  mls.   teste passou
+
+
+Time: 12/11/2021 11:16:13  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 11:16:14  Message: Desempenho do método-teste:   tempo: 492 mlsg.
+Time: 11/12/2021 11:16:14  Message: teste: Teste_05 executado em: 492  mls.   teste passou
+
+
+Time: 12/11/2021 11:17:24  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 11:17:31  Message: Desempenho do método-teste:   tempo: 7203 mlsg.
+Time: 11/12/2021 11:17:31  Message: teste: Teste_05 executado em: 7203  mls.   teste passou
+
+
+Time: 12/11/2021 11:18:24  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 11:18:25  Message: Desempenho do método-teste:   tempo: 549 mlsg.
+Time: 11/12/2021 11:18:25  Message: teste: Teste_05 executado em: 549  mls.   teste passou
+
+
+Time: 12/11/2021 11:21:06  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 11:21:15  Message: Desempenho do método-teste:   tempo: 9351 mlsg.
+Time: 11/12/2021 11:21:15  Message: teste: Teste_05 executado em: 9351  mls.   teste passou
+
+
+Time: 12/11/2021 11:25:38  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 11:25:53  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 11:26:49  Message: Desempenho do método-teste:   tempo: 55721 mlsg.
+Time: 11/12/2021 11:26:49  Message: teste: Teste_05 executado em: 55721  mls.   teste passou
+
+
+Time: 12/11/2021 11:34:15  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 11:35:12  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 11:36:59  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 11:39:58  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 11:41:08  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 11:43:30  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 11:45:55  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 11:48:16  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 11:50:04  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 11:50:46  Message: Desempenho do método-teste:   tempo: 42168 mlsg.
+Time: 11/12/2021 11:50:47  Message: teste: Teste_05 executado em: 42168  mls.   teste passou
+
+
+Time: 12/11/2021 11:58:15  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 12:00:52  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 12:01:58  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 12:03:29  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 12:06:55  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 12:07:58  Message: Desempenho do método-teste:   tempo: 63366 mlsg.
+Time: 11/12/2021 12:08:01  Message: teste: Teste_05 executado em: 63366  mls.   teste passou
+
+
+Time: 12/11/2021 12:10:17  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 12:10:17  Message: Desempenho do método-teste:   tempo: 737 mlsg.
+Time: 11/12/2021 12:10:17  Message: teste: Teste_05 executado em: 737  mls.   teste passou
+
+
+Time: 12/11/2021 12:12:54  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 12:12:56  Message: Desempenho do método-teste:   tempo: 1721 mlsg.
+Time: 11/12/2021 12:12:56  Message: teste: Teste_05 executado em: 1721  mls.   teste passou
+
+
+Time: 12/11/2021 12:14:32  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 12:15:31  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 12:15:32  Message: Desempenho do método-teste:   tempo: 1452 mlsg.
+Time: 11/12/2021 12:15:32  Message: teste: Teste_05 executado em: 1452  mls.   teste passou
+
+
+Time: 12/11/2021 12:18:49  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 12:18:50  Message: Desempenho do método-teste:   tempo: 673 mlsg.
+Time: 11/12/2021 12:18:50  Message: teste: Teste_05 executado em: 673  mls.   teste passou
+
+
+Time: 12/11/2021 12:19:31  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 12:19:32  Message: Desempenho do método-teste:   tempo: 449 mlsg.
+Time: 11/12/2021 12:19:32  Message: teste: Teste_05 executado em: 449  mls.   teste passou
+
+
+Time: 12/11/2021 12:21:19  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 12:21:19  Message: Desempenho do método-teste:   tempo: 748 mlsg.
+Time: 11/12/2021 12:21:19  Message: teste: Teste_05 executado em: 748  mls.   teste passou
+
+
+Time: 12/11/2021 12:22:14  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 12:22:14  Message: Desempenho do método-teste:   tempo: 572 mlsg.
+Time: 11/12/2021 12:22:14  Message: teste: Teste_05 executado em: 572  mls.   teste passou
+
+
+Time: 12/11/2021 13:06:37  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 13:06:37  Message: Desempenho do método-teste:   tempo: 739 mlsg.
+Time: 11/12/2021 13:06:37  Message: teste: Teste_05 executado em: 739  mls.   teste passou
+
+
+Time: 12/11/2021 13:09:05  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 13:09:05  Message: Desempenho do método-teste:   tempo: 606 mlsg.
+Time: 11/12/2021 13:09:05  Message: teste: Teste_05 executado em: 606  mls.   teste passou
+
+
+Time: 12/11/2021 13:12:34  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 13:12:35  Message: Desempenho do método-teste:   tempo: 579 mlsg.
+Time: 11/12/2021 13:12:35  Message: teste: Teste_05 executado em: 579  mls.   teste passou
+
+
+Time: 12/11/2021 13:38:46  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 13:38:50  Message: Desempenho do método-teste:   tempo: 3918 mlsg.
+Time: 11/12/2021 13:38:50  Message: teste: Teste_05 executado em: 3918  mls.   teste passou
+
+
+Time: 12/11/2021 13:40:51  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 13:44:07  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 13:45:54  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 13:51:41  Message: Desempenho do método-teste:   tempo: 346704 mlsg.
+Time: 11/12/2021 13:51:41  Message: teste: Teste_05 executado em: 346704  mls.   teste passou
+
+
+Time: 12/11/2021 13:53:39  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 13:53:42  Message: Desempenho do método-teste:   tempo: 2610 mlsg.
+Time: 11/12/2021 13:53:42  Message: teste: Teste_05 executado em: 2610  mls.   teste passou
+
+
+Time: 12/11/2021 13:55:06  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 13:55:08  Message: Desempenho do método-teste:   tempo: 2511 mlsg.
+Time: 11/12/2021 13:55:08  Message: teste: Teste_05 executado em: 2511  mls.   teste passou
+
+
+Time: 12/11/2021 13:56:23  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 13:56:25  Message: Desempenho do método-teste:   tempo: 1934 mlsg.
+Time: 11/12/2021 13:56:25  Message: teste: Teste_05 executado em: 1934  mls.   teste passou
+
+
+Time: 12/11/2021 14:01:49  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:01:50  Message: Desempenho do método-teste:   tempo: 682 mlsg.
+Time: 11/12/2021 14:01:50  Message: teste: Teste_05 executado em: 682  mls.   teste passou
+
+
+Time: 12/11/2021 14:02:36  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:02:55  Message: Desempenho do método-teste:   tempo: 18745 mlsg.
+Time: 11/12/2021 14:02:57  Message: teste: Teste_05 executado em: 18745  mls.   teste passou
+
+
+Time: 12/11/2021 14:05:40  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:05:41  Message: Desempenho do método-teste:   tempo: 508 mlsg.
+Time: 11/12/2021 14:05:41  Message: teste: Teste_05 executado em: 508  mls.   teste passou
+
+
+Time: 12/11/2021 14:09:15  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:09:16  Message: Desempenho do método-teste:   tempo: 662 mlsg.
+Time: 11/12/2021 14:09:16  Message: teste: Teste_05 executado em: 662  mls.   teste passou
+
+
+Time: 12/11/2021 14:11:31  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:13:56  Message: Desempenho do método-teste:   tempo: 144711 mlsg.
+Time: 11/12/2021 14:13:56  Message: teste: Teste_05 executado em: 144711  mls.   teste passou
+
+
+Time: 12/11/2021 14:15:30  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:16:10  Message: Desempenho do método-teste:   tempo: 39798 mlsg.
+Time: 11/12/2021 14:16:10  Message: teste: Teste_05 executado em: 39798  mls.   teste passou
+
+
+Time: 12/11/2021 14:17:29  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:17:51  Message: Desempenho do método-teste:   tempo: 21992 mlsg.
+Time: 11/12/2021 14:17:51  Message: teste: Teste_05 executado em: 21992  mls.   teste passou
+
+
+Time: 12/11/2021 14:19:33  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 14:22:09  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 14:23:04  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:23:22  Message: Desempenho do método-teste:   tempo: 17343 mlsg.
+Time: 11/12/2021 14:23:22  Message: teste: Teste_05 executado em: 17343  mls.   teste passou
+
+
+Time: 12/11/2021 14:24:24  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 14:25:01  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:26:05  Message: Desempenho do método-teste:   tempo: 64065 mlsg.
+Time: 11/12/2021 14:26:05  Message: teste: Teste_05 executado em: 64065  mls.   teste passou
+
+
+Time: 12/11/2021 14:28:01  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:28:02  Message: Desempenho do método-teste:   tempo: 661 mlsg.
+Time: 11/12/2021 14:28:02  Message: teste: Teste_05 executado em: 661  mls.   teste passou
+
+
+Time: 12/11/2021 14:33:53  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:33:54  Message: Desempenho do método-teste:   tempo: 677 mlsg.
+Time: 11/12/2021 14:33:54  Message: teste: Teste_05 executado em: 677  mls.   teste passou
+
+
+Time: 12/11/2021 14:38:49  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:38:50  Message: Desempenho do método-teste:   tempo: 862 mlsg.
+Time: 11/12/2021 14:38:50  Message: teste: Teste_05 executado em: 862  mls.   teste passou
+
+
+Time: 12/11/2021 14:40:09  Message: testes para o sistema programcao com Aspectos.
+
+
+Time: 12/11/2021 14:40:38  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:40:39  Message: Desempenho do método-teste:   tempo: 663 mlsg.
+Time: 11/12/2021 14:40:39  Message: teste: Teste_05 executado em: 663  mls.   teste passou
+
+
+Time: 12/11/2021 14:46:23  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:46:25  Message: Desempenho do método-teste:   tempo: 1348 mlsg.
+Time: 11/12/2021 14:46:25  Message: teste: Teste_05 executado em: 1348  mls.   teste passou
+
+
+Time: 12/11/2021 14:49:01  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:49:02  Message: Desempenho do método-teste:   tempo: 619 mlsg.
+Time: 11/12/2021 14:49:02  Message: teste: Teste_05 executado em: 619  mls.   teste passou
+
+
+Time: 12/11/2021 14:51:34  Message: testes para o sistema programcao com Aspectos.
+Time: 11/12/2021 14:51:35  Message: Desempenho do método-teste:   tempo: 645 mlsg.
+Time: 11/12/2021 14:51:35  Message: teste: Teste_05 executado em: 645  mls.   teste passou
+Time: 11/12/2021 14:52:57  Message: Desempenho do método-teste:   tempo: 82110 mlsg.
+Time: 11/12/2021 14:52:57  Message: teste: Teste_04 executado em: 82110  mls.   teste passou
+Time: 11/12/2021 14:52:57  Message: Desempenho do método-teste:   tempo: 234 mlsg.
+Time: 11/12/2021 14:52:57  Message: teste: Teste_02 executado em: 234  mls.   teste passou
+Time: 11/12/2021 14:52:57  Message: Desempenho do método-teste:   tempo: 294 mlsg.
+Time: 11/12/2021 14:52:57  Message: teste: Teste_01 executado em: 294  mls.   teste passou
+Time: 11/12/2021 14:52:58  Message: Desempenho do método-teste:   tempo: 304 mlsg.
+Time: 11/12/2021 14:52:58  Message: teste: Teste_03 executado em: 304  mls.   teste passou
+Time: 11/12/2021 14:52:58  Message: teste: Teste_03 executado em: 304  mls.   teste passou
+Time: 11/12/2021 14:52:58  Message: Desempenho do método-teste:   tempo: 304 mlsg.
+
+
+
+
+Time: 12/11/2021 16:29:20  Message: testes para o sistema programacao com Aspectos.
+Time: 11/12/2021 16:29:21  Message: Desempenho do método-teste:   tempo: 634 mlsg.
+Time: 11/12/2021 16:29:21  Message: teste: Teste_05 executado em: 634  mls.   teste passou
+Time: 11/12/2021 16:29:28  Message: Desempenho do método-teste:   tempo: 7444 mlsg.
+Time: 11/12/2021 16:29:28  Message: teste: Teste_04 executado em: 7444  mls.   teste passou
+Time: 11/12/2021 16:29:29  Message: Desempenho do método-teste:   tempo: 318 mlsg.
+Time: 11/12/2021 16:29:29  Message: teste: Teste_02 executado em: 318  mls.   teste passou
+Time: 11/12/2021 16:29:29  Message: Desempenho do método-teste:   tempo: 382 mlsg.
+Time: 11/12/2021 16:29:29  Message: teste: Teste_01 executado em: 382  mls.   teste passou
+Time: 11/12/2021 16:29:29  Message: Desempenho do método-teste:   tempo: 298 mlsg.
+Time: 11/12/2021 16:29:29  Message: teste: Teste_03 executado em: 298  mls.   teste passou
+Time: 11/12/2021 16:29:29  Message: teste: Teste_03 executado em: 298  mls.   teste passou
+Time: 11/12/2021 16:29:29  Message: Desempenho do método-teste:   tempo: 298 mlsg.
+
+
+
+
+Time: 12/11/2021 16:30:52  Message: testes para o sistema programacao com Aspectos.
+Time: 11/12/2021 16:30:52  Message: Desempenho do método-teste:   tempo: 555 mlsg.
+Time: 11/12/2021 16:30:52  Message: teste: Teste_05 executado em: 555  mls.   teste passou
+Time: 11/12/2021 16:30:52  Message: Desempenho do método-teste:   tempo: 151 mlsg.
+Time: 11/12/2021 16:30:52  Message: teste: Teste_04 executado em: 151  mls.   teste passou
+Time: 11/12/2021 16:30:53  Message: Desempenho do método-teste:   tempo: 245 mlsg.
+Time: 11/12/2021 16:30:53  Message: teste: Teste_02 executado em: 245  mls.   teste passou
+Time: 11/12/2021 16:30:53  Message: Desempenho do método-teste:   tempo: 623 mlsg.
+Time: 11/12/2021 16:30:53  Message: teste: Teste_01 executado em: 623  mls.   teste passou
+Time: 11/12/2021 16:30:54  Message: Desempenho do método-teste:   tempo: 569 mlsg.
+Time: 11/12/2021 16:30:54  Message: teste: Teste_03 executado em: 569  mls.   teste passou
+Time: 11/12/2021 16:30:54  Message: teste: Teste_03 executado em: 569  mls.   teste passou
+Time: 11/12/2021 16:30:54  Message: Desempenho do método-teste:   tempo: 569 mlsg.
 
 

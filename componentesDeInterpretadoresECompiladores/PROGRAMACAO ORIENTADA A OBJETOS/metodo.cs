@@ -58,13 +58,14 @@ namespace parser
         // Modos de execucao da função:
         //     1- via instruções da linguagem orquidea.
         //     2- via metodo via reflexao (é preciso setar o objeto que fará a chamada do método).
-        protected object ExecuteAFunction(List<object> parametros, Escopo escopo)
+        protected object ExecuteAFunction(List<object> valoresDosParametros, Escopo escopo)
         {
-
-            
+  
 
             if (this.instrucoesFuncao != null) // avaliação da função via instruções da linguagem orquidea.
             {
+            
+
                 ProgramaEmVM program = new ProgramaEmVM(this.instrucoesFuncao);
                 program.Run(escopo);
 
@@ -76,7 +77,7 @@ namespace parser
             else
             if (this.InfoMethod != null) // avaliação de função via método importado com API Reflexão.
             {
-                object result1= this.InfoMethod.Invoke(this.caller, parametros.ToArray());
+                object result1= this.InfoMethod.Invoke(this.caller, valoresDosParametros.ToArray());
                 return result1;
             }
             else
@@ -103,44 +104,43 @@ namespace parser
             escopo.tabela.GetObjetos().Add(actual);
 
 
-            Escopo escopoDoMetodo = escopo.Clone();  
+            Escopo escopoDoMetodo = escopo.Clone(); // copia o escopo da classe, como sendo o escopo do método.
 
-            if (objetoCaller.GetFields() != null)
-                escopoDoMetodo.tabela.GetObjetos().AddRange(objetoCaller.GetFields()); // é preciso copiar no escopo do metodo, os valores das propriedades do objeto.
 
-            
+            escopoDoMetodo.tabela.GetObjetos().AddRange(objetoCaller.GetFields());
+
+            // copia os valores das propriedades do objeto que chama o método, para dentro do escopo do metodo.
+            foreach (Objeto umaPropriedade in objetoCaller.GetFields())
+                escopoDoMetodo.tabela.GetObjeto(umaPropriedade.GetNome(), escopoDoMetodo).SetField(umaPropriedade);
+
+
+            // valoes dos parametros, calculado após a avaliação das expressões parâmetros.
+            List<object> valoresDosParametros = new List<object>();
 
             if ((parametrosDoMetodo != null) && (parametrosDoMetodo.Count > 0))
             {
-                // CONSTROI os parametros do metodo.
-                for (int x = 0; x < parametrosDoMetodo.Count; x++) // o numero de parametros da funcao e os parametros passados pelo metodo precisam ser iguais.
+                // o numero de parametros da funcao e os parametros passados pelo metodo precisam ser iguais.
+                if (parametrosDaFuncao.Length != parametrosDoMetodo.Count)
+                    return null;
+               
+                // calcula os valores de cada parâmetro da chamada do método.
+                for (int x = 0; x < parametrosDoMetodo.Count; x++) 
                 {
                     object valorParametro = new EvalExpression().EvalPosOrdem(parametrosDoMetodo[x], escopo);
                     this.parametrosDaFuncao[x].SetValor(valorParametro);
+                    valoresDosParametros.Add(valorParametro);
                 }
-                escopoDoMetodo.tabela.GetObjetos().AddRange(parametrosDaFuncao); // adiciona OS PÂRAMETROS da função.
+
+                // adiciona os objetos parâmetros para o escopo de execução do método.
+                escopoDoMetodo.tabela.GetObjetos().AddRange(parametrosDaFuncao); 
 
            
             }
-          
 
-            object objetoValor=ExecuteAFunction(parametrosDoMetodo, objetoCaller, escopoDoMetodo); // os valores de propriedades são retornadas no escopo!
+
+            object objetoValor = ExecuteAFunction(valoresDosParametros, escopoDoMetodo); 
             
-            
-            
-            if (escopoDoMetodo.tabela.GetObjetos() != null) //repassa valores modificados de propriedades no escopo.
-                for (int x = 0; x < escopoDoMetodo.tabela.GetObjetos().Count; x++)
-                {
-                    object valor = escopoDoMetodo.tabela.GetObjetos()[x].GetValor();
-                    Objeto umaPropriedade = objetoCaller.GetFields().Find(k => k.GetNome() == escopoDoMetodo.tabela.GetObjetos()[x].GetNome());
-
-
-                    if ((valor != null) && (umaPropriedade != null))
-                        umaPropriedade.SetValor(valor);
-       
-                }
-
-
+  
             if (classeDoObjeto.propriedadesEstaticas != null) // repassa moficações de propriedades estáticas no escopo.
             {
                 List<Objeto> propEstaticas = RepositorioDeClassesOO.Instance().GetClasse(objetoCaller.GetTipo()).propriedadesEstaticas;
@@ -153,12 +153,8 @@ namespace parser
 
             }
 
-
-            if (parametrosDaFuncao != null)
-                for (int x = 0; x < parametrosDaFuncao.Length; x++)
-                    escopo.tabela.GetObjetos().Remove(parametrosDaFuncao[x]); // remove os parâmetro do escopo do método.
-
-            if (objetoCaller.GetFields() != null) // repassa o valor modificados no escopo do método, para as propriedades do objeto caller.
+            // repassa o valor modificados no escopo do método, para as propriedades do objeto caller.
+            if (objetoCaller.GetFields() != null) 
                 for (int x = 0; x < objetoCaller.GetFields().Count; x++)
                 {
                     Objeto propriedadeModificada = escopoDoMetodo.tabela.GetObjetos().Find(k => k.GetNome() == objetoCaller.GetFields()[x].GetNome());
@@ -167,12 +163,10 @@ namespace parser
 
                 }
 
-            
 
-            escopo.tabela.RemoveObjeto("actual"); // remove o objeto "actual".
-              
-            return objetoValor;
+            escopoDoMetodo.Dispose(); // libera os recurso desta seção de execução de método.            
 
+            return objetoValor; 
         }
         /// <summary>
         ///  avalia uma função, tendo como parâmetros expressões, muito apreciada nas chamadas de função, que utiliza expressões como parâmetros.
@@ -180,36 +174,54 @@ namespace parser
         /// </summary>
         public object ExecuteAFunction(List<Expressao> parametros, object caller, Escopo escopo)
         {
-         
+            Escopo escopoDaFuncao = new Escopo(escopo);
+
             List<object> valoresParametro = new List<object>();
             EvalExpression eval = new EvalExpression();
-          
+
             for (int x = 0; x < parametros.Count; x++)
             {
                 parametros[x].isModify = true;
-                object umValor = eval.EvalPosOrdem(parametros[x], escopo);
-                
-                if (Expressao.Instance.IsNumero(umValor.ToString()))
+                object umValor = eval.EvalPosOrdem(parametros[x], escopoDaFuncao);
+                if ((umValor != null) && (Expressao.Instance.IsNumero(umValor.ToString())))
                     valoresParametro.Add(umValor);
                 else
-                if (umValor.GetType() == typeof(Objeto))
+                if ((umValor != null) && (umValor.GetType() == typeof(Objeto))) 
                     valoresParametro.Add(((Objeto)umValor).GetValor());
                 else
                     valoresParametro.Add(umValor);
             } // for x
 
+
+
+            List<object> parametrosValoresAtuais = new List<object>();
             if (this.parametrosDaFuncao != null)
                 for (int x = 0; x < parametrosDaFuncao.Length; x++)
-                    valoresParametro.Add(parametrosDaFuncao[x]);
+                {
+                    parametrosDaFuncao[x].SetValor(valoresParametro[x]);
+                    escopoDaFuncao.tabela.GetObjetos().Add(parametrosDaFuncao[x]);
+
+                    parametrosValoresAtuais.Add(parametrosDaFuncao[x]);
+                 
+                }
+
+            object resultCalcFuncao = null;
 
             if (this.InfoMethod == null)
-                return ExecuteAFunction(valoresParametro, escopo);
+                resultCalcFuncao = ExecuteAFunction(parametrosValoresAtuais, escopoDaFuncao);
             else
             if ((this.InfoMethod != null) && (caller != null))
-                return this.InfoMethod.Invoke(caller, valoresParametro.ToArray());
+                resultCalcFuncao = this.InfoMethod.Invoke(caller, valoresParametro.ToArray());
 
-            return null;
-        } // ExecuteAFunction()
+
+
+            for (int x = 0; x < parametrosDaFuncao.Length; x++)
+                escopoDaFuncao.tabela.GetObjetos().Remove(parametrosDaFuncao[x]);
+
+
+
+            return resultCalcFuncao;
+        }
 
 
  
@@ -240,8 +252,8 @@ namespace parser
                     return null;
 
                 // os objetos inicializados no construtor são passados no escopo!
-                RepositorioDeClassesOO.Instance().GetClasse(nomeClasse).construtores[indexConstrutor].ExecuteAFunction(valoresParametro, escopo);
-                
+                return RepositorioDeClassesOO.Instance().GetClasse(nomeClasse).construtores[indexConstrutor].ExecuteAFunction(valoresParametro, escopo);
+                   
             }
             return null;
         }
