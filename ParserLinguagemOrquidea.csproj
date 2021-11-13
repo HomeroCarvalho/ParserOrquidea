@@ -169,7 +169,9 @@
     <Content Include="componentesDeInterpretadoresECompiladores\GramaticaComponentes\readme.txt" />
     <Content Include="componentesDeInterpretadoresECompiladores\PROGRAMACAO ORIENTADA A OBJETOS\classes de Apoio\readme.txt" />
     <Content Include="Documentos do Projeto\comandos e funcoes interpretador Prolog.txt" />
+    <Content Include="Documentos do Projeto\comandos e funcoes interpretador Prolog[1041].txt" />
     <Content Include="Documentos do Projeto\comandos e instrucoes  do interpretador lisp.txt" />
+    <Content Include="Documentos do Projeto\comandos e instrucoes  do interpretador lisp[1042].txt" />
     <Content Include="Documentos do Projeto\comandos Lisp.txt" />
     <Content Include="Documentos do Projeto\DailyScrum.txt" />
     <Content Include="Documentos do Projeto\Entregas do Projeto.txt" />
